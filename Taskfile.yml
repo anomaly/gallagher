@@ -1,0 +1,17 @@
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  build:image:
+    desc: builds a publishable docker image
+    cmds:
+      - docker build -t anomalyhq/python-lab-server-api:v{{.PROJ_VER} -f Dockerfile.api .
+  dev:test:
+    desc: runs tests inside the server container
+    cmds:
+      - docker compose exec api sh -c "coverage run -m pytest"
+  dev:coverreport:
+    desc: runs coverage inside the server container
+    cmds:
+      - docker compose exec api sh -c "coverage report -m"

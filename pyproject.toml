@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "gallagher"
+version = "0.1.0"
+description = ""
+authors = ["Dev Mukherjee <devraj@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+httpx = "^0.23.3"
+pydantic = "^1.10.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

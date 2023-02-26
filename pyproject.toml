@@ -8,7 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.23.3"
-pydantic = "^1.10.4"
+pydantic = "^1.10.5"
+pyhumps = "^3.8.0"
+typing-extensions = "^4.5.0"
 
 
 [build-system]

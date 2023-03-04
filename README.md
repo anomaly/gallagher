@@ -1,25 +1,36 @@
 # Gallagher Command Centre REST API Client
-> Python Wrapper for the Gallagher REST API for use with the Gallagher Command Centre or via the Cloud Proxy
+> Python idiomatic client for Gallagher Command Centre API
 
-Gallagher Security manufacture a range of access control systems, including the Command Centre. The Command Centre is a Windows application that can be used to manage access control systems. Gallagher Cloud Proxy allows third party applications to connect to the Command Centre via a REST API without having to develop or deploy a secure connection to the premises.
+Gallagher Security manufacture a variety of [security products](https://security.gallagher.com) all of which are controlled by their [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Traditionally Command Centre has been a Windows based server product. Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests. Gallagher also provide a [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which allows third party integrations to securely communicate with the Command Centre on site.
 
-This library provides a Python wrapper for the Gallagher REST API. It is designed to be used with the Gallagher Command Centre, but can also be used with the Gallagher Cloud Proxy.
+This API client is a Python wrapper around their REST API and is designed to work locally or via the Cloud API Gateway.
 
-It wraps the REST API in a Pythonic way, allowing you to develop applications without having to encapsulate the API calls in your own code.
+While Gallagher maintain a set of [Swagger definitions](https://github.com/gallaghersecurity/cc-rest-docs) for their API, they are primarily intended to generate the documentation [published on Github](https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html). They use a tool called [Spectacle](https://github.com/sourcey/spectacle). Gallagher explicitly state that the Swagger definitions are not intended to be used to generate code. Due to this the API client is hand built and not auto-generated.
+
+> Due to custom annotations the YAML files will not parse with any standard parser.
+
+The client was designed while building products around the Gallagher API. It's design is highly opinionated and does not conform with how Gallagher design software interfaces. If you've worked with [stripe-python](https://github.com/stripe/stripe-python) the syntax may feel familiar.
 
 ```python
 from gallagher import cc, const
 
 cc.api_key = "GH_"
+
+
+cc.discover()
 cc.Customer.create()
 ```
 
 ## Design
 
-httpx
+This API client primarily depends on the following libraries:
 
-pydantic
+- [httpx](https://www.python-httpx.org), fo transporting and parsing HTTP requests
+- [pydantic](https://pydantic.dev), for validating responses and constructing request bodies
 
+We use [Taskfile](https://taskfile.dev) to automate running tasks.
+
+The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license. **DO NOT** run the tests against a production system.
 
 ## Configuring the Command Centre
 

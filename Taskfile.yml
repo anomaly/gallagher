@@ -4,14 +4,14 @@ dotenv: ['.env']
 
 tasks:
   build:image:
-    desc: builds a publishable docker image
+    desc: builds publishable python package
     cmds:
-      - docker build -t anomalyhq/python-lab-server-api:v{{.PROJ_VER} -f Dockerfile.api .
+      - poetry build
   dev:test:
     desc: runs tests inside the server container
     cmds:
-      - docker compose exec api sh -c "coverage run -m pytest"
+      - poetry run coverage run -m pytest
   dev:coverreport:
     desc: runs coverage inside the server container
     cmds:
-      - docker compose exec api sh -c "coverage report -m"
+      - poetry run coverage report -m

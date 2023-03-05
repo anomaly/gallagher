@@ -13,6 +13,10 @@ pyhumps = "^3.8.0"
 typing-extensions = "^4.5.0"
 
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.2"
+coverage = "^7.2.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

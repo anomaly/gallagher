@@ -21,6 +21,89 @@ cc.discover()
 cc.Customer.create()
 ```
 
+## API Notes
+
+The Gallagher API uses `href` attributes to provide a the destination of referenced objects in the responses. These are prefixed with the server origin i.e if you are using the Cloud Gateway then all your URLs will be prefixed  with the appropriate gateway's address.
+
+These appear in various forms, starting from as simple as the `href` itself:
+```json
+"cardholders": {
+    "href": "https://localhost:8904/api/access_groups/352/cardholders"
+}
+```
+through to self recursive references with additional attributes:
+```json
+"parent": {
+    "href": "https://localhost:8904/api/access_groups/100",
+    "name": "All R&D"
+}
+```
+
+> Above examples have been taken from the Gallagher documentation
+
+Our `schemas` provide a set of `Mixins` that are used to construct the Models. These are repeatable patterns that need not be repeated. The typical patter would be to subclass from the `Mixins` e.g:
+
+```python
+from .utils import AppBaseModel, IdentityMixin, HrefMixin
+
+class AccessGroupRef(
+    AppBaseModel,
+    HrefMixin
+):
+    """ Access Groups is what a user is assigned to to provide access to doors
+    """
+    name: str
+```
+where the `HrefMixin` provides the `href` attribute:
+```python
+class HrefMixin(BaseModel):
+    """ Href
+
+    This mixin is used to define the href field for all
+    responses from the Gallagher API.
+    """
+    href: str
+```
+These `Mixin` classes can also be used to declare attributes that seek to use the same pattern:
+```python
+class Division(
+    AppBaseModel,
+    IdentityMixin,
+):
+    """
+    """
+
+    name: str
+    description: Optional[str]
+    server_display_name: str
+    parent: Optional[HrefMixin]
+```
+where `parent` is simply an `href` without any other attributes. In the cases where these attributes have more than just an `href` we defined `Reference` classes:
+```python
+class AccessGroupRef(
+    AppBaseModel,
+    HrefMixin
+):
+    """ Access Groups is what a user is assigned to to provide access to doors
+    """
+    name: str
+```
+and use them to populate the attributes:
+```python
+class VisitorType(
+    AppBaseModel,
+    IdentityMixin
+):
+    """
+    """
+    access_group : AccessGroupRef
+    host_access_groups: list[AccessGroupSummary]
+    visitor_access_groups: list[AccessGroupSummary]
+```
+In this example the `AppGroupRef` has a `name` attribute which is not present in the `HrefMixin` class.
+
+> Please see the schema section for naming conventions for `schema` classes
+
 ## Design
 
 This API client primarily depends on the following libraries:
@@ -30,7 +113,20 @@ This API client primarily depends on the following libraries:
 
 We use [Taskfile](https://taskfile.dev) to automate running tasks.
 
-The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license. **DO NOT** run the tests against a production system.
+The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license. 
+
+**DO NOT** run the tests against a production system.
+
+### Schema
+
+
+
+Ref
+Summary
+Detail
+
+
+### Patterns
 
 ## Configuring the Command Centre
 

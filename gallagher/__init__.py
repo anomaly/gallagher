@@ -21,7 +21,21 @@
 
 from typing import Optional
 
+from .const import URL
+
+__version__ = "0.1.0"
+
+# Follow the instructions in the Gallagher documentation
+# to obtain an API key
 api_key: str = None
-api_base: str = None
-client_id: str = None
+
+# By default the base API is set to the Australian Gateway
+# Override this with the US gateway or a local DNS/IP address
+api_base: str = URL.CLOUD_GATEWAY_AU
+
+# Default is set to the library, set this to your application
+client_id: str = "gallagher-py"
+
+# By default connections are sent straight to the server
+# should you wish to use a proxy, set this to the proxy URL
 proxy: Optional[str] = None

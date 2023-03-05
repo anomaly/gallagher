@@ -48,3 +48,10 @@ class IdentityMixin(BaseModel):
     id: str
     href: str
 
+class HrefMixin(BaseModel):
+    """ Href
+
+    This mixin is used to define the href field for all
+    responses from the Gallagher API.
+    """
+    href: str

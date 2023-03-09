@@ -119,16 +119,21 @@ The project provides a comprehensive set of tests which can be run with `task te
 
 ### Schema
 
+There are three types of schema definitions, each one of them suffixed with their intent:
 
+- **Ref** are `References` to other objects, they using contain a `href` and possibly additional meta data such as a `name` or `id`
+- **Summary** is what is returned by the Gallagher API in operations such as [searches](https://gallaghersecurity.github.io/cc-rest-docs/ref/cardholders.html), these are generally a subset of the full object
+- **Detail** are the full object found at a particular `href`, they compound on the `Summary` schema and add additional attributes
 
-Ref
-Summary
-Detail
+In summary:
 
+- `Refs` are the minimal pathway to an object
+- `Summary` builds on a `Ref` and provides a subset of the attributes
+- `Detail` builds on a `Summary` and provides the full set of attributes
 
 ### Patterns
 
-## Configuring the Command Centre
+# Configuring the Command Centre
 
 The following requires you to have an understanding of the Gallagher Command Centre and how to configure it. If you are unsure, please contact your Gallagher representative.
 

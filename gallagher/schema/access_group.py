@@ -1,8 +1,23 @@
 
 from typing import Optional
 
+from .utils import AppBaseModel, IdentityMixin,\
+    HrefMixin
 from .division import Division
-from .utils import AppBaseModel, IdentityMixin, HrefMixin
+from .pdf import PDFRef
+from .schedule import ScheduleRef
+from .zone import AccessZoneRef
+from .salto import SaltoAccessItemSummary
+from .alarm import AlarmZoneSummary
+
+class AccessSummary(
+    AppBaseModel
+):
+    """ Access is zone paired with a schedule
+    """
+    access_zone: AccessZoneRef
+    schedule: ScheduleRef
+
 
 class AccessGroupRef(
     AppBaseModel,
@@ -33,5 +48,12 @@ class AccessGroupDetail(
     """
     """
     description: Optional[str]
-    parent: Optional[AccessGroupSummary]
+    parent: Optional[AccessGroupRef]
     division: Division
+    cardholders: Optional[HrefMixin]
+    server_display_name: Optional[str]
+    children: list[AccessGroupRef]
+    personal_data_definitions: list[PDFRef]
+    access: list[AccessSummary]
+    salto_access: list[SaltoAccessItemSummary]
+    alarm_zones: list[AlarmZoneSummary]

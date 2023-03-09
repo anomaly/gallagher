@@ -7,7 +7,8 @@ from typing import Optional
 from .utils import AppBaseModel,\
     IdentityMixin, HrefMixin
 
-from .access_group import AccessGroupRef
+from .access_group import AccessGroupRef,\
+    AccessGroupSummary
 
 class VisitorType(
     AppBaseModel,

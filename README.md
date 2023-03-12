@@ -16,10 +16,11 @@ from gallagher import cc, const
 
 cc.api_key = "GH_"
 
-
 cc.discover()
 cc.Customer.create()
 ```
+
+> Note this project is **NOT** officially affiliated with Gallagher Security
 
 ## API Notes
 
@@ -66,7 +67,7 @@ class HrefMixin(BaseModel):
 ```
 These `Mixin` classes can also be used to declare attributes that seek to use the same pattern:
 ```python
-class Division(
+class DivisionDetail(
     AppBaseModel,
     IdentityMixin,
 ):
@@ -90,7 +91,7 @@ class AccessGroupRef(
 ```
 and use them to populate the attributes:
 ```python
-class VisitorType(
+class VisitorTypeDetail(
     AppBaseModel,
     IdentityMixin
 ):
@@ -131,7 +132,9 @@ In summary:
 - `Summary` builds on a `Ref` and provides a subset of the attributes
 - `Detail` builds on a `Summary` and provides the full set of attributes
 
-### Patterns
+### Resources
+
+Resources are `fetcable`, `queryable`, `creatable`, `updatable` and `deletable`.
 
 # Configuring the Command Centre
 

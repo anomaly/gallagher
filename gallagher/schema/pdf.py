@@ -15,7 +15,7 @@ class PDFRef(
     """
     name: str
 
-class PDF(
+class PDFDetail(
     PDFRef
 ):
     """ Personal Data Fields are custom fields for a card holder

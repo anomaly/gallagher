@@ -7,28 +7,22 @@ from typing import Optional
 from .utils import AppBaseModel,\
     IdentityMixin, HrefMixin
 
-from .access_group import AccessGroupRef,\
-    AccessGroupSummary
+from .visitor import VisitorManagementSummary
 
-class VisitorType(
+class DivisionRef(
     AppBaseModel,
-    IdentityMixin
+    IdentityMixin,
+    HrefMixin
 ):
-    """
-    """
-    access_group : AccessGroupRef
-    host_access_groups: list[AccessGroupSummary]
-    visitor_access_groups: list[AccessGroupSummary]
+    """ Division reference is used to link to a division
 
-class VisitorManagement(
-    AppBaseModel
-):
+    The Mixins cover all the fields that are returned in the
+    summary, hence nothing has to be declared in the body
     """
-    """
-    active: bool
-    visitor_types: list[VisitorType]
+    pass
+
     
-class Division(
+class DivisionDetail(
     AppBaseModel,
     IdentityMixin,
 ):
@@ -40,4 +34,4 @@ class Division(
     server_display_name: str
     parent: Optional[HrefMixin]
 
-    visitor_management: VisitorManagement
+    visitor_management: VisitorManagementSummary

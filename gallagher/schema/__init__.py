@@ -5,9 +5,10 @@
 from typing import Optional
 from .utils import AppBaseModel, HrefMixin
 
-from .cardholder import CardholderSummary, CardholderDetail
-from .access_group import AccessGroupSummary, AccessGroupDetail
-from .role import RoleDetail
+from .card_type import CardTypeDetail
+# from .cardholder import CardholderSummary, CardholderDetail
+# from .access_group import AccessGroupSummary, AccessGroupDetail
+# from .role import RoleDetail
 
 class Response(
     AppBaseModel
@@ -17,10 +18,11 @@ class Response(
     """
     next: Optional[HrefMixin]
     results: list[
-        CardholderSummary,
-        CardholderDetail,
-        AccessGroupSummary,
-        AccessGroupDetail,
-        RoleDetail,
+        # CardholderSummary,
+        # CardholderDetail,
+        CardTypeDetail,
+        # AccessGroupSummary,
+        # AccessGroupDetail,
+        # RoleDetail,
     ]
     

@@ -38,3 +38,5 @@ client_id: str = "gallagher-py"
 # By default connections are sent straight to the server
 # should you wish to use a proxy, set this to the proxy URL
 proxy: Optional[str] = None
+
+from .card import *

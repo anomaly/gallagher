@@ -2,6 +2,8 @@
 
  Copyight (c) 2023, Anomaly Software Pty Ltd
 
+ This project is **NOT** officially affiliated with Gallagher Security.
+
  Distributed under the terms of the MIT License.
 """
 

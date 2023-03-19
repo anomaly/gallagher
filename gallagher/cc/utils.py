@@ -1,5 +1,6 @@
+"""
 
-from gallagher import cc
+"""
 
 def check_api_key_format():
     """
@@ -8,7 +9,7 @@ def check_api_key_format():
     return False
 
 def get_authorization_headers():
-    print(cc.api_key)
+    from . import api_key
     return {
-        "Authorization": "GGL-API-KEY"
+        "Authorization": f'GGL-API-KEY {api_key}'
     }

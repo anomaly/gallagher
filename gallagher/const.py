@@ -2,8 +2,8 @@
 """
 class URL:
 
-    CLOUD_GATEWAY_AU: str = "https://commandcentre-api-au.security.gallagher.cloud"
-    CLOUD_GATEWAY_US: str = "https://commandcentre-api-us.security.gallagher.cloud"
+    CLOUD_GATEWAY_AU: str = "https://commandcentre-api-au.security.gallagher.cloud/api/"
+    CLOUD_GATEWAY_US: str = "https://commandcentre-api-us.security.gallagher.cloud/api/"
 
 class IP_ADDR:
 

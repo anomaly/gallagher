@@ -40,3 +40,4 @@ client_id: str = "gallagher-py"
 proxy: Optional[str] = None
 
 from .card import *
+from .divisions import *

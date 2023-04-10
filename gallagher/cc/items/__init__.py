@@ -1,12 +1,14 @@
 from ..utils import APIBase
-from ...schema.items import ItemResponse
+from ...schema.items import ItemResponse, ItemTypesResponse
 
 
 class ItemsTypes(APIBase):
     """
      Gallagher
     """
+
     ENDPOINT = "items/types"
+    RESPONSE_CLASS = ItemTypesResponse
 
 class Item(APIBase):
     """

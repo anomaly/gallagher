@@ -3,8 +3,6 @@
 """
 import httpx
 
-from ..schema import Response
-
 def check_api_key_format(api_key):
     """
     
@@ -41,5 +39,20 @@ class APIBase():
             headers=get_authorization_headers(),
         )
 
-        card_holder = Response.parse_obj(response.json())
-        return card_holder
+        parsed_obj = cls.RESPONSE_CLASS.parse_obj(
+            response.json()
+        )
+
+        return parsed_obj
+
+    @classmethod
+    def retrieve(cls, id):
+        pass
+
+    @classmethod
+    def modify(cls):
+        pass
+
+    @classmethod
+    def create(cls, **params):
+        pass

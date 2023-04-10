@@ -16,6 +16,7 @@ def setup_module(module):
     from gallagher import cc
     cc.api_key = api_key
 
+
 def teardown_module(module):
     """ When we are done running the tests return the API client
     to it's default state.

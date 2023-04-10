@@ -134,7 +134,7 @@ In summary:
 
 ### Resources
 
-Resources are `fetcable`, `queryable`, `creatable`, `updatable` and `deletable`.
+Resources are `fetchable`, `queryable`, `creatable`, `updatable` and `deletable`.
 
 # Configuring the Command Centre
 

@@ -22,3 +22,11 @@ class CardTypeDetail(
     facility_code: str
     credential_class: str
     available_card_states: list[str]
+
+class CardTypeResponse(
+    AppBaseModel,
+):
+    """ Card Types are cards mobile or physical that are supported at a site
+    """
+    results: list[CardTypeDetail]
+    next: Optional[HrefMixin]

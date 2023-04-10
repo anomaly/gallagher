@@ -7,7 +7,7 @@ from typing import Optional
 from .utils import AppBaseModel,\
     IdentityMixin, HrefMixin
 
-from .visitor import VisitorManagementSummary
+# import visitor.VisitorManagementSummary
 
 class DivisionRef(
     AppBaseModel,
@@ -31,7 +31,7 @@ class DivisionDetail(
 
     name: str
     description: Optional[str]
-    server_display_name: str
+    server_display_name: Optional[str]
     parent: Optional[HrefMixin]
 
-    visitor_management: VisitorManagementSummary
+    # visitor_management: visitor.VisitorManagementSummary

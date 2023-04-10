@@ -35,3 +35,12 @@ class ItemSummary(
     type: ItemTypeDetail
     notes: Optional[str]
     server_display_name: Optional[str]
+
+
+class ItemResponse(
+    AppBaseModel,
+):
+    """ Personal Data Fields are custom fields for a card holder
+    """
+    results: list[ItemSummary]
+    next: Optional[HrefMixin]

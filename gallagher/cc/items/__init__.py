@@ -1,4 +1,5 @@
 from ..utils import APIBase
+from ...schema.items import ItemResponse
 
 
 class ItemsTypes(APIBase):
@@ -16,4 +17,5 @@ class Item(APIBase):
     """
 
     ENDPOINT = "items"
+    RESPONSE_CLASS = ItemResponse
 

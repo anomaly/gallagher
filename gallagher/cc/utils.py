@@ -44,3 +44,15 @@ class APIBase():
         )
 
         return parsed_obj
+
+    @classmethod
+    def retrieve(cls, id):
+        pass
+
+    @classmethod
+    def modify(cls):
+        pass
+
+    @classmethod
+    def create(cls, **params):
+        pass

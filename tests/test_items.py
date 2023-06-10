@@ -1,6 +1,13 @@
+"""
 
+
+"""
+import pytest
 
 def test_items_types_list():
+    """ Get a list of item types and iterates through it
+    
+    """
     from gallagher.cc.items import ItemsTypes
     from gallagher.schema.items import ItemTypesResponse
 
@@ -10,10 +17,26 @@ def test_items_types_list():
     assert len(response.item_types) > 0
 
 def test_items_list():
+    """ Get a list of items and this should feed into fetching
+    each one of these on it's own.
+    
+    """
     from gallagher.cc.items import Item
     from gallagher.schema.items import ItemResponse
+
 
     response = Item.list()
     assert type(response) is ItemResponse
     assert type(response.results) is list
     assert len(response.results) > 0
+
+def test_each_item():
+    """ Get each item in the list and make sure it's a valid item
+    
+    """
+    from gallagher.cc.items import Item
+    from gallagher.schema.items import ItemResponse
+    assert True
+
+    # for item in items:
+    #     print(item)

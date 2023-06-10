@@ -8,6 +8,7 @@ from typing import Optional
 from .utils import AppBaseModel, IdentityMixin,\
     HrefMixin
 
+from .division import DivisionRef
 
 class ItemTypeDetail(
     AppBaseModel,
@@ -36,11 +37,18 @@ class ItemSummary(
     notes: Optional[str]
     server_display_name: Optional[str]
 
+class ItemDetail(
+    ItemSummary,
+):
+    """ All attributes of the Summary plus the division
+    """
+    division: DivisionRef
+    
 
 class ItemResponse(
     AppBaseModel,
 ):
-    """ 
+    """  ItemsResponse is the list of items from the API
     """
     results: list[ItemSummary]
     next: Optional[HrefMixin]

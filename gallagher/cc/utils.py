@@ -29,7 +29,8 @@ class APIBase():
         
         """
         endpoint = None
-        response_class = None
+        list_response_class = None
+        retrieve_response_class = None
 
         top = 10
         sort = "id" # Can be set to id or -id
@@ -43,7 +44,7 @@ class APIBase():
             headers=get_authorization_headers(),
         )
 
-        parsed_obj = cls.Config.response_class.parse_obj(
+        parsed_obj = cls.Config.list_response_class.parse_obj(
             response.json()
         )
 
@@ -51,7 +52,20 @@ class APIBase():
 
     @classmethod
     def retrieve(cls, id):
-        pass
+        """
+        
+        """
+        from . import api_base
+        response = httpx.get(
+            f'{api_base}{cls.Config.endpoint}/{id}',
+            headers=get_authorization_headers(),
+        )
+
+        parsed_obj = cls.Config.retrieve_response_class.parse_obj(
+            response.json()
+        )
+
+        return parsed_obj
 
     @classmethod
     def modify(cls):
@@ -60,3 +74,13 @@ class APIBase():
     @classmethod
     def create(cls, **params):
         pass
+
+    @classmethod
+    def delete(cls):
+        pass
+
+    @classmethod
+    def search(cls):
+        pass
+
+

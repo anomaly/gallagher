@@ -1,5 +1,6 @@
 from ..utils import APIBase
-from ...schema.items import ItemResponse, ItemTypesResponse
+from ...schema.items import ItemTypesResponse,\
+    ItemsSummaryResponse, ItemDetailResponse
 
 
 class ItemsTypes(APIBase):
@@ -10,7 +11,7 @@ class ItemsTypes(APIBase):
     class Config:
         
         endpoint = "items/types"
-        response_class = ItemTypesResponse
+        list_response_class = ItemTypesResponse
 
 
 class Item(APIBase):
@@ -24,5 +25,6 @@ class Item(APIBase):
     class Config:
 
         endpoint = "items"
-        response_class = ItemResponse
+        list_response_class = ItemsSummaryResponse
+        retrieve_response_class = ItemDetailResponse
 

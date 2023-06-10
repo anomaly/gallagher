@@ -6,6 +6,7 @@ import pytest
 
 def test_items_types_list():
     """ Get a list of item types and iterates through it
+    these are a summary response
     
     """
     from gallagher.cc.items import ItemsTypes
@@ -22,21 +23,26 @@ def test_items_list():
     
     """
     from gallagher.cc.items import Item
-    from gallagher.schema.items import ItemResponse
-
+    from gallagher.schema.items import ItemsSummaryResponse
 
     response = Item.list()
-    assert type(response) is ItemResponse
+    assert type(response) is ItemsSummaryResponse
     assert type(response.results) is list
     assert len(response.results) > 0
 
-def test_each_item():
+def test_item_detail():
     """ Get each item in the list and make sure it's a valid item
     
     """
     from gallagher.cc.items import Item
-    from gallagher.schema.items import ItemResponse
-    assert True
+    from gallagher.schema.items import ItemsSummaryResponse,\
+        ItemDetailResponse, ItemDetail
 
-    # for item in items:
-    #     print(item)
+    response: ItemsSummaryResponse = Item.list()
+    assert type(response) is ItemsSummaryResponse
+
+    for item_summary in response.results:
+        # Get the detail of the item
+        item_detail_response = Item.retrieve(item_summary.id)
+        assert type(item_detail_response) is ItemDetailResponse
+        assert type(item_detail_response.results) is ItemDetail

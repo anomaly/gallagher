@@ -10,7 +10,7 @@ tasks:
   dev:test:
     desc: runs tests inside the server container
     cmds:
-      - poetry run coverage run -m pytest
+      - poetry run coverage run -m pytest -s
   dev:coverreport:
     desc: runs coverage inside the server container
     cmds:

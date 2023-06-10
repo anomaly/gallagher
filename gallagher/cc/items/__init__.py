@@ -7,8 +7,11 @@ class ItemsTypes(APIBase):
      Gallagher
     """
 
-    ENDPOINT = "items/types"
-    RESPONSE_CLASS = ItemTypesResponse
+    class Config:
+        
+        endpoint = "items/types"
+        response_class = ItemTypesResponse
+
 
 class Item(APIBase):
     """
@@ -18,6 +21,8 @@ class Item(APIBase):
     
     """
 
-    ENDPOINT = "items"
-    RESPONSE_CLASS = ItemResponse
+    class Config:
+
+        endpoint = "items"
+        response_class = ItemResponse
 

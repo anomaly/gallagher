@@ -24,22 +24,26 @@ class APIBase():
     
     """
 
-    ENDPOINT = None
-    RESPONSE_CLASS = None
+    class Config:
+        """
+        
+        """
+        endpoint = None
+        response_class = None
 
-    TOP = 10
-    SORT = "id" # Can be set to id or -id
-    FIELDS = []
+        top = 10
+        sort = "id" # Can be set to id or -id
+        fields = []
 
     @classmethod
     def list(cls, skip=0):
         from . import api_base
         response = httpx.get(
-            f'{api_base}{cls.ENDPOINT}',
+            f'{api_base}{cls.Config.endpoint}',
             headers=get_authorization_headers(),
         )
 
-        parsed_obj = cls.RESPONSE_CLASS.parse_obj(
+        parsed_obj = cls.Config.response_class.parse_obj(
             response.json()
         )
 

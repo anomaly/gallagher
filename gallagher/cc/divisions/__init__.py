@@ -8,5 +8,7 @@ class Division(APIBase):
     
     """
 
-    ENDPOINT = "divisions"
+    class Config:
+        
+        endpoint = "divisions"
 

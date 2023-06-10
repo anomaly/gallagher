@@ -1,3 +1,4 @@
+> Currently under heavy development, please check for stable release before use
 # Gallagher Command Centre REST API Client
 > Python idiomatic client for Gallagher Command Centre API
 

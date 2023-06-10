@@ -94,7 +94,7 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Alarm Zone summary
 - [ ] Alarm Zone detail
 - [ ] Day category search
-- [ ] Day category
+- [X] Day category
 - [ ] Door search
 - [ ] Door summary
 - [ ] Door detail

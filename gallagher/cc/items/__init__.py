@@ -1,6 +1,6 @@
 from ..utils import APIBase
 from ...schema.items import ItemTypesResponse,\
-    ItemsSummaryResponse, ItemDetailResponse
+    ItemsSummaryResponse, ItemDetail
 
 
 class ItemsTypes(APIBase):
@@ -26,5 +26,4 @@ class Item(APIBase):
 
         endpoint = "items"
         list_response_class = ItemsSummaryResponse
-        retrieve_response_class = ItemDetailResponse
-
+        retrieve_response_class = ItemDetail

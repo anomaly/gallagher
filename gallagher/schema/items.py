@@ -45,8 +45,12 @@ class ItemDetail(
     ItemSummary,
 ):
     """ All attributes of the Summary plus the division
+
+    While running our tests we found that for some system level
+    objects the divison can be optional, this attribute is hence
+    marked optional, please test for availability before using it.
     """
-    division: DivisionRef
+    division: Optional[DivisionRef]
     
 
 class ItemsSummaryResponse(
@@ -57,13 +61,6 @@ class ItemsSummaryResponse(
     """
     results: list[ItemSummary]
     next: Optional[HrefMixin]
-
-class ItemDetailResponse(
-    AppBaseModel,
-):
-    """ ItemDetailResponse is the detail of an item
-    """
-    results: ItemDetail
 
 class ItemTypesResponse(
     AppBaseModel,

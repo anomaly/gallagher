@@ -2,7 +2,6 @@
 
 
 """
-import pytest
 
 def test_items_types_list():
     """ Get a list of item types and iterates through it
@@ -36,7 +35,7 @@ def test_item_detail():
     """
     from gallagher.cc.items import Item
     from gallagher.schema.items import ItemsSummaryResponse,\
-        ItemDetailResponse, ItemDetail
+        ItemDetail
 
     response: ItemsSummaryResponse = Item.list()
     assert type(response) is ItemsSummaryResponse
@@ -44,5 +43,4 @@ def test_item_detail():
     for item_summary in response.results:
         # Get the detail of the item
         item_detail_response = Item.retrieve(item_summary.id)
-        assert type(item_detail_response) is ItemDetailResponse
-        assert type(item_detail_response.results) is ItemDetail
+        assert type(item_detail_response) is ItemDetail

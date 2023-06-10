@@ -137,6 +137,10 @@ In summary:
 
 Resources are `fetchable`, `queryable`, `creatable`, `updatable` and `deletable`.
 
+### Responses
+
+Responses can be the object itself or a response layout
+
 # Configuring the Command Centre
 
 The following requires you to have an understanding of the Gallagher Command Centre and how to configure it. If you are unsure, please contact your Gallagher representative.

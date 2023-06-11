@@ -8,7 +8,7 @@ def test_items_types_list():
     these are a summary response
     
     """
-    from gallagher.cc.items import ItemsTypes
+    from gallagher.cc.alarms.items import ItemsTypes
     from gallagher.schema.items import ItemTypesResponse
 
     response = ItemsTypes.list()
@@ -21,7 +21,7 @@ def test_items_list():
     each one of these on it's own.
     
     """
-    from gallagher.cc.items import Item
+    from gallagher.cc.alarms.items import Item
     from gallagher.schema.items import ItemsSummaryResponse
 
     response = Item.list()
@@ -33,7 +33,7 @@ def test_item_detail():
     """ Get each item in the list and make sure it's a valid item
     
     """
-    from gallagher.cc.items import Item
+    from gallagher.cc.alarms.items import Item
     from gallagher.schema.items import ItemsSummaryResponse,\
         ItemDetail
 

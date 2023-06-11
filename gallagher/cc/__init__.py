@@ -39,5 +39,3 @@ client_id: str = "gallagher-py"
 # should you wish to use a proxy, set this to the proxy URL
 proxy: Optional[str] = None
 
-from .card import *
-from .divisions import *

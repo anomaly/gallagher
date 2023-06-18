@@ -1,6 +1,8 @@
 # Welcome to Gallagher Python
 
-## Commands
+This project maintains an idiomatic client for Python
+
+## Contributing to the documentation
 
 * `mkdocs new [dir-name]` - Create a new project.
 * `mkdocs serve` - Start the live-reloading docs server.

@@ -117,7 +117,7 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Output summary
 - [ ] Output detail
 - [ ] Schedule search
-- [ ] Schedule summary
+- [X] Schedule summary
 - [ ] Schedule detail
 - [ ] Schedule POST and PATCH
 - [ ] Override end time

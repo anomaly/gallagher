@@ -1,5 +1,7 @@
-""" 
+""" Gallagher Python idiomatic client library test
 
+  Test suite for the Gallagher Python idiomatic client library,
+  using pytest run via Taskfile.
 
 """
 

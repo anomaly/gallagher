@@ -59,7 +59,7 @@ class APIBase():
             headers=get_authorization_headers(),
         )
 
-        parsed_obj = cls.Config.list_response_class.parse_obj(
+        parsed_obj = cls.Config.list_response_class.model_validate(
             response.json()
         )
 
@@ -79,7 +79,7 @@ class APIBase():
             headers=get_authorization_headers(),
         )
 
-        parsed_obj = cls.Config.retrieve_response_class.parse_obj(
+        parsed_obj = cls.Config.retrieve_response_class.model_validate(
             response.json()
         )
 

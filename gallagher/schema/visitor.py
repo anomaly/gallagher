@@ -1,11 +1,14 @@
 
 
-from .utils import AppBaseModel,\
+from .utils import (
+    AppBaseModel,
     IdentityMixin
+)
 
-from .access_group import AccessGroupRef,\
+from .access_group import (
+    AccessGroupRef,
     AccessGroupSummary
-
+)
 class VisitorTypeSummary(
     AppBaseModel,
     IdentityMixin

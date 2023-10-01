@@ -5,7 +5,10 @@ and the schedule determines what happens at certain times on those days.
 """
 from typing import Optional
 
-from .utils import AppBaseModel, HrefMixin
+from .utils import (
+    AppBaseModel,
+    HrefMixin
+)
 
 class DayCategory(
     AppBaseModel,

@@ -4,14 +4,15 @@ dotenv: ['.env']
 
 tasks:
   build:image:
+    prompt: Have you made sure the version number is up to date?
     desc: builds publishable python package
     cmds:
       - poetry build
-  dev:test:
+  test:
     desc: runs tests inside the server container
     cmds:
       - poetry run coverage run -m pytest -s
-  dev:coverreport:
+  test:coverreport:
     desc: runs coverage inside the server container
     cmds:
       - poetry run coverage report -m

@@ -5,8 +5,11 @@
 
 from typing import Optional
 
-from .utils import AppBaseModel, IdentityMixin,\
+from .utils import (
+    AppBaseModel,
+    IdentityMixin,
     HrefMixin
+)
 
 class CardTypeDetail(
     AppBaseModel,

@@ -5,7 +5,6 @@
 
 
 from pydantic import BaseModel
-from humps import camelize
 
 def to_camel_case(string):
     """ Convert a string to camelCase

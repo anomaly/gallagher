@@ -2,7 +2,10 @@
 
 """
 
-from .utils import AppBaseModel, HrefMixin
+from .utils import (
+    AppBaseModel,
+    HrefMixin
+)
 
 class ScheduleRef(
     AppBaseModel,

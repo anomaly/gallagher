@@ -4,7 +4,10 @@
 
 from datetime import datetime
 
-from .utils import AppBaseModel, IdentityMixin
+from .utils import (
+    AppBaseModel,
+    IdentityMixin,
+)
 
 
 class CardholderSummary(

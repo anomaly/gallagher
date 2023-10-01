@@ -1,8 +1,12 @@
 
 from typing import Optional
 
-from .utils import AppBaseModel, IdentityMixin,\
+from .utils import (
+    AppBaseModel,
+    IdentityMixin,
     HrefMixin
+)
+
 from .division import DivisionDetail
 from .pdf import PDFRef
 from .schedule import ScheduleRef

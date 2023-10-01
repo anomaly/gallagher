@@ -1,4 +1,4 @@
-"""
+""" Utilities for the Gallagher Command Centre API
 
 """
 import httpx
@@ -20,8 +20,14 @@ def get_authorization_headers():
     }
 
 class APIBase():
-    """
-    
+    """ Base class for all API objects
+
+    All API endpoints must inherit from this class and provide a Config class
+    that automates the implementation of many of the API methods.
+
+    If the endpoints provide additional methods then they are to implement them
+    based on the same standards as this base class.
+
     """
 
     class Config:
@@ -37,7 +43,16 @@ class APIBase():
         fields = []
 
     @classmethod
+    def _discover(cls):
+        pass
+
+    @classmethod
     def list(cls, skip=0):
+        """ For a list of objects for the given resource
+
+        Most resources can be searched which is exposed by this method.
+        Resources also allow pagination which can be controlled by the skip
+        """
         from . import api_base
         response = httpx.get(
             f'{api_base}{cls.Config.endpoint}',
@@ -52,8 +67,11 @@ class APIBase():
 
     @classmethod
     def retrieve(cls, id):
-        """
-        
+        """ Retrieve a single object for the given resource
+
+        Most objects have an ID which is numeral or UUID. 
+        Each resource also provides a href and pagination for
+        children.
         """
         from . import api_base
         response = httpx.get(
@@ -69,18 +87,28 @@ class APIBase():
 
     @classmethod
     def modify(cls):
+        """
+        
+        """
         pass
 
     @classmethod
     def create(cls, **params):
+        """
+        
+        """
         pass
 
     @classmethod
     def delete(cls):
+        """
+        
+        """
         pass
 
     @classmethod
     def search(cls):
+        """
+        
+        """
         pass
-
-

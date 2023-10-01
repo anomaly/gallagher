@@ -3,8 +3,10 @@
 """
 
 
-from .utils import AppBaseModel, HrefMixin
-
+from .utils import (
+    AppBaseModel,
+    HrefMixin
+)
 class AlarmZoneRef(
     AppBaseModel,
     HrefMixin

@@ -3,4 +3,4 @@ site_url: https://anomaly.github.io/gallagher/
 repo_url: https://github.com/anomaly/gallagher/
 site_author: Dev Mukherjee
 theme:
-  name: dracula
+  name: terminal

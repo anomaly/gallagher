@@ -2,14 +2,21 @@
 
 """
 
-from ..utils import APIBase
-from ...schema.schedule import ScheduleSummaryResponse
+from ..utils import (
+    APIBase,
+    EndpointConfig
+)
+
+from ...dto.schedule import (
+    ScheduleSummaryResponse
+)
+
 
 class Schedule(APIBase):
     """ Schedules
     """
 
-    class Config:
-        
-        endpoint = "schedules"
-        list_response_class = ScheduleSummaryResponse
+    __config__ = EndpointConfig(
+        endpoint="schedules",
+        dto_list=ScheduleSummaryResponse,
+    )

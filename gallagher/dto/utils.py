@@ -1,23 +1,21 @@
-"""
+""" Data Transfer Object (DTO) utilities
 
 
 """
 
 
-from pydantic import BaseModel
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+)
 
-def to_camel_case(string):
-    """ Convert a string to camelCase
-    
-    This is a wrapper function that is used by the pydantic
-    models to covert the snake_case field names to camelCase
-    for the JSON response.
 
-    It's important to follow standards for both languages
-    and make it as seamless as possible for developers to
-    work in each environment
+def to_lower_camel(name: str) -> str:
     """
-    return camelize(string)
+    Converts a snake_case string to lowerCamelCase
+    """
+    upper = "".join(word.capitalize() for word in name.split("_"))
+    return upper[:1].lower() + upper[1:]
 
 
 class AppBaseModel(BaseModel):
@@ -34,9 +32,11 @@ class AppBaseModel(BaseModel):
     For a full set of options, see:
     https://pydantic-docs.helpmanual.io/usage/model_config/
     """
-    class Config:
-        alias_generator = to_camel_case
-        allow_population_by_field_name = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        alias_generator=to_lower_camel,
+    )
+
 
 class IdentityMixin(BaseModel):
     """ Identifier 
@@ -45,7 +45,7 @@ class IdentityMixin(BaseModel):
     responses from the Gallagher API.
     """
     id: str
-    href: str
+
 
 class HrefMixin(BaseModel):
     """ Href

@@ -1,5 +1,7 @@
 > Currently under heavy development, please check for stable release before use
+
 # Gallagher Command Centre REST API Client
+
 > Python idiomatic client for Gallagher Command Centre API
 
 Gallagher Security manufacture a variety of [security products](https://security.gallagher.com) all of which are controlled by their [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Traditionally Command Centre has been a Windows based server product. Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests. Gallagher also provide a [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which allows third party integrations to securely communicate with the Command Centre on site.
@@ -25,15 +27,18 @@ cc.Customer.create()
 
 ## API Notes
 
-The Gallagher API uses `href` attributes to provide a the destination of referenced objects in the responses. These are prefixed with the server origin i.e if you are using the Cloud Gateway then all your URLs will be prefixed  with the appropriate gateway's address.
+The Gallagher API uses `href` attributes to provide a the destination of referenced objects in the responses. These are prefixed with the server origin i.e if you are using the Cloud Gateway then all your URLs will be prefixed with the appropriate gateway's address.
 
 These appear in various forms, starting from as simple as the `href` itself:
+
 ```json
 "cardholders": {
     "href": "https://localhost:8904/api/access_groups/352/cardholders"
 }
 ```
+
 through to self recursive references with additional attributes:
+
 ```json
 "parent": {
     "href": "https://localhost:8904/api/access_groups/100",
@@ -56,7 +61,9 @@ class AccessGroupRef(
     """
     name: str
 ```
+
 where the `HrefMixin` provides the `href` attribute:
+
 ```python
 class HrefMixin(BaseModel):
     """ Href
@@ -66,7 +73,9 @@ class HrefMixin(BaseModel):
     """
     href: str
 ```
+
 These `Mixin` classes can also be used to declare attributes that seek to use the same pattern:
+
 ```python
 class DivisionDetail(
     AppBaseModel,
@@ -80,7 +89,9 @@ class DivisionDetail(
     server_display_name: str
     parent: Optional[HrefMixin]
 ```
+
 where `parent` is simply an `href` without any other attributes. In the cases where these attributes have more than just an `href` we defined `Reference` classes:
+
 ```python
 class AccessGroupRef(
     AppBaseModel,
@@ -90,7 +101,9 @@ class AccessGroupRef(
     """
     name: str
 ```
+
 and use them to populate the attributes:
+
 ```python
 class VisitorTypeDetail(
     AppBaseModel,
@@ -102,6 +115,7 @@ class VisitorTypeDetail(
     host_access_groups: list[AccessGroupSummary]
     visitor_access_groups: list[AccessGroupSummary]
 ```
+
 In this example the `AppGroupRef` has a `name` attribute which is not present in the `HrefMixin` class.
 
 > Please see the schema section for naming conventions for `schema` classes
@@ -115,11 +129,11 @@ This API client primarily depends on the following libraries:
 
 We use [Taskfile](https://taskfile.dev) to automate running tasks.
 
-The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license. 
+The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license.
 
 **DO NOT** run the tests against a production system.
 
-### Schema
+### Data Transfer Objects
 
 There are three types of schema definitions, each one of them suffixed with their intent:
 
@@ -170,4 +184,5 @@ To check your API key:
 ![Command Centre Cloud Connections](assets/gallagher-rest-properties.png)
 
 # License
+
 Distributed under the MIT License.

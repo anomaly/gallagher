@@ -1,6 +1,15 @@
+"""
 
-from ..utils import APIBase
-from ...schema.card_type import CardTypeResponse
+"""
+from ..utils import (
+    APIBase,
+    EndpointConfig
+)
+
+from ...dto.card_type import (
+    CardTypeResponse
+)
+
 
 class CardType(APIBase):
     """ Card Types provide a list of support card types for the instance.
@@ -10,8 +19,7 @@ class CardType(APIBase):
     of credentials available on this particular instance.  
     """
 
-    class Config:
-
-        endpoint = "card_types"
-        list_response_class = CardTypeResponse
-
+    __config__ = EndpointConfig(
+        endpoint="card_types",
+        dto_list=CardTypeResponse,
+    )

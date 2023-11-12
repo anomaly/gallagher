@@ -13,6 +13,7 @@ from .utils import (
 
 from .division import DivisionRef
 
+
 class ItemTypeDetail(
     AppBaseModel,
 ):
@@ -23,6 +24,8 @@ class ItemTypeDetail(
     """
     id: str
     name: str
+    canonical_type_name: str
+
 
 class ItemRef(
     AppBaseModel,
@@ -41,8 +44,7 @@ class ItemSummary(
     server_display_name, this is used by the item summary response
     """
     type: ItemTypeDetail
-    notes: Optional[str]
-    server_display_name: Optional[str]
+
 
 class ItemDetail(
     ItemSummary,
@@ -53,8 +55,8 @@ class ItemDetail(
     objects the divison can be optional, this attribute is hence
     marked optional, please test for availability before using it.
     """
-    division: Optional[DivisionRef]
-    
+    division: Optional[DivisionRef] = None
+
 
 class ItemsSummaryResponse(
     AppBaseModel,
@@ -63,7 +65,8 @@ class ItemsSummaryResponse(
     it provides the summary of all Items Summary
     """
     results: list[ItemSummary]
-    next: Optional[HrefMixin]
+    next: Optional[HrefMixin] = None
+
 
 class ItemTypesResponse(
     AppBaseModel,

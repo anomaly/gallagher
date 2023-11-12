@@ -1,6 +1,15 @@
-from ..utils import APIBase
-from ...schema.items import ItemTypesResponse,\
-    ItemsSummaryResponse, ItemDetail
+"""
+"""
+from ..utils import (
+    APIBase,
+    EndpointConfig
+)
+
+from ...dto.items import (
+    ItemTypesResponse,
+    ItemsSummaryResponse,
+    ItemDetail
+)
 
 
 class ItemsTypes(APIBase):
@@ -8,10 +17,10 @@ class ItemsTypes(APIBase):
      Gallagher
     """
 
-    class Config:
-        
-        endpoint = "items/types"
-        list_response_class = ItemTypesResponse
+    __config__ = EndpointConfig(
+        endpoint="items/types",
+        dto_list=ItemTypesResponse,
+    )
 
 
 class Item(APIBase):
@@ -19,11 +28,11 @@ class Item(APIBase):
     Gallagher advises against hardcoding the URLs for divisions, and instead
     recommends using the /api endpoint to discover the URLs from 
     events.divisions.href and alarms.division.href.
-    
+
     """
 
-    class Config:
-
-        endpoint = "items"
-        list_response_class = ItemsSummaryResponse
-        retrieve_response_class = ItemDetail
+    __config__ = EndpointConfig(
+        endpoint="items",
+        dto_list=ItemsSummaryResponse,
+        dto_retrieve=ItemDetail,
+    )

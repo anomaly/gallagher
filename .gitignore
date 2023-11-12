@@ -1,3 +1,6 @@
+# managed by direnv
+.envrc
+
 # Byte-compiled / optimized / DLL files
 .secret
 .DS_Store

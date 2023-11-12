@@ -12,6 +12,7 @@ from .utils import (
 
 # import visitor.VisitorManagementSummary
 
+
 class DivisionRef(
     AppBaseModel,
     IdentityMixin,
@@ -24,17 +25,29 @@ class DivisionRef(
     """
     pass
 
-    
+
 class DivisionDetail(
-    AppBaseModel,
-    IdentityMixin,
+    DivisionRef,
 ):
     """
     """
 
     name: str
-    description: Optional[str]
-    server_display_name: Optional[str]
-    parent: Optional[HrefMixin]
+    description: Optional[str] = None
+    server_display_name: Optional[str] = None
+    parent: Optional[HrefMixin] = None
 
+    # TODO: Looks like we don't have access to visitor management
+    # on our test instance at the moment
     # visitor_management: visitor.VisitorManagementSummary
+
+
+class DivisionDetailResponse(
+    AppBaseModel
+):
+    """
+
+    """
+
+    results: list[DivisionDetail]
+    next: Optional[HrefMixin] = None

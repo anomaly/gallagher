@@ -7,6 +7,11 @@ from ..utils import (
     EndpointConfig
 )
 
+from ...dto.division import (
+    DivisionDetailResponse,
+    DivisionDetail,
+)
+
 
 class Division(APIBase):
     """
@@ -18,4 +23,6 @@ class Division(APIBase):
 
     __config__ = EndpointConfig(
         endpoint="divisions",
+        dto_list=DivisionDetailResponse,
+        dto_retrieve=DivisionDetail,
     )

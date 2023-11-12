@@ -37,8 +37,10 @@ def test_item_detail():
 
     """
     from gallagher.cc.alarms.items import Item
-    from gallagher.dto.items import ItemsSummaryResponse, \
+    from gallagher.dto.items import (
+        ItemsSummaryResponse,
         ItemDetail
+    )
 
     response: ItemsSummaryResponse = Item.list()
     assert type(response) is ItemsSummaryResponse
@@ -47,3 +49,4 @@ def test_item_detail():
         # Get the detail of the item
         item_detail_response = Item.retrieve(item_summary.id)
         assert type(item_detail_response) is ItemDetail
+        assert (item_detail_response.id == item_summary.id)

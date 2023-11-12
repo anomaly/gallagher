@@ -2,8 +2,8 @@
 
 The following is tracking which endpoints are available along with their test cases
 
-- [ ] Authentication
-- [ ] Base API route design
+- [x] Authentication
+- [x] Base API route design
 
 ## Alarms, events, and non-cardholder items
 
@@ -18,16 +18,15 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Event detail
 - [ ] Event POST body
 - [ ] Event groups
-- [ ] Divisions
-- [ ] Division
+- [x] Divisions
+- [x] Division
 - [ ] Division PATCH and POST example
 - [ ] Item search
-- [X] Item summary
-- [X] Item detail
-- [X] Item types
+- [x] Item summary
+- [x] Item detail
+- [x] Item types
 - [ ] Item update
 - [ ] Item update subscription
-
 
 ## Cardholders and related items
 
@@ -94,7 +93,7 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Alarm Zone summary
 - [ ] Alarm Zone detail
 - [ ] Day category search
-- [X] Day category
+- [x] Day category
 - [ ] Door search
 - [ ] Door summary
 - [ ] Door detail
@@ -117,11 +116,10 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Output summary
 - [ ] Output detail
 - [ ] Schedule search
-- [X] Schedule summary
+- [x] Schedule summary
 - [ ] Schedule detail
 - [ ] Schedule POST and PATCH
 - [ ] Override end time
-
 
 ## PIV cards
 

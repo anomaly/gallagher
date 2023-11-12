@@ -1,5 +1,5 @@
 from ..utils import APIBase
-from ...schema.items import (
+from ...dto.items import (
     ItemTypesResponse,
     ItemsSummaryResponse,
     ItemDetail

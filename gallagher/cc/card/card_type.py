@@ -1,6 +1,7 @@
 
 from ..utils import APIBase
-from ...schema.card_type import CardTypeResponse
+from ...dto.card_type import CardTypeResponse
+
 
 class CardType(APIBase):
     """ Card Types provide a list of support card types for the instance.
@@ -14,4 +15,3 @@ class CardType(APIBase):
 
         endpoint = "card_types"
         list_response_class = CardTypeResponse
-

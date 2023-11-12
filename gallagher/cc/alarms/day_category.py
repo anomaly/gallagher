@@ -4,7 +4,7 @@
 """
 
 from ..utils import APIBase
-from ...schema.day_category import DayCategoryResponse
+from ...dto.day_category import DayCategoryResponse
 
 
 class DayCategory(APIBase):
@@ -12,6 +12,6 @@ class DayCategory(APIBase):
     """
 
     class Config:
-        
+
         endpoint = "day_categories"
         list_response_class = DayCategoryResponse

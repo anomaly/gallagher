@@ -10,9 +10,22 @@ from .utils import (
     HrefMixin
 )
 
-class DayCategory(
+
+class DayCategoryRef(
     AppBaseModel,
     HrefMixin,
+):
+    """ A reference to a day category
+
+    This is what is sent by the day_category endpoint as of v9
+    the references can be used from other endpoints.
+    """
+
+    name: str
+
+
+class DayCategory(
+    DayCategoryRef,
 ):
     """ Represents a single entry from the response
     """
@@ -28,5 +41,5 @@ class DayCategoryResponse(
     """ The response has a list of results and a link to the next page
     """
 
-    results: list[DayCategory]
-    next: Optional[HrefMixin]
+    results: list[DayCategoryRef]
+    next: Optional[HrefMixin] = None

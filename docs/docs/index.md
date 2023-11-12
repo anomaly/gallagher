@@ -12,7 +12,10 @@ The design pattern of the API client is opinionated from our experience as softw
 
 ## Features
 
-To be completed
+- pydantic models for all API payloads
+- HTTP transport using httpx
+- Full test coverage
+- A completely python based interface to interacting with Gallagher Command Centre
 
 ## Developing the client
 

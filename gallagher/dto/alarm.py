@@ -2,11 +2,27 @@
 
 """
 
+from typing import Optional
 
 from .utils import (
     AppBaseModel,
-    HrefMixin
+    HrefMixin,
+    IdentityMixin,
 )
+
+from .event import EventType
+
+
+class AlarmSource(
+    AppBaseModel,
+    HrefMixin,
+    IdentityMixin,
+):
+    """ AlarmSource represents a device that has triggered an alarm
+    """
+    name: str
+
+
 class AlarmZoneRef(
     AppBaseModel,
     HrefMixin
@@ -15,8 +31,11 @@ class AlarmZoneRef(
     """
     name: str
 
+
 class AlarmZoneSummary(
     AppBaseModel,
+    HrefMixin,
+    IdentityMixin,
 ):
     """ #TODO: Revise this if it shows up in other places
 
@@ -24,4 +43,30 @@ class AlarmZoneSummary(
     property in the access_group schema. I don't know if this
     is appropriate
     """
-    alarm_zone: AlarmZoneRef
+    time: str
+    message: str
+    source: AlarmSource
+    type: str
+    event_type: Optional[EventType] = None
+    priority: int
+    state: str
+    active: bool
+    division: HrefMixin
+    event: Optional[HrefMixin] = None
+    note_presets: list[str] = []
+    view: HrefMixin
+    comment: HrefMixin
+    acknowledge: Optional[HrefMixin] = None
+    acknowledge_with_comment: Optional[HrefMixin] = None
+    process: Optional[HrefMixin] = None
+    process_with_comment: Optional[HrefMixin] = None
+    force_process: Optional[HrefMixin] = None
+
+
+class AlarmResponse(
+    AppBaseModel,
+):
+    """ AlarmResponse represents a single alarm
+    """
+    alarms: list[AlarmZoneSummary]
+    updates: HrefMixin

@@ -9,7 +9,7 @@ The following is tracking which endpoints are available along with their test ca
 
 - [ ] Alarm search
 - [ ] Alarm updates
-- [ ] Alarm summary
+- [x] Alarm summary
 - [ ] Alarm detail
 - [ ] Alarm history entry
 - [ ] Alarm update request

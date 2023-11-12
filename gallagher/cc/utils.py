@@ -153,3 +153,7 @@ class APIBase():
 
         """
         pass
+
+    @classmethod
+    def updates(cls):
+        pass

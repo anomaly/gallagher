@@ -9,6 +9,7 @@ from pydantic import (
     ConfigDict,
 )
 
+
 def to_lower_camel(name: str) -> str:
     """
     Converts a snake_case string to lowerCamelCase
@@ -36,6 +37,7 @@ class AppBaseModel(BaseModel):
         alias_generator=to_lower_camel,
     )
 
+
 class IdentityMixin(BaseModel):
     """ Identifier 
 
@@ -43,7 +45,7 @@ class IdentityMixin(BaseModel):
     responses from the Gallagher API.
     """
     id: str
-    href: str
+
 
 class HrefMixin(BaseModel):
     """ Href

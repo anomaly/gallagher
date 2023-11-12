@@ -1,23 +1,72 @@
 """ Utilities for the Gallagher Command Centre API
 
 """
+from typing import Optional
+from dataclasses import dataclass
+
 import httpx
 
+
 def check_api_key_format(api_key):
-    """
-    
+    """ Validates that the Gallagher Key is in the right format.
+
+    It's not possible for the API client to validate the key against
+    Gallagher servers but it will validate that the key is in the
+    right format.
     """
     api_tokens = api_key.split('-')
     return (api_tokens.count() == 8)
 
+
 def get_authorization_headers():
-    """
-    
+    """ Creates an authorization header for Gallagher API calls
+
+    The server expects an Authorization header with GGL-API-KEY
+    set to the API key provided by Gallagher Command Centre.
+
+    This API key is what allows the cloud proxy to determine where
+    the request should be routed to.
+
+    See the Authorization section here for more information
+    https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html
+
+    from gallagher import cc, const
+
+    cc.api_key = "GH_"
+
     """
     from . import api_key
     return {
         'Authorization': f'GGL-API-KEY {api_key}'
     }
+
+
+@dataclass
+class EndpointConfig:
+    """ A configuration for an API endpoint
+
+    Each API endpoint has a configuration that defines how 
+    the APIBase should attempt to parse responses from the
+    Gallagher servers.
+
+    Additionally it provides defaults for various parameters
+    that are commonly accepted by endpoints.
+
+    Not assigning a configuration to an endpoint will result
+    in APIBase raising an exception.
+
+    The configuration is assigned a special variable called
+    __config__ which is set to None by default.
+
+    """
+    endpoint: str  # partial path to the endpoint e.g. day_category
+    dto_list: Optional[any] = None  # DTO to be used for list requests
+    dto_retrieve: Optional[any] = None  # DTO to be used for retrieve requests
+
+    top: Optional[int] = 10  # Number of response to download
+    sort: Optional[str] = "id"  # Can be set to id or -id
+    # fields: list[str] = []  # Optional list of fields
+
 
 class APIBase():
     """ Base class for all API objects
@@ -30,17 +79,9 @@ class APIBase():
 
     """
 
-    class Config:
-        """
-        
-        """
-        endpoint = None
-        list_response_class = None
-        retrieve_response_class = None
-
-        top = 10
-        sort = "id" # Can be set to id or -id
-        fields = []
+    # This must be overridden by each child class that inherits
+    # from this base class.
+    __config__ = None
 
     @classmethod
     def _discover(cls):
@@ -55,11 +96,11 @@ class APIBase():
         """
         from . import api_base
         response = httpx.get(
-            f'{api_base}{cls.Config.endpoint}',
+            f'{api_base}{cls.__config__.endpoint}',
             headers=get_authorization_headers(),
         )
 
-        parsed_obj = cls.Config.list_response_class.model_validate(
+        parsed_obj = cls.__config__.dto_list.model_validate(
             response.json()
         )
 
@@ -75,11 +116,11 @@ class APIBase():
         """
         from . import api_base
         response = httpx.get(
-            f'{api_base}{cls.Config.endpoint}/{id}',
+            f'{api_base}{cls.__config__.endpoint}/{id}',
             headers=get_authorization_headers(),
         )
 
-        parsed_obj = cls.Config.retrieve_response_class.model_validate(
+        parsed_obj = cls.__config__.dto_retrieve.model_validate(
             response.json()
         )
 
@@ -88,27 +129,27 @@ class APIBase():
     @classmethod
     def modify(cls):
         """
-        
+
         """
         pass
 
     @classmethod
     def create(cls, **params):
         """
-        
+
         """
         pass
 
     @classmethod
     def delete(cls):
         """
-        
+
         """
         pass
 
     @classmethod
     def search(cls):
         """
-        
+
         """
         pass

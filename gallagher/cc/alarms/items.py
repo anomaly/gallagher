@@ -1,4 +1,10 @@
-from ..utils import APIBase
+"""
+"""
+from ..utils import (
+    APIBase,
+    EndpointConfig
+)
+
 from ...dto.items import (
     ItemTypesResponse,
     ItemsSummaryResponse,
@@ -11,10 +17,10 @@ class ItemsTypes(APIBase):
      Gallagher
     """
 
-    class Config:
-
-        endpoint = "items/types"
-        list_response_class = ItemTypesResponse
+    __config__ = EndpointConfig(
+        endpoint="items/types",
+        dto_list=ItemTypesResponse,
+    )
 
 
 class Item(APIBase):
@@ -25,8 +31,8 @@ class Item(APIBase):
 
     """
 
-    class Config:
-
-        endpoint = "items"
-        list_response_class = ItemsSummaryResponse
-        retrieve_response_class = ItemDetail
+    __config__ = EndpointConfig(
+        endpoint="items",
+        dto_list=ItemsSummaryResponse,
+        dto_retrieve=ItemDetail,
+    )

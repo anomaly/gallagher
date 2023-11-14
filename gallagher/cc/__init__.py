@@ -23,6 +23,12 @@
 from typing import Optional
 
 from ..const import URL
+from ..dto.discover import DiscoveryResponse
+
+from .utils import (
+    APIBase,
+    EndpointConfig
+)
 
 # Follow the instructions in the Gallagher documentation
 # to obtain an API key
@@ -39,3 +45,14 @@ client_id: str = "gallagher-py"
 # should you wish to use a proxy, set this to the proxy URL
 proxy: Optional[str] = None
 
+
+class APIDiscovery(
+    APIBase
+):
+    """
+
+    """
+    __config__ = EndpointConfig(
+        endpoint="",
+        dto_list=DiscoveryResponse,
+    )

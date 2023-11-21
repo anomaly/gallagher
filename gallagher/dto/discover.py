@@ -175,8 +175,14 @@ class FeatureVisits(
 class FeaturesDetail(
     AppBaseModel,
 ):
-    """ 
+    """ A detailed list of features that are available on the server.
 
+    All features are marked as Optional, which means that by default
+    it's assumed that they are not available on the server. Upon discovery
+    if a feature is enabled on the server then we receive a href which
+    indicates to the client that the feature is available.
+
+    If a feature is unavailable the API client will throw an exception.
     """
     access_groups: Optional[FeatureAccessGroups] = None
     access_zones: Optional[FeatureAccessZones] = None
@@ -208,7 +214,18 @@ class FeaturesDetail(
 class DiscoveryResponse(
     AppBaseModel,
 ):
-    """  
+    """ A response that outlines the capability of the server
+
+    Gallagher requires customers to license individual features, if they are
+    the server will return a 403 HTTP code. The purpose of this model is to
+    discover what features are available on the server.
+
+    The response should be memoized as it is unlikely to change during individual
+    sessions, they can however change over a period of time.
+
+    This API client is updated to work with various versions of the server, the
+    server responds with a version string that can be used to determine if
+    the API client can work with the server.  
     """
 
     version: str

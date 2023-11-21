@@ -4,6 +4,8 @@ The Command Centre API has a discovery endpoint that allows
 
 """
 
+from typing import Optional
+
 from .utils import (
     AppBaseModel,
     HrefMixin
@@ -176,31 +178,31 @@ class FeaturesDetail(
     """ 
 
     """
-    access_groups: FeatureAccessGroups
-    access_zones: FeatureAccessZones
-    alarm_zones: FeatureAlarmZones
-    alarms: FeatureAlarms
-    card_types: FeatureCardTypes
-    cardholders: FeatureCardholders
-    competencies: FeatureCompetencies
-    day_categories: FeatureDayCategories
-    divisions: FeatureDivisions
-    doors: FeatureDoors
-    elevators: FeatureElevators
-    events: FeatureEvents
-    fence_zones: FeatureFenceZones
-    inputs: FeatureInputs
-    interlock_groups: FeatureInterlockGroups
-    items: FeatureItems
-    locker_banks: FeatureLockerBanks
-    macros: FeatureMacros
-    operator_groups: FeatureOperatorGroups
-    outputs: FeatureOutputs
-    personal_data_fields: FeaturePersonalDataFields
-    receptions: FeatureReceptions
-    roles: FeatureRoles
-    schedules: FeatureSchedules
-    visits: FeatureVisits
+    access_groups: Optional[FeatureAccessGroups] = None
+    access_zones: Optional[FeatureAccessZones] = None
+    alarm_zones: Optional[FeatureAlarmZones] = None
+    alarms: Optional[FeatureAlarms] = None
+    card_types: Optional[FeatureCardTypes] = None
+    cardholders: Optional[FeatureCardholders] = None
+    competencies: Optional[FeatureCompetencies] = None
+    day_categories: Optional[FeatureDayCategories] = None
+    divisions: Optional[FeatureDivisions] = None
+    doors: Optional[FeatureDoors] = None
+    elevators: Optional[FeatureElevators] = None
+    events: Optional[FeatureEvents] = None
+    fence_zones: Optional[FeatureFenceZones] = None
+    inputs: Optional[FeatureInputs] = None
+    interlock_groups: Optional[FeatureInterlockGroups] = None
+    items: Optional[FeatureItems] = None
+    locker_banks: Optional[FeatureLockerBanks] = None
+    macros: Optional[FeatureMacros] = None
+    operator_groups: Optional[FeatureOperatorGroups] = None
+    outputs: Optional[FeatureOutputs] = None
+    personal_data_fields: Optional[FeaturePersonalDataFields] = None
+    receptions: Optional[FeatureReceptions] = None
+    roles: Optional[FeatureRoles] = None
+    schedules: Optional[FeatureSchedules] = None
+    visits: Optional[FeatureVisits] = None
 
 
 class DiscoveryResponse(

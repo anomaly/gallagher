@@ -26,7 +26,7 @@ from ..const import URL
 from ..dto.discover import DiscoveryResponse
 
 from .utils import (
-    APIBase,
+    APIEndpoint,
     EndpointConfig
 )
 
@@ -46,13 +46,26 @@ client_id: str = "gallagher-py"
 proxy: Optional[str] = None
 
 
-class APIDiscovery(
-    APIBase
+class APIFeatureDiscovery(
+    APIEndpoint
 ):
-    """
+    """ The Command Centre root API endpoint 
+
+    Much of Gallagher's API documentation suggests that we don't
+    hard code the URL, but instead use the discovery endpoint by 
+    calling the root endpoint. 
+
+    This should be a singleton which is instantiated upon initialisation
+    and then used across the other endpoints.
+
+    For example features.events.events.href is the endpoint for the events
+    where as features.events.events.updates is the endpoint for getting
+    updates to the changes to events.
+
+    This differs per endpoint that we work with.
 
     """
     __config__ = EndpointConfig(
-        endpoint="",
+        endpoint="",  # The root endpoint is the discovery endpoint
         dto_list=DiscoveryResponse,
     )

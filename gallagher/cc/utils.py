@@ -6,6 +6,8 @@ from dataclasses import dataclass
 
 import httpx
 
+from ..dto.discover import DiscoverResponse
+
 
 def check_api_key_format(api_key):
     """ Validates that the Gallagher Key is in the right format.
@@ -68,7 +70,7 @@ class EndpointConfig:
     # fields: list[str] = []  # Optional list of fields
 
 
-class APIBase():
+class APIEndpoint():
     """ Base class for all API objects
 
     All API endpoints must inherit from this class and provide a Config class
@@ -79,12 +81,32 @@ class APIBase():
 
     """
 
+    # Discover response object, each endpoint will reference
+    # one of the instance variable Href property to get the
+    # path to the endpoint.
+    #
+    # Gallagher recommends that the endpdoints not be hardcoded
+    # into the client and instead be discovered at runtime.
+    #
+    # Note that if a feature has not been licensed by a client
+    # then the path will be set to None, if the client attempts
+    # to access the endpoint then the library will throw an exception
+    #
+    # This value is memoized and should perform
+    paths = DiscoverResponse()
+
     # This must be overridden by each child class that inherits
     # from this base class.
     __config__ = None
 
     @classmethod
     def _discover(cls):
+        """ Discovers the endpoints for the given API
+
+        This is a memoized function that will only be called once
+        on the first operation that is accessed, subsequent calls
+        will return the cached result.
+        """
         pass
 
     @classmethod
@@ -148,8 +170,8 @@ class APIBase():
         pass
 
     @classmethod
-    def search(cls):
-        """
+    def search(cls, **kwargs):
+        """ Search
 
         """
         pass

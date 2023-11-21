@@ -1,7 +1,7 @@
 """
 """
 from ..utils import (
-    APIBase,
+    APIEndpoint,
     EndpointConfig
 )
 
@@ -12,7 +12,7 @@ from ...dto.items import (
 )
 
 
-class ItemsTypes(APIBase):
+class ItemsTypes(APIEndpoint):
     """
      Gallagher
     """
@@ -23,7 +23,7 @@ class ItemsTypes(APIBase):
     )
 
 
-class Item(APIBase):
+class Item(APIEndpoint):
     """
     Gallagher advises against hardcoding the URLs for divisions, and instead
     recommends using the /api endpoint to discover the URLs from 

@@ -2,7 +2,7 @@
 
 """
 from ..utils import (
-    APIBase,
+    APIEndpoint,
     EndpointConfig
 )
 
@@ -11,7 +11,7 @@ from ...dto.card_type import (
 )
 
 
-class CardType(APIBase):
+class CardType(APIEndpoint):
     """ Card Types provide a list of support card types for the instance.
 
     These can vary between using physical cards, mobile credentials, or

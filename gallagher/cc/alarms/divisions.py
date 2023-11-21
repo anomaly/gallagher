@@ -3,7 +3,7 @@
 """
 
 from ..utils import (
-    APIBase,
+    APIEndpoint,
     EndpointConfig
 )
 
@@ -13,7 +13,7 @@ from ...dto.division import (
 )
 
 
-class Division(APIBase):
+class Division(APIEndpoint):
     """
     Gallagher advises against hardcoding the URLs for divisions, and instead
     recommends using the /api endpoint to discover the URLs from 

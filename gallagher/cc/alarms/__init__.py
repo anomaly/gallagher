@@ -4,7 +4,7 @@
 """
 
 from ..utils import (
-    APIBase,
+    APIEndpoint,
     EndpointConfig
 )
 
@@ -15,7 +15,7 @@ from ...dto.alarm import (
 
 
 class Alarms(
-    APIBase
+    APIEndpoint
 ):
     """ Alarms
     """

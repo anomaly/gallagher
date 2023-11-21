@@ -3,7 +3,7 @@
 """
 
 from ..utils import (
-    APIBase,
+    APIEndpoint,
     EndpointConfig
 )
 
@@ -12,7 +12,7 @@ from ...dto.schedule import (
 )
 
 
-class Schedule(APIBase):
+class Schedule(APIEndpoint):
     """ Schedules
     """
 

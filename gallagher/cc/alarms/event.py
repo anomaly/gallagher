@@ -5,13 +5,13 @@ authenticates at a device, usually by badging a card.
 """
 
 from ..utils import (
-    APIBase,
+    APIEndpoint,
     EndpointConfig
 )
 
 
 class Event(
-    APIBase
+    APIEndpoint
 ):
     """
 

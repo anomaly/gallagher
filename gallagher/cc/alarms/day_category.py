@@ -4,7 +4,7 @@
 """
 
 from ..utils import (
-    APIBase,
+    APIEndpoint,
     EndpointConfig
 )
 
@@ -13,7 +13,7 @@ from ...dto.day_category import (
 )
 
 
-class DayCategory(APIBase):
+class DayCategory(APIEndpoint):
     """ Day Categories
     """
 

@@ -4,7 +4,10 @@ The Command Centre API has a discovery endpoint that allows
 
 """
 
-from typing import Optional
+from typing import (
+    Annotated,
+    Optional,
+)
 
 from .utils import (
     AppBaseModel,
@@ -228,8 +231,9 @@ class DiscoveryResponse(
     the API client can work with the server.  
     """
 
-    version: str
-    features: FeaturesDetail
+    version: Annotated[str, "The version of the server"]
+    features: Annotated[FeaturesDetail,
+                        "A list of features available on the server"]
 
     @property
     def get_sem_ver(self):

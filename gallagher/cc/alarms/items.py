@@ -18,7 +18,7 @@ class ItemsTypes(APIEndpoint):
     """
 
     __config__ = EndpointConfig(
-        endpoint="items/types",
+        endpoint=cls.paths.features.alarms.alarms.href,
         dto_list=ItemTypesResponse,
     )
 

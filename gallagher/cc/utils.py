@@ -1,12 +1,25 @@
 """ Utilities for the Gallagher Command Centre API
 
+This package provides a set of utilities that are used that each endpoint
+uses to communicate with the Gallagher Command Centre API.
+
+Every endpoint inherits from the APIEndpoint class and must define
+a configuration that is assigned to the variable __config__.
+
+The endpoint variable in the EndpointConfig should be assigned to a reference
+to the endpoint in the DiscoveryResponse object. When initialised the
+endpoint will be assigned to None but will self heal as part of 
+the bootstrapping process.
 """
 from typing import Optional
 from dataclasses import dataclass
 
 import httpx
 
-from ..dto.discover import DiscoverResponse
+from ..dto.discover import (
+    DiscoveryResponse,
+    FeaturesDetail,
+)
 
 
 def check_api_key_format(api_key):
@@ -93,7 +106,10 @@ class APIEndpoint():
     # to access the endpoint then the library will throw an exception
     #
     # This value is memoized and should perform
-    paths = DiscoverResponse()
+    paths = DiscoveryResponse(
+        version="0.0.0",  # Indicates that it's not been discovered
+        features=FeaturesDetail()
+    )
 
     # This must be overridden by each child class that inherits
     # from this base class.
@@ -107,7 +123,13 @@ class APIEndpoint():
         on the first operation that is accessed, subsequent calls
         will return the cached result.
         """
-        pass
+        # Auto-discovery of the API endpoints, this will
+        # be called as part of the bootstrapping process
+        from ..cc import (
+            APIFeatureDiscovery
+        )
+
+        cls.paths = APIFeatureDiscovery.list()
 
     @classmethod
     def list(cls, skip=0):

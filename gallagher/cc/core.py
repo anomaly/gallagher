@@ -125,7 +125,7 @@ class APIEndpoint():
         """
         # Auto-discovery of the API endpoints, this will
         # be called as part of the bootstrapping process
-        from ..cc import (
+        from . import (
             APIFeatureDiscovery
         )
 

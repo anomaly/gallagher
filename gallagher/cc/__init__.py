@@ -25,7 +25,7 @@ from typing import Optional
 from ..const import URL
 from ..dto.discover import DiscoveryResponse
 
-from .utils import (
+from .core import (
     APIEndpoint,
     EndpointConfig
 )

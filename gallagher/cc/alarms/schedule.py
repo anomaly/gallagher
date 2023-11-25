@@ -2,7 +2,7 @@
 
 """
 
-from ..utils import (
+from ..core import (
     APIEndpoint,
     EndpointConfig
 )

@@ -23,11 +23,10 @@
 from typing import Optional
 
 from ..const import URL
-from ..dto.discover import DiscoveryResponse
 
-from .core import (
-    APIEndpoint,
-    EndpointConfig
+from ..dto.discover import (
+    DiscoveryResponse,
+    FeaturesDetail,
 )
 
 # Follow the instructions in the Gallagher documentation
@@ -45,27 +44,19 @@ client_id: str = "gallagher-py"
 # should you wish to use a proxy, set this to the proxy URL
 proxy: Optional[str] = None
 
-
-class APIFeatureDiscovery(
-    APIEndpoint
-):
-    """ The Command Centre root API endpoint 
-
-    Much of Gallagher's API documentation suggests that we don't
-    hard code the URL, but instead use the discovery endpoint by 
-    calling the root endpoint. 
-
-    This should be a singleton which is instantiated upon initialisation
-    and then used across the other endpoints.
-
-    For example features.events.events.href is the endpoint for the events
-    where as features.events.events.updates is the endpoint for getting
-    updates to the changes to events.
-
-    This differs per endpoint that we work with.
-
-    """
-    __config__ = EndpointConfig(
-        endpoint="",  # The root endpoint is the discovery endpoint
-        dto_list=DiscoveryResponse,
-    )
+# Discover response object, each endpoint will reference
+# one of the instance variable Href property to get the
+# path to the endpoint.
+#
+# Gallagher recommends that the endpoints not be hardcoded
+# into the client and instead be discovered at runtime.
+#
+# Note that if a feature has not been licensed by a client
+# then the path will be set to None, if the client attempts
+# to access the endpoint then the library will throw an exception
+#
+# This value is memoized and should perform
+CAPABILITIES = DiscoveryResponse(
+    version="0.0.0",  # Indicates that it's not been discovered
+    features=FeaturesDetail()
+)

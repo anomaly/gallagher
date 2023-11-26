@@ -8,7 +8,7 @@ Everything declared here indicates an implementation error.
 """
 
 
-class FeatureNotLicensedException(Exception):
+class UnlicensedFeatureException(Exception):
     """ Raised when a feature is not licensed
 
     This exception is raised when the client attempts to access

@@ -16,9 +16,12 @@ from dataclasses import dataclass
 
 import httpx
 
+from gallagher.exception import (
+    UnlicensedFeatureException
+)
+
 from ..dto.discover import (
     DiscoveryResponse,
-    FeaturesDetail,
 )
 
 
@@ -82,6 +85,18 @@ class EndpointConfig:
     sort: Optional[str] = "id"  # Can be set to id or -id
     # fields: list[str] = []  # Optional list of fields
 
+    @classmethod
+    def validate_endpoint(cls):
+        """ Check to see if the feature is licensed and available
+
+        Gallagher REST API is licensed per feature, if a feature is not
+        the endpoint is set to none and we should throw an exception
+        """
+        if not cls.endpoint:
+            raise UnlicensedFeatureException(
+                "Endpoint not defined"
+            )
+
 
 class APIEndpoint():
     """ Base class for all API objects
@@ -94,42 +109,42 @@ class APIEndpoint():
 
     """
 
-    # Discover response object, each endpoint will reference
-    # one of the instance variable Href property to get the
-    # path to the endpoint.
-    #
-    # Gallagher recommends that the endpdoints not be hardcoded
-    # into the client and instead be discovered at runtime.
-    #
-    # Note that if a feature has not been licensed by a client
-    # then the path will be set to None, if the client attempts
-    # to access the endpoint then the library will throw an exception
-    #
-    # This value is memoized and should perform
-    paths = DiscoveryResponse(
-        version="0.0.0",  # Indicates that it's not been discovered
-        features=FeaturesDetail()
-    )
-
     # This must be overridden by each child class that inherits
     # from this base class.
     __config__ = None
 
     @classmethod
     def _discover(cls):
-        """ Discovers the endpoints for the given API
+        """ The Command Centre root API endpoint 
 
-        This is a memoized function that will only be called once
-        on the first operation that is accessed, subsequent calls
-        will return the cached result.
+        Much of Gallagher's API documentation suggests that we don't
+        hard code the URL, but instead use the discovery endpoint by 
+        calling the root endpoint. 
+
+        This should be a singleton which is instantiated upon initialisation
+        and then used across the other endpoints.
+
+        For example features.events.events.href is the endpoint for the events
+        where as features.events.events.updates is the endpoint for getting
+        updates to the changes to events.
+
+        This differs per endpoint that we work with.
         """
+
         # Auto-discovery of the API endpoints, this will
         # be called as part of the bootstrapping process
-        from . import (
-            APIFeatureDiscovery
+        from . import api_base
+        response = httpx.get(
+            api_base,
+            headers=get_authorization_headers(),
         )
 
-        cls.paths = APIFeatureDiscovery.list()
+        parsed_obj = DiscoveryResponse.model_validate(
+            response.json()
+        )
+
+        from . import CAPABILITIES
+        CAPABILITIES = parsed_obj
 
     @classmethod
     def list(cls, skip=0):
@@ -138,6 +153,8 @@ class APIEndpoint():
         Most resources can be searched which is exposed by this method.
         Resources also allow pagination which can be controlled by the skip
         """
+        cls._discover()
+
         from . import api_base
         response = httpx.get(
             f'{api_base}{cls.__config__.endpoint}',
@@ -158,6 +175,8 @@ class APIEndpoint():
         Each resource also provides a href and pagination for
         children.
         """
+        cls._discover()
+
         from . import api_base
         response = httpx.get(
             f'{api_base}{cls.__config__.endpoint}/{id}',

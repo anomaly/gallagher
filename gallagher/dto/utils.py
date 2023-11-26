@@ -3,6 +3,10 @@
 
 """
 
+from typing import (
+    Optional
+)
+from datetime import datetime
 
 from pydantic import (
     BaseModel,
@@ -36,6 +40,13 @@ class AppBaseModel(BaseModel):
         populate_by_name=True,
         alias_generator=to_lower_camel,
     )
+
+    # Set to the last time each response was retrieved
+    # If it's set to None then the response was either created
+    # by the API client or it wasn't retrieved from the server
+    #
+    # This is generally used for caching
+    good_known_since: Optional[datetime] = None
 
 
 class IdentityMixin(BaseModel):

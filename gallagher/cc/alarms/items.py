@@ -1,8 +1,11 @@
 """
 """
+
+from gallagher.cc import CAPABILITIES
+
 from ..core import (
     APIEndpoint,
-    EndpointConfig
+    EndpointConfig,
 )
 
 from ...dto.items import (
@@ -18,7 +21,7 @@ class ItemsTypes(APIEndpoint):
     """
 
     __config__ = EndpointConfig(
-        endpoint=cls.paths.features.alarms.alarms.href,
+        endpoint="items/types",
         dto_list=ItemTypesResponse,
     )
 

@@ -14,7 +14,7 @@ tasks:
       runs all the tests inside the virtualenv, optionally
       provide the name of the test as an argument to run a single test
     cmds:
-      - poetry run coverage run -m pytest tests/{{.CLI_ARGS}}
+      - poetry run coverage run -m pytest -s tests/{{.CLI_ARGS}}
   test:coverreport:
     desc: runs coverage inside the server container
     cmds:

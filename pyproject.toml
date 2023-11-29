@@ -1,9 +1,20 @@
 [tool.poetry]
 name = "gallagher"
-version = "0.1.0"
+version = "0.1.0-alpha.1"
 description = "Python idiomatic client for Gallagher Command Centre API"
 authors = ["Dev Mukherjee <devraj@gmail.com>"]
 readme = "README.md"
+license = "MIT"
+repository = "https://github.com/anomaly/gallagher"
+documentation = "https://anomaly.github.io/gallagher/"
+keywords = ["gallagher", "rest", "api"]
+classifiers = [
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/anomaly/gallagher/issues"
 
 [tool.poetry.dependencies]
 python = "^3.11"

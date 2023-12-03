@@ -258,7 +258,8 @@ class DiscoveryResponse(
 
     version: Annotated[str, "The version of the server"] = "0.0.0"
     features: Annotated[FeaturesDetail,
-                        "A list of features available on the server"]
+                        "A list of features available on the server"
+                        ] = FeaturesDetail()
 
     @property
     def get_sem_ver(self):

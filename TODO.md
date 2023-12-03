@@ -31,8 +31,8 @@ The following is tracking which endpoints are available along with their test ca
 ## Cardholders and related items
 
 - [ ] Cardholder search
-- [ ] Cardholder summary
-- [ ] Cardholder detail
+- [x] Cardholder summary
+- [x] Cardholder detail
 - [ ] Cardholder POST example
 - [ ] Cardholder Update Location POST example
 - [ ] Cardholder PATCH example

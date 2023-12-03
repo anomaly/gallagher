@@ -12,6 +12,7 @@ endpoint will be assigned to None but will self heal as part of
 the bootstrapping process.
 """
 from typing import Optional
+from datetime import datetime
 from dataclasses import dataclass
 
 import httpx
@@ -23,7 +24,6 @@ from gallagher.exception import (
 from ..dto.discover import (
     DiscoveryResponse,
     FeaturesDetail,
-    FeatureAlarms,
 )
 
 
@@ -159,6 +159,13 @@ class APIEndpoint():
         This differs per endpoint that we work with.
         """
 
+        if cls._capabilities.version != "0.0.0" and\
+                type(cls._capabilities.good_known_since) is datetime:
+            # We've already discovered the endpoint hence
+            # we can stop execution to improve performance
+            # and avoid network round trips.
+            return
+
         # Auto-discovery of the API endpoints, this will
         # be called as part of the bootstrapping process
         from . import api_base
@@ -209,7 +216,6 @@ class APIEndpoint():
         """
         cls._discover()
 
-        from . import api_base
         response = httpx.get(
             f'{cls.__config__.endpoint}/{id}',
             headers=get_authorization_headers(),

@@ -22,6 +22,7 @@ from gallagher.exception import (
 
 from ..dto.discover import (
     DiscoveryResponse,
+    FeaturesDetail,
 )
 
 
@@ -109,6 +110,23 @@ class APIEndpoint():
 
     """
 
+    # Discover response object, each endpoint will reference
+    # one of the instance variable Href property to get the
+    # path to the endpoint.
+    #
+    # Gallagher recommends that the endpoints not be hardcoded
+    # into the client and instead be discovered at runtime.
+    #
+    # Note that if a feature has not been licensed by a client
+    # then the path will be set to None, if the client attempts
+    # to access the endpoint then the library will throw an exception
+    #
+    # This value is memoized and should perform
+    _capabilities = DiscoveryResponse(
+        version="0.0.0",  # Indicates that it's not been discovered
+        features=FeaturesDetail()
+    )
+
     # This must be overridden by each child class that inherits
     # from this base class.
     __config__ = None
@@ -143,8 +161,10 @@ class APIEndpoint():
             response.json()
         )
 
-        from . import CAPABILITIES
-        CAPABILITIES = parsed_obj
+        cls._capabilities = parsed_obj
+
+        cls.__config__ = cls.get_config()
+        print(cls.__config__)
 
     @classmethod
     def list(cls, skip=0):

@@ -1,4 +1,4 @@
-"""
+""" Alarms
 
 
 """
@@ -20,8 +20,10 @@ class Alarms(
     """ Alarms
     """
 
-    __config__ = EndpointConfig(
-        endpoint="alarms",
-        dto_list=AlarmResponse,
-        dto_retrieve=AlarmZoneSummary,
-    )
+    @classmethod
+    def get_config(cls):
+        return EndpointConfig(
+            endpoint=cls._capabilities.alarms.alarms.href,
+            dto_list=AlarmResponse,
+            dto_retrieve=AlarmZoneSummary,
+        )

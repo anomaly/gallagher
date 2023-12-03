@@ -23,6 +23,7 @@ from gallagher.exception import (
 from ..dto.discover import (
     DiscoveryResponse,
     FeaturesDetail,
+    FeatureAlarms,
 )
 
 
@@ -164,7 +165,6 @@ class APIEndpoint():
         cls._capabilities = parsed_obj
 
         cls.__config__ = cls.get_config()
-        print(cls.__config__)
 
     @classmethod
     def list(cls, skip=0):
@@ -175,9 +175,8 @@ class APIEndpoint():
         """
         cls._discover()
 
-        from . import api_base
         response = httpx.get(
-            f'{api_base}{cls.__config__.endpoint}',
+            f'{cls.__config__.endpoint}',
             headers=get_authorization_headers(),
         )
 

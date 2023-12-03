@@ -9,10 +9,6 @@ from typing import (
     Optional,
 )
 
-from pydantic.dataclasses import (
-    dataclass,
-)
-
 from .utils import (
     AppBaseModel,
     HrefMixin
@@ -179,7 +175,6 @@ class FeatureVisits(
     visits: Optional[HrefMixin] = None
 
 
-@dataclass
 class FeaturesDetail(
     AppBaseModel,
 ):
@@ -192,59 +187,58 @@ class FeaturesDetail(
 
     If a feature is unavailable the API client will throw an exception.
     """
-    # access_groups: Optional[FeatureAccessGroups]\
-    #     = FeatureAccessGroups()
-    # access_zones: Optional[FeatureAccessZones]\
-    #     = FeatureAccessZones()
-    # alarm_zones: Optional[FeatureAlarmZones]\
-    #     = FeatureAlarmZones()
+    access_groups: Optional[FeatureAccessGroups]\
+        = FeatureAccessGroups()
+    access_zones: Optional[FeatureAccessZones]\
+        = FeatureAccessZones()
+    alarm_zones: Optional[FeatureAlarmZones]\
+        = FeatureAlarmZones()
     alarms: Optional[FeatureAlarms]\
         = FeatureAlarms()
-    # card_types: Optional[FeatureCardTypes]\
-    #     = FeatureCardTypes()
-    # cardholders: Optional[FeatureCardholders]\
-    #     = FeatureCardholders()
-    # competencies: Optional[FeatureCompetencies]\
-    #     = FeatureCompetencies()
-    # day_categories: Optional[FeatureDayCategories]\
-    #     = FeatureDayCategories()
-    # divisions: Optional[FeatureDivisions]\
-    #     = FeatureDivisions()
-    # doors: Optional[FeatureDoors]\
-    #     = FeatureDoors()
-    # elevators: Optional[FeatureElevators]\
-    #     = FeatureElevators()
-    # events: Optional[FeatureEvents]\
-    #     = FeatureEvents()
-    # fence_zones: Optional[FeatureFenceZones]\
-    #     = FeatureFenceZones()
-    # inputs: Optional[FeatureInputs]\
-    #     = FeatureInputs()
-    # interlock_groups: Optional[FeatureInterlockGroups]\
-    #     = FeatureInterlockGroups()
-    # items: Optional[FeatureItems]\
-    #     = FeatureItems()
-    # locker_banks: Optional[FeatureLockerBanks]\
-    #     = FeatureLockerBanks()
-    # macros: Optional[FeatureMacros]\
-    #     = FeatureMacros()
-    # operator_groups: Optional[FeatureOperatorGroups]\
-    #     = FeatureOperatorGroups()
-    # outputs: Optional[FeatureOutputs]\
-    #     = FeatureOutputs()
-    # personal_data_fields: Optional[FeaturePersonalDataFields]\
-    #     = FeaturePersonalDataFields()
-    # receptions: Optional[FeatureReceptions]\
-    #     = FeatureReceptions()
-    # roles: Optional[FeatureRoles]\
-    #     = FeatureRoles()
-    # schedules: Optional[FeatureSchedules]\
-    #     = FeatureSchedules()
-    # visits: Optional[FeatureVisits]\
-    #     = FeatureVisits()
+    card_types: Optional[FeatureCardTypes]\
+        = FeatureCardTypes()
+    cardholders: Optional[FeatureCardholders]\
+        = FeatureCardholders()
+    competencies: Optional[FeatureCompetencies]\
+        = FeatureCompetencies()
+    day_categories: Optional[FeatureDayCategories]\
+        = FeatureDayCategories()
+    divisions: Optional[FeatureDivisions]\
+        = FeatureDivisions()
+    doors: Optional[FeatureDoors]\
+        = FeatureDoors()
+    elevators: Optional[FeatureElevators]\
+        = FeatureElevators()
+    events: Optional[FeatureEvents]\
+        = FeatureEvents()
+    fence_zones: Optional[FeatureFenceZones]\
+        = FeatureFenceZones()
+    inputs: Optional[FeatureInputs]\
+        = FeatureInputs()
+    interlock_groups: Optional[FeatureInterlockGroups]\
+        = FeatureInterlockGroups()
+    items: Optional[FeatureItems]\
+        = FeatureItems()
+    locker_banks: Optional[FeatureLockerBanks]\
+        = FeatureLockerBanks()
+    macros: Optional[FeatureMacros]\
+        = FeatureMacros()
+    operator_groups: Optional[FeatureOperatorGroups]\
+        = FeatureOperatorGroups()
+    outputs: Optional[FeatureOutputs]\
+        = FeatureOutputs()
+    personal_data_fields: Optional[FeaturePersonalDataFields]\
+        = FeaturePersonalDataFields()
+    receptions: Optional[FeatureReceptions]\
+        = FeatureReceptions()
+    roles: Optional[FeatureRoles]\
+        = FeatureRoles()
+    schedules: Optional[FeatureSchedules]\
+        = FeatureSchedules()
+    visits: Optional[FeatureVisits]\
+        = FeatureVisits()
 
 
-@dataclass
 class DiscoveryResponse(
     AppBaseModel,
 ):
@@ -262,7 +256,7 @@ class DiscoveryResponse(
     the API client can work with the server.  
     """
 
-    version: Annotated[str, "The version of the server"]
+    version: Annotated[str, "The version of the server"] = "0.0.0"
     features: Annotated[FeaturesDetail,
                         "A list of features available on the server"]
 

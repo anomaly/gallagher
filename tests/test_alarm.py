@@ -1,4 +1,5 @@
-"""
+""" Alarms are raised by the command centre, we want
+to make sure that we are getting valid responses.
 
 """
 

@@ -43,20 +43,3 @@ client_id: str = "gallagher-py"
 # By default connections are sent straight to the server
 # should you wish to use a proxy, set this to the proxy URL
 proxy: Optional[str] = None
-
-# Discover response object, each endpoint will reference
-# one of the instance variable Href property to get the
-# path to the endpoint.
-#
-# Gallagher recommends that the endpoints not be hardcoded
-# into the client and instead be discovered at runtime.
-#
-# Note that if a feature has not been licensed by a client
-# then the path will be set to None, if the client attempts
-# to access the endpoint then the library will throw an exception
-#
-# This value is memoized and should perform
-CAPABILITIES = DiscoveryResponse(
-    version="0.0.0",  # Indicates that it's not been discovered
-    features=FeaturesDetail()
-)

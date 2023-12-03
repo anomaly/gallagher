@@ -17,8 +17,11 @@ class DayCategory(APIEndpoint):
     """ Day Categories
     """
 
-    __config__ = EndpointConfig(
-        endpoint="day_categories",
-        dto_list=DayCategoryResponse,
-        dto_retrieve=DayCategoryResponse,
-    )
+    @classmethod
+    def get_config(cls):
+        return EndpointConfig(
+            endpoint=cls._capabilities.features.day_categories
+            .day_categories.href,
+            dto_list=DayCategoryResponse,
+            dto_retrieve=DayCategoryResponse,
+        )

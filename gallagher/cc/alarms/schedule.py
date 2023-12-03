@@ -16,7 +16,9 @@ class Schedule(APIEndpoint):
     """ Schedules
     """
 
-    __config__ = EndpointConfig(
-        endpoint="schedules",
-        dto_list=ScheduleSummaryResponse,
-    )
+    @classmethod
+    def get_config(cls):
+        return EndpointConfig(
+            endpoint=cls._capabilities.features.schedules.schedules.href,
+            dto_list=ScheduleSummaryResponse,
+        )

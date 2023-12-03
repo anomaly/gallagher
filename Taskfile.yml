@@ -15,6 +15,12 @@ tasks:
       provide the name of the test as an argument to run a single test
     cmds:
       - poetry run coverage run -m pytest -s tests/{{.CLI_ARGS}}
+  test:list:
+    desc: lists the available tests
+    summary:
+      runs collect only on pytest to list the tests available
+    cmds:
+      - poetry run pytest --co
   test:coverreport:
     desc: runs coverage inside the server container
     cmds:

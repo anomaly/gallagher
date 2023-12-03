@@ -19,7 +19,10 @@ class CardType(APIEndpoint):
     of credentials available on this particular instance.  
     """
 
-    __config__ = EndpointConfig(
-        endpoint="card_types",
-        dto_list=CardTypeResponse,
-    )
+    @classmethod
+    def get_config(cls):
+        return EndpointConfig(
+            endpoint=cls._capabilities.features.card_types.card_types.href,
+            dto_list=CardTypeResponse,
+            dto_retrieve=CardTypeResponse,
+        )

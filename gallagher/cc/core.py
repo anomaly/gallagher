@@ -22,6 +22,8 @@ from gallagher.exception import (
 
 from ..dto.discover import (
     DiscoveryResponse,
+    FeaturesDetail,
+    FeatureAlarms,
 )
 
 
@@ -109,9 +111,35 @@ class APIEndpoint():
 
     """
 
-    # This must be overridden by each child class that inherits
-    # from this base class.
+    # Discover response object, each endpoint will reference
+    # one of the instance variable Href property to get the
+    # path to the endpoint.
+    #
+    # Gallagher recommends that the endpoints not be hardcoded
+    # into the client and instead be discovered at runtime.
+    #
+    # Note that if a feature has not been licensed by a client
+    # then the path will be set to None, if the client attempts
+    # to access the endpoint then the library will throw an exception
+    #
+    # This value is memoized and should perform
+    _capabilities = DiscoveryResponse(
+        version="0.0.0",  # Indicates that it's not been discovered
+        features=FeaturesDetail()
+    )
+
+    # Do not set this variable in your class, this is set by the
+    # lifecycle methods and use to cache the configuration object
     __config__ = None
+
+    @classmethod
+    def get_config(cls):
+        """ Returns the configuration for the endpoint
+
+        This method can be overridden by the child class to
+        provide additional configuration options.
+        """
+        return None
 
     @classmethod
     def _discover(cls):
@@ -143,8 +171,13 @@ class APIEndpoint():
             response.json()
         )
 
-        from . import CAPABILITIES
-        CAPABILITIES = parsed_obj
+        # Assign the capabilities to the class, this should
+        # result in the endpoint
+        cls._capabilities = parsed_obj
+
+        # Set this so the configuration is only discovered
+        # once per endpoint
+        cls.__config__ = cls.get_config()
 
     @classmethod
     def list(cls, skip=0):
@@ -155,9 +188,8 @@ class APIEndpoint():
         """
         cls._discover()
 
-        from . import api_base
         response = httpx.get(
-            f'{api_base}{cls.__config__.endpoint}',
+            f'{cls.__config__.endpoint}',
             headers=get_authorization_headers(),
         )
 
@@ -179,7 +211,7 @@ class APIEndpoint():
 
         from . import api_base
         response = httpx.get(
-            f'{api_base}{cls.__config__.endpoint}/{id}',
+            f'{cls.__config__.endpoint}/{id}',
             headers=get_authorization_headers(),
         )
 

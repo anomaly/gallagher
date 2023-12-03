@@ -18,161 +18,161 @@ from .utils import (
 class FeatureAccessGroups(
     AppBaseModel,
 ):
-    access_groups: HrefMixin
+    access_groups: Optional[HrefMixin] = None
 
 
 class FeatureAccessZones(
     AppBaseModel,
 ):
-    access_zones: HrefMixin
+    access_zones: Optional[HrefMixin] = None
 
 
 class FeatureAlarmZones(
     AppBaseModel,
 ):
-    alarm_zones: HrefMixin
+    alarm_zones: Optional[HrefMixin] = None
 
 
 class FeatureAlarms(
     AppBaseModel,
 ):
-    alarms: HrefMixin
-    divisions: HrefMixin
-    updates: HrefMixin
+    alarms: Optional[HrefMixin] = None
+    divisions: Optional[HrefMixin] = None
+    updates: Optional[HrefMixin] = None
 
 
 class FeatureCardTypes(
     AppBaseModel,
 ):
-    assign: HrefMixin
-    card_types: HrefMixin
+    assign: Optional[HrefMixin] = None
+    card_types: Optional[HrefMixin] = None
 
 
 class FeatureCardholders(
     AppBaseModel,
 ):
-    cardholders: HrefMixin
-    changes: HrefMixin
-    update_location_access_zones: HrefMixin
+    cardholders: Optional[HrefMixin] = None
+    changes: Optional[HrefMixin] = None
+    update_location_access_zones: Optional[HrefMixin] = None
 
 
 class FeatureCompetencies(
     AppBaseModel,
 ):
-    competencies: HrefMixin
+    competencies: Optional[HrefMixin] = None
 
 
 class FeatureDayCategories(
     AppBaseModel,
 ):
-    day_categories: HrefMixin
+    day_categories: Optional[HrefMixin] = None
 
 
 class FeatureDivisions(
     AppBaseModel,
 ):
-    divisions: HrefMixin
+    divisions: Optional[HrefMixin] = None
 
 
 class FeatureDoors(
     AppBaseModel,
 ):
-    doors: HrefMixin
+    doors: Optional[HrefMixin] = None
 
 
 class FeatureElevators(
     AppBaseModel,
 ):
-    elevator_groups: HrefMixin
+    elevator_groups: Optional[HrefMixin] = None
 
 
 class FeatureEvents(
     AppBaseModel,
 ):
-    divisions: HrefMixin
-    event_groups: HrefMixin
-    events: HrefMixin
-    updates: HrefMixin
+    divisions: Optional[HrefMixin] = None
+    event_groups: Optional[HrefMixin] = None
+    events: Optional[HrefMixin] = None
+    updates: Optional[HrefMixin] = None
 
 
 class FeatureFenceZones(
     AppBaseModel,
 ):
-    fence_zones: HrefMixin
+    fence_zones: Optional[HrefMixin] = None
 
 
 class FeatureInputs(
     AppBaseModel,
 ):
-    inputs: HrefMixin
+    inputs: Optional[HrefMixin] = None
 
 
 class FeatureInterlockGroups(
     AppBaseModel,
 ):
-    interlock_groups: HrefMixin
+    interlock_groups: Optional[HrefMixin] = None
 
 
 class FeatureItems(
     AppBaseModel,
 ):
-    item_types: HrefMixin
-    items: HrefMixin
-    updates: HrefMixin
+    item_types: Optional[HrefMixin] = None
+    items: Optional[HrefMixin] = None
+    updates: Optional[HrefMixin] = None
 
 
 class FeatureLockerBanks(
     AppBaseModel,
 ):
-    locker_banks: HrefMixin
+    locker_banks: Optional[HrefMixin] = None
 
 
 class FeatureMacros(
     AppBaseModel,
 ):
-    macros: HrefMixin
+    macros: Optional[HrefMixin] = None
 
 
 class FeatureOperatorGroups(
     AppBaseModel,
 ):
-    operator_groups: HrefMixin
+    operator_groups: Optional[HrefMixin] = None
 
 
 class FeatureOutputs(
     AppBaseModel,
 ):
-    outputs: HrefMixin
+    outputs: Optional[HrefMixin] = None
 
 
 class FeaturePersonalDataFields(
     AppBaseModel,
 ):
-    personal_data_fields: HrefMixin
+    personal_data_fields: Optional[HrefMixin] = None
 
 
 class FeatureReceptions(
     AppBaseModel,
 ):
-    receptions: HrefMixin
+    receptions: Optional[HrefMixin] = None
 
 
 class FeatureRoles(
     AppBaseModel,
 ):
-    roles: HrefMixin
+    roles: Optional[HrefMixin] = None
 
 
 class FeatureSchedules(
     AppBaseModel,
 ):
-    schedules: HrefMixin
+    schedules: Optional[HrefMixin] = None
 
 
 class FeatureVisits(
     AppBaseModel,
 ):
-    visits: HrefMixin
+    visits: Optional[HrefMixin] = None
 
 
 class FeaturesDetail(
@@ -187,31 +187,56 @@ class FeaturesDetail(
 
     If a feature is unavailable the API client will throw an exception.
     """
-    access_groups: Optional[FeatureAccessGroups] = None
-    access_zones: Optional[FeatureAccessZones] = None
-    alarm_zones: Optional[FeatureAlarmZones] = None
-    alarms: Optional[FeatureAlarms] = None
-    card_types: Optional[FeatureCardTypes] = None
-    cardholders: Optional[FeatureCardholders] = None
-    competencies: Optional[FeatureCompetencies] = None
-    day_categories: Optional[FeatureDayCategories] = None
-    divisions: Optional[FeatureDivisions] = None
-    doors: Optional[FeatureDoors] = None
-    elevators: Optional[FeatureElevators] = None
-    events: Optional[FeatureEvents] = None
-    fence_zones: Optional[FeatureFenceZones] = None
-    inputs: Optional[FeatureInputs] = None
-    interlock_groups: Optional[FeatureInterlockGroups] = None
-    items: Optional[FeatureItems] = None
-    locker_banks: Optional[FeatureLockerBanks] = None
-    macros: Optional[FeatureMacros] = None
-    operator_groups: Optional[FeatureOperatorGroups] = None
-    outputs: Optional[FeatureOutputs] = None
-    personal_data_fields: Optional[FeaturePersonalDataFields] = None
-    receptions: Optional[FeatureReceptions] = None
-    roles: Optional[FeatureRoles] = None
-    schedules: Optional[FeatureSchedules] = None
-    visits: Optional[FeatureVisits] = None
+    access_groups: Optional[FeatureAccessGroups]\
+        = FeatureAccessGroups()
+    access_zones: Optional[FeatureAccessZones]\
+        = FeatureAccessZones()
+    alarm_zones: Optional[FeatureAlarmZones]\
+        = FeatureAlarmZones()
+    alarms: Optional[FeatureAlarms]\
+        = FeatureAlarms()
+    card_types: Optional[FeatureCardTypes]\
+        = FeatureCardTypes()
+    cardholders: Optional[FeatureCardholders]\
+        = FeatureCardholders()
+    competencies: Optional[FeatureCompetencies]\
+        = FeatureCompetencies()
+    day_categories: Optional[FeatureDayCategories]\
+        = FeatureDayCategories()
+    divisions: Optional[FeatureDivisions]\
+        = FeatureDivisions()
+    doors: Optional[FeatureDoors]\
+        = FeatureDoors()
+    elevators: Optional[FeatureElevators]\
+        = FeatureElevators()
+    events: Optional[FeatureEvents]\
+        = FeatureEvents()
+    fence_zones: Optional[FeatureFenceZones]\
+        = FeatureFenceZones()
+    inputs: Optional[FeatureInputs]\
+        = FeatureInputs()
+    interlock_groups: Optional[FeatureInterlockGroups]\
+        = FeatureInterlockGroups()
+    items: Optional[FeatureItems]\
+        = FeatureItems()
+    locker_banks: Optional[FeatureLockerBanks]\
+        = FeatureLockerBanks()
+    macros: Optional[FeatureMacros]\
+        = FeatureMacros()
+    operator_groups: Optional[FeatureOperatorGroups]\
+        = FeatureOperatorGroups()
+    outputs: Optional[FeatureOutputs]\
+        = FeatureOutputs()
+    personal_data_fields: Optional[FeaturePersonalDataFields]\
+        = FeaturePersonalDataFields()
+    receptions: Optional[FeatureReceptions]\
+        = FeatureReceptions()
+    roles: Optional[FeatureRoles]\
+        = FeatureRoles()
+    schedules: Optional[FeatureSchedules]\
+        = FeatureSchedules()
+    visits: Optional[FeatureVisits]\
+        = FeatureVisits()
 
 
 class DiscoveryResponse(
@@ -231,9 +256,10 @@ class DiscoveryResponse(
     the API client can work with the server.  
     """
 
-    version: Annotated[str, "The version of the server"]
+    version: Annotated[str, "The version of the server"] = "0.0.0"
     features: Annotated[FeaturesDetail,
-                        "A list of features available on the server"]
+                        "A list of features available on the server"
+                        ] = FeaturesDetail()
 
     @property
     def get_sem_ver(self):

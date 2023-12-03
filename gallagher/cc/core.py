@@ -128,9 +128,18 @@ class APIEndpoint():
         features=FeaturesDetail()
     )
 
-    # This must be overridden by each child class that inherits
-    # from this base class.
+    # Do not set this variable in your class, this is set by the
+    # lifecycle methods and use to cache the configuration object
     __config__ = None
+
+    @classmethod
+    def get_config(cls):
+        """ Returns the configuration for the endpoint
+
+        This method can be overridden by the child class to
+        provide additional configuration options.
+        """
+        return None
 
     @classmethod
     def _discover(cls):
@@ -162,8 +171,12 @@ class APIEndpoint():
             response.json()
         )
 
+        # Assign the capabilities to the class, this should
+        # result in the endpoint
         cls._capabilities = parsed_obj
 
+        # Set this so the configuration is only discovered
+        # once per endpoint
         cls.__config__ = cls.get_config()
 
     @classmethod
@@ -198,7 +211,7 @@ class APIEndpoint():
 
         from . import api_base
         response = httpx.get(
-            f'{api_base}{cls.__config__.endpoint}/{id}',
+            f'{cls.__config__.endpoint}/{id}',
             headers=get_authorization_headers(),
         )
 

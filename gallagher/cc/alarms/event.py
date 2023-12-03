@@ -17,8 +17,10 @@ class Event(
 
     """
 
-    __config__ = EndpointConfig(
-        endpoint="events",
-        dto_list=EventResponse,
-        dto_retrieve=EventDetail,
-    )
+    @classmethod
+    def get_config(cls):
+        return EndpointConfig(
+            endpoint="events",
+            dto_list=EventResponse,
+            dto_retrieve=EventDetail,
+        )

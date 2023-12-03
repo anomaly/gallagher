@@ -22,10 +22,13 @@ class ItemsTypes(APIEndpoint):
      Gallagher
     """
 
-    __config__ = EndpointConfig(
-        endpoint="items/types",
-        dto_list=ItemTypesResponse,
-    )
+    @classmethod
+    def get_config(cls):
+        return EndpointConfig(
+            endpoint=cls._discover.features.items.item_types.href,
+            dto_list=ItemTypesResponse,
+            dto_retrieve=ItemTypesResponse,
+        )
 
 
 class Item(APIEndpoint):
@@ -36,8 +39,10 @@ class Item(APIEndpoint):
 
     """
 
-    __config__ = EndpointConfig(
-        endpoint="items",
-        dto_list=ItemsSummaryResponse,
-        dto_retrieve=ItemDetail,
-    )
+    @classmethod
+    def get_config(cls):
+        return EndpointConfig(
+            endpoint=cls._discover.features.items.items.href,
+            dto_list=ItemsSummaryResponse,
+            dto_retrieve=ItemDetail,
+        )

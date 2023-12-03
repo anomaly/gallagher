@@ -3,8 +3,6 @@
 
 """
 
-from gallagher.cc import CAPABILITIES
-
 from ..core import (
     APIEndpoint,
     EndpointConfig,

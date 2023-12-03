@@ -20,7 +20,7 @@ class DayCategory(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=cls._capabilities.features.day_categories
+            endpoint=APIEndpoint._capabilities.features.day_categories
             .day_categories.href,
             dto_list=DayCategoryResponse,
             dto_retrieve=DayCategoryResponse,

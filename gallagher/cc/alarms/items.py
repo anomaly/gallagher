@@ -23,7 +23,7 @@ class ItemsTypes(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=cls._capabilities.features.items.item_types.href,
+            endpoint=APIEndpoint._capabilities.features.items.item_types.href,
             dto_list=ItemTypesResponse,
             dto_retrieve=ItemTypesResponse,
         )
@@ -40,7 +40,7 @@ class Item(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=cls._capabilities.features.items.items.href,
+            endpoint=APIEndpoint._capabilities.features.items.items.href,
             dto_list=ItemsSummaryResponse,
             dto_retrieve=ItemDetail,
         )

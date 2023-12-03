@@ -157,10 +157,13 @@ class APIEndpoint():
         updates to the changes to events.
 
         This differs per endpoint that we work with.
+
+        Note that references to APIEndpoint._capabilities as a singleton, while
+        cls.method when executing a class method.
         """
 
-        if cls._capabilities.version != "0.0.0" and\
-                type(cls._capabilities.good_known_since) is datetime:
+        if APIEndpoint._capabilities.version != "0.0.0" and\
+                type(APIEndpoint._capabilities.good_known_since) is datetime:
             # We've already discovered the endpoint hence
             # we can stop execution to improve performance
             # and avoid network round trips.
@@ -180,7 +183,7 @@ class APIEndpoint():
 
         # Assign the capabilities to the class, this should
         # result in the endpoint
-        cls._capabilities = parsed_obj
+        APIEndpoint._capabilities = parsed_obj
 
         # Set this so the configuration is only discovered
         # once per endpoint

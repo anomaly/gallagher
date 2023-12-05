@@ -3,6 +3,7 @@
 """
 
 from ..core import (
+    Capabilities,
     APIEndpoint,
     EndpointConfig
 )
@@ -19,6 +20,6 @@ class Schedule(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=APIEndpoint._capabilities.features.schedules.schedules.href,
+            endpoint=Capabilities.CURRENT.features.schedules.schedules.href,
             dto_list=ScheduleSummaryResponse,
         )

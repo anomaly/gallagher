@@ -100,16 +100,7 @@ class EndpointConfig:
             )
 
 
-class APIEndpoint():
-    """ Base class for all API objects
-
-    All API endpoints must inherit from this class and provide a Config class
-    that automates the implementation of many of the API methods.
-
-    If the endpoints provide additional methods then they are to implement them
-    based on the same standards as this base class.
-
-    """
+class Capabilities():
 
     # Discover response object, each endpoint will reference
     # one of the instance variable Href property to get the
@@ -123,10 +114,22 @@ class APIEndpoint():
     # to access the endpoint then the library will throw an exception
     #
     # This value is memoized and should perform
-    _capabilities = DiscoveryResponse(
+    CURRENT = DiscoveryResponse(
         version="0.0.0",  # Indicates that it's not been discovered
         features=FeaturesDetail()
     )
+
+
+class APIEndpoint():
+    """ Base class for all API objects
+
+    All API endpoints must inherit from this class and provide a Config class
+    that automates the implementation of many of the API methods.
+
+    If the endpoints provide additional methods then they are to implement them
+    based on the same standards as this base class.
+
+    """
 
     # Do not set this variable in your class, this is set by the
     # lifecycle methods and use to cache the configuration object
@@ -158,12 +161,12 @@ class APIEndpoint():
 
         This differs per endpoint that we work with.
 
-        Note that references to APIEndpoint._capabilities as a singleton, while
+        Note that references to Capabilities.CURRENT as a singleton, while
         cls.method when executing a class method.
         """
 
-        if APIEndpoint._capabilities.version != "0.0.0" and\
-                type(APIEndpoint._capabilities.good_known_since) is datetime:
+        if Capabilities.CURRENT.version != "0.0.0" and\
+                type(Capabilities.CURRENT.good_known_since) is datetime:
             # We've already discovered the endpoint hence
             # we can stop execution to improve performance
             # and avoid network round trips.
@@ -183,7 +186,7 @@ class APIEndpoint():
 
         # Assign the capabilities to the class, this should
         # result in the endpoint
-        APIEndpoint._capabilities = parsed_obj
+        Capabilities.CURRENT = parsed_obj
 
         # Set this so the configuration is only discovered
         # once per endpoint

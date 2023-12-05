@@ -4,6 +4,7 @@
 """
 
 from ..core import (
+    Capabilities,
     APIEndpoint,
     EndpointConfig
 )
@@ -20,7 +21,7 @@ class DayCategory(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=APIEndpoint._capabilities.features.day_categories
+            endpoint=Capabilities.CURRENT.features.day_categories
             .day_categories.href,
             dto_list=DayCategoryResponse,
             dto_retrieve=DayCategoryResponse,

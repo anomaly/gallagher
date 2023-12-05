@@ -5,7 +5,8 @@
 
 from ..core import (
     APIEndpoint,
-    EndpointConfig
+    EndpointConfig,
+    Capabilities
 )
 
 from ...dto.alarm import (
@@ -23,7 +24,7 @@ class Alarms(
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=APIEndpoint._capabilities.features.alarms.alarms.href,
+            endpoint=Capabilities.CURRENT.features.alarms.alarms.href,
             dto_list=AlarmResponse,
             dto_retrieve=AlarmZoneSummary,
         )

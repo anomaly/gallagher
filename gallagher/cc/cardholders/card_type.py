@@ -2,6 +2,7 @@
 
 """
 from ..core import (
+    Capabilities,
     APIEndpoint,
     EndpointConfig
 )
@@ -22,7 +23,7 @@ class CardType(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=APIEndpoint._capabilities.features.card_types.card_types.href,
+            endpoint=Capabilities.CURRENT.features.card_types.card_types.href,
             dto_list=CardTypeResponse,
             dto_retrieve=CardTypeResponse,
         )

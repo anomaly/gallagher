@@ -3,6 +3,7 @@
 """
 
 from ..core import (
+    Capabilities,
     APIEndpoint,
     EndpointConfig
 )
@@ -24,7 +25,7 @@ class Division(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=APIEndpoint._capabilities.features.divisions.divisions.href,
+            endpoint=Capabilities.CURRENT.features.divisions.divisions.href,
             dto_list=DivisionDetailResponse,
             dto_retrieve=DivisionDetail,
         )

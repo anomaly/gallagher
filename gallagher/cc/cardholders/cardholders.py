@@ -2,6 +2,7 @@
 
 """
 from ..core import (
+    Capabilities,
     APIEndpoint,
     EndpointConfig
 )
@@ -23,7 +24,7 @@ class Cardholder(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=APIEndpoint._capabilities.features.cardholders.cardholders.href,
+            endpoint=Capabilities.CURRENT.features.cardholders.cardholders.href,
             dto_list=CardholderSummaryResponse,
             dto_retrieve=CardholderDetail,
         )

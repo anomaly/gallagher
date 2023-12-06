@@ -24,7 +24,7 @@ class Cardholder(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.cardholders.cardholders.href,
+            endpoint=Capabilities.CURRENT.features.cardholders.cardholders,
             dto_list=CardholderSummaryResponse,
             dto_retrieve=CardholderDetail,
         )

@@ -100,7 +100,7 @@ class EndpointConfig:
             )
 
 
-class Capabilities():
+class Capabilities:
 
     # Discover response object, each endpoint will reference
     # one of the instance variable Href property to get the
@@ -120,7 +120,7 @@ class Capabilities():
     )
 
 
-class APIEndpoint():
+class APIEndpoint:
     """ Base class for all API objects
 
     All API endpoints must inherit from this class and provide a Config class
@@ -186,10 +186,21 @@ class APIEndpoint():
 
         # Assign the capabilities to the class, this should
         # result in the endpoint
+        #
+        # With the refactored initialisation of the pydantic
+        # models, the values for the unavailable endpoints
+        # should be set to None
         Capabilities.CURRENT = parsed_obj
 
         # Set this so the configuration is only discovered
         # once per endpoint
+        #
+        # If we assign the __config__ variable in the class
+        # that inherits from this class, the instance of EndpointConfig
+        # will copy the None values from the Capabilities.CURRENT
+        # object, this primarily because Capabilities.CURRENT is
+        # an instance of a pyndatic object and all values are thus
+        # copied not referenced.
         cls.__config__ = cls.get_config()
 
     @classmethod
@@ -202,7 +213,7 @@ class APIEndpoint():
         cls._discover()
 
         response = httpx.get(
-            f'{cls.__config__.endpoint}',
+            f'{cls.__config__.endpoint.href}',
             headers=get_authorization_headers(),
         )
 
@@ -223,7 +234,7 @@ class APIEndpoint():
         cls._discover()
 
         response = httpx.get(
-            f'{cls.__config__.endpoint}/{id}',
+            f'{cls.__config__.endpoint.href}/{id}',
             headers=get_authorization_headers(),
         )
 

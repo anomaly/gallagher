@@ -65,3 +65,25 @@ class HrefMixin(BaseModel):
     responses from the Gallagher API.
     """
     href: str
+
+
+class OptionalHref(BaseModel):
+    """ Optionally available Href
+
+    This mixin is used to define the href field for all
+    responses from the Gallagher API.
+
+    Primarily used by the discovery endpoint, where the href
+    may be absent if the feature is not available.
+
+    Reason for this so the API Endpoint configuration can 
+    reference the href property (pre discovery), otherwise
+    the Feature* classes have a None object for the object
+
+    # Use with caution
+
+    Only use these with responses that don't optionally
+    require a href. See Gallagher's documentation for
+    confirmation.
+    """
+    href: Optional[str] = None

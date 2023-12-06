@@ -11,168 +11,168 @@ from typing import (
 
 from .utils import (
     AppBaseModel,
-    HrefMixin
+    OptionalHref,
 )
 
 
 class FeatureAccessGroups(
     AppBaseModel,
 ):
-    access_groups: Optional[HrefMixin] = None
+    access_groups: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureAccessZones(
     AppBaseModel,
 ):
-    access_zones: Optional[HrefMixin] = None
+    access_zones: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureAlarmZones(
     AppBaseModel,
 ):
-    alarm_zones: Optional[HrefMixin] = None
+    alarm_zones: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureAlarms(
     AppBaseModel,
 ):
-    alarms: Optional[HrefMixin] = None
-    divisions: Optional[HrefMixin] = None
-    updates: Optional[HrefMixin] = None
+    alarms: Optional[OptionalHref] = OptionalHref()
+    divisions: Optional[OptionalHref] = OptionalHref()
+    updates: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureCardTypes(
     AppBaseModel,
 ):
-    assign: Optional[HrefMixin] = None
-    card_types: Optional[HrefMixin] = None
+    assign: Optional[OptionalHref] = OptionalHref()
+    card_types: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureCardholders(
     AppBaseModel,
 ):
-    cardholders: Optional[HrefMixin] = None
-    changes: Optional[HrefMixin] = None
-    update_location_access_zones: Optional[HrefMixin] = None
+    cardholders: Optional[OptionalHref] = OptionalHref()
+    changes: Optional[OptionalHref] = OptionalHref()
+    update_location_access_zones: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureCompetencies(
     AppBaseModel,
 ):
-    competencies: Optional[HrefMixin] = None
+    competencies: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureDayCategories(
     AppBaseModel,
 ):
-    day_categories: Optional[HrefMixin] = None
+    day_categories: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureDivisions(
     AppBaseModel,
 ):
-    divisions: Optional[HrefMixin] = None
+    divisions: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureDoors(
     AppBaseModel,
 ):
-    doors: Optional[HrefMixin] = None
+    doors: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureElevators(
     AppBaseModel,
 ):
-    elevator_groups: Optional[HrefMixin] = None
+    elevator_groups: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureEvents(
     AppBaseModel,
 ):
-    divisions: Optional[HrefMixin] = None
-    event_groups: Optional[HrefMixin] = None
-    events: Optional[HrefMixin] = None
-    updates: Optional[HrefMixin] = None
+    divisions: Optional[OptionalHref] = OptionalHref()
+    event_groups: Optional[OptionalHref] = OptionalHref()
+    events: Optional[OptionalHref] = OptionalHref()
+    updates: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureFenceZones(
     AppBaseModel,
 ):
-    fence_zones: Optional[HrefMixin] = None
+    fence_zones: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureInputs(
     AppBaseModel,
 ):
-    inputs: Optional[HrefMixin] = None
+    inputs: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureInterlockGroups(
     AppBaseModel,
 ):
-    interlock_groups: Optional[HrefMixin] = None
+    interlock_groups: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureItems(
     AppBaseModel,
 ):
-    item_types: Optional[HrefMixin] = None
-    items: Optional[HrefMixin] = None
-    updates: Optional[HrefMixin] = None
+    item_types: Optional[OptionalHref] = OptionalHref()
+    items: Optional[OptionalHref] = OptionalHref()
+    updates: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureLockerBanks(
     AppBaseModel,
 ):
-    locker_banks: Optional[HrefMixin] = None
+    locker_banks: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureMacros(
     AppBaseModel,
 ):
-    macros: Optional[HrefMixin] = None
+    macros: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureOperatorGroups(
     AppBaseModel,
 ):
-    operator_groups: Optional[HrefMixin] = None
+    operator_groups: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureOutputs(
     AppBaseModel,
 ):
-    outputs: Optional[HrefMixin] = None
+    outputs: Optional[OptionalHref] = OptionalHref()
 
 
 class FeaturePersonalDataFields(
     AppBaseModel,
 ):
-    personal_data_fields: Optional[HrefMixin] = None
+    personal_data_fields: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureReceptions(
     AppBaseModel,
 ):
-    receptions: Optional[HrefMixin] = None
+    receptions: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureRoles(
     AppBaseModel,
 ):
-    roles: Optional[HrefMixin] = None
+    roles: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureSchedules(
     AppBaseModel,
 ):
-    schedules: Optional[HrefMixin] = None
+    schedules: Optional[OptionalHref] = OptionalHref()
 
 
 class FeatureVisits(
     AppBaseModel,
 ):
-    visits: Optional[HrefMixin] = None
+    visits: Optional[OptionalHref] = OptionalHref()
 
 
 class FeaturesDetail(

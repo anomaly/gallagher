@@ -25,7 +25,7 @@ class Division(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.divisions.divisions.href,
+            endpoint=Capabilities.CURRENT.features.divisions.divisions,
             dto_list=DivisionDetailResponse,
             dto_retrieve=DivisionDetail,
         )

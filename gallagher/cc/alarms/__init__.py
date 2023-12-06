@@ -24,7 +24,7 @@ class Alarms(
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.alarms.alarms.href,
+            endpoint=Capabilities.CURRENT.features.alarms.alarms,
             dto_list=AlarmResponse,
             dto_retrieve=AlarmZoneSummary,
         )

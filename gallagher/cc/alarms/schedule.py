@@ -20,6 +20,6 @@ class Schedule(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.schedules.schedules.href,
+            endpoint=Capabilities.CURRENT.features.schedules.schedules,
             dto_list=ScheduleSummaryResponse,
         )

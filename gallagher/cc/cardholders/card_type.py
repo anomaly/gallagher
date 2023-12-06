@@ -23,7 +23,7 @@ class CardType(APIEndpoint):
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.card_types.card_types.href,
+            endpoint=Capabilities.CURRENT.features.card_types.card_types,
             dto_list=CardTypeResponse,
             dto_retrieve=CardTypeResponse,
         )

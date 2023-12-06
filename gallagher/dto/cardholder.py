@@ -33,6 +33,16 @@ class CardholderSummary(
     description: Optional[str] = None
     authorised: bool
 
+    def cli_repr(self):
+        return [
+            self.first_name,
+            self.last_name,
+            "yes" if self.authorised else "no"
+        ]
+
+    def __str__(self):
+        return f"{self.id} {self.first_name} {self.last_name}"
+
 
 class CardholderDetail(
     CardholderSummary
@@ -63,3 +73,18 @@ class CardholderSummaryResponse(
 
     """
     results: list[CardholderSummary]
+
+    @property
+    def cli_header(self):
+        return [
+            "First name",
+            "Last name",
+            "Authorised"
+        ]
+
+    @property
+    def cli_repr(self):
+        return [x.cli_repr() for x in self.results]
+
+    def __str__(self):
+        return f"{len(self.results)} cardholders"

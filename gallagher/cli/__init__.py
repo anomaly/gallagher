@@ -15,14 +15,6 @@ app.add_typer(alarms_app, name="alarms")
 app.add_typer(cardholders_app, name="ch")
 
 
-@app.command()
-def echo(name: str):
-    """
-
-    """
-    typer.echo("Hello World")
-
-
 if __name__ == "__main__":
     """ In case you are invoking this via Python directly
 

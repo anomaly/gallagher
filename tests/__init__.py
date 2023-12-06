@@ -5,6 +5,7 @@
 
 """
 
+
 def setup_module(module):
     """ The Gallagher API client requires a test key, this is 
     set in the environment variable GACC_API_KEY.
@@ -14,7 +15,7 @@ def setup_module(module):
     """
     import os
     api_key = os.environ.get("GACC_API_KEY")
-    
+
     from gallagher import cc
     cc.api_key = api_key
 

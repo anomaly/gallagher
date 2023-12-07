@@ -35,6 +35,7 @@ class CardholderSummary(
 
     def cli_repr(self):
         return [
+            self.id,
             self.first_name,
             self.last_name,
             "yes" if self.authorised else "no"
@@ -77,6 +78,7 @@ class CardholderSummaryResponse(
     @property
     def cli_header(self):
         return [
+            "Id",
             "First name",
             "Last name",
             "Authorised"

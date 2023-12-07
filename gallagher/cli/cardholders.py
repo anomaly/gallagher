@@ -2,6 +2,7 @@
 
 """
 import typer
+from rich import print as rprint
 from rich.console import Console
 from rich.table import Table
 
@@ -14,12 +15,6 @@ app = typer.Typer(help="query or manage cardholders")
 def summary():
     """ list all cardholders
     """
-    import os
-    api_key = os.environ.get("GACC_API_KEY")
-
-    from gallagher import cc
-    cc.api_key = api_key
-
     cardholders = Cardholder.list()
 
     table = Table(title="Cardholders")
@@ -37,4 +32,5 @@ def summary():
 def get(id: int):
     """ get a cardholder by id
     """
-    typer.echo(f"Getting cardholder {id}")
+    cardholder = Cardholder.retrieve(id)
+    rprint(cardholder.__dict__)

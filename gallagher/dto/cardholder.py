@@ -33,7 +33,7 @@ class CardholderSummary(
     description: Optional[str] = None
     authorised: bool
 
-    def cli_repr(self):
+    def __rich_repr__(self):
         return [
             self.id,
             self.first_name,
@@ -64,6 +64,21 @@ class CardholderDetail(
     user_extended_access_time: bool = False
     windows_login_enabled: bool = False
 
+    def __rich_repr__(self):
+        return [
+            f"[blue bold] person",
+            f"{'id':>20} {self.id}",
+            f"{'first_name':>20} {self.first_name}",
+            f"{'last_name':>20} {self.last_name}",
+            f"{'short_name':>20} {self.short_name}",
+            f"{'description':>20} {self.description}",
+            f"{'authorised':>20} {'yes' if self.authorised else 'no'}",
+            f"",
+            f"{'disable_cipher_pad':>20} {'yes' if self.disable_cipher_pad else 'no'}",
+            f"{'division':>20} {self.division.id}",
+            f"",
+        ]
+
 
 class CardholderSummaryResponse(
     AppBaseModel
@@ -84,9 +99,8 @@ class CardholderSummaryResponse(
             "Authorised"
         ]
 
-    @property
-    def cli_repr(self):
-        return [x.cli_repr() for x in self.results]
+    def __rich_repr__(self):
+        return [r.__rich_repr__() for r in self.results]
 
     def __str__(self):
         return f"{len(self.results)} cardholders"

@@ -5,8 +5,13 @@ authenticates at a device, usually by badging a card.
 """
 
 from ..core import (
+    Capabilities,
     APIEndpoint,
     EndpointConfig
+)
+
+from ...dto.event import (
+    EventTypeResponse
 )
 
 
@@ -23,4 +28,19 @@ class Event(
             endpoint="events",
             dto_list=EventResponse,
             dto_retrieve=EventDetail,
+        )
+
+
+class EventType(
+    APIEndpoint
+):
+    """
+
+    """
+
+    @classmethod
+    def get_config(cls):
+        return EndpointConfig(
+            endpoint=Capabilities.CURRENT.features.events.event_groups,
+            dto_list=EventTypeResponse,
         )

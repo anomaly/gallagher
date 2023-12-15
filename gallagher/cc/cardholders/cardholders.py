@@ -28,3 +28,7 @@ class Cardholder(APIEndpoint):
             dto_list=CardholderSummaryResponse,
             dto_retrieve=CardholderDetail,
         )
+
+    @classmethod
+    def search(cls, name: str, sort: str = "id", top: int = 100):
+        pass

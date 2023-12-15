@@ -256,22 +256,53 @@ class APIEndpoint:
         """
 
         """
-        pass
+        cls._discover()
 
     @classmethod
     def delete(cls):
         """
 
         """
-        pass
+        cls._discover()
 
     @classmethod
-    def search(cls, **kwargs):
-        """ Search
+    def search(cls,
+               top: int = 100,
+               sort: str = 'id',
+               fields: str = 'defaults',
+               **kwargs
+               ):
+        """ Search wrapper for most objects to dynamically search content
+
+        Each object has a set of fields that you can query for, most searches
+        also allow you to search for a partial string.
+
+        :param int top: Number of results to return
+        :param str sort: Sort order, can be set to id or -id
+        :param str fields: List of fields to return
+        :param kwargs: Fields to search for
 
         """
-        pass
+        cls._discover()
 
-    @classmethod
-    def updates(cls):
-        pass
+        params = {
+            'top': top,
+            'sort': sort,
+            'fields': fields,
+        }
+
+        # Adds arbitrary fields to the search, these will be different
+        # for each type of object that calls the base function
+        params.update(kwargs)
+
+        response = httpx.get(
+            f'{cls.__config__.endpoint.href}',
+            params=params,
+            headers=get_authorization_headers(),
+        )
+
+        parsed_obj = cls.__config__.dto_list.model_validate(
+            response.json()
+        )
+
+        return parsed_obj

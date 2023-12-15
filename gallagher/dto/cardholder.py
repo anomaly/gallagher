@@ -48,7 +48,11 @@ class CardholderSummary(
 class CardholderDetail(
     CardholderSummary
 ):
-    """
+    """ Displays a table of cardholders
+
+    Gallagher command centre offers a summary of all the cardholders
+    provisioned on the system. This command presents a summary table
+    with the aim of using the identifier to get detailed information.
 
     """
     disable_cipher_pad: bool = False
@@ -76,7 +80,8 @@ class CardholderDetail(
             f"",
             f"{'disable_cipher_pad':>20} {'yes' if self.disable_cipher_pad else 'no'}",
             f"{'division':>20} {self.division.id}",
-            f"",
+            f"[blue bold] hrefs",
+            f"{'edit':>20} [link={self.edit.href}]edit[/link]",
         ]
 
 

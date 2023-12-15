@@ -10,7 +10,7 @@ from .utils import (
     IdentityMixin,
 )
 
-from .event import EventType
+from .event import EventTypeSummary
 
 
 class AlarmSource(
@@ -47,7 +47,7 @@ class AlarmZoneSummary(
     message: str
     source: AlarmSource
     type: str
-    event_type: Optional[EventType] = None
+    event_type: Optional[EventTypeSummary] = None
     priority: int
     state: str
     active: bool

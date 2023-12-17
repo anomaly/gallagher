@@ -17,7 +17,7 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Event summary
 - [ ] Event detail
 - [ ] Event POST body
-- [ ] Event groups
+- [x] Event groups
 - [x] Divisions
 - [x] Division
 - [ ] Division PATCH and POST example
@@ -63,7 +63,7 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Competency summary
 - [ ] Competency detail
 - [ ] Card type search
-- [ ] Card type
+- [x] Card type
 - [ ] Operator group search
 - [ ] Operator group summary
 - [ ] Operator group detail

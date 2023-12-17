@@ -11,21 +11,21 @@ from ..core import (
 )
 
 from ...dto.event import (
-    EventTypeResponse
+    EventTypeResponse,
 )
 
 
 class Event(
     APIEndpoint
 ):
-    """
+    """ Event 
 
     """
 
     @classmethod
     def get_config(cls):
         return EndpointConfig(
-            endpoint="events",
+            endpoint=Capabilities.CURRENT.features.events.events,
             dto_list=EventResponse,
             dto_retrieve=EventDetail,
         )
@@ -34,7 +34,7 @@ class Event(
 class EventType(
     APIEndpoint
 ):
-    """
+    """ EventType
 
     """
 

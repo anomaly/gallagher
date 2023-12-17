@@ -14,6 +14,15 @@ from .utils import (
 from .division import DivisionRef
 
 
+class ItemRef(
+    AppBaseModel,
+    HrefMixin
+):
+    """ Reference to an ItemType
+    """
+    name: str
+
+
 class ItemTypeDetail(
     AppBaseModel,
 ):
@@ -25,15 +34,6 @@ class ItemTypeDetail(
     id: str
     name: str
     canonical_type_name: str
-
-
-class ItemRef(
-    AppBaseModel,
-    HrefMixin
-):
-    """ Reference to an ItemType
-    """
-    name: str
 
 
 class ItemSummary(

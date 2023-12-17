@@ -10,6 +10,16 @@ from .utils import (
 )
 
 
+class DoorRef(
+    AppBaseModel,
+    HrefMixin
+):
+    """ Door 
+
+    """
+    name: str
+
+
 class DoorSummary(
     AppBaseModel,
     IdentityMixin,

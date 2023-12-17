@@ -15,6 +15,15 @@ from .division import (
 )
 
 
+class CardholderRef(
+    AppBaseModel,
+    HrefMixin,
+):
+    """ Reference to a Cardholder
+    """
+    name: str
+
+
 class CardholderSummary(
     AppBaseModel,
     IdentityMixin

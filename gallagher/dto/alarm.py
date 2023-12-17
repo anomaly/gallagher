@@ -13,6 +13,15 @@ from .utils import (
 from .event import EventTypeSummary
 
 
+class AlarmRef(
+    AppBaseModel,
+    HrefMixin
+):
+    """ AlarmRef represents a single alarm
+    """
+    state: str
+
+
 class AlarmSource(
     AppBaseModel,
     HrefMixin,

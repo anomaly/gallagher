@@ -45,7 +45,7 @@ class DivisionDetail(
 class DivisionDetailResponse(
     AppBaseModel
 ):
-    """
+    """ Division
 
     """
 

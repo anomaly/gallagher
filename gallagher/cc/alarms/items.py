@@ -22,7 +22,7 @@ class ItemsTypes(APIEndpoint):
     """
 
     @classmethod
-    def get_config(cls):
+    async def get_config(cls):
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.items.item_types,
             dto_list=ItemTypesResponse,
@@ -39,7 +39,7 @@ class Item(APIEndpoint):
     """
 
     @classmethod
-    def get_config(cls):
+    async def get_config(cls):
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.items.items,
             dto_list=ItemsSummaryResponse,

@@ -3,18 +3,18 @@
 """
 
 
-def test_cardholder_list():
+async def test_cardholder_list():
 
     from gallagher.cc.cardholders.cardholders import Cardholder
     from gallagher.dto.cardholder import CardholderSummaryResponse
 
-    response = Cardholder.list()
+    response = await Cardholder.list()
     assert type(response) is CardholderSummaryResponse
     assert type(response.results) is list
     assert len(response.results) > 0
 
 
-def test_cardholder_detail():
+async def test_cardholder_detail():
 
     from gallagher.cc.cardholders.cardholders import Cardholder
     from gallagher.dto.cardholder import (
@@ -22,7 +22,7 @@ def test_cardholder_detail():
         CardholderDetail,
     )
 
-    response = Cardholder.list()
+    response = await Cardholder.list()
     assert type(response) is CardholderSummaryResponse
 
     for cardholder_summary in response.results:

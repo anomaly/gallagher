@@ -23,7 +23,7 @@ class Event(
     """
 
     @classmethod
-    def get_config(cls):
+    async def get_config(cls):
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.events.events,
             dto_list=EventResponse,
@@ -39,7 +39,7 @@ class EventType(
     """
 
     @classmethod
-    def get_config(cls):
+    async def get_config(cls):
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.events.event_groups,
             dto_list=EventTypeResponse,

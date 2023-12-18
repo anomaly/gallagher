@@ -27,7 +27,7 @@ from ..dto.discover import (
 )
 
 
-async def check_api_key_format(api_key):
+def check_api_key_format(api_key):
     """ Validates that the Gallagher Key is in the right format.
 
     It's not possible for the API client to validate the key against
@@ -38,7 +38,7 @@ async def check_api_key_format(api_key):
     return (api_tokens.count() == 8)
 
 
-async def get_authorization_headers():
+def get_authorization_headers():
     """ Creates an authorization header for Gallagher API calls
 
     The server expects an Authorization header with GGL-API-KEY
@@ -120,13 +120,6 @@ class Capabilities:
     )
 
 
-# Async client for making requests to the Gallagher API
-# see documentation where httpx suggests we use the same
-# object across requests
-# https://www.python-httpx.org/async/#opening-and-closing-clients
-_httpx_async = httpx.AsyncClient()
-
-
 class APIEndpoint:
     """ Base class for all API objects
 
@@ -182,11 +175,13 @@ class APIEndpoint:
         # Auto-discovery of the API endpoints, this will
         # be called as part of the bootstrapping process
         from . import api_base
-        async with _httpx_async:
+        async with httpx.AsyncClient() as _httpx_async:
             response = await _httpx_async.get(
                 api_base,
                 headers=get_authorization_headers(),
             )
+
+            await _httpx_async.aclose()
 
             parsed_obj = DiscoveryResponse.model_validate(
                 response.json()
@@ -220,12 +215,14 @@ class APIEndpoint:
         """
         await cls._discover()
 
-        async with _httpx_async:
+        async with httpx.AsyncClient() as _httpx_async:
 
             response = await _httpx_async.get(
                 f'{cls.__config__.endpoint.href}',
                 headers=get_authorization_headers(),
             )
+
+            await _httpx_async.aclose()
 
             parsed_obj = cls.__config__.dto_list.model_validate(
                 response.json()
@@ -243,12 +240,14 @@ class APIEndpoint:
         """
         await cls._discover()
 
-        async with _httpx_async:
+        async with httpx.AsyncClient() as _httpx_async:
 
             response = await _httpx_async.get(
                 f'{cls.__config__.endpoint.href}/{id}',
                 headers=get_authorization_headers(),
             )
+
+            await _httpx_async.aclose()
 
             parsed_obj = cls.__config__.dto_retrieve.model_validate(
                 response.json()
@@ -307,13 +306,15 @@ class APIEndpoint:
         # for each type of object that calls the base function
         params.update(kwargs)
 
-        async with _httpx_async:
+        async with httpx.AsyncClient() as _httpx_async:
 
             response = await _httpx_async.get(
                 f'{cls.__config__.endpoint.href}',
                 params=params,
                 headers=get_authorization_headers(),
             )
+
+            await _httpx_async.aclose()
 
             parsed_obj = cls.__config__.dto_list.model_validate(
                 response.json()

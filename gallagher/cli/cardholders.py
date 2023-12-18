@@ -1,14 +1,17 @@
 """ Cardholder cli commands mounted at ch
 
 """
-import typer
 from rich import print as rprint
 from rich.console import Console
 from rich.table import Table
 
-from gallagher.cc.cardholders.cardholders import Cardholder
+from .utils import AsyncTyper
 
-app = typer.Typer(help="query or manage cardholders")
+from gallagher.cc.cardholders.cardholders import (
+    Cardholder
+)
+
+app = AsyncTyper(help="query or manage cardholders")
 
 
 @app.command("list")
@@ -20,7 +23,7 @@ async def list():
         "[bold green]Fetching cardholders...",
         spinner="clock"
     ):
-        cardholders = Cardholder.list()
+        cardholders = await Cardholder.list()
 
         table = Table(title="Cardholders")
         for header in cardholders.cli_header:
@@ -36,5 +39,5 @@ async def list():
 async def get(id: int):
     """ get a cardholder by id
     """
-    cardholder = Cardholder.retrieve(id)
+    cardholder = await Cardholder.retrieve(id)
     [rprint(r) for r in cardholder.__rich_repr__()]

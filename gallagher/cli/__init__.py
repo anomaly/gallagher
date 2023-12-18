@@ -1,16 +1,16 @@
-"""
+""" CLI entry point
 
 
 """
-import typer
-
 from gallagher import __version__
+
+from .utils import AsyncTyper
 
 from .alarms import app as alarms_app
 from .cardholders import app as cardholders_app
 
 # Main Typer app use to create the CLI
-app = typer.Typer()
+app = AsyncTyper()
 app.add_typer(alarms_app, name="alarms")
 app.add_typer(cardholders_app, name="ch")
 

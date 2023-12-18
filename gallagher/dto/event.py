@@ -9,10 +9,10 @@ from .utils import (
     IdentityMixin,
 )
 
-from ..dto.alarm import AlarmRef
-from ..dto.cardholder import CardholderRef
-from ..dto.access_group import AccessGroupRef
-from ..dto.door import DoorRef
+# from ..dto.alarm import AlarmRef
+# from ..dto.cardholder import CardholderRef
+# from ..dto.access_group import AccessGroupRef
+# from ..dto.door import DoorRef
 
 
 class EventTypeSummary(
@@ -69,21 +69,21 @@ class EventSummaryResponse(
     message: Optional[str]
     occurrences: int
     priority: int
-    alarm: AlarmRef
+    # alarm: AlarmRef
 
-    operator: CardholderRef
-    source: str
-    group: str
-    type: str
-    event_type: EventTypeSummary
-    division: str
-    cardholder: str
-    entry_access_zone: str
-    exit_access_zone: str
-    door: DoorRef
-    access_group: HrefMixin
-    card: str
-    modified_item: str
+    # operator: CardholderRef
+    # source: str
+    # group: str
+    # type: str
+    # event_type: EventTypeSummary
+    # division: str
+    # cardholder: str
+    # entry_access_zone: str
+    # exit_access_zone: str
+    # door: DoorRef
+    # access_group: HrefMixin
+    # card: str
+    # modified_item: str
 
     next: HrefMixin
     previous: HrefMixin

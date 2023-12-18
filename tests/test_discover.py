@@ -3,7 +3,7 @@
 """
 
 
-def test_discover():
+async def test_discover():
     """
 
     """

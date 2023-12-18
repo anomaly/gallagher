@@ -9,6 +9,8 @@
   Refer to pytest.ini for configuration
   https://pytest-asyncio.readthedocs.io/en/latest/reference/markers/index.html
 
+  TODO: check if setup and teardown can be turned into async
+
 """
 
 

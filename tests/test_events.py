@@ -1,10 +1,10 @@
 
 
-def test_event_types():
+async def test_event_types():
     from gallagher.cc.alarms.events import EventType
     from gallagher.dto.event import (
         EventTypeResponse,
     )
 
-    response = EventType.list()
+    response = await EventType.list()
     assert type(response) is EventTypeResponse

@@ -22,7 +22,7 @@ class Cardholder(APIEndpoint):
     """
 
     @classmethod
-    def get_config(cls):
+    async def get_config(cls):
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.cardholders.cardholders,
             dto_list=CardholderSummaryResponse,
@@ -30,5 +30,5 @@ class Cardholder(APIEndpoint):
         )
 
     @classmethod
-    def search(cls, name: str, sort: str = "id", top: int = 100):
+    async def search(cls, name: str, sort: str = "id", top: int = 100):
         pass

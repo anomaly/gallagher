@@ -50,7 +50,7 @@ class CardholderSummary(
             "yes" if self.authorised else "no"
         ]
 
-    def __str__(self):
+    async def __str__(self):
         return f"{self.id} {self.first_name} {self.last_name}"
 
 

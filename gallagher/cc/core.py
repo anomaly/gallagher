@@ -27,7 +27,7 @@ from ..dto.discover import (
 )
 
 
-def check_api_key_format(api_key):
+async def check_api_key_format(api_key):
     """ Validates that the Gallagher Key is in the right format.
 
     It's not possible for the API client to validate the key against
@@ -38,7 +38,7 @@ def check_api_key_format(api_key):
     return (api_tokens.count() == 8)
 
 
-def get_authorization_headers():
+async def get_authorization_headers():
     """ Creates an authorization header for Gallagher API calls
 
     The server expects an Authorization header with GGL-API-KEY
@@ -88,7 +88,7 @@ class EndpointConfig:
     # fields: list[str] = []  # Optional list of fields
 
     @classmethod
-    def validate_endpoint(cls):
+    async def validate_endpoint(cls):
         """ Check to see if the feature is licensed and available
 
         Gallagher REST API is licensed per feature, if a feature is not
@@ -120,6 +120,13 @@ class Capabilities:
     )
 
 
+# Async client for making requests to the Gallagher API
+# see documentation where httpx suggests we use the same
+# object across requests
+# https://www.python-httpx.org/async/#opening-and-closing-clients
+_httpx_async = httpx.AsyncClient()
+
+
 class APIEndpoint:
     """ Base class for all API objects
 
@@ -136,7 +143,7 @@ class APIEndpoint:
     __config__ = None
 
     @classmethod
-    def get_config(cls):
+    async def get_config(cls):
         """ Returns the configuration for the endpoint
 
         This method can be overridden by the child class to
@@ -145,7 +152,7 @@ class APIEndpoint:
         return None
 
     @classmethod
-    def _discover(cls):
+    async def _discover(cls):
         """ The Command Centre root API endpoint 
 
         Much of Gallagher's API documentation suggests that we don't
@@ -175,103 +182,108 @@ class APIEndpoint:
         # Auto-discovery of the API endpoints, this will
         # be called as part of the bootstrapping process
         from . import api_base
-        response = httpx.get(
-            api_base,
-            headers=get_authorization_headers(),
-        )
+        async with _httpx_async:
+            response = await _httpx_async.get(
+                api_base,
+                headers=get_authorization_headers(),
+            )
 
-        parsed_obj = DiscoveryResponse.model_validate(
-            response.json()
-        )
+            parsed_obj = DiscoveryResponse.model_validate(
+                response.json()
+            )
 
-        # Assign the capabilities to the class, this should
-        # result in the endpoint
-        #
-        # With the refactored initialisation of the pydantic
-        # models, the values for the unavailable endpoints
-        # should be set to None
-        Capabilities.CURRENT = parsed_obj
+            # Assign the capabilities to the class, this should
+            # result in the endpoint
+            #
+            # With the refactored initialisation of the pydantic
+            # models, the values for the unavailable endpoints
+            # should be set to None
+            Capabilities.CURRENT = parsed_obj
 
-        # Set this so the configuration is only discovered
-        # once per endpoint
-        #
-        # If we assign the __config__ variable in the class
-        # that inherits from this class, the instance of EndpointConfig
-        # will copy the None values from the Capabilities.CURRENT
-        # object, this primarily because Capabilities.CURRENT is
-        # an instance of a pyndatic object and all values are thus
-        # copied not referenced.
-        cls.__config__ = cls.get_config()
+            # Set this so the configuration is only discovered
+            # once per endpoint
+            #
+            # If we assign the __config__ variable in the class
+            # that inherits from this class, the instance of EndpointConfig
+            # will copy the None values from the Capabilities.CURRENT
+            # object, this primarily because Capabilities.CURRENT is
+            # an instance of a pyndatic object and all values are thus
+            # copied not referenced.
+            cls.__config__ = await cls.get_config()
 
     @classmethod
-    def list(cls, skip=0):
+    async def list(cls, skip=0):
         """ For a list of objects for the given resource
 
         Most resources can be searched which is exposed by this method.
         Resources also allow pagination which can be controlled by the skip
         """
-        cls._discover()
+        await cls._discover()
 
-        response = httpx.get(
-            f'{cls.__config__.endpoint.href}',
-            headers=get_authorization_headers(),
-        )
+        async with _httpx_async:
 
-        parsed_obj = cls.__config__.dto_list.model_validate(
-            response.json()
-        )
+            response = await _httpx_async.get(
+                f'{cls.__config__.endpoint.href}',
+                headers=get_authorization_headers(),
+            )
 
-        return parsed_obj
+            parsed_obj = cls.__config__.dto_list.model_validate(
+                response.json()
+            )
+
+            return parsed_obj
 
     @classmethod
-    def retrieve(cls, id):
+    async def retrieve(cls, id):
         """ Retrieve a single object for the given resource
 
         Most objects have an ID which is numeral or UUID. 
         Each resource also provides a href and pagination for
         children.
         """
-        cls._discover()
+        await cls._discover()
 
-        response = httpx.get(
-            f'{cls.__config__.endpoint.href}/{id}',
-            headers=get_authorization_headers(),
-        )
+        async with _httpx_async:
 
-        parsed_obj = cls.__config__.dto_retrieve.model_validate(
-            response.json()
-        )
+            response = await _httpx_async.get(
+                f'{cls.__config__.endpoint.href}/{id}',
+                headers=get_authorization_headers(),
+            )
 
-        return parsed_obj
+            parsed_obj = cls.__config__.dto_retrieve.model_validate(
+                response.json()
+            )
+
+            return parsed_obj
 
     @classmethod
-    def modify(cls):
+    async def modify(cls):
         """
 
         """
         pass
 
     @classmethod
-    def create(cls, **params):
+    async def create(cls, **params):
         """
 
         """
         cls._discover()
 
     @classmethod
-    def delete(cls):
+    async def delete(cls):
         """
 
         """
         cls._discover()
 
     @classmethod
-    def search(cls,
-               top: int = 100,
-               sort: str = 'id',
-               fields: str = 'defaults',
-               **kwargs
-               ):
+    async def search(cls,
+                     top: int = 100,
+                     sort: str = 'id',
+                     fields: str = 'defaults',
+                     **kwargs
+                     ):
         """ Search wrapper for most objects to dynamically search content
 
         Each object has a set of fields that you can query for, most searches
@@ -283,7 +295,7 @@ class APIEndpoint:
         :param kwargs: Fields to search for
 
         """
-        cls._discover()
+        await cls._discover()
 
         params = {
             'top': top,
@@ -295,14 +307,16 @@ class APIEndpoint:
         # for each type of object that calls the base function
         params.update(kwargs)
 
-        response = httpx.get(
-            f'{cls.__config__.endpoint.href}',
-            params=params,
-            headers=get_authorization_headers(),
-        )
+        async with _httpx_async:
 
-        parsed_obj = cls.__config__.dto_list.model_validate(
-            response.json()
-        )
+            response = await _httpx_async.get(
+                f'{cls.__config__.endpoint.href}',
+                params=params,
+                headers=get_authorization_headers(),
+            )
 
-        return parsed_obj
+            parsed_obj = cls.__config__.dto_list.model_validate(
+                response.json()
+            )
+
+            return parsed_obj

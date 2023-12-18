@@ -262,7 +262,7 @@ class DiscoveryResponse(
                         ] = FeaturesDetail()
 
     @property
-    def get_sem_ver(self):
+    async def get_sem_ver(self):
         """ Get a SemVer tuple from the version string
         """
         return self.version.split(".")

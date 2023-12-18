@@ -18,7 +18,7 @@ class Schedule(APIEndpoint):
     """
 
     @classmethod
-    def get_config(cls):
+    async def get_config(cls):
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.schedules.schedules,
             dto_list=ScheduleSummaryResponse,

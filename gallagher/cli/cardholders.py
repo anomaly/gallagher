@@ -12,7 +12,7 @@ app = typer.Typer(help="query or manage cardholders")
 
 
 @app.command("list")
-def list():
+async def list():
     """ list all cardholders
     """
     console = Console()
@@ -33,7 +33,7 @@ def list():
 
 
 @app.command("get")
-def get(id: int):
+async def get(id: int):
     """ get a cardholder by id
     """
     cardholder = Cardholder.retrieve(id)

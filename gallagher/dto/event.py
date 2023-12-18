@@ -9,7 +9,7 @@ from .utils import (
     IdentityMixin,
 )
 
-from ..dto.alarm import AlarmRef
+# from ..dto.alarm import AlarmRef
 from ..dto.cardholder import CardholderRef
 from ..dto.access_group import AccessGroupRef
 from ..dto.door import DoorRef
@@ -69,7 +69,7 @@ class EventSummaryResponse(
     message: Optional[str]
     occurrences: int
     priority: int
-    alarm: AlarmRef
+    # alarm: AlarmRef
 
     operator: CardholderRef
     source: str

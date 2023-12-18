@@ -27,6 +27,8 @@ async def test_cardholder_detail():
 
     for cardholder_summary in response.results:
         # Get the detail of the cardholder for comparison
-        cardholder_detail_response = Cardholder.retrieve(cardholder_summary.id)
+        cardholder_detail_response = await Cardholder.retrieve(
+            cardholder_summary.id
+        )
         assert type(cardholder_detail_response) is CardholderDetail
         assert (cardholder_detail_response.id == cardholder_summary.id)

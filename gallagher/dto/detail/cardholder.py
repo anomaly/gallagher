@@ -7,7 +7,7 @@ from .utils import (
     HrefMixin,
 )
 
-from .division import (
+from ..ref import (
     DivisionRef,
 )
 

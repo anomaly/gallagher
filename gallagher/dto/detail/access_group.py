@@ -18,7 +18,7 @@ from division import (
     DivisionDetail
 )
 
-from ..ref.pdf import (
+from ..ref import (
     PDFRef
 )
 

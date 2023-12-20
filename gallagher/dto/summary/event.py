@@ -6,9 +6,14 @@ from ..utils import (
     IdentityMixin,
 )
 
-from ..summary import (
-    EventTypeSummary
-)
+
+class EventTypeSummary(
+    AppBaseModel,
+    IdentityMixin,
+):
+    """ An event type has identifiers and names
+    """
+    name: str
 
 
 class EventSummary(

@@ -1,4 +1,4 @@
-from .utils import (
+from ..utils import (
     AppBaseModel,
     IdentityMixin
 )
@@ -7,9 +7,8 @@ from ..ref import (
     AccessGroupRef
 )
 
-from ..summary import (
+from .access_group import (
     AccessGroupSummary,
-    VisitorTypeSummary,
 )
 
 

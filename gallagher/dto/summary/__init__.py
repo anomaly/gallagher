@@ -32,6 +32,7 @@ from .door import (
 from .event import (
     EventSummary,
     EventGroupSummary,
+    EventTypeSummary,
 )
 
 from .items import (

@@ -2,7 +2,7 @@ from ..utils import (
     AppBaseModel,
 )
 
-from ..ref import (
+from ..summary import (
     ScheduleSummary
 )
 

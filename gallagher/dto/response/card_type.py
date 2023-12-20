@@ -6,7 +6,7 @@ from ..utils import (
 )
 
 from ..detail import (
-    CardTypeDEtail
+    CardTypeDetail
 )
 
 

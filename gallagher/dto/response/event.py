@@ -6,6 +6,10 @@ from ..utils import (
     IdentityMixin,
 )
 
+from ..summary import (
+    EventGroupSummary,
+)
+
 
 class EventSummaryResponse(
     AppBaseModel,

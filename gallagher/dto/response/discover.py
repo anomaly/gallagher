@@ -6,6 +6,10 @@ from ..utils import (
     AppBaseModel,
 )
 
+from ..detail import (
+    FeaturesDetail,
+)
+
 
 class DiscoveryResponse(
     AppBaseModel,

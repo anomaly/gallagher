@@ -3,12 +3,14 @@ from typing import Optional
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
+    HrefMixin,
 )
 
 
 class CardholderSummary(
     AppBaseModel,
-    IdentityMixin
+    IdentityMixin,
+    HrefMixin,
 ):
     """
     The cardholder search at /api/cardholders returns an array of these. 

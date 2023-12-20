@@ -10,11 +10,14 @@ from ..ref import (
     AlarmRef,
     CardholderRef,
     DoorRef,
+    AccessZoneRef,
+    DivisionRef,
 )
 
 from ..summary import (
     EventGroupSummary,
     EventTypeSummary,
+    CardholderSummary,
 )
 
 
@@ -34,13 +37,13 @@ class EventSummaryResponse(
 
     operator: CardholderRef
     source: str
-    group: str
-    type: str
+    group: EventGroupSummary
+    type: EventTypeSummary
     event_type: EventTypeSummary
-    division: str
-    cardholder: str
-    entry_access_zone: str
-    exit_access_zone: str
+    division: DivisionRef
+    cardholder: CardholderSummary
+    entry_access_zone: AccessZoneRef
+    exit_access_zone: AccessZoneRef
     door: DoorRef
     access_group: HrefMixin
     card: str

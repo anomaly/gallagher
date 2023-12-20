@@ -57,6 +57,10 @@ from .discover import (
     FeatureVisitsRef,
 )
 
+from .division import (
+    DivisionRef,
+)
+
 from .door import (
     DoorRef,
 )

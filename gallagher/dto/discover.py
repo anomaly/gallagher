@@ -15,25 +15,25 @@ from .utils import (
 )
 
 
-class FeatureAccessGroups(
+class FeatureAccessGroupsRef(
     AppBaseModel,
 ):
     access_groups: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureAccessZones(
+class FeatureAccessZonesRef(
     AppBaseModel,
 ):
     access_zones: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureAlarmZones(
+class FeatureAlarmZonesRef(
     AppBaseModel,
 ):
     alarm_zones: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureAlarms(
+class FeatureAlarmsRef(
     AppBaseModel,
 ):
     alarms: Optional[OptionalHref] = OptionalHref()
@@ -41,14 +41,14 @@ class FeatureAlarms(
     updates: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureCardTypes(
+class FeatureCardTypesRef(
     AppBaseModel,
 ):
     assign: Optional[OptionalHref] = OptionalHref()
     card_types: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureCardholders(
+class FeatureCardholdersRef(
     AppBaseModel,
 ):
     cardholders: Optional[OptionalHref] = OptionalHref()
@@ -56,37 +56,37 @@ class FeatureCardholders(
     update_location_access_zones: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureCompetencies(
+class FeatureCompetenciesRef(
     AppBaseModel,
 ):
     competencies: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureDayCategories(
+class FeatureDayCategoriesRef(
     AppBaseModel,
 ):
     day_categories: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureDivisions(
+class FeatureDivisionsRef(
     AppBaseModel,
 ):
     divisions: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureDoors(
+class FeatureDoorsRef(
     AppBaseModel,
 ):
     doors: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureElevators(
+class FeatureElevatorsRef(
     AppBaseModel,
 ):
     elevator_groups: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureEvents(
+class FeatureEventsRef(
     AppBaseModel,
 ):
     divisions: Optional[OptionalHref] = OptionalHref()
@@ -95,25 +95,25 @@ class FeatureEvents(
     updates: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureFenceZones(
+class FeatureFenceZonesRef(
     AppBaseModel,
 ):
     fence_zones: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureInputs(
+class FeatureInputsRef(
     AppBaseModel,
 ):
     inputs: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureInterlockGroups(
+class FeatureInterlockGroupsRef(
     AppBaseModel,
 ):
     interlock_groups: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureItems(
+class FeatureItemsRef(
     AppBaseModel,
 ):
     item_types: Optional[OptionalHref] = OptionalHref()
@@ -121,55 +121,55 @@ class FeatureItems(
     updates: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureLockerBanks(
+class FeatureLockerBanksRef(
     AppBaseModel,
 ):
     locker_banks: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureMacros(
+class FeatureMacrosRef(
     AppBaseModel,
 ):
     macros: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureOperatorGroups(
+class FeatureOperatorGroupsRef(
     AppBaseModel,
 ):
     operator_groups: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureOutputs(
+class FeatureOutputsRef(
     AppBaseModel,
 ):
     outputs: Optional[OptionalHref] = OptionalHref()
 
 
-class FeaturePersonalDataFields(
+class FeaturePersonalDataFieldsRef(
     AppBaseModel,
 ):
     personal_data_fields: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureReceptions(
+class FeatureReceptionsRef(
     AppBaseModel,
 ):
     receptions: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureRoles(
+class FeatureRolesRef(
     AppBaseModel,
 ):
     roles: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureSchedules(
+class FeatureSchedulesRef(
     AppBaseModel,
 ):
     schedules: Optional[OptionalHref] = OptionalHref()
 
 
-class FeatureVisits(
+class FeatureVisitsRef(
     AppBaseModel,
 ):
     visits: Optional[OptionalHref] = OptionalHref()
@@ -187,56 +187,56 @@ class FeaturesDetail(
 
     If a feature is unavailable the API client will throw an exception.
     """
-    access_groups: Optional[FeatureAccessGroups]\
-        = FeatureAccessGroups()
-    access_zones: Optional[FeatureAccessZones]\
-        = FeatureAccessZones()
-    alarm_zones: Optional[FeatureAlarmZones]\
-        = FeatureAlarmZones()
-    alarms: Optional[FeatureAlarms]\
-        = FeatureAlarms()
-    card_types: Optional[FeatureCardTypes]\
-        = FeatureCardTypes()
-    cardholders: Optional[FeatureCardholders]\
-        = FeatureCardholders()
-    competencies: Optional[FeatureCompetencies]\
-        = FeatureCompetencies()
-    day_categories: Optional[FeatureDayCategories]\
-        = FeatureDayCategories()
-    divisions: Optional[FeatureDivisions]\
-        = FeatureDivisions()
-    doors: Optional[FeatureDoors]\
-        = FeatureDoors()
-    elevators: Optional[FeatureElevators]\
-        = FeatureElevators()
-    events: Optional[FeatureEvents]\
-        = FeatureEvents()
-    fence_zones: Optional[FeatureFenceZones]\
-        = FeatureFenceZones()
-    inputs: Optional[FeatureInputs]\
-        = FeatureInputs()
-    interlock_groups: Optional[FeatureInterlockGroups]\
-        = FeatureInterlockGroups()
-    items: Optional[FeatureItems]\
-        = FeatureItems()
-    locker_banks: Optional[FeatureLockerBanks]\
-        = FeatureLockerBanks()
-    macros: Optional[FeatureMacros]\
-        = FeatureMacros()
-    operator_groups: Optional[FeatureOperatorGroups]\
-        = FeatureOperatorGroups()
-    outputs: Optional[FeatureOutputs]\
-        = FeatureOutputs()
-    personal_data_fields: Optional[FeaturePersonalDataFields]\
-        = FeaturePersonalDataFields()
-    receptions: Optional[FeatureReceptions]\
-        = FeatureReceptions()
-    roles: Optional[FeatureRoles]\
-        = FeatureRoles()
-    schedules: Optional[FeatureSchedules]\
-        = FeatureSchedules()
-    visits: Optional[FeatureVisits]\
-        = FeatureVisits()
+    access_groups: Optional[FeatureAccessGroupsRef]\
+        = FeatureAccessGroupsRef()
+    access_zones: Optional[FeatureAccessZonesRef]\
+        = FeatureAccessZonesRef()
+    alarm_zones: Optional[FeatureAlarmZonesRef]\
+        = FeatureAlarmZonesRef()
+    alarms: Optional[FeatureAlarmsRef]\
+        = FeatureAlarmsRef()
+    card_types: Optional[FeatureCardTypesRef]\
+        = FeatureCardTypesRef()
+    cardholders: Optional[FeatureCardholdersRef]\
+        = FeatureCardholdersRef()
+    competencies: Optional[FeatureCompetenciesRef]\
+        = FeatureCompetenciesRef()
+    day_categories: Optional[FeatureDayCategoriesRef]\
+        = FeatureDayCategoriesRef()
+    divisions: Optional[FeatureDivisionsRef]\
+        = FeatureDivisionsRef()
+    doors: Optional[FeatureDoorsRef]\
+        = FeatureDoorsRef()
+    elevators: Optional[FeatureElevatorsRef]\
+        = FeatureElevatorsRef()
+    events: Optional[FeatureEventsRef]\
+        = FeatureEventsRef()
+    fence_zones: Optional[FeatureFenceZonesRef]\
+        = FeatureFenceZonesRef()
+    inputs: Optional[FeatureInputsRef]\
+        = FeatureInputsRef()
+    interlock_groups: Optional[FeatureInterlockGroupsRef]\
+        = FeatureInterlockGroupsRef()
+    items: Optional[FeatureItemsRef]\
+        = FeatureItemsRef()
+    locker_banks: Optional[FeatureLockerBanksRef]\
+        = FeatureLockerBanksRef()
+    macros: Optional[FeatureMacrosRef]\
+        = FeatureMacrosRef()
+    operator_groups: Optional[FeatureOperatorGroupsRef]\
+        = FeatureOperatorGroupsRef()
+    outputs: Optional[FeatureOutputsRef]\
+        = FeatureOutputsRef()
+    personal_data_fields: Optional[FeaturePersonalDataFieldsRef]\
+        = FeaturePersonalDataFieldsRef()
+    receptions: Optional[FeatureReceptionsRef]\
+        = FeatureReceptionsRef()
+    roles: Optional[FeatureRolesRef]\
+        = FeatureRolesRef()
+    schedules: Optional[FeatureSchedulesRef]\
+        = FeatureSchedulesRef()
+    visits: Optional[FeatureVisitsRef]\
+        = FeatureVisitsRef()
 
 
 class DiscoveryResponse(

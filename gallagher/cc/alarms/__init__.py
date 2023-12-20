@@ -9,9 +9,12 @@ from ..core import (
     Capabilities
 )
 
-from ...dto.alarm import (
-    AlarmResponse,
+from ...dto.summary import (
     AlarmZoneSummary
+)
+
+from ...dto.response import (
+    AlarmResponse,
 )
 
 

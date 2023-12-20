@@ -24,10 +24,6 @@ from typing import Optional
 
 from ..const import URL
 
-from ..dto.discover import (
-    DiscoveryResponse,
-    FeaturesDetail,
-)
 
 # Follow the instructions in the Gallagher documentation
 # to obtain an API key

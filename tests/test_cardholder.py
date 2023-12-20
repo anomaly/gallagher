@@ -5,8 +5,12 @@
 
 async def test_cardholder_list():
 
-    from gallagher.cc.cardholders.cardholders import Cardholder
-    from gallagher.dto.cardholder import CardholderSummaryResponse
+    from gallagher.cc.cardholders.cardholders import (
+        Cardholder
+    )
+    from gallagher.dto.response import (
+        CardholderSummaryResponse
+    )
 
     response = await Cardholder.list()
     assert type(response) is CardholderSummaryResponse
@@ -16,10 +20,14 @@ async def test_cardholder_list():
 
 async def test_cardholder_detail():
 
-    from gallagher.cc.cardholders.cardholders import Cardholder
-    from gallagher.dto.cardholder import (
-        CardholderSummaryResponse,
+    from gallagher.cc.cardholders.cardholders import (
+        Cardholder
+    )
+    from gallagher.dto.detail import (
         CardholderDetail,
+    )
+    from gallagher.dto.response import (
+        CardholderSummaryResponse,
     )
 
     response = await Cardholder.list()

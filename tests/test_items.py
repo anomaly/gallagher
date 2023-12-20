@@ -9,8 +9,12 @@ async def test_items_types_list():
     these are a summary response
 
     """
-    from gallagher.cc.alarms.items import ItemsTypes
-    from gallagher.dto.items import ItemTypesResponse
+    from gallagher.cc.alarms.items import (
+        ItemsTypes
+    )
+    from gallagher.dto.response import (
+        ItemTypesResponse
+    )
 
     response = await ItemsTypes.list()
     assert type(response) is ItemTypesResponse
@@ -23,8 +27,12 @@ async def test_items_list():
     each one of these on it's own.
 
     """
-    from gallagher.cc.alarms.items import Item
-    from gallagher.dto.items import ItemsSummaryResponse
+    from gallagher.cc.alarms.items import (
+        Item
+    )
+    from gallagher.dto.response import (
+        ItemsSummaryResponse
+    )
 
     response = await Item.list()
     assert type(response) is ItemsSummaryResponse
@@ -36,10 +44,14 @@ async def test_item_detail():
     """ Get each item in the list and make sure it's a valid item
 
     """
-    from gallagher.cc.alarms.items import Item
-    from gallagher.dto.items import (
+    from gallagher.cc.alarms.items import (
+        Item
+    )
+    from gallagher.dto.summary import (
+        ItemSummary,
+    )
+    from gallagher.dto.response import (
         ItemsSummaryResponse,
-        ItemDetail
     )
 
     response: ItemsSummaryResponse = await Item.list()
@@ -48,5 +60,5 @@ async def test_item_detail():
     for item_summary in response.results:
         # Get the detail of the item
         item_detail_response = await Item.retrieve(item_summary.id)
-        assert type(item_detail_response) is ItemDetail
+        assert type(item_detail_response) is ItemSummary
         assert (item_detail_response.id == item_summary.id)

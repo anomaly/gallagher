@@ -9,9 +9,11 @@ async def test_discover():
     """
     from gallagher.cc.core import APIEndpoint
 
-    from gallagher.dto.discover import (
+    from gallagher.dto.detail import (
+        FeaturesDetail,
+    )
+    from gallagher.dto.response import (
         DiscoveryResponse,
-        FeaturesDetail
     )
 
     assert 1 == 1

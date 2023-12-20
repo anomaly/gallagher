@@ -9,8 +9,12 @@ async def test_alarms_list():
     these are a summary response
 
     """
-    from gallagher.cc.alarms import Alarms
-    from gallagher.dto.alarm import AlarmResponse
+    from gallagher.cc.alarms import (
+        Alarms
+    )
+    from gallagher.dto.response import (
+        AlarmResponse
+    )
 
     response = await Alarms.list()
     assert type(response) is AlarmResponse

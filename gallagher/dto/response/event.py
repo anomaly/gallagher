@@ -6,8 +6,15 @@ from ..utils import (
     IdentityMixin,
 )
 
+from ..ref import (
+    AlarmRef,
+    CardholderRef,
+    DoorRef,
+)
+
 from ..summary import (
     EventGroupSummary,
+    EventTypeSummary,
 )
 
 
@@ -23,21 +30,21 @@ class EventSummaryResponse(
     message: Optional[str]
     occurrences: int
     priority: int
-    # alarm: AlarmRef
+    alarm: AlarmRef
 
-    # operator: CardholderRef
-    # source: str
-    # group: str
-    # type: str
-    # event_type: EventTypeSummary
-    # division: str
-    # cardholder: str
-    # entry_access_zone: str
-    # exit_access_zone: str
-    # door: DoorRef
-    # access_group: HrefMixin
-    # card: str
-    # modified_item: str
+    operator: CardholderRef
+    source: str
+    group: str
+    type: str
+    event_type: EventTypeSummary
+    division: str
+    cardholder: str
+    entry_access_zone: str
+    exit_access_zone: str
+    door: DoorRef
+    access_group: HrefMixin
+    card: str
+    modified_item: str
 
     next: HrefMixin
     previous: HrefMixin

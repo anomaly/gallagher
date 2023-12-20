@@ -1,4 +1,4 @@
-from gallagher.dto.utils import (
+from ..utils import (
     AppBaseModel,
     IdentityMixin,
     HrefMixin

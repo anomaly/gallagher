@@ -1,5 +1,5 @@
 
-from gallagher.dto.utils import (
+from ..utils import (
     AppBaseModel,
     HrefMixin
 )

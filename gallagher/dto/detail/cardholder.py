@@ -1,7 +1,6 @@
 from typing import Optional
-from datetime import datetime
 
-from .utils import (
+from ..utils import (
     AppBaseModel,
     IdentityMixin,
     HrefMixin,

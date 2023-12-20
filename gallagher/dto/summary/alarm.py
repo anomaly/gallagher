@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .utils import (
+from ..utils import (
     AppBaseModel,
     HrefMixin,
     IdentityMixin,

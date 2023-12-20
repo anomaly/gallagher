@@ -7,7 +7,7 @@ from ..core import (
     EndpointConfig
 )
 
-from ...dto.card_type import (
+from ...dto.response import (
     CardTypeResponse
 )
 

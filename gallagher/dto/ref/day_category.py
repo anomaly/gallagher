@@ -3,7 +3,7 @@
 The calendar determines the days of the year that fall into a day category, 
 and the schedule determines what happens at certain times on those days.
 """
-from ..utils import (
+from gallagher.dto.utils import (
     AppBaseModel,
     HrefMixin
 )

@@ -2,7 +2,7 @@ from typing import (
     Optional
 )
 
-from ..utils import (
+from gallagher.dto.utils import (
     AppBaseModel,
 )
 

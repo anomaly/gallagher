@@ -1,10 +1,6 @@
-from ..utils import (
+from gallagher.dto.utils import (
     AppBaseModel,
     HrefMixin
-)
-
-from ..ref import (
-    ScheduleRef
 )
 
 

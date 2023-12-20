@@ -9,7 +9,7 @@ from ..core import (
     EndpointConfig
 )
 
-from ...dto.day_category import (
+from ...dto.response import (
     DayCategoryResponse
 )
 

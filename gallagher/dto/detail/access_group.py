@@ -1,6 +1,6 @@
 from typing import Optional
 
-from ..utils import (
+from gallagher.dto.utils import (
     AppBaseModel,
     IdentityMixin,
     HrefMixin
@@ -10,14 +10,12 @@ from ..ref.access_group import (
     AccessGroupRef
 )
 
-from ..ref.division import (
-    DivisionRef
-)
-
-from division import (
+from .division import (
     DivisionDetail
 )
-
+from ..summary import (
+    AccessSummary
+)
 from ..ref import (
     PDFRef
 )

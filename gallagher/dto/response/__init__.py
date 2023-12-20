@@ -40,3 +40,7 @@ from .items import (
     ItemsSummaryResponse,
     ItemTypesResponse,
 )
+
+from .schedule import (
+    ScheduleSummaryResponse,
+)

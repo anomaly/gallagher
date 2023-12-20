@@ -5,7 +5,7 @@ and the schedule determines what happens at certain times on those days.
 """
 from typing import Optional
 
-from ..utils import (
+from gallagher.dto.utils import (
     AppBaseModel,
     HrefMixin
 )

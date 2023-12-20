@@ -8,7 +8,7 @@ from ..core import (
     EndpointConfig
 )
 
-from ...dto.schedule import (
+from ...dto.response import (
     ScheduleSummaryResponse
 )
 

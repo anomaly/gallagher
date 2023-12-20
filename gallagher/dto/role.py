@@ -10,16 +10,3 @@ from .utils import (
 )
 
 from .division import DivisionRef
-
-class RoleDetail(
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-):
-    """
-    """
-    name: str
-    server_display_name: str
-    description: Optional[str]
-    division: DivisionRef
-

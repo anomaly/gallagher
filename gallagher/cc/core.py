@@ -21,9 +21,12 @@ from gallagher.exception import (
     UnlicensedFeatureException
 )
 
-from ..dto.discover import (
-    DiscoveryResponse,
+from ..dto.detail import (
     FeaturesDetail,
+)
+
+from ..dto.response import (
+    DiscoveryResponse,
 )
 
 

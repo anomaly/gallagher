@@ -6,7 +6,7 @@ from ..utils import (
 )
 
 
-class ItemTypeDetail(
+class ItemTypeSummary(
     AppBaseModel,
 ):
     """ Items Types only provide the name and id
@@ -28,4 +28,4 @@ class ItemSummary(
     server_display_name, this is used by the item summary response
     """
     name: str
-    type: ItemTypeDetail
+    type: ItemTypeSummary

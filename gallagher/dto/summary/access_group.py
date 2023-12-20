@@ -6,8 +6,10 @@ from ..utils import (
     HrefMixin
 )
 
-from ..ref.access_group import (
-    AccessGroupRef
+from ..ref import (
+    AccessGroupRef,
+    AccessZoneRef,
+    ScheduleRef,
 )
 
 

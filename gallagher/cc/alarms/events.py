@@ -10,7 +10,7 @@ from ..core import (
     EndpointConfig
 )
 
-from ...dto.event import (
+from ...dto.response import (
     EventTypeResponse,
 )
 

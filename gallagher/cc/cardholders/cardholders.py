@@ -7,9 +7,12 @@ from ..core import (
     EndpointConfig
 )
 
-from ...dto.cardholder import (
-    CardholderSummaryResponse,
+from ...dto.detail import (
     CardholderDetail,
+)
+
+from ...dto.response import (
+    CardholderSummaryResponse,
 )
 
 

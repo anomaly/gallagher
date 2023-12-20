@@ -8,9 +8,12 @@ from ..core import (
     EndpointConfig
 )
 
-from ...dto.division import (
-    DivisionDetailResponse,
+from ...dto.detail import (
     DivisionDetail,
+)
+
+from ...dto.response import (
+    DivisionDetailResponse,
 )
 
 

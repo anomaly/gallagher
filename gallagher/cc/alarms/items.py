@@ -9,10 +9,12 @@ from ..core import (
     EndpointConfig,
 )
 
-from ...dto.items import (
+from ...dto.summary import (
+    ItemSummary,
+)
+from ...dto.response import (
     ItemTypesResponse,
     ItemsSummaryResponse,
-    ItemDetail
 )
 
 
@@ -43,5 +45,5 @@ class Item(APIEndpoint):
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.items.items,
             dto_list=ItemsSummaryResponse,
-            dto_retrieve=ItemDetail,
+            dto_retrieve=ItemSummary,
         )

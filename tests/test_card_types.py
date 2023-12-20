@@ -4,8 +4,12 @@
 
 
 async def test_get_card_types():
-    from gallagher.cc.cardholders.card_type import CardType
-    from gallagher.dto.card_type import CardTypeResponse
+    from gallagher.cc.cardholders.card_type import (
+        CardType
+    )
+    from gallagher.dto.response import (
+        CardTypeResponse
+    )
 
     response = await CardType.list()
     assert type(response) is CardTypeResponse

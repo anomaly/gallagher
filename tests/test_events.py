@@ -1,8 +1,11 @@
 
 
 async def test_event_types():
-    from gallagher.cc.alarms.events import EventType
-    from gallagher.dto.event import (
+
+    from gallagher.cc.alarms.events import (
+        EventType
+    )
+    from gallagher.dto.response import (
         EventTypeResponse,
     )
 

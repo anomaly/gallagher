@@ -1,6 +1,10 @@
 async def test_division_list():
-    from gallagher.cc.alarms.divisions import Division
-    from gallagher.dto.division import DivisionDetailResponse
+    from gallagher.cc.alarms.divisions import (
+        Division
+    )
+    from gallagher.dto.response import (
+        DivisionDetailResponse
+    )
 
     response = await Division.list()
     assert type(response) is DivisionDetailResponse
@@ -9,10 +13,14 @@ async def test_division_list():
 
 
 async def test_division_detail():
-    from gallagher.cc.alarms.divisions import Division
-    from gallagher.dto.division import (
-        DivisionDetailResponse,
+    from gallagher.cc.alarms.divisions import (
+        Division
+    )
+    from gallagher.dto.detail import (
         DivisionDetail,
+    )
+    from gallagher.dto.response import (
+        DivisionDetailResponse,
     )
 
     response = await Division.list()

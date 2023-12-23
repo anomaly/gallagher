@@ -14,7 +14,7 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Alarm history entry
 - [ ] Alarm update request
 - [ ] Event search
-- [ ] Event summary
+- [x] Event summary
 - [ ] Event detail
 - [ ] Event POST body
 - [x] Event groups

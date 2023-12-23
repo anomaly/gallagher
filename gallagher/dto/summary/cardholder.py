@@ -24,7 +24,7 @@ class CardholderSummary(
     last_name: str
     short_name: Optional[str] = None
     description: Optional[str] = None
-    authorised: bool
+    authorised: bool = False
 
     def __rich_repr__(self):
         return [

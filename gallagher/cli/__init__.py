@@ -18,6 +18,7 @@ from .utils import AsyncTyper
 
 from .alarms import app as alarms_app
 from .cardholders import app as cardholders_app
+from .events import app as events_app
 
 # Load the API key for the package so all entry points
 # can use it to query the service
@@ -29,7 +30,7 @@ app = AsyncTyper()
 # Load up all sub commands
 app.add_typer(alarms_app, name="alarms")
 app.add_typer(cardholders_app, name="ch")
-
+app.add_typer(events_app, name="events")
 
 if __name__ == "__main__":
     """ In case you are invoking this via Python directly

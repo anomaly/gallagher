@@ -11,7 +11,9 @@ from gallagher.cc.cardholders.cardholders import (
     Cardholder
 )
 
-app = AsyncTyper(help="query or manage cardholders")
+app = AsyncTyper(
+    help="query or manage cardholders"
+)
 
 
 @app.command("list")

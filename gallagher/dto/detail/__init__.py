@@ -23,6 +23,10 @@ from .division import (
     DivisionDetail,
 )
 
+from .event import (
+    EventDetail,
+)
+
 from .pdf import (
     PDFDetail,
 )

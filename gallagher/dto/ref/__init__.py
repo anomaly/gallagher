@@ -23,6 +23,7 @@ from .alarm import (
 
 from .cardholder import (
     CardholderRef,
+    CardholderEventRef,
 )
 
 from .day_category import (

@@ -4,6 +4,21 @@ from ..utils import (
     AppBaseModel,
     HrefMixin,
     IdentityMixin,
+    OptionalHref,
+)
+
+from ..ref import (
+    AlarmRef,
+    CardholderRef,
+    CardholderEventRef,
+    DoorRef,
+    AccessZoneRef,
+    DivisionRef,
+    ItemRef,
+)
+
+from .cardholder import (
+    CardholderSummary,
 )
 
 
@@ -14,26 +29,6 @@ class EventTypeSummary(
     """ An event type has identifiers and names
     """
     name: str
-
-
-class EventSummary(
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-):
-    """ Events that the Command Centre generates
-
-    """
-    server_display_name: str
-    time: str
-    message: Optional[str]
-    occurrences: int
-    priority: int
-
-    # Hrefs to follows other events
-    next: HrefMixin
-    previous: HrefMixin
-    updates: HrefMixin
 
 
 class EventGroupSummary(
@@ -47,3 +42,32 @@ class EventGroupSummary(
     """
     name: str
     event_types: list[EventTypeSummary]
+
+
+class EventSummary(
+    AppBaseModel,
+    HrefMixin,
+    IdentityMixin,
+):
+    """ Summary of events that have occurred on the server
+    """
+    server_display_name: Optional[str] = None
+    time: str
+    message: Optional[str] = None
+    occurrences: Optional[int] = 0
+    priority: int
+    alarm: Optional[AlarmRef] = None
+
+    operator: Optional[CardholderRef] = None
+    source: ItemRef
+    # group: Optional[EventGroupSummary] = None
+    type: Optional[EventTypeSummary] = None
+    event_type: Optional[EventTypeSummary] = None
+    division: Optional[DivisionRef] = None
+    cardholder: Optional[CardholderEventRef] = None
+    entry_access_zone: Optional[AccessZoneRef] = None
+    exit_access_zone: Optional[AccessZoneRef] = None
+    door: Optional[DoorRef] = None
+    access_group: OptionalHref = None
+    # card: str
+    # modified_item: str

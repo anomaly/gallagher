@@ -10,8 +10,13 @@ from ..core import (
     EndpointConfig
 )
 
+from ...dto.detail import (
+    EventDetail,
+)
+
 from ...dto.response import (
     EventTypeResponse,
+    EventSummaryResponse,
 )
 
 
@@ -26,7 +31,7 @@ class Event(
     async def get_config(cls):
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.events.events,
-            dto_list=EventResponse,
+            dto_list=EventSummaryResponse,
             dto_retrieve=EventDetail,
         )
 

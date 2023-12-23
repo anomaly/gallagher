@@ -1,3 +1,4 @@
+from typing import Optional
 
 from ..utils import (
     AppBaseModel,
@@ -16,7 +17,7 @@ class ItemTypeSummary(
     """
     id: str
     name: str
-    canonical_type_name: str
+    canonical_type_name: Optional[str] = None
 
 
 class ItemSummary(
@@ -27,5 +28,5 @@ class ItemSummary(
     """ Summary of an Item which adds the notes and 
     server_display_name, this is used by the item summary response
     """
-    name: str
+    name: Optional[str] = None
     type: ItemTypeSummary

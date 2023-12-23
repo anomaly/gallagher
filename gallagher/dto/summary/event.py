@@ -15,10 +15,15 @@ from ..ref import (
     AccessZoneRef,
     DivisionRef,
     ItemRef,
+    EventGroupRef,
 )
 
-from .cardholder import (
-    CardholderSummary,
+from .card_type import (
+    CardSummary,
+)
+
+from .items import (
+    ItemSummary,
 )
 
 
@@ -60,7 +65,7 @@ class EventSummary(
 
     operator: Optional[CardholderRef] = None
     source: ItemRef
-    # group: Optional[EventGroupSummary] = None
+    group: Optional[EventGroupRef] = None
     type: Optional[EventTypeSummary] = None
     event_type: Optional[EventTypeSummary] = None
     division: Optional[DivisionRef] = None
@@ -69,5 +74,5 @@ class EventSummary(
     exit_access_zone: Optional[AccessZoneRef] = None
     door: Optional[DoorRef] = None
     access_group: OptionalHref = None
-    # card: str
-    # modified_item: str
+    card: Optional[CardSummary] = None
+    modified_item: Optional[ItemSummary] = None

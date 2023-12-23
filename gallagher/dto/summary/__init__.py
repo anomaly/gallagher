@@ -15,6 +15,7 @@ from .alarm import (
 
 from .card_type import (
     CardExpiryTypeSummary,
+    CardSummary,
 )
 
 from .cardholder import (

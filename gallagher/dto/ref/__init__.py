@@ -66,6 +66,10 @@ from .door import (
     DoorRef,
 )
 
+from .event import (
+    EventGroupRef,
+)
+
 from .items import (
     ItemRef,
 )

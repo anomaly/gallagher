@@ -1,4 +1,5 @@
 from typing import Optional
+from datetime import datetime
 
 from ..utils import (
     AppBaseModel,
@@ -32,7 +33,7 @@ class AlarmZoneSummary(
     property in the access_group schema. I don't know if this
     is appropriate
     """
-    time: str
+    time: datetime
     message: str
     source: AlarmSourceSummary
     type: str

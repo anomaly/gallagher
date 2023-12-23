@@ -1,4 +1,5 @@
 from typing import Optional
+from datetime import datetime
 
 from ..utils import (
     AppBaseModel,
@@ -24,7 +25,7 @@ class EventDetail(
     """ Details of an event that took place on a server
     """
     server_display_name: str
-    time: str
+    time: datetime
     message: Optional[str]
     occurrences: int
     priority: int

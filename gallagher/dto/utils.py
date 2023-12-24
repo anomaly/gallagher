@@ -48,14 +48,14 @@ class AppBaseModel(BaseModel):
     # This is generally used for caching
     good_known_since: Optional[datetime] = None
 
-    def model_post_init(self, __context) -> None:
-        """
-        The model_post_init method is called after the model is
-        initialized, this is used to set the good_known_since
+    # def model_post_init(self, __context) -> None:
+    #     """
+    #     The model_post_init method is called after the model is
+    #     initialized, this is used to set the good_known_since
 
-        https://docs.pydantic.dev/2.0/api/main/#pydantic.main.BaseModel.model_post_init
-        """
-        self.good_known_since = datetime.now()
+    #     https://docs.pydantic.dev/2.0/api/main/#pydantic.main.BaseModel.model_post_init
+    #     """
+    #     self.good_known_since = datetime.now()
 
 
 class IdentityMixin(BaseModel):

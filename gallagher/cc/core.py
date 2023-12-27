@@ -170,9 +170,10 @@ class APIEndpoint:
 
         if Capabilities.CURRENT.version != "0.0.0" and\
                 type(Capabilities.CURRENT.good_known_since) is datetime:
-            # We've already discovered the endpoint hence
-            # we can stop execution to improve performance
-            # and avoid network round trips.
+            # We've already discovered the endpoints as per HATEOAS
+            # design requirement, however because the endpoint configuration is
+            # dynamically populated, we have to call the get_config method
+            cls.__config__ = await cls.get_config()
             return
 
         # Auto-discovery of the API endpoints, this will

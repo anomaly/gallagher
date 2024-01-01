@@ -139,13 +139,15 @@ class APIEndpoint:
     __config__ = None
 
     @classmethod
-    async def get_config(cls):
+    async def get_config(cls) -> EndpointConfig:
         """ Returns the configuration for the endpoint
 
         This method can be overridden by the child class to
         provide additional configuration options.
         """
-        return None
+        raise NotImplementedError(
+            "get_config method not implemented"
+        )
 
     @classmethod
     async def _discover(cls):

@@ -19,7 +19,7 @@ class DayCategory(APIEndpoint):
     """
 
     @classmethod
-    async def get_config(cls):
+    async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.day_categories
             .day_categories,

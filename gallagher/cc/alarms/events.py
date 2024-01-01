@@ -28,7 +28,7 @@ class Event(
     """
 
     @classmethod
-    async def get_config(cls):
+    async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.events.events,
             dto_list=EventSummaryResponse,
@@ -44,7 +44,7 @@ class EventType(
     """
 
     @classmethod
-    async def get_config(cls):
+    async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.events.event_groups,
             dto_list=EventTypeResponse,

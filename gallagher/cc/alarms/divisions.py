@@ -26,7 +26,7 @@ class Division(APIEndpoint):
     """
 
     @classmethod
-    async def get_config(cls):
+    async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.divisions.divisions,
             dto_list=DivisionDetailResponse,

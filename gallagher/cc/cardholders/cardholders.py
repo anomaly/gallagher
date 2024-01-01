@@ -25,7 +25,7 @@ class Cardholder(APIEndpoint):
     """
 
     @classmethod
-    async def get_config(cls):
+    async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.cardholders.cardholders,
             dto_list=CardholderSummaryResponse,

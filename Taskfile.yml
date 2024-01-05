@@ -14,7 +14,7 @@ tasks:
       runs all the tests inside the virtualenv, optionally
       provide the name of the test as an argument to run a single test
     cmds:
-      - poetry run coverage run -m pytest -s tests/{{.CLI_ARGS}}
+      - poetry run coverage run -m pytest -s --tap tests/{{.CLI_ARGS}}
   test:list:
     desc: lists the available tests
     summary:

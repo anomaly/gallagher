@@ -506,6 +506,21 @@ files = [
 pytest = {version = ">=6.2.4", markers = "python_version >= \"3.10\""}
 
 [[package]]
+name = "pytest-tap"
+version = "3.4"
+description = "Test Anything Protocol (TAP) reporting plugin for pytest"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pytest-tap-3.4.tar.gz", hash = "sha256:a7c2a4a3e8b4bf18522e46d74208f8579a191dd972c59182104ad9a4967318fb"},
+    {file = "pytest_tap-3.4-py3-none-any.whl", hash = "sha256:d97a2115c94415086f6faec395d243b3c18ea846ce1c1653a4b2588082be35d8"},
+]
+
+[package.dependencies]
+pytest = ">=3.0"
+"tap.py" = ">=3.0,<4.0"
+
+[[package]]
 name = "rich"
 version = "13.7.0"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
@@ -546,6 +561,20 @@ files = [
 ]
 
 [[package]]
+name = "tap-py"
+version = "3.1"
+description = "Test Anything Protocol (TAP) tools"
+optional = false
+python-versions = "*"
+files = [
+    {file = "tap.py-3.1-py3-none-any.whl", hash = "sha256:928c852f3361707b796c93730cc5402c6378660b161114461066acf53d65bf5d"},
+    {file = "tap.py-3.1.tar.gz", hash = "sha256:3c0cd45212ad5a25b35445964e2517efa000a118a1bfc3437dae828892eaf1e1"},
+]
+
+[package.extras]
+yaml = ["PyYAML (>=5.1)", "more-itertools"]
+
+[[package]]
 name = "typer"
 version = "0.9.0"
 description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
@@ -583,4 +612,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "e890536ac968b6a67565b478490f501c69f9015327a1ba2cd20b8db789e45742"
+content-hash = "a8da851337e41b4386ea4d299182ca1de4ae9ed837b7c9b396c55a4481b28dc6"

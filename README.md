@@ -1,8 +1,6 @@
-> Currently under heavy development, please check for stable release before use
+# Gallagher Python toolkit
 
-# Gallagher Command Centre tools - A REST client, a Command Line Interface and a textual console
-
-> Python idiomatic client and tools for Gallagher Command Centre API
+> Python idiomatic client and tools for Gallagher Command Centre API, featuring a REST API client, a command line interface and a text based console
 
 Gallagher Security manufacture a variety of [security products](https://security.gallagher.com) all of which are controlled by their [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Traditionally Command Centre has been a Windows based server product. Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests. Gallagher also provide a [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which allows third party integrations to securely communicate with the Command Centre on site.
 

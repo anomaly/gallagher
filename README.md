@@ -1,6 +1,6 @@
 > Currently under heavy development, please check for stable release before use
 
-# Gallagher Command Centre REST API Client
+# Gallagher Command Centre tools - A REST client, a Command Line Interface and a textual console
 
 > Python idiomatic client and tools for Gallagher Command Centre API
 

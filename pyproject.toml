@@ -9,12 +9,20 @@ repository = "https://github.com/anomaly/gallagher"
 documentation = "https://anomaly.github.io/gallagher/"
 keywords = ["gallagher", "rest", "api"]
 classifiers = [
+    "License :: OSI Approved :: MIT License",
     "Topic :: Software Development :: Build Tools",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Operating System :: OS Independent",
+    "Framework :: Pydantic",
+    "Framework :: Pydantic :: 2",
 ]
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/anomaly/gallagher/issues"
+
+[tool.poetry.extras]
+cli = ["asyncer", "typer", "rich"]
+console = ["textual"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -41,8 +49,13 @@ asyncer = "^0.0.2"
 typer = "^0.9.0"
 rich = "^13.7.0"
 
+
+[tool.poetry.group.console.dependencies]
+textual = "^0.47.1"
+
 [tool.poetry.scripts]
 gal = "gallagher.cli:app"
+gcon = "gallagher.console:main"
 
 [build-system]
 requires = ["poetry-core"]

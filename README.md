@@ -1,4 +1,4 @@
-# Gallagher Python toolkit
+# Gallagher Python Toolkit
 
 > Python idiomatic client and tools for Gallagher Command Centre API, featuring a REST API client, a command line interface and a text based console
 

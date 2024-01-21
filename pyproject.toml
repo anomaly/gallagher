@@ -42,6 +42,8 @@ pytest = "^7.4.4"
 pytest-order = "^1.2.0"
 pytest-tap = "^3.4"
 pytest-asyncio = "^0.23.3"
+pytest-clarity = "^1.0.1"
+textual-dev = "^1.4.0"
 
 
 [tool.poetry.group.cli.dependencies]
@@ -52,6 +54,7 @@ rich = "^13.7.0"
 
 [tool.poetry.group.console.dependencies]
 textual = "^0.47.1"
+textual-select = "^0.3.4"
 
 [tool.poetry.scripts]
 gal = "gallagher.cli:app"

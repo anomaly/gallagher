@@ -25,3 +25,12 @@ tasks:
     desc: runs coverage inside the server container
     cmds:
       - poetry run coverage report -m
+  dev:textual:
+    desc: runs the textual cli
+    cmds:
+      - poetry run textual --
+  dev:gcon:
+    desc: runs text gallagher console in dev mode
+    cmds:
+      - poetry run textual run --dev gallagher.console:main
+

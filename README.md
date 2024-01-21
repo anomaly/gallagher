@@ -1,6 +1,6 @@
 # Gallagher Python Toolkit
 
-> Python idiomatic client and tools for Gallagher Command Centre API, featuring a REST API client, a command line interface and a text based console
+> Python idiomatic REST API client, a command line interface and a text based console for Gallagher Command Centre API
 
 Gallagher Security manufacture a variety of [security products](https://security.gallagher.com) all of which are controlled by their [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Traditionally Command Centre has been a Windows based server product. Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests. Gallagher also provide a [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which allows third party integrations to securely communicate with the Command Centre on site.
 
@@ -17,8 +17,7 @@ from gallagher import cc, const
 
 cc.api_key = "GH_"
 
-cc.discover()
-cc.Customer.create()
+cc.Customer.list()
 ```
 
 > Note this project is **NOT** officially affiliated with Gallagher Security
@@ -129,7 +128,7 @@ We use [Taskfile](https://taskfile.dev) to automate running tasks.
 
 The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license.
 
-**DO NOT** run the tests against a production system.
+> It's **not recommended** to run tests against a production system.
 
 ### Data Transfer Objects
 
@@ -153,7 +152,7 @@ Resources are `fetchable`, `queryable`, `creatable`, `updatable` and `deletable`
 
 Responses can be the object itself or a response layout
 
-# Configuring the Command Centre
+## Configuring the Command Centre
 
 The following requires you to have an understanding of the Gallagher Command Centre and how to configure it. If you are unsure, please contact your Gallagher representative.
 
@@ -181,6 +180,6 @@ To check your API key:
 
 ![Command Centre Cloud Connections](assets/gallagher-rest-properties.png)
 
-# License
+## License
 
 Distributed under the MIT License.

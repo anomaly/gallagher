@@ -1,3 +1,6 @@
+"""
+
+"""
 from ..utils import (
     AppBaseModel,
 )
@@ -12,7 +15,8 @@ class CardholderSummaryResponse(
 ):
     """ Summary response for cardholder list and search
 
-    /api/cardholders is generally the endpoint that 
+    /api/cardholders is generally the endpoint that responds
+    to the query, it is dynamically configured from the discovery
 
     """
     results: list[CardholderSummary]

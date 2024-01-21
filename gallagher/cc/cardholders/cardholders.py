@@ -33,5 +33,9 @@ class Cardholder(APIEndpoint):
         )
 
     @classmethod
-    async def search(cls, name: str, sort: str = "id", top: int = 100):
+    async def search(cls,
+                     name: str,
+                     sort: str = "id",
+                     top: int = 100
+                     ):
         pass

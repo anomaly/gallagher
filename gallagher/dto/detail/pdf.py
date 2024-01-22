@@ -7,7 +7,7 @@ from ..utils import (
 )
 
 
-class PDFDetail(
+class PdfDetail(
     AppBaseModel,
     HrefMixin
 ):

@@ -36,6 +36,10 @@ from .event import (
     EventTypeResponse,
 )
 
+from .pdf import (
+    PdfResponse,
+)
+
 from .items import (
     ItemsSummaryResponse,
     ItemTypesResponse,

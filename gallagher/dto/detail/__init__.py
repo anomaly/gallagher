@@ -28,7 +28,7 @@ from .event import (
 )
 
 from .pdf import (
-    PDFDetail,
+    PdfDetail,
 )
 
 from .role import (

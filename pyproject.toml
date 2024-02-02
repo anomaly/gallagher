@@ -47,14 +47,18 @@ textual-dev = "^1.4.0"
 
 
 [tool.poetry.group.cli.dependencies]
-asyncer = "^0.0.2"
+asyncer = "^0.0.3"
 typer = "^0.9.0"
 rich = "^13.7.0"
 
 
 [tool.poetry.group.console.dependencies]
 textual = "^0.47.1"
-textual-select = "^0.3.4"
+
+
+[tool.poetry.group.sync.dependencies]
+sqlalchemy = "^2.0.25"
+alembic = "^1.13.1"
 
 [tool.poetry.scripts]
 gal = "gallagher.cli:app"

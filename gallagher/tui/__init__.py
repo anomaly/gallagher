@@ -1,4 +1,4 @@
-""" Console 
+""" Console
 """
 
 from textual.app import (
@@ -18,6 +18,8 @@ from textual.widgets import (
     Placeholder,
 )
 
+from .dashboard import Dashboard
+
 
 class GallagherConsole(App):
     """ A console interface for the Gallagher Command Centre.
@@ -32,7 +34,7 @@ class GallagherConsole(App):
 
     # Decorative constants
     TITLE = "Gallagher"
-    SUB_TITLE = "Super charged textual console"
+    SUB_TITLE = "power tools for the console"
 
     # def on_mount(self) -> None:
 
@@ -40,10 +42,7 @@ class GallagherConsole(App):
         """ Create child widgets for the app.
         """
         yield Header()
-        with Grid():
-            yield Placeholder(id="a")
-            yield Placeholder(id="b")
-            yield Placeholder(id="c")
+        yield Dashboard()
         yield Footer()
 
     def action_toggle_dark(self) -> None:

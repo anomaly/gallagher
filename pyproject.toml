@@ -62,7 +62,7 @@ alembic = "^1.13.1"
 
 [tool.poetry.scripts]
 gal = "gallagher.cli:app"
-gcon = "gallagher.console:main"
+gcon = "gallagher.tui:main"
 
 [build-system]
 requires = ["poetry-core"]

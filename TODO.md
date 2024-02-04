@@ -69,7 +69,7 @@ The following is tracking which endpoints are available along with their test ca
 - [ ] Operator group detail
 - [ ] Operator group membership
 - [ ] PDF definition search
-- [ ] PDF definition
+- [x] PDF definition
 - [ ] Reception search
 - [ ] Reception
 - [ ] Redaction

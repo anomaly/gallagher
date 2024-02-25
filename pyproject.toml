@@ -3,22 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-
-name = "[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
 name = "gallagher"
 dynamic = ["version"]
-description = ''
+description = 'Python idiomatic client and tools for Gallagher Command Centre API'
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
-keywords = []
-authors = [
-  { name = "Dev Mukherjee", email = "devraj@gmail.com" },
-]
+keywords = ["gallagher", "rest", "api"]
+authors = [{ name = "Dev Mukherjee", email = "devraj@gmail.com" }]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
@@ -30,65 +22,16 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+  "httpx~=0.27.0",
+  "pydantic~=2.6.2",
+  "certifi~=2024.2.2",
+  "typing-extensions~=4.9.0",
+  "annotated-types~=0.6.0",
+]
 
 [project.urls]
 Documentation = "https://github.com/unknown/gallagher#readme"
-Issues = "https://github.com/unknown/gallagher/issues"
-Source = "https://github.com/unknown/gallagher"
-
-[tool.hatch.version]
-path = "src/gallagher/__about__.py"
-
-[tool.hatch.envs.default]
-dependencies = ["coverage[toml]>=6.5", "pytest"]
-[tool.hatch.envs.default.scripts]
-test = "pytest {args:tests}"
-test-cov = "coverage run -m pytest {args:tests}"
-cov-report = ["- coverage combine", "coverage report"]
-cov = ["test-cov", "cov-report"]
-
-[[tool.hatch.envs.all.matrix]]
-python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
-
-[tool.hatch.envs.types]
-dependencies = ["mypy>=1.0.0"]
-[tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/gallagher tests}"
-
-[tool.coverage.run]
-source_pkgs = ["gallagher", "tests"]
-branch = true
-parallel = true
-omit = ["src/gallagher/__about__.py"]
-
-[tool.coverage.paths]
-gallagher = ["src/gallagher", "*/gallagher/src/gallagher"]
-tests = ["tests", "*/gallagher/tests"]
-
-[tool.coverage.report]
-dynamic = ["version"]
-description = ''
-readme = "README.md"
-requires-python = ">=3.8"
-license = "MIT"
-keywords = []
-authors = [{ name = "Dev Mukherjee", email = "devraj@gmail.com" }]
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
-]
-dependencies = []
-
-[project.urls]
-Documentation = "https://github.com/unknown/gallagher#readme"exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 Issues = "https://github.com/unknown/gallagher/issues"
 Source = "https://github.com/unknown/gallagher"
 

@@ -27,7 +27,7 @@ console = ["textual"]
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.27.0"
-pydantic = "^2.6.3"
+pydantic = "^2.6.4"
 typing-extensions = "^4.10.0"
 annotated-types = "^0.6.0"
 certifi = "^2024.2.2"
@@ -40,10 +40,10 @@ aiohttp = "^3.9.3"
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^4.1.0"
 coverage = "^7.4.0"
-pytest = "^8.1.0"
+pytest = "^8.1.1"
 pytest-order = "^1.2.0"
 pytest-tap = "^3.4"
-pytest-asyncio = "^0.23.5"
+pytest-asyncio = "^0.23.6"
 pytest-clarity = "^1.0.1"
 textual-dev = "^1.4.0"
 
@@ -55,7 +55,7 @@ rich = "^13.7.1"
 
 
 [tool.poetry.group.tui.dependencies]
-textual = "^0.52.1"
+textual = "^0.53.1"
 textual-dev = "^1.5.1"
 
 

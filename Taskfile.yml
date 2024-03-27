@@ -9,10 +9,28 @@ tasks:
     cmds:
       - poetry build
   test:
-    desc: runs tests inside the server container
+    desc: runs tests inside the virtualenv
+    summary:
+      runs all the tests inside the virtualenv, optionally
+      provide the name of the test as an argument to run a single test
     cmds:
-      - poetry run coverage run -m pytest -s
+      - poetry run coverage run -m pytest -s --tap tests/{{.CLI_ARGS}}
+  test:list:
+    desc: lists the available tests
+    summary:
+      runs collect only on pytest to list the tests available
+    cmds:
+      - poetry run pytest --co
   test:coverreport:
     desc: runs coverage inside the server container
     cmds:
       - poetry run coverage report -m
+  dev:textual:
+    desc: runs the textual cli
+    cmds:
+      - poetry run textual --
+  dev:gcon:
+    desc: runs text gallagher console in dev mode
+    cmds:
+      - poetry run textual run --dev gallagher.console:main
+

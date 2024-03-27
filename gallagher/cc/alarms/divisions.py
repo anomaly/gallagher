@@ -2,13 +2,22 @@
 
 """
 
-from ..utils import (
-    APIBase,
+from ..core import (
+    Capabilities,
+    APIEndpoint,
     EndpointConfig
 )
 
+from ...dto.detail import (
+    DivisionDetail,
+)
 
-class Division(APIBase):
+from ...dto.response import (
+    DivisionDetailResponse,
+)
+
+
+class Division(APIEndpoint):
     """
     Gallagher advises against hardcoding the URLs for divisions, and instead
     recommends using the /api endpoint to discover the URLs from 
@@ -16,6 +25,10 @@ class Division(APIBase):
 
     """
 
-    __config__ = EndpointConfig(
-        endpoint="divisions",
-    )
+    @classmethod
+    async def get_config(cls) -> EndpointConfig:
+        return EndpointConfig(
+            endpoint=Capabilities.CURRENT.features.divisions.divisions,
+            dto_list=DivisionDetailResponse,
+            dto_retrieve=DivisionDetail,
+        )

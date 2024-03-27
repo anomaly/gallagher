@@ -3,6 +3,10 @@
 
 """
 
+from typing import (
+    Optional,
+)
+from datetime import datetime
 
 from pydantic import (
     BaseModel,
@@ -37,6 +41,22 @@ class AppBaseModel(BaseModel):
         alias_generator=to_lower_camel,
     )
 
+    # Set to the last time each response was retrieved
+    # If it's set to None then the response was either created
+    # by the API client or it wasn't retrieved from the server
+    #
+    # This is generally used for caching
+    good_known_since: Optional[datetime] = None
+
+    def model_post_init(self, __context) -> None:
+        """
+        The model_post_init method is called after the model is
+        initialized, this is used to set the good_known_since
+
+        https://docs.pydantic.dev/2.0/api/main/#pydantic.main.BaseModel.model_post_init
+        """
+        self.good_known_since = datetime.now()
+
 
 class IdentityMixin(BaseModel):
     """ Identifier 
@@ -54,3 +74,25 @@ class HrefMixin(BaseModel):
     responses from the Gallagher API.
     """
     href: str
+
+
+class OptionalHref(BaseModel):
+    """ Optionally available Href
+
+    This mixin is used to define the href field for all
+    responses from the Gallagher API.
+
+    Primarily used by the discovery endpoint, where the href
+    may be absent if the feature is not available.
+
+    Reason for this so the API Endpoint configuration can 
+    reference the href property (pre discovery), otherwise
+    the Feature* classes have a None object for the object
+
+    # Use with caution
+
+    Only use these with responses that don't optionally
+    require a href. See Gallagher's documentation for
+    confirmation.
+    """
+    href: Optional[str] = None

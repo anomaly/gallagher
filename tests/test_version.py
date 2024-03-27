@@ -1,7 +1,10 @@
-"""
+""" Tests to see that are running the tests against the right version
+
+
 """
 
 from gallagher import __version__
 
-def test_version():
-    assert __version__ == '0.1.0'
+
+async def test_version():
+    assert __version__ == '0.1.0-alpha.3'

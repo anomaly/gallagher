@@ -4,12 +4,16 @@
 """
 
 
-def test_schedules_list():
+async def test_schedules_list():
 
-    from gallagher.cc.alarms.schedule import Schedule
-    from gallagher.dto.schedule import ScheduleSummaryResponse
+    from gallagher.cc.alarms.schedule import (
+        Schedule
+    )
+    from gallagher.dto.response import (
+        ScheduleSummaryResponse,
+    )
 
-    response = Schedule.list()
+    response = await Schedule.list()
     assert type(response) is ScheduleSummaryResponse
     assert type(response.results) is list
     assert len(response.results) > 0

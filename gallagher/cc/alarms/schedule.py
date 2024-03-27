@@ -2,21 +2,24 @@
 
 """
 
-from ..utils import (
-    APIBase,
+from ..core import (
+    Capabilities,
+    APIEndpoint,
     EndpointConfig
 )
 
-from ...dto.schedule import (
+from ...dto.response import (
     ScheduleSummaryResponse
 )
 
 
-class Schedule(APIBase):
+class Schedule(APIEndpoint):
     """ Schedules
     """
 
-    __config__ = EndpointConfig(
-        endpoint="schedules",
-        dto_list=ScheduleSummaryResponse,
-    )
+    @classmethod
+    async def get_config(cls) -> EndpointConfig:
+        return EndpointConfig(
+            endpoint=Capabilities.CURRENT.features.schedules.schedules,
+            dto_list=ScheduleSummaryResponse,
+        )

@@ -1,29 +1,38 @@
+""" Items
+
+
 """
-"""
-from ..utils import (
-    APIBase,
-    EndpointConfig
+
+from ..core import (
+    Capabilities,
+    APIEndpoint,
+    EndpointConfig,
 )
 
-from ...dto.items import (
+from ...dto.summary import (
+    ItemSummary,
+)
+from ...dto.response import (
     ItemTypesResponse,
     ItemsSummaryResponse,
-    ItemDetail
 )
 
 
-class ItemsTypes(APIBase):
+class ItemsTypes(APIEndpoint):
     """
      Gallagher
     """
 
-    __config__ = EndpointConfig(
-        endpoint="items/types",
-        dto_list=ItemTypesResponse,
-    )
+    @classmethod
+    async def get_config(cls) -> EndpointConfig:
+        return EndpointConfig(
+            endpoint=Capabilities.CURRENT.features.items.item_types,
+            dto_list=ItemTypesResponse,
+            dto_retrieve=ItemTypesResponse,
+        )
 
 
-class Item(APIBase):
+class Item(APIEndpoint):
     """
     Gallagher advises against hardcoding the URLs for divisions, and instead
     recommends using the /api endpoint to discover the URLs from 
@@ -31,8 +40,10 @@ class Item(APIBase):
 
     """
 
-    __config__ = EndpointConfig(
-        endpoint="items",
-        dto_list=ItemsSummaryResponse,
-        dto_retrieve=ItemDetail,
-    )
+    @classmethod
+    async def get_config(cls) -> EndpointConfig:
+        return EndpointConfig(
+            endpoint=Capabilities.CURRENT.features.items.items,
+            dto_list=ItemsSummaryResponse,
+            dto_retrieve=ItemSummary,
+        )

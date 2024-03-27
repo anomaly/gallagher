@@ -3,22 +3,26 @@
 
 """
 
-from ..utils import (
-    APIBase,
+from ..core import (
+    Capabilities,
+    APIEndpoint,
     EndpointConfig
 )
 
-from ...dto.day_category import (
+from ...dto.response import (
     DayCategoryResponse
 )
 
 
-class DayCategory(APIBase):
+class DayCategory(APIEndpoint):
     """ Day Categories
     """
 
-    __config__ = EndpointConfig(
-        endpoint="day_categories",
-        dto_list=DayCategoryResponse,
-        dto_retrieve=DayCategoryResponse,
-    )
+    @classmethod
+    async def get_config(cls) -> EndpointConfig:
+        return EndpointConfig(
+            endpoint=Capabilities.CURRENT.features.day_categories
+            .day_categories,
+            dto_list=DayCategoryResponse,
+            dto_retrieve=DayCategoryResponse,
+        )

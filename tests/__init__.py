@@ -3,7 +3,16 @@
   Test suite for the Gallagher Python idiomatic client library,
   using pytest run via Taskfile.
 
+  The pytest.mark.asyncio marker can be omitted entirely in auto mode 
+  where the asyncio marker is added automatically to async test functions.
+  
+  Refer to pytest.ini for configuration
+  https://pytest-asyncio.readthedocs.io/en/latest/reference/markers/index.html
+
+  TODO: check if setup and teardown can be turned into async
+
 """
+
 
 def setup_module(module):
     """ The Gallagher API client requires a test key, this is 
@@ -14,7 +23,7 @@ def setup_module(module):
     """
     import os
     api_key = os.environ.get("GACC_API_KEY")
-    
+
     from gallagher import cc
     cc.api_key = api_key
 

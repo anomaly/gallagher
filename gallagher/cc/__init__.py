@@ -24,6 +24,7 @@ from typing import Optional
 
 from ..const import URL
 
+
 # Follow the instructions in the Gallagher documentation
 # to obtain an API key
 api_key: str = None
@@ -38,4 +39,3 @@ client_id: str = "gallagher-py"
 # By default connections are sent straight to the server
 # should you wish to use a proxy, set this to the proxy URL
 proxy: Optional[str] = None
-

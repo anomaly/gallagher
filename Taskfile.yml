@@ -29,8 +29,8 @@ tasks:
     desc: runs the textual cli
     cmds:
       - poetry run textual --
-  dev:gcon:
+  dev:tui:
     desc: runs text gallagher console in dev mode
     cmds:
-      - poetry run textual run --dev gallagher.console:main
+      - poetry run textual run --dev gallagher.tui:main
 

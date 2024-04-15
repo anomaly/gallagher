@@ -180,6 +180,18 @@ To check your API key:
 
 ![Command Centre Cloud Connections](assets/gallagher-rest-properties.png)
 
+## Python Libraries
+
+> Following are Python libraries that I have found during the development of the Gallagher tools. They are not necessarily in use at the moment but a reference in case we need the functionality.
+
+- [plotext](https://github.com/piccolomo/plotext?tab=readme-ov-file) - plots directly on your terminal (something I found when I was exploring apps like [dolphie](https://github.com/charles-001/dolphie))
+- [rich-pixels](https://github.com/darrenburns/rich-pixels) - a [Rich-compatible](https://github.com/Textualize/rich) library for writing pixel images and other colourful grids to the terminal by @darrenburns
+- [PyFilesystem](https://github.com/pyfilesystem/pyfilesystem2) - a Python file system abstraction layer
+
+### Articles
+
+- [A year of building for the terminal](https://textual.textualize.io/blog/2022/12/20/a-year-of-building-for-the-terminal/) by @darrenburns
+
 ## License
 
 Distributed under the MIT License.

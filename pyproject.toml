@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "gallagher"
 version = "0.1.0-alpha.2"
-description = "Python idiomatic client and tools for Gallagher Command Centre API"
+description = "Python tools for Gallagher Security Centre"
 authors = ["Dev Mukherjee <devraj@gmail.com>"]
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/anomaly/gallagher"
 documentation = "https://anomaly.github.io/gallagher/"
-keywords = ["gallagher", "rest", "api"]
+keywords = ["gallagher", "rest", "api", "tui", "cli"]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Topic :: Software Development :: Build Tools",
@@ -22,7 +22,7 @@ classifiers = [
 
 [tool.poetry.extras]
 cli = ["asyncer", "typer", "rich"]
-console = ["textual"]
+tui = ["textual"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -62,6 +62,7 @@ textual-dev = "^1.5.1"
 [tool.poetry.group.sync.dependencies]
 sqlalchemy = "^2.0.29"
 alembic = "^1.13.1"
+shillelagh = "^1.2.19"
 
 
 [tool.poetry.group.test.dependencies]

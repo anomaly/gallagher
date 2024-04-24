@@ -73,7 +73,7 @@ coverage = "^7.4.3"
 pytest-asyncio = "^0.23.5.post1"
 
 [tool.poetry.scripts]
-gal = "gallagher.cli:app"
+gala = "gallagher.cli:app"
 gtui = "gallagher.tui:main"
 
 [build-system]

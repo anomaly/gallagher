@@ -27,6 +27,7 @@ cc.api_key = api_key
 
 # Main Typer app use to create the CLI
 app = AsyncTyper()
+
 # Load up all sub commands
 app.add_typer(alarms_app, name="alarms")
 app.add_typer(cardholders_app, name="ch")

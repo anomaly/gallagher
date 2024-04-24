@@ -55,6 +55,5 @@ def main():
     app = GallagherConsole()
     app.run()
 
-
 if __name__ == "__main__":
     main()

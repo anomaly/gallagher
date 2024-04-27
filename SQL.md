@@ -1,6 +1,6 @@
 # SQL Interface
 
-
+A central goal of the Python tools for Gallagher is assist enterprise to integrate corporate systems with the command centre. Use cases would involve systems like payroll, human resources applications that would want to toggle access or additionally keep abreast of events that have taken place in the command centre inline situ.
 
 
 ## Why SQL?

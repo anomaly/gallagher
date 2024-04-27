@@ -45,3 +45,7 @@ A simple example to get a list of cardholders looks like:
 ```
 
 you can also ask each sub command to give you in
+
+## Resources
+
+- [Command Line Interface Guidelines - clig.dev](https://clig.dev)

@@ -31,3 +31,17 @@ Each component presented by this project aims to do just that.
 > The primary objective of the CLI is to interact with the JSON API through the command line so users can build high level automation without having to interact directly with the JSON payloads. It uses the Python API client to ensure strict data rules when interacting with the API endpoints, thus preventing corruption.
 
 The project must provide complete documentation for the tool to be useful to an end user / system administrator.
+
+## Scope
+
+The initial version 
+
+- Cardholder
+- Visits
+- Alarms
+
+
+
+## Resources
+
+- [Command Line Interface Guidelines - clig.dev](https://clig.dev)

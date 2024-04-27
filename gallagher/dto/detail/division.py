@@ -23,3 +23,11 @@ class DivisionDetail(
     # TODO: Looks like we don't have access to visitor management
     # on our test instance at the moment
     # visitor_management: visitor.VisitorManagementSummary
+
+    def __rich_repr__(self):
+        return [
+            self.id,
+            self.name,
+            self.server_display_name if self.server_display_name\
+             else "unavailable"
+        ]

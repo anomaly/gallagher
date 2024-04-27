@@ -13,11 +13,11 @@ async def test_division_list():
         Division
     )
     from gallagher.dto.response import (
-        DivisionDetailResponse
+        DivisionSummaryResponse
     )
 
     response = await Division.list()
-    assert type(response) is DivisionDetailResponse
+    assert type(response) is DivisionSummaryResponse
     assert type(response.results) is list
     assert len(response.results) > 0
 
@@ -38,11 +38,11 @@ async def test_division_detail():
         DivisionDetail,
     )
     from gallagher.dto.response import (
-        DivisionDetailResponse,
+        DivisionSummaryResponse,
     )
 
     response = await Division.list()
-    assert type(response) is DivisionDetailResponse
+    assert type(response) is DivisionSummaryResponse
     assert type(response.results) is list
 
     for division_summary in response.results:

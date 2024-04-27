@@ -36,5 +36,12 @@ async def list():
         console.print(table)
 
 
+@app.command("get")
+async def get(id: int):
+    """ get a division by id
+    """
+    division = await Division.retrieve(id)
+    [rprint(r) for r in division.__rich_repr__()]
+
 
 

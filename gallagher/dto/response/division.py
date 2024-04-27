@@ -5,19 +5,29 @@ from ..utils import (
     HrefMixin,
 )
 
+from ..summary import (
+    DivisionSummary
+)
+
 from ..detail import (
     DivisionDetail
 )
 
 
-class DivisionDetailResponse(
+
+class DivisionSummaryResponse(
     AppBaseModel
 ):
-    """ Division
+    """ Division Summary 
+
+    This should return the summary and as per the documentation
+    the detail should have more than what we have here
+
+    TODO: check this is different
 
     """
 
-    results: list[DivisionDetail]
+    results: list[DivisionSummary]
     next: Optional[HrefMixin] = None
 
     @property
@@ -33,3 +43,5 @@ class DivisionDetailResponse(
 
     def __str__(self):
         return f"{len(self.results)} divisions"
+
+

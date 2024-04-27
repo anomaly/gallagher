@@ -24,7 +24,7 @@ from .discover import (
 )
 
 from .division import (
-    DivisionDetailResponse,
+    DivisionSummaryResponse,
 )
 
 from .door import (

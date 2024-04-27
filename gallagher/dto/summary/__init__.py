@@ -26,6 +26,10 @@ from .day_category import (
     DayCategorySummary,
 )
 
+from .division import (
+    DivisionSummary
+)
+
 from .door import (
     DoorSummary,
 )

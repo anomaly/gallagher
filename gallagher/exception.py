@@ -16,3 +16,12 @@ class UnlicensedFeatureException(Exception):
 
     """
     pass
+
+
+class ComingSoonException(Exception):
+    """ Raised if Gallagher has marked this feature to be coming soon
+
+    These are items such as mutating a division which is scheduled
+    but has not be released
+    """
+    pass

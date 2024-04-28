@@ -218,6 +218,8 @@ class APIEndpoint:
 
         Most resources can be searched which is exposed by this method.
         Resources also allow pagination which can be controlled by the skip
+
+        :param int skip: fetch responses from this anchor
         """
         await cls._discover()
 
@@ -243,6 +245,8 @@ class APIEndpoint:
         Most objects have an ID which is numeral or UUID. 
         Each resource also provides a href and pagination for
         children.
+
+        :param int id: identifier of the object to be fetched
         """
         await cls._discover()
 

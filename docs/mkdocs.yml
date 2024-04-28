@@ -2,8 +2,12 @@ site_name: Gallagher Python Toolkit
 site_url: https://anomaly.github.io/gallagher/
 repo_url: https://github.com/anomaly/gallagher/
 site_author: Dev Mukherjee
+
 theme:
   name: readthedocs
+
+markdown_extensions:
+    - mkdocs-typer
 
 nav:
   - Introduction: index.md

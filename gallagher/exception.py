@@ -18,6 +18,13 @@ class UnlicensedFeatureException(Exception):
     pass
 
 
+class NotFoundException(Exception):
+    """ Raised if you tried to access an object that either does not
+    exists or you don't have permission to access it.
+    """
+    pass
+
+
 class ComingSoonException(Exception):
     """ Raised if Gallagher has marked this feature to be coming soon
 

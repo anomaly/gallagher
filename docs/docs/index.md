@@ -1,4 +1,10 @@
-# Welcome to Gallagher Python
+# Welcome to Gallagher Python Toolkit
+
+Gallagher Python Toolkit aims to enhance the developer experience of working with Gallagher Security's Command Centre.
+
+> **Note:** This project is not affiliated with Gallagher in any way.
+
+## History
 
 This project maintains an idiomatic client for Python. The project began as a requirement for us to reliably work with the Gallagher API. While Gallagher publish their [API reference](https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html) which is built from an OpenAPI spec with [Spectacle](https://github.com/sourcey/spectacle) documentation generator flavours. The OpenAPI spec is maintained by hand and [can be found on Github](https://github.com/GallagherSecurity/cc-rest-docs/tree/master/swagger).
 
@@ -8,14 +14,17 @@ The API client draws inspiration from companies like [Stripe](https://stripe.com
 
 The design pattern of the API client is opinionated from our experience as software engineers. We goto great lengths to document and justify our thought process so others can see where we are coming from.
 
-> **Note:** This project is not affiliated with Gallagher in any way.
-
 ## Features
 
 - pydantic models for all API payloads
 - HTTP transport using httpx
 - Full test coverage
 - A completely python based interface to interacting with Gallagher Command Centre
+
+Additionally we offer:
+
+- A command line interface to interact with the command centre
+- A terminal user interface with some nifty features
 
 ## Developing the client
 

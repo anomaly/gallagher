@@ -1,4 +1,4 @@
-# Design
+# API Client Design
 
 A central feature to this client is it's detailed design, focused on a superior developer experience and performance. We also ensure that we follow design patterns outlined by Gallagher
 

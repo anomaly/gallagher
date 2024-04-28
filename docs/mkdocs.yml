@@ -4,3 +4,11 @@ repo_url: https://github.com/anomaly/gallagher/
 site_author: Dev Mukherjee
 theme:
   name: readthedocs
+
+nav:
+  - Introduction: index.md
+  - Installation: installation.md
+  - Using the API Client: howto-api-client.md
+  - Command Line Inteface: cli.md
+  - Terminal User Inteface: tui.md  
+  - API Client Design: design.md

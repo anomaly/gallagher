@@ -33,4 +33,21 @@ tasks:
     desc: runs text gallagher console in dev mode
     cmds:
       - poetry run textual run --dev gallagher.tui:main
+  debug:get:
+    desc: use httpie to get payload from CC
+    summary: |
+      runs a httpie get against the gallagher aus gateway
+      appends the required headers, assumes the environment
+      variables are set.
+
+      you must pass in the partial url (past /api), 
+      along with any parameters.
+
+      by no suffix is provided CC returns a list of hateoas
+      compliant endpoints.
+    cmds:
+      - |
+        http get \
+        https://commandcentre-api-au.security.gallagher.cloud/api/{{.CLI_ARGS}} \
+        "Authorization: GGL-API-KEY $GACC_API_KEY"
 

@@ -2,7 +2,7 @@ from typing import Optional
 
 from ..utils import (
     HrefMixin,
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 )
 
 from ..ref import (
@@ -11,7 +11,7 @@ from ..ref import (
 
 
 class DayCategoryResponse(
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 ):
     """ The response has a list of results and a link to the next page
     """

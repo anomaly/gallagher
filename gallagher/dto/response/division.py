@@ -2,7 +2,7 @@ from typing import Optional
 
 from ..utils import (
     HrefMixin,
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 )
 
 from ..summary import (
@@ -16,7 +16,7 @@ from ..detail import (
 
 
 class DivisionSummaryResponse(
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 ):
     """ Division Summary 
 

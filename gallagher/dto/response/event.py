@@ -4,7 +4,7 @@ from ..utils import (
     HrefMixin,
     IdentityMixin,
     AppBaseResponseModel,
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 )
 
 from ..summary import (
@@ -14,7 +14,7 @@ from ..summary import (
 
 
 class EventSummaryResponse(
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 ):
 
     events: list[EventSummary]

@@ -2,7 +2,7 @@ from typing import Optional
 
 from ..utils import (
     HrefMixin,
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 )
 
 from ..detail import (
@@ -11,7 +11,7 @@ from ..detail import (
 
 
 class CardTypeResponse(
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 ):
     """ Card Types are cards mobile or physical that are supported at a site
     """

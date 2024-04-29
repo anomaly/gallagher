@@ -3,7 +3,7 @@ from typing import Optional
 from ..utils import (
     HrefMixin,
     AppBaseResponseModel,
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 )
 
 from ..summary import (
@@ -13,7 +13,7 @@ from ..summary import (
 
 
 class ItemsSummaryResponse(
-    AppBaseResponseWithNavModel,
+    AppBaseResponseWithFollowModel,
 ):
     """  ItemsResponse is the list of items from the API
     it provides the summary of all Items Summary

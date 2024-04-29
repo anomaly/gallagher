@@ -61,3 +61,34 @@ If a command centre does not have a certain capability then the objects are set 
 ## Layout
 
 Layout of our files
+
+```
+.
+├── assets
+├── docs
+│   └── docs
+├── gallagher
+│   ├── cc
+│   │   ├── alarms
+│   │   ├── cardholders
+│   │   └── status_overrides
+│   ├── cli
+│   ├── dto
+│   │   ├── detail
+│   │   ├── ref
+│   │   ├── response
+│   │   └── summary
+│   └── tui
+└── tests
+```
+
+## Toolchain
+
+Majority of the development was conducted on macOS, but the toolchain should be compatible with any operating system. All elements of the project were developed in `python` with standard tooling
+
+In addition we use:
+
+- `task` - as the task runner of choice, it's widely avilable on platforms and supports Github actions. All endpoints are documented within the command line tool.
+- `poetry` as our package manager of choice for the python project
+
+

@@ -4,7 +4,7 @@
 """
 
 from .alarm import (
-    AlarmResponse,
+    AlarmSummaryResponse,
 )
 
 from .card_type import (

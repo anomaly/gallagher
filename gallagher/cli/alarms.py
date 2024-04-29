@@ -2,7 +2,6 @@
 
 Sub commands to interact with the alarms data
 
-
 """
 
 

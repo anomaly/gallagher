@@ -14,7 +14,7 @@ from ...dto.summary import (
 )
 
 from ...dto.response import (
-    AlarmResponse,
+    AlarmSummaryResponse,
 )
 
 
@@ -28,6 +28,6 @@ class Alarms(
     async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.alarms.alarms,
-            dto_list=AlarmResponse,
+            dto_list=AlarmSummaryResponse,
             dto_retrieve=AlarmZoneSummary,
         )

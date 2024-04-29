@@ -8,10 +8,10 @@ from ..summary import (
 )
 
 
-class AlarmResponse(
+class AlarmSummaryResponse(
     AppBaseResponseModel,
 ):
-    """ AlarmResponse represents a single alarm
+    """ AlarmSummaryResponse represents a single alarm
     """
     alarms: list[AlarmZoneSummary]
     updates: HrefMixin

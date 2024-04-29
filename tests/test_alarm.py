@@ -20,3 +20,23 @@ async def test_alarms_list():
     assert type(response) is AlarmResponse
     assert type(response.alarms) is list
     assert len(response.alarms) > 0
+
+
+# async def test_alarms_detail():
+#     """ Get a list of alarms and then try and get it's detail
+#     """
+#     from gallagher.cc.alarms import (
+#         Alarms
+#     )
+#     from gallagher.dto.response import (
+#         AlarmResponse,
+#     )
+
+#     response = await Alarms.list()
+#     assert type(response) is AlarmResponse
+#     assert type(response.alarms) is list
+#     assert len(response.alarms) > 0
+
+#     for alarm in response.results:
+#         pass
+

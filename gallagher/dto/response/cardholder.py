@@ -2,7 +2,7 @@
 
 """
 from ..utils import (
-    AppBaseModel,
+    AppBaseResponseModel,
 )
 
 from ..summary import (
@@ -11,7 +11,7 @@ from ..summary import (
 
 
 class CardholderSummaryResponse(
-    AppBaseModel
+    AppBaseResponseModel,
 ):
     """ Summary response for cardholder list and search
 

@@ -1,8 +1,9 @@
 from typing import Optional
 
 from ..utils import (
-    AppBaseModel,
-    HrefMixin
+    HrefMixin,
+    AppBaseResponseModel,
+    AppBaseResponseWithNavModel,
 )
 
 from ..summary import (
@@ -12,17 +13,16 @@ from ..summary import (
 
 
 class ItemsSummaryResponse(
-    AppBaseModel,
+    AppBaseResponseWithNavModel,
 ):
     """  ItemsResponse is the list of items from the API
     it provides the summary of all Items Summary
     """
     results: list[ItemSummary]
-    next: Optional[HrefMixin] = None
 
 
 class ItemTypesResponse(
-    AppBaseModel,
+    AppBaseResponseModel,
 ):
     """ Every security centre can provide a list of item types
 

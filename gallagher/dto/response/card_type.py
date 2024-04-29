@@ -1,8 +1,8 @@
 from typing import Optional
 
 from ..utils import (
-    AppBaseModel,
-    HrefMixin
+    HrefMixin,
+    AppBaseResponseWithNavModel,
 )
 
 from ..detail import (
@@ -11,9 +11,8 @@ from ..detail import (
 
 
 class CardTypeResponse(
-    AppBaseModel,
+    AppBaseResponseWithNavModel,
 ):
     """ Card Types are cards mobile or physical that are supported at a site
     """
     results: list[CardTypeDetail]
-    next: Optional[HrefMixin] = None

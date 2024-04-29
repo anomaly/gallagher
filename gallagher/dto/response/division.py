@@ -1,8 +1,8 @@
 from typing import Optional
 
 from ..utils import (
-    AppBaseModel,
     HrefMixin,
+    AppBaseResponseWithNavModel,
 )
 
 from ..summary import (
@@ -16,7 +16,7 @@ from ..detail import (
 
 
 class DivisionSummaryResponse(
-    AppBaseModel
+    AppBaseResponseWithNavModel,
 ):
     """ Division Summary 
 
@@ -28,7 +28,6 @@ class DivisionSummaryResponse(
     """
 
     results: list[DivisionSummary]
-    next: Optional[HrefMixin] = None
 
     @property
     def cli_header(self):

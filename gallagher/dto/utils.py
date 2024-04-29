@@ -109,7 +109,7 @@ class AppBaseResponseModel(AppBaseModel):
     """
     pass
 
-class AppBaseResponseWithNavigationModel(AppBaseResponseModel):
+class AppBaseResponseWithNavModel(AppBaseResponseModel):
     """ Response
 
     """

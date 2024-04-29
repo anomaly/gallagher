@@ -9,7 +9,7 @@ href references or as individual fields in the user's profile.
 
 """
 from ..utils import (
-    AppBaseModel,
+    AppBaseResponseModel,
 )
 
 from ..ref import (
@@ -18,7 +18,7 @@ from ..ref import (
 
 
 class PdfResponse(
-    AppBaseModel,
+    AppBaseResponseModel,
 ):
     """ Personal Definition fields
 

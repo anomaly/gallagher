@@ -1,5 +1,5 @@
 from ..utils import (
-    AppBaseModel,
+    AppBaseResponseModel,
     HrefMixin,
 )
 
@@ -9,7 +9,7 @@ from ..summary import (
 
 
 class AlarmResponse(
-    AppBaseModel,
+    AppBaseResponseModel,
 ):
     """ AlarmResponse represents a single alarm
     """

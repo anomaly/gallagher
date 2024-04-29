@@ -13,50 +13,19 @@ from pydantic import (
     ConfigDict,
 )
 
+# Helper functions for parsing
 
-def to_lower_camel(name: str) -> str:
+def _to_lower_camel(name: str) -> str:
     """
     Converts a snake_case string to lowerCamelCase
+
+    Not designed for use outside of the scope of this package
     """
     upper = "".join(word.capitalize() for word in name.split("_"))
     return upper[:1].lower() + upper[1:]
 
-
-class AppBaseModel(BaseModel):
-    """ Pydantic base model for applications
-
-    This class is used to define the base model for all schema
-    that we use in the Application, it configures pydantic to
-    translate between camcelCase and snake_case for the JSON
-    amongst other default settings.
-
-    ORM mode will allow pydantic to translate SQLAlchemy results
-    into serializable models.
-
-    For a full set of options, see:
-    https://pydantic-docs.helpmanual.io/usage/model_config/
-    """
-    model_config = ConfigDict(
-        populate_by_name=True,
-        alias_generator=to_lower_camel,
-    )
-
-    # Set to the last time each response was retrieved
-    # If it's set to None then the response was either created
-    # by the API client or it wasn't retrieved from the server
-    #
-    # This is generally used for caching
-    good_known_since: Optional[datetime] = None
-
-    def model_post_init(self, __context) -> None:
-        """
-        The model_post_init method is called after the model is
-        initialized, this is used to set the good_known_since
-
-        https://docs.pydantic.dev/2.0/api/main/#pydantic.main.BaseModel.model_post_init
-        """
-        self.good_known_since = datetime.now()
-
+# Ensure that the primative wrappers such as Mixins appear
+# before the generic classes for parsing utlities
 
 class IdentityMixin(BaseModel):
     """ Identifier 
@@ -96,3 +65,58 @@ class OptionalHref(BaseModel):
     confirmation.
     """
     href: Optional[str] = None
+
+
+
+class AppBaseModel(BaseModel):
+    """ Pydantic base model for applications
+
+    This class is used to define the base model for all schema
+    that we use in the Application, it configures pydantic to
+    translate between camcelCase and snake_case for the JSON
+    amongst other default settings.
+
+    ORM mode will allow pydantic to translate SQLAlchemy results
+    into serializable models.
+
+    For a full set of options, see:
+    https://pydantic-docs.helpmanual.io/usage/model_config/
+    """
+    model_config = ConfigDict(
+        populate_by_name=True,
+        alias_generator=_to_lower_camel,
+    )
+
+    # Set to the last time each response was retrieved
+    # If it's set to None then the response was either created
+    # by the API client or it wasn't retrieved from the server
+    #
+    # This is generally used for caching
+    good_known_since: Optional[datetime] = None
+
+    def model_post_init(self, __context) -> None:
+        """
+        The model_post_init method is called after the model is
+        initialized, this is used to set the good_known_since
+
+        https://docs.pydantic.dev/2.0/api/main/#pydantic.main.BaseModel.model_post_init
+        """
+        self.good_known_since = datetime.now()
+
+
+class AppBaseResponseModel(AppBaseModel):
+    """ Response Model
+    """
+    pass
+
+class AppBaseResponseWithNavigationModel(AppBaseResponseModel):
+    """ Response
+
+    """
+
+    next: Optional[HrefMixin] = None # None means it's the end of responses
+    previous: Optional[HrefMixin] = None # None means first set of responses
+    updates: Optional[HrefMixin] = None # None means no updates to watch for
+
+
+

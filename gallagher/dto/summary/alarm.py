@@ -27,11 +27,14 @@ class AlarmZoneSummary(
     HrefMixin,
     IdentityMixin,
 ):
-    """ #TODO: Revise this if it shows up in other places
+    """ AlarmZoneSummary gives us unactioned events from the CC
 
-    I have literally named this class to model the alarm_zones
-    property in the access_group schema. I don't know if this
-    is appropriate
+    While the detail and summary would typically differ, it seems that
+    the API endpoints return more detail in the summary endpoints.
+
+    Note: that we have a number of hrefs that we should follow to
+    HATEOAS compliance as per the documentation.
+
     """
     time: datetime
     message: str
@@ -44,6 +47,9 @@ class AlarmZoneSummary(
     division: HrefMixin
     event: Optional[HrefMixin] = None
     note_presets: list[str] = []
+
+    # The following URLS should be used to follow through
+    # on various actions that the system allows
     view: HrefMixin
     comment: HrefMixin
     acknowledge: Optional[HrefMixin] = None

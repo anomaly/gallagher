@@ -1,5 +1,17 @@
 """ Data Transfer Object (DTO) utilities
 
+These are utilities that DTO refs, summaries and detail objects
+inherit from. It defines the basic parsing mechanism based on the
+configuration of each endpoint class.
+
+In addition we provide a based class for Responses to encapsulate
+behaviour outlined by the Gallagher API.
+
+Mixins are classes that provided an isolated behaviour for DTO
+classes to inherit from, for example Identifier, Hrefs, etc.
+
+There are some utility functions that are used internally, please
+ignore them unless you are developing the client itself.
 
 """
 
@@ -16,16 +28,15 @@ from pydantic import (
 # Helper functions for parsing
 
 def _to_lower_camel(name: str) -> str:
-    """
-    Converts a snake_case string to lowerCamelCase
+    """ Converts a snake_case string to lowerCamelCase
 
     Not designed for use outside of the scope of this package
     """
     upper = "".join(word.capitalize() for word in name.split("_"))
     return upper[:1].lower() + upper[1:]
 
-# Ensure that the primative wrappers such as Mixins appear
-# before the generic classes for parsing utlities
+# Ensure that the primitive wrappers such as Mixins appear
+# before the generic classes for parsing utilities
 
 class IdentityMixin(BaseModel):
     """ Identifier 
@@ -106,11 +117,28 @@ class AppBaseModel(BaseModel):
 
 class AppBaseResponseModel(AppBaseModel):
     """ Response Model
+
+    Response classes should subclass this not AppBaseModel, so that
+    the framework can differentiate between Model classes and responses.
+
+    AppBaseResponseWithFollowModel sub classes from this, and adds
+    functionality for following next, updates or going back to the previous
+    set of results.
+
     """
     pass
 
-class AppBaseResponseWithNavModel(AppBaseResponseModel):
-    """ Response
+class AppBaseResponseWithFollowModel(AppBaseResponseModel):
+    """ Response with optional Follow links
+
+    Many responses from the Gallagher system return next, previous and update
+    links. This is typical when there are a large number of responses
+    where the absence of a next link denotes that the client has fetched
+    all pending objects.
+
+    Some endpoints return an `update` URL which can be followed to poll 
+    for responses.
+
 
     """
 

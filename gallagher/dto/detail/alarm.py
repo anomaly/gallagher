@@ -20,25 +20,25 @@ from ..ref import (
 
 from ..summary import (
 	EventTypeSummary,
+    AlarmSourceSummary,
 )
 
 class AlarmHistoryDetail(
 	AppBaseModel,
 ):
-	""" Alarm History presented in the details
-	"""
-
-    time: datetime
+    """ Alarm History presented in the details
+    """
     action: str
+    time: datetime
     comment: str
     operator: OperatorRef
 
-class AlarmZoneDetail(
+class AlarmDetail(
     AppBaseModel,
     HrefMixin,
     IdentityMixin,
 ):
-    """ AlarmZoneSummary gives us unactioned events from the CC
+    """ AlarmSummary gives us unactioned events from the CC
 
     While the detail and summary would typically differ, it seems that
     the API endpoints return more detail in the summary endpoints.
@@ -70,7 +70,7 @@ class AlarmZoneDetail(
     force_process: Optional[HrefMixin] = None
 
     # Details fields
-    details: str
-    history: list[AlarmHistoryDetail]
-    instruction: InstructionRef
+    details: Optional[str] = ""
+    history: Optional[list[AlarmHistoryDetail]] = []
+    instruction: Optional[InstructionRef] = None
     cardholder: Optional[CardholderRef] = None

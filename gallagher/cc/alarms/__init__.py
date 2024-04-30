@@ -9,8 +9,8 @@ from ..core import (
     Capabilities
 )
 
-from ...dto.summary import (
-    AlarmZoneSummary
+from ...dto.detail import (
+    AlarmDetail,
 )
 
 from ...dto.response import (
@@ -29,5 +29,5 @@ class Alarms(
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.alarms.alarms,
             dto_list=AlarmSummaryResponse,
-            dto_retrieve=AlarmZoneSummary,
+            dto_retrieve=AlarmDetail,
         )

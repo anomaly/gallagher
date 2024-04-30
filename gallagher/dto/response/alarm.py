@@ -4,7 +4,7 @@ from ..utils import (
 )
 
 from ..summary import (
-    AlarmZoneSummary,
+    AlarmSummary,
 )
 
 
@@ -13,5 +13,5 @@ class AlarmSummaryResponse(
 ):
     """ AlarmSummaryResponse represents a single alarm
     """
-    alarms: list[AlarmZoneSummary]
+    alarms: list[AlarmSummary]
     updates: HrefMixin

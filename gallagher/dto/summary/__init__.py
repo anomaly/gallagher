@@ -1,4 +1,4 @@
-"""
+""" Summary
 
 
 """
@@ -10,7 +10,7 @@ from .access_group import (
 
 from .alarm import (
     AlarmSourceSummary,
-    AlarmZoneSummary,
+    AlarmSummary,
 )
 
 from .card_type import (

@@ -6,7 +6,7 @@ from ..utils import (
     HrefMixin
 )
 from ..summary import (
-    AlarmZoneSummary,
+    AlarmSummary,
     AccessSummary,
     SaltoAccessItemSummary,
 )
@@ -64,4 +64,4 @@ class AccessGroupDetail(
 
     access: list[AccessSummary]
     salto_access: list[SaltoAccessItemSummary]
-    alarm_zones: list[AlarmZoneSummary]
+    alarm_zones: list[AlarmSummary]

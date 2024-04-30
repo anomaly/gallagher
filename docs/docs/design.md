@@ -45,18 +45,39 @@ class Alarms(
     async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.alarms.alarms,
-            dto_list=AlarmResponse,
-            dto_retrieve=AlarmZoneSummary,
+            dto_list=AlarmSummaryResponse,
+            dto_retrieve=AlarmSummary,
         )
 ```
 
-The above example shows the `Alarms` class which is a consumer of the `alarms` endpoint. It nominates `AlarmResponse` as the class the infrastructure will use to parse `list` responses and `AlarmZoneSummary` as the class to parse `retrieve` responses.
+The above example shows the `Alarms` class which is a consumer of the `alarms` endpoint. It nominates `AlarmSummaryResponse` as the class the infrastructure will use to parse `list` responses and `AlarmSummary` as the class to parse `retrieve` responses.
 
 It references the `Capabilities.CURRENT` singleton which is a `Capabilities` instance that is bootstrapped at runtime. This is a singleton that is used to provide references to all endpoints.
 
 If a command centre does not have a certain capability then the objects are set to `None` and accessing the feature raises an exception (more on this in other sections).
 
 ### Designing Endpoint Consumers
+
+Why `get_config`
+
+
+```python
+class Division(APIEndpoint):
+    """
+    Gallagher advises against hardcoding the URLs for divisions, and instead
+    recommends using the /api endpoint to discover the URLs from 
+    events.divisions.href and alarms.division.href.
+
+    """
+
+    @classmethod
+    async def get_config(cls) -> EndpointConfig:
+        return EndpointConfig(
+            endpoint=Capabilities.CURRENT.features.divisions.divisions,
+            dto_list=DivisionSummaryResponse,
+            dto_retrieve=DivisionDetail,
+        )
+```
 
 ## Layout
 

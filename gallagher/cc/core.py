@@ -139,6 +139,21 @@ class APIEndpoint:
     __config__ = None
 
     @classmethod
+    async def expire_discovery(cls):
+        """ Expires endpoint discovery information
+
+        Use this with caution as it significantly increases roundtrip times
+        and decreases API client performance.
+
+        Unless the server instance updates mid cycle, there should be no
+        reason for these discovered URLs to change.
+        """
+        Capabilities.CURRENT = DiscoveryResponse(
+           version="0.0.0",  # Indicates that it's not been discovered
+            features=FeaturesDetail()
+        )
+
+    @classmethod
     async def get_config(cls) -> EndpointConfig:
         """ Returns the configuration for the endpoint
 

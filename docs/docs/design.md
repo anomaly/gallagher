@@ -58,13 +58,35 @@ If a command centre does not have a certain capability then the objects are set 
 
 ### Designing Endpoint Consumers
 
-Why `get_config`
+Each API consumer inherits from `APIEndpont` which is defined in  `gallagher.cc.core`. Before each endpoint is executed we run an internal discovery process (see the `_discover` method in `APIEndoint` class). 
+
+We do this to be forwards compatible (see [HATEOAS chapter](https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html) in Gallagher's documentation), but caches the response across a session (a session being an application life cycle) to increase API round trip performance.
+
+The discovered state of the server is stored in a singleton, that's used by all the API endpoints. This can be found in the `core` package, as the `CURRENT` attribute of the  `Capabilities` class. This is always an instance of `DiscoveryResponse`. Because this is instantiated as part of the bootstrap, initially all the URLs are set to `None`, the values are populated ahead of the first API call made to the server.
+
+For this reason all `APIEndpoint` classes return a configuration as a result of a function called `get_config` (an `async` method that at a `class` scope) as opposed to a statically assigned class variable (otherwise the URLs would always result to be the initial `None` value).
+
+> If you want to force discovery of the endpoints call `expire_discovery` on the `APIEndpoint` before calling the API endpoint.
 
 
 ```python
+from ..core import (
+    Capabilities,
+    APIEndpoint,
+    EndpointConfig
+)
+
+from ...dto.detail import (
+    DivisionDetail,
+)
+
+from ...dto.response import (
+    DivisionSummaryResponse,
+)
+
 class Division(APIEndpoint):
     """
-    Gallagher advises against hardcoding the URLs for divisions, and instead
+    Gallagher advises against hard coding the URLs for divisions, and instead
     recommends using the /api endpoint to discover the URLs from 
     events.divisions.href and alarms.division.href.
 

@@ -34,7 +34,7 @@ Never hard code URLs as this violates the [HATEOAS](https://en.wikipedia.org/wik
 
 Additionally each configuration will provide references to DTO classes that is used to parse responses, and details of the body.
 
-```
+```py
 class Alarms(
     APIEndpoint
 ):

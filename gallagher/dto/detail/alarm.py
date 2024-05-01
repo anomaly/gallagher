@@ -30,7 +30,7 @@ class AlarmHistoryDetail(
     """
     action: str
     time: datetime
-    comment: str
+    comment: str # Comment provided as part of an action
     operator: OperatorRef
 
 class AlarmDetail(
@@ -50,7 +50,7 @@ class AlarmDetail(
     time: datetime
     message: str
     source: AlarmSourceSummary
-    type: str
+    type: str 
     event_type: Optional[EventTypeSummary] = None
     priority: int
     state: str
@@ -69,7 +69,7 @@ class AlarmDetail(
     process_with_comment: Optional[HrefMixin] = None
     force_process: Optional[HrefMixin] = None
 
-    # Details fields
+    # Details fields, these are what don't appear in the summary
     details: Optional[str] = ""
     history: Optional[list[AlarmHistoryDetail]] = []
     instruction: Optional[InstructionRef] = None

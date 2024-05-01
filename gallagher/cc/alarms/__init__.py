@@ -103,7 +103,9 @@ class Alarms(
         to get the href of the Alarm
         """
 
-        return False
+        
+
+        return alarm.href is not None
 
 
     @classmethod
@@ -133,7 +135,7 @@ class Alarms(
     ) -> bool:
         """
         """
-        return False
+        return len(comment)>0
 
 
     @classmethod

@@ -15,6 +15,8 @@ from typing import Optional
 from datetime import datetime
 from dataclasses import dataclass
 
+from http import HTTPStatus  # Provides constants for HTTP status codes
+
 import httpx
 
 from gallagher.exception import (
@@ -27,6 +29,12 @@ from ..dto.detail import (
 
 from ..dto.response import (
     DiscoveryResponse,
+)
+
+from ..exception import (
+    UnlicensedFeatureException,
+    NotFoundException,
+    AuthenticationError,
 )
 
 
@@ -240,18 +248,31 @@ class APIEndpoint:
 
         async with httpx.AsyncClient() as _httpx_async:
 
-            response = await _httpx_async.get(
-                f'{cls.__config__.endpoint.href}',
-                headers=get_authorization_headers(),
-            )
+            try:
 
-            await _httpx_async.aclose()
+                response = await _httpx_async.get(
+                    f'{cls.__config__.endpoint.href}',
+                    headers=get_authorization_headers(),
+                )
 
-            parsed_obj = cls.__config__.dto_list.model_validate(
-                response.json()
-            )
+                await _httpx_async.aclose()
 
-            return parsed_obj
+                if response.status_code == HTTPStatus.OK:
+
+
+                    parsed_obj = cls.__config__.dto_list.model_validate(
+                        response.json()
+                    )
+
+                    return parsed_obj
+
+                elif response.status_code == HTTPStatus.FORBIDDEN:
+                    raise UnlicensedFeatureException()
+                elif response.status_code == HTTPStatus.UNAUTHORIZED:
+                    raise AuthenticationError()
+
+            except httpx.RequestError as e:
+                pass
 
     @classmethod
     async def retrieve(cls, id):
@@ -267,18 +288,32 @@ class APIEndpoint:
 
         async with httpx.AsyncClient() as _httpx_async:
 
-            response = await _httpx_async.get(
-                f'{cls.__config__.endpoint.href}/{id}',
-                headers=get_authorization_headers(),
-            )
+            try:
 
-            await _httpx_async.aclose()
+                response = await _httpx_async.get(
+                    f'{cls.__config__.endpoint.href}/{id}',
+                    headers=get_authorization_headers(),
+                )
 
-            parsed_obj = cls.__config__.dto_retrieve.model_validate(
-                response.json()
-            )
+                await _httpx_async.aclose()
 
-            return parsed_obj
+                if response.status_code == HTTPStatus.OK:
+
+                    parsed_obj = cls.__config__.dto_retrieve.model_validate(
+                        response.json()
+                    )
+
+                    return parsed_obj
+
+                elif response.status_code == HTTPStatus.NOT_FOUND:
+                    raise NotFoundException()
+                elif response.status_code == HTTPStatus.FORBIDDEN:
+                    raise UnlicensedFeatureException()
+                elif response.status_code == HTTPStatus.UNAUTHORIZED:
+                    raise AuthenticationError()
+
+            except httpx.RequestError as e:
+                pass
 
     @classmethod
     async def modify(cls):
@@ -302,12 +337,13 @@ class APIEndpoint:
         cls._discover()
 
     @classmethod
-    async def search(cls,
-                     top: int = 100,
-                     sort: str = 'id',
-                     fields: str = 'defaults',
-                     **kwargs
-                     ):
+    async def search(
+        cls,
+        top: int = 100,
+        sort: str = 'id',
+        fields: str = 'defaults',
+        **kwargs
+    ):
         """ Search wrapper for most objects to dynamically search content
 
         Each object has a set of fields that you can query for, most searches

@@ -1,6 +1,8 @@
 """ Cardholder cli commands mounted at ch
 
 """
+import typer
+
 from rich import print as rprint
 from rich.console import Console
 from rich.table import Table
@@ -9,6 +11,10 @@ from .utils import AsyncTyper
 
 from gallagher.cc.cardholders.cardholders import (
     Cardholder
+)
+
+from gallagher.exception import (
+    NotFoundException,
 )
 
 app = AsyncTyper(
@@ -41,5 +47,9 @@ async def list():
 async def get(id: int):
     """ get a cardholder by id
     """
-    cardholder = await Cardholder.retrieve(id)
-    [rprint(r) for r in cardholder.__rich_repr__()]
+    try:
+        cardholder = await Cardholder.retrieve(id)
+        [rprint(r) for r in cardholder.__rich_repr__()]
+    except NotFoundException as e:
+        rprint(f"[bold]No cardholder with id={id} found[/bold]")
+        raise typer.Exit(code=1)

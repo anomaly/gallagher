@@ -18,6 +18,16 @@ class UnlicensedFeatureException(Exception):
     pass
 
 
+class AuthenticationError(Exception):
+    """ Error authentication against the CC API
+
+    This is likely because the use has not provided an authentication
+    key or is not allowed to access this resources with this
+    particular key
+    """
+    pass
+
+
 class NotFoundException(Exception):
     """ Raised if you tried to access an object that either does not
     exists or you don't have permission to access it.

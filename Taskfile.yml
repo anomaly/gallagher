@@ -33,6 +33,10 @@ tasks:
     desc: runs text gallagher console in dev mode
     cmds:
       - poetry run textual run --dev gallagher.tui:main
+  dev:py:
+    desc: runs python in the poetry shell
+    cmds: 
+      - poetry run python -- {{.CLI_ARGS}}
   debug:get:
     desc: use httpie to get payload from CC
     summary: |

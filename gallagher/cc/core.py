@@ -249,34 +249,12 @@ class APIEndpoint:
 
         :param int skip: fetch responses from this anchor
         """
-        await cls._discover()
+        await cls._discover() # Discover must be here for dynamic config
 
-        async with httpx.AsyncClient() as _httpx_async:
-
-            try:
-
-                response = await _httpx_async.get(
-                    f'{cls.__config__.endpoint.href}',
-                    headers=get_authorization_headers(),
-                )
-
-                await _httpx_async.aclose()
-
-                if response.status_code == HTTPStatus.OK:
-
-                    parsed_obj = cls.__config__.dto_list.model_validate(
-                        response.json()
-                    )
-
-                    return parsed_obj
-
-                elif response.status_code == HTTPStatus.FORBIDDEN:
-                    raise UnlicensedFeatureException()
-                elif response.status_code == HTTPStatus.UNAUTHORIZED:
-                    raise AuthenticationError()
-
-            except httpx.RequestError as e:
-                pass
+        return await cls._get(
+            cls.__config__.endpoint.href,
+            cls.__config__.dto_list,
+        )
 
     @classmethod
     async def retrieve(cls, id):
@@ -288,36 +266,12 @@ class APIEndpoint:
 
         :param int id: identifier of the object to be fetched
         """
-        await cls._discover()
+        await cls._discover() # Discover must be here for dynamic config
 
-        async with httpx.AsyncClient() as _httpx_async:
-
-            try:
-
-                response = await _httpx_async.get(
-                    f'{cls.__config__.endpoint.href}/{id}',
-                    headers=get_authorization_headers(),
-                )
-
-                await _httpx_async.aclose()
-
-                if response.status_code == HTTPStatus.OK:
-
-                    parsed_obj = cls.__config__.dto_retrieve.model_validate(
-                        response.json()
-                    )
-
-                    return parsed_obj
-
-                elif response.status_code == HTTPStatus.NOT_FOUND:
-                    raise NotFoundException()
-                elif response.status_code == HTTPStatus.FORBIDDEN:
-                    raise UnlicensedFeatureException()
-                elif response.status_code == HTTPStatus.UNAUTHORIZED:
-                    raise AuthenticationError()
-
-            except httpx.RequestError as e:
-                pass
+        return await cls._get(
+            f'{cls.__config__.endpoint.href}/{id}',
+            cls.__config__.dto_retrieve,
+        )        
 
     @classmethod
     async def modify(cls):
@@ -389,16 +343,24 @@ class APIEndpoint:
         
     # Proposed methods for internal use    
     @classmethod
-    async def _get_all(
+    async def _get(
         cls, 
-        url:str, 
+        url: str, 
         response_class: AppBaseModel | None,
     ):
-        """
-        """
+        """ Generic _get method for all endpoints
 
-        await cls._discover()
+        This is to be used if we can find a prepared url endpoint, this
+        is useful for follow on endpoints like commenting, next, previous
+        etc. The response_class is used to parse the returned object.
 
+        Note: that this does not run discover as it expects the endpoint to
+        be fully formed and callable. If you are calling this from a generic
+        endpoint like `list` please ensure you've called _discover first.
+
+        :param str url: URL to fetch the data from
+        :param AppBaseModel response_class: DTO to be used for list requests
+        """
         async with httpx.AsyncClient() as _httpx_async:
 
             try:
@@ -438,9 +400,6 @@ class APIEndpoint:
     ):
         """
         """
-
-        await cls._discover()
-
         async with httpx.AsyncClient() as _httpx_async:
 
             try:

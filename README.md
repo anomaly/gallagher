@@ -13,11 +13,38 @@ While Gallagher maintain a set of [Swagger definitions](https://github.com/galla
 The client was designed while building products around the Gallagher API. It's design is highly opinionated and does not conform with how Gallagher design software interfaces. If you've worked with [stripe-python](https://github.com/stripe/stripe-python) the syntax may feel familiar.
 
 ```python
-from gallagher import cc, const
+# Import core python libs
+import os
+import asyncio
 
-cc.api_key = "GH_"
+# Import the client and models
+from gallagher import (
+    cc,
+)
+from gallagher.dto.summary import (
+    CardholderSummary,
+)
+from gallagher.cc.cardholders.cardholders import (
+    Cardholder
+)
 
-cc.Customer.list()
+# Set the API key from the environment
+api_key = os.environ.get("GACC_API_KEY")
+cc.api_key = api_key
+
+# Async support gives us back a coroutine
+ch_coro = Cardholder.list()
+
+# Run the coroutine to get the cardholder
+cardholders = asyncio.run(ch_coro)
+cardholder = cardholders.results[0]
+
+# This is now a pydantic object
+type(cardholder) == CardholderSummary
+
+# Print out some details from the object
+cardholder.href
+cardholder.first_name
 ```
 
 > Note this project is **NOT** officially affiliated with Gallagher Security

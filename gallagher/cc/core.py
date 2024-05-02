@@ -432,7 +432,7 @@ class APIEndpoint:
     @classmethod
     async def _post(
         cls, 
-        url:str,
+        url: str,
         payload: AppBaseModel | None,
         response_class: AppBaseModel | None = None,
     ):
@@ -453,7 +453,7 @@ class APIEndpoint:
 
                 await _httpx_async.aclose()
 
-                if response.status_code == HTTPStatus.CREATED:
+                if response.status_code == HTTPStatus.OK:
 
                     if not response_class:
                         return
@@ -470,4 +470,4 @@ class APIEndpoint:
                     raise AuthenticationError()
 
             except httpx.RequestError as e:
-                pass
+                raise(e)

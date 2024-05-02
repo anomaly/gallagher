@@ -106,7 +106,7 @@ class Alarms(
         """
 
         await cls._post(
-            alarm.href,
+            alarm.comment.href,
             AlarmCommentPayload(
                 comment=comment
             ),

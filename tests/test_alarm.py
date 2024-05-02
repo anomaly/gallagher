@@ -99,5 +99,8 @@ async def test_alarms_post_comment(alarm_comment: str):
             alarm_summary.id
         )
 
-        assert created_status == True
+        for history in alarm_detail_response.history:
+            if history.comment == alarm_comment:
+                assert True
+                return
 

@@ -72,6 +72,7 @@ def get_authorization_headers():
     """
     from . import api_key
     return {
+        'Content-Type': 'application/json',
         'Authorization': f'GGL-API-KEY {api_key}'
     }
 
@@ -198,7 +199,7 @@ class APIEndpoint:
         """
 
         if Capabilities.CURRENT.version != "0.0.0" and\
-                type(Capabilities.CURRENT.good_known_since) is datetime:
+                type(Capabilities.CURRENT._good_known_since) is datetime:
             # We've already discovered the endpoints as per HATEOAS
             # design requirement, however because the endpoint configuration is
             # dynamically populated, we have to call the get_config method
@@ -446,7 +447,7 @@ class APIEndpoint:
 
                 response = await _httpx_async.post(
                     url,
-                    json=payload.dict(exclude={"good_known_since"}) if payload else None,
+                    json=payload.dict() if payload else None,
                     headers=get_authorization_headers(),
                 )
 

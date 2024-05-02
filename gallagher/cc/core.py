@@ -23,6 +23,10 @@ from gallagher.exception import (
     UnlicensedFeatureException
 )
 
+from ..dto.utils import (
+    AppBaseModel,
+)
+
 from ..dto.detail import (
     FeaturesDetail,
 )
@@ -259,7 +263,6 @@ class APIEndpoint:
 
                 if response.status_code == HTTPStatus.OK:
 
-
                     parsed_obj = cls.__config__.dto_list.model_validate(
                         response.json()
                     )
@@ -382,3 +385,88 @@ class APIEndpoint:
             )
 
             return parsed_obj
+        
+    # Proposed methods for internal use    
+    @classmethod
+    async def _get_all(
+        cls, 
+        url:str, 
+        response_class: AppBaseModel | None,
+    ):
+        """
+        """
+
+        await cls._discover()
+
+        async with httpx.AsyncClient() as _httpx_async:
+
+            try:
+
+                response = await _httpx_async.get(
+                    url,
+                    headers=get_authorization_headers(),
+                )
+
+                await _httpx_async.aclose()
+
+                if response.status_code == HTTPStatus.OK:
+
+                    if not response_class:
+                        return
+
+                    parsed_obj = response_class.model_validate(
+                        response.json()
+                    )
+
+                    return parsed_obj
+
+                elif response.status_code == HTTPStatus.FORBIDDEN:
+                    raise UnlicensedFeatureException()
+                elif response.status_code == HTTPStatus.UNAUTHORIZED:
+                    raise AuthenticationError()
+
+            except httpx.RequestError as e:
+                pass
+
+    @classmethod
+    async def _post(
+        cls, 
+        url:str,
+        payload: AppBaseModel | None,
+        response_class: AppBaseModel | None = None,
+    ):
+        """
+        """
+
+        await cls._discover()
+
+        async with httpx.AsyncClient() as _httpx_async:
+
+            try:
+
+                response = await _httpx_async.post(
+                    url,
+                    json=payload.dict(exclude={"good_known_since"}) if payload else None,
+                    headers=get_authorization_headers(),
+                )
+
+                await _httpx_async.aclose()
+
+                if response.status_code == HTTPStatus.CREATED:
+
+                    if not response_class:
+                        return
+
+                    parsed_obj = response_class.model_validate(
+                        response.json()
+                    )
+
+                    return parsed_obj
+
+                elif response.status_code == HTTPStatus.FORBIDDEN:
+                    raise UnlicensedFeatureException()
+                elif response.status_code == HTTPStatus.UNAUTHORIZED:
+                    raise AuthenticationError()
+
+            except httpx.RequestError as e:
+                pass

@@ -2,7 +2,9 @@
 to make sure that we are getting valid responses.
 
 """
+from datetime import datetime
 
+import pytest
 
 async def test_alarms_list():
     """ Get a list of item types and iterates through it
@@ -23,7 +25,11 @@ async def test_alarms_list():
 
 
 async def test_alarms_detail():
-    """ Get a list of alarms and then try and get it's detail
+    """ Get details of all the alarms 
+
+    This will get the details of all the alarms and then
+    compare the summary with the detail to make sure that
+    the data is consistent.
     """
     from gallagher.cc.alarms import (
         Alarms
@@ -50,9 +56,19 @@ async def test_alarms_detail():
         assert type(alarm_detail_response) is AlarmDetail
         assert (alarm_detail_response.id == alarm_summary.id)
 
+# Fixture for the comment, this will create a timestamp
+# based string so we can compare this is a comment that
+# was created for this test
 
-async def test_alarms_post_comment():
-    """ Get a list of alarms and then try and get it's detail
+@pytest.fixture
+async def alarm_comment():
+    return f"Alarm comment {datetime.now()}"
+
+async def test_alarms_post_comment(alarm_comment: str):
+    """ Posts a commend to an alarm 
+
+    This will make a new comment and then expect the next test
+    to figure out that we have a new comment on the first
     """
     from gallagher.cc.alarms import (
         Alarms
@@ -71,13 +87,17 @@ async def test_alarms_post_comment():
     assert type(response.alarms) is list
     assert len(response.alarms) > 0
 
-
     for alarm_summary in response.alarms:
         # Get the detail of the alarm for comparison
         created_status = await Alarms.comment(
             alarm_summary,
-            "Statis comment"
+            alarm_comment,
         )
 
-        assert(created_status == True)
+        # Get alarm detail to check the comment
+        alarm_detail_response = await Alarms.retrieve(
+            alarm_summary.id
+        )
+
+        assert created_status == True
 

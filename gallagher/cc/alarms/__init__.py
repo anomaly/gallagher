@@ -27,6 +27,10 @@ from ...dto.response import (
     AlarmSummaryResponse,
 )
 
+from ...dto.payload import (
+    AlarmCommentPayload,
+)
+
 
 class Alarms(
     APIEndpoint,
@@ -52,7 +56,7 @@ class Alarms(
     async def get_config(cls) -> EndpointConfig:
         """ Return the configuration for Alarms
 
-        Agruments:
+        Arguments:
         cls: class reference
         """
         return EndpointConfig(
@@ -74,11 +78,10 @@ class Alarms(
     @classmethod
     async def mark_as_viewed(
         cls,
-        alarm: [
-            AlarmRef|
-            AlarmSummary|
-            AlarmDetail
-        ],
+        alarm:
+            AlarmRef |
+            AlarmSummary |
+            AlarmDetail,
     ):
         """
         """
@@ -87,11 +90,10 @@ class Alarms(
     @classmethod
     async def comment(
         cls,
-        alarm: [
-            AlarmRef|
-            AlarmSummary|
-            AlarmDetail
-        ],
+        alarm:
+            AlarmRef |
+            AlarmSummary |
+            AlarmDetail,
         comment: str,
     ) -> bool:
         """ Comment on an alarm without changing status
@@ -103,19 +105,22 @@ class Alarms(
         to get the href of the Alarm
         """
 
-        
+        await cls._post(
+            alarm.href,
+            AlarmCommentPayload(
+                comment=comment
+            ),
+        )
 
         return alarm.href is not None
-
 
     @classmethod
     async def mark_as_acknowledged(
         cls,
-        alarm: [
-            AlarmRef|
-            AlarmSummary|
-            AlarmDetail
-        ],
+        alarm:
+            AlarmRef |
+            AlarmSummary |
+            AlarmDetail,
         comment: Optional[str],
     ) -> bool:
         """
@@ -126,11 +131,10 @@ class Alarms(
     @classmethod
     async def mark_as_processed(
         cls,
-        alarm: [
-            AlarmRef|
-            AlarmSummary|
-            AlarmDetail
-        ],
+        alarm:
+            AlarmRef |
+            AlarmSummary |
+            AlarmDetail,
         comment: Optional[str],
     ) -> bool:
         """
@@ -141,11 +145,10 @@ class Alarms(
     @classmethod
     async def mark_as_force_processed(
         cls,
-        alarm: [
-            AlarmRef|
-            AlarmSummary|
-            AlarmDetail
-        ],
+        alarm:
+            AlarmRef |
+            AlarmSummary |
+            AlarmDetail,
     ) -> bool:
         """
         """

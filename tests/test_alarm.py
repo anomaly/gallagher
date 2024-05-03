@@ -62,7 +62,7 @@ async def test_alarms_detail():
 
 @pytest.fixture
 async def alarm_comment():
-    return f"Alarm comment {datetime.now()}"
+    return f"Test suite alarm comment {datetime.now()}"
 
 async def test_alarms_post_comment(alarm_comment: str):
     """ Posts a commend to an alarm 
@@ -89,7 +89,7 @@ async def test_alarms_post_comment(alarm_comment: str):
 
     for alarm_summary in response.alarms:
         # Get the detail of the alarm for comparison
-        created_status = await Alarms.comment(
+        await Alarms.comment(
             alarm_summary,
             alarm_comment,
         )
@@ -100,7 +100,9 @@ async def test_alarms_post_comment(alarm_comment: str):
         )
 
         for history in alarm_detail_response.history:
-            if history.comment == alarm_comment:
+            # Find the comment in the history
+            if history.comment == alarm_comment and \
+                history.action == "comment":
                 assert True
                 return
 

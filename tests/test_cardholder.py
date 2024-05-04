@@ -2,38 +2,48 @@
 
 """
 
+import pytest
 
-async def test_cardholder_list():
+from gallagher.dto.detail import (
+    CardholderDetail,
+)
 
-    from gallagher.cc.cardholders.cardholders import (
-        Cardholder
-    )
-    from gallagher.dto.response import (
-        CardholderSummaryResponse
-    )
+from gallagher.dto.response import (
+    CardholderSummaryResponse
+)
 
-    response = await Cardholder.list()
-    assert type(response) is CardholderSummaryResponse
-    assert type(response.results) is list
-    assert len(response.results) > 0
+from gallagher.cc.cardholders.cardholders import (
+    Cardholder
+)
 
+@pytest.fixture
+async def cardholder_summary() -> CardholderSummaryResponse:
+    """ Makes a single call to the cardholder list
 
-async def test_cardholder_detail():
+    This is passed as a fixture to all other calls around
+    on this test to save network round trips.
 
-    from gallagher.cc.cardholders.cardholders import (
-        Cardholder
-    )
-    from gallagher.dto.detail import (
-        CardholderDetail,
-    )
-    from gallagher.dto.response import (
-        CardholderSummaryResponse,
-    )
+    :return: CardholderSummaryResponse
+    """
 
     response = await Cardholder.list()
-    assert type(response) is CardholderSummaryResponse
+    return response
 
-    for cardholder_summary in response.results:
+async def test_cardholder_list(
+    cardholder_summary: CardholderSummaryResponse
+):
+    """ Test for the cardholder list
+    """
+    assert type(cardholder_summary) is CardholderSummaryResponse
+    assert type(cardholder_summary.results) is list
+    assert len(cardholder_summary.results) > 0
+
+
+async def test_cardholder_detail(cardholder_summary: CardholderSummaryResponse):
+    """ For each cardholder in the list, get the detail and compare
+    """
+
+    for cardholder_summary in cardholder_summary.results:
         # Get the detail of the cardholder for comparison
         cardholder_detail_response = await Cardholder.retrieve(
             cardholder_summary.id

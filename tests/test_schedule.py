@@ -1,19 +1,36 @@
+""" Schedule lists
 """
 
+import pytest
 
-"""
+from gallagher.dto.response import (
+    ScheduleSummaryResponse,
+)
 
+from gallagher.cc.alarms.schedule import (
+    Schedule
+)
 
-async def test_schedules_list():
+@pytest.fixture
+async def schedule_summary_response() -> ScheduleSummaryResponse:
+    """ Makes a single call to the schedule list
 
-    from gallagher.cc.alarms.schedule import (
-        Schedule
-    )
-    from gallagher.dto.response import (
-        ScheduleSummaryResponse,
-    )
+    This is passed as a fixture to all other calls around
+    on this test to save network round trips.
+
+    :return: ScheduleSummaryResponse
+    """
 
     response = await Schedule.list()
-    assert type(response) is ScheduleSummaryResponse
-    assert type(response.results) is list
-    assert len(response.results) > 0
+    return response
+
+async def test_schedules_list(
+    schedule_summary_response: ScheduleSummaryResponse
+):
+    """ Tests the schedule list
+
+    :param schedule_summary_response: ScheduleSummaryResponse
+    """
+    assert type(schedule_summary_response) is ScheduleSummaryResponse
+    assert type(schedule_summary_response.results) is list
+    assert len(schedule_summary_response.results) > 0

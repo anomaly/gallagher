@@ -1,6 +1,4 @@
 """ Tests to see that are running the tests against the right version
-
-
 """
 
 from gallagher import __version__

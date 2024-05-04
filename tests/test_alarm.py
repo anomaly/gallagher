@@ -6,7 +6,6 @@ from datetime import datetime
 
 import pytest
 
-
 from gallagher.dto.detail import (
     AlarmDetail,
 )

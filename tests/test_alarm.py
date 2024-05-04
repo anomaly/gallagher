@@ -83,6 +83,12 @@ async def test_alarms_post_comment(
             alarm_comment,
         )
 
+async def test_alarms_comment_exists(
+    alarm_summary: AlarmSummaryResponse,
+    alarm_comment: str
+):
+    for alarm_summary in alarm_summary.alarms:
+
         # Get alarm detail to check the comment
         alarm_detail_response = await Alarms.retrieve(
             alarm_summary.id

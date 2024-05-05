@@ -196,7 +196,7 @@ To check the system level gateway status:
 - Find the `Command Centre Cloud` item and double-click it
 - Switch to the `Configuration` page, it should look something like this:
 
-![Command Centre Cloud Configuration](https://raw.githubusercontent.com/anomaly/gallagher/main/gallagher-command-centre-properties.png)
+![Command Centre Cloud Configuration](https://raw.githubusercontent.com/anomaly/gallagher/master/gallagher-command-centre-properties.png)
 
 To check your API key:
 
@@ -205,7 +205,7 @@ To check your API key:
 - Find the item that represents your REST Client
 - Switch to the `Connections` page, it should look something like this
 
-![Command Centre Cloud Connections](https://raw.githubusercontent.com/anomaly/gallagher/main/gallagher-rest-properties.png)
+![Command Centre Cloud Connections](https://raw.githubusercontent.com/anomaly/gallagher/master/gallagher-rest-properties.png)
 
 ## Python Libraries
 

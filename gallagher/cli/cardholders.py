@@ -3,7 +3,6 @@
 """
 import typer
 
-from rich import print as rprint
 from rich.console import Console
 from rich.table import Table
 
@@ -29,7 +28,7 @@ async def list():
     console = Console()
     with console.status(
         "[bold green]Fetching cardholders...",
-        spinner="clock"
+        spinner="dots"
     ):
         cardholders = await Cardholder.list()
 
@@ -47,9 +46,15 @@ async def list():
 async def get(id: int):
     """ get a cardholder by id
     """
-    try:
-        cardholder = await Cardholder.retrieve(id)
-        [rprint(r) for r in cardholder.__rich_repr__()]
-    except NotFoundException as e:
-        rprint(f"[bold]No cardholder with id={id} found[/bold]")
-        raise typer.Exit(code=1)
+    console = Console()
+    with console.status(
+        "[bold]Finding cardholder...",
+        spinner="dots"
+    ):
+        try:
+
+            cardholder = await Cardholder.retrieve(id)
+            [console.print(r) for r in cardholder.__rich_repr__()]
+        except NotFoundException as e:
+            console.print(f"[bold]No cardholder with id={id} found[/bold]")
+            raise typer.Exit(code=1)

@@ -383,6 +383,8 @@ class APIEndpoint:
 
                     return parsed_obj
 
+                elif response.status_code == HTTPStatus.NOT_FOUND:
+                    raise NotFoundException()
                 elif response.status_code == HTTPStatus.FORBIDDEN:
                     raise UnlicensedFeatureException()
                 elif response.status_code == HTTPStatus.UNAUTHORIZED:

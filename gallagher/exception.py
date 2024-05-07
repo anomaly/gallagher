@@ -7,8 +7,14 @@ responses from the Gallagher API.
 Everything declared here indicates an implementation error.
 """
 
+class BaseException(Exception):
+    """ Base exception for all Gallagher exceptions
 
-class UnlicensedFeatureException(Exception):
+    This is the base exception for all Gallagher exceptions.
+    """
+    pass
+
+class UnlicensedFeatureException(BaseException):
     """ Raised when a feature is not licensed
 
     This exception is raised when the client attempts to access
@@ -18,7 +24,7 @@ class UnlicensedFeatureException(Exception):
     pass
 
 
-class AuthenticationError(Exception):
+class AuthenticationError(BaseException):
     """ Error authentication against the CC API
 
     This is likely because the use has not provided an authentication
@@ -28,17 +34,27 @@ class AuthenticationError(Exception):
     pass
 
 
-class NotFoundException(Exception):
+class NotFoundException(BaseException):
     """ Raised if you tried to access an object that either does not
     exists or you don't have permission to access it.
     """
     pass
 
 
-class ComingSoonException(Exception):
+class ComingSoonException(BaseException):
     """ Raised if Gallagher has marked this feature to be coming soon
 
     These are items such as mutating a division which is scheduled
     but has not be released
+    """
+    pass
+
+
+class UnsupportedPathException(BaseException):
+    """ Raised if an API Follow path is not supported
+
+    This is raised if the API path is not supported by the client
+    these related to next, previous or updates that certain
+    endpoints support.
     """
     pass

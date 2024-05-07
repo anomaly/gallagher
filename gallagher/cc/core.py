@@ -39,6 +39,7 @@ from ..exception import (
     UnlicensedFeatureException,
     NotFoundException,
     AuthenticationError,
+    UnsupportedPathException,
 )
 
 
@@ -134,7 +135,7 @@ class Capabilities:
         version="0.0.0",  # Indicates that it's not been discovered
         features=FeaturesDetail()
     )
-
+    pass
 
 class APIEndpoint:
     """ Base class for all API objects
@@ -341,6 +342,68 @@ class APIEndpoint:
 
             return parsed_obj
         
+
+    # Follow links methods, these are valid based on if the response
+    # classes make available a next, previous or update href, otherwise
+    # the client raises an NotImplementedError
+
+    @classmethod
+    async def next(cls, response):
+        """ Fetches the next set of results
+
+        This is only valid if the response object has a next href
+        """
+        await cls._discover()
+
+        if not cls.__config__.endpoint.next:
+            raise UnsupportedPathException(
+                "Next not available"
+            )
+
+        return await cls._get(
+            cls.response.next.href,
+            cls.__config__.dto_list,
+        )
+
+
+    @classmethod
+    async def previous(cls, response):
+        """ Fetches the previous set of results
+
+        This is only valid if the response object has a previous href
+        """
+        await cls._discover()
+
+        if not cls.__config__.endpoint.previous:
+            raise UnsupportedPathException(
+                "Previous not available"
+            )
+
+        return await cls._get(
+            cls.response.previous.href,
+            cls.__config__.dto_list,
+        )
+
+    @classmethod
+    async def update(cls, response):
+        """ Fetches the updated set of results
+
+        Update follow the same pattern as next and previous, except
+        it keeps yielding results until the server has no more updates
+        """
+        await cls._discover()
+
+        if not cls.__config__.endpoint.update:
+            raise UnsupportedPathException(
+                "Update not available"
+            )
+
+        return await cls._get(
+            cls.response.update.href,
+            cls.__config__.dto_list,
+        )
+
+
     # Proposed methods for internal use    
     @classmethod
     async def _get(
@@ -417,6 +480,7 @@ class APIEndpoint:
                 if response.status_code == HTTPStatus.OK:
 
                     if not response_class:
+                        """ No response to parse """
                         return
 
                     parsed_obj = response_class.model_validate(
@@ -432,3 +496,4 @@ class APIEndpoint:
 
             except httpx.RequestError as e:
                 raise(e)
+

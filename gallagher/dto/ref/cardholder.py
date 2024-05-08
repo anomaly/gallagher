@@ -4,7 +4,7 @@ from ..utils import (
     AppBaseModel,
     HrefMixin,
     IdentityMixin,
-    OptionalHref,
+    OptionalHrefMixin,
 )
 
 
@@ -20,7 +20,7 @@ class CardholderRef(
 class CardholderEventRef(
     AppBaseModel,
     IdentityMixin,
-    OptionalHref,
+    OptionalHrefMixin,
 ):
     """ Cardholder ref used with events
 

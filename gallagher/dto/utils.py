@@ -57,7 +57,7 @@ class HrefMixin(BaseModel):
     href: HttpUrl
 
 
-class OptionalHref(BaseModel):
+class OptionalHrefMixin(BaseModel):
     """ Optionally available Href
 
     This mixin is used to define the href field for all
@@ -145,9 +145,9 @@ class AppBaseResponseWithFollowModel(AppBaseResponseModel):
 
     """
 
-    next: OptionalHref = None # None means it's the end of responses
-    previous: OptionalHref = None # None means first set of responses
-    updates: OptionalHref = None # None means no updates to watch for
+    next: OptionalHrefMixin = None # None means it's the end of responses
+    previous: OptionalHrefMixin = None # None means first set of responses
+    updates: OptionalHrefMixin = None # None means no updates to watch for
 
 
 

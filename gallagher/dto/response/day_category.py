@@ -1,8 +1,8 @@
 from typing import Optional
 
 from ..utils import (
-    AppBaseModel,
-    HrefMixin
+    HrefMixin,
+    AppBaseResponseWithFollowModel,
 )
 
 from ..ref import (
@@ -11,10 +11,9 @@ from ..ref import (
 
 
 class DayCategoryResponse(
-    AppBaseModel,
+    AppBaseResponseWithFollowModel,
 ):
     """ The response has a list of results and a link to the next page
     """
 
     results: list[DayCategoryRef]
-    next: Optional[HrefMixin] = None

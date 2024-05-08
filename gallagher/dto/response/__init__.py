@@ -4,7 +4,7 @@
 """
 
 from .alarm import (
-    AlarmResponse,
+    AlarmSummaryResponse,
 )
 
 from .card_type import (
@@ -24,7 +24,7 @@ from .discover import (
 )
 
 from .division import (
-    DivisionDetailResponse,
+    DivisionSummaryResponse,
 )
 
 from .door import (

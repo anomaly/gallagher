@@ -1,5 +1,5 @@
 from ..utils import (
-    AppBaseModel,
+    AppBaseResponseModel,
 )
 
 from ..summary import (
@@ -8,7 +8,7 @@ from ..summary import (
 
 
 class ScheduleSummaryResponse(
-    AppBaseModel
+    AppBaseResponseModel,
 ):
     """ Schedule is a time
     """

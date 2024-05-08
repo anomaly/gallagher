@@ -3,7 +3,8 @@ from typing import Optional
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
-    HrefMixin
+    HrefMixin,
+    OptionalHrefMixin,
 )
 
 from ..ref import (
@@ -36,5 +37,5 @@ class AccessGroupSummary(
     description: Optional[str]
     parent: Optional[AccessGroupRef]
     division: IdentityMixin
-    cardholders: Optional[HrefMixin]
+    cardholders: OptionalHrefMixin
     server_display_name: Optional[str]

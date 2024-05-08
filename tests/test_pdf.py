@@ -1,13 +1,36 @@
-async def test_pdf_list():
+""" Personal Data Fields tests
 
-    from gallagher.cc.cardholders.cardholders import (
-        PdfDefinition
-    )
-    from gallagher.dto.response import (
-        PdfResponse
-    )
+Personal Data Fields are dynamic fields that can be added on a cardholder.
+These are per site and are local to the customer.
+
+See #1 to track how this was developed and tested.
+"""
+
+import pytest
+
+from gallagher.dto.response import (
+    PdfResponse
+)
+
+from gallagher.cc.cardholders.cardholders import (
+    PdfDefinition
+)
+
+@pytest.fixture
+async def pdf_definition() -> PdfResponse:
+    """ Makes a single call to the pdf list
+
+    This is passed as a fixture to all other calls around
+    on this test to save network round trips.
+
+    :return: PdfResponse
+    """
 
     response = await PdfDefinition.list()
-    assert type(response) is PdfResponse
-    assert type(response.results) is list
-    assert len(response.results) > 0
+    return response
+
+async def test_pdf_list(pdf_definition: PdfResponse):
+
+    assert type(pdf_definition) is PdfResponse
+    assert type(pdf_definition.results) is list
+    assert len(pdf_definition.results) > 0

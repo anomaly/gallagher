@@ -4,6 +4,7 @@ from datetime import datetime
 from ..utils import (
     AppBaseModel,
     HrefMixin,
+    OptionalHrefMixin,
     IdentityMixin,
 )
 
@@ -22,16 +23,19 @@ class AlarmSourceSummary(
     name: str
 
 
-class AlarmZoneSummary(
+class AlarmSummary(
     AppBaseModel,
     HrefMixin,
     IdentityMixin,
 ):
-    """ #TODO: Revise this if it shows up in other places
+    """ AlarmSummary gives us unactioned events from the CC
 
-    I have literally named this class to model the alarm_zones
-    property in the access_group schema. I don't know if this
-    is appropriate
+    While the detail and summary would typically differ, it seems that
+    the API endpoints return more detail in the summary endpoints.
+
+    Note: that we have a number of hrefs that we should follow to
+    HATEOAS compliance as per the documentation.
+
     """
     time: datetime
     message: str
@@ -42,12 +46,15 @@ class AlarmZoneSummary(
     state: str
     active: bool
     division: HrefMixin
-    event: Optional[HrefMixin] = None
+    event: OptionalHrefMixin = None
     note_presets: list[str] = []
+
+    # The following URLS should be used to follow through
+    # on various actions that the system allows
     view: HrefMixin
     comment: HrefMixin
-    acknowledge: Optional[HrefMixin] = None
-    acknowledge_with_comment: Optional[HrefMixin] = None
-    process: Optional[HrefMixin] = None
-    process_with_comment: Optional[HrefMixin] = None
-    force_process: Optional[HrefMixin] = None
+    acknowledge: OptionalHrefMixin = None
+    acknowledge_with_comment: OptionalHrefMixin = None
+    process: OptionalHrefMixin = None
+    process_with_comment: OptionalHrefMixin = None
+    force_process: OptionalHrefMixin = None

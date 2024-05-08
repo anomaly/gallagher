@@ -1,17 +1,17 @@
 from ..utils import (
-    AppBaseModel,
+    AppBaseResponseModel,
     HrefMixin,
 )
 
 from ..summary import (
-    AlarmZoneSummary,
+    AlarmSummary,
 )
 
 
-class AlarmResponse(
-    AppBaseModel,
+class AlarmSummaryResponse(
+    AppBaseResponseModel,
 ):
-    """ AlarmResponse represents a single alarm
+    """ AlarmSummaryResponse represents a single alarm
     """
-    alarms: list[AlarmZoneSummary]
+    alarms: list[AlarmSummary]
     updates: HrefMixin

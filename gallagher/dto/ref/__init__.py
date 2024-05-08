@@ -87,6 +87,14 @@ from .schedule import (
     ScheduleRef,
 )
 
+from .operator import (
+    OperatorRef,
+)
+
+from .misc import (
+    InstructionRef,
+)
+
 from .zone import (
     AccessZoneRef,
 )

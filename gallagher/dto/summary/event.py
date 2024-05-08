@@ -5,7 +5,7 @@ from ..utils import (
     AppBaseModel,
     HrefMixin,
     IdentityMixin,
-    OptionalHref,
+    OptionalHrefMixin,
 )
 
 from ..ref import (
@@ -74,6 +74,6 @@ class EventSummary(
     entry_access_zone: Optional[AccessZoneRef] = None
     exit_access_zone: Optional[AccessZoneRef] = None
     door: Optional[DoorRef] = None
-    access_group: OptionalHref = None
+    access_group: OptionalHrefMixin = None
     card: Optional[CardSummary] = None
     modified_item: Optional[ItemSummary] = None

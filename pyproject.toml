@@ -27,7 +27,7 @@ tui = ["textual"]
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.27.0"
-pydantic = "^2.7.0"
+pydantic = "^2.7.1"
 typing-extensions = "^4.11.0"
 annotated-types = "^0.6.0"
 certifi = "^2024.2.2"
@@ -42,13 +42,16 @@ multidict = "^6.0.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^5.0.0"
-coverage = "^7.4.4"
-pytest = "^8.1.1"
+coverage = "^7.5.0"
+pytest = "^8.2.0"
 pytest-order = "^1.2.1"
 pytest-tap = "^3.4"
 pytest-asyncio = "^0.23.6"
 pytest-clarity = "^1.0.1"
 textual-dev = "^1.4.0"
+mkdocs-typer = "^0.0.3"
+mkdocs = "^1.6.0"
+pytest-dependency = "^0.6.0"
 
 
 [tool.poetry.group.cli.dependencies]
@@ -58,7 +61,7 @@ rich = "^13.7.1"
 
 
 [tool.poetry.group.tui.dependencies]
-textual = "^0.56.4"
+textual = "^0.58.1"
 textual-dev = "^1.5.1"
 
 

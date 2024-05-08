@@ -15,10 +15,16 @@ from typing import Optional
 from datetime import datetime
 from dataclasses import dataclass
 
+from http import HTTPStatus  # Provides constants for HTTP status codes
+
 import httpx
 
 from gallagher.exception import (
     UnlicensedFeatureException
+)
+
+from ..dto.utils import (
+    AppBaseModel,
 )
 
 from ..dto.detail import (
@@ -27,6 +33,13 @@ from ..dto.detail import (
 
 from ..dto.response import (
     DiscoveryResponse,
+)
+
+from ..exception import (
+    UnlicensedFeatureException,
+    NotFoundException,
+    AuthenticationError,
+    UnsupportedPathException,
 )
 
 
@@ -60,6 +73,7 @@ def get_authorization_headers():
     """
     from . import api_key
     return {
+        'Content-Type': 'application/json',
         'Authorization': f'GGL-API-KEY {api_key}'
     }
 
@@ -121,7 +135,7 @@ class Capabilities:
         version="0.0.0",  # Indicates that it's not been discovered
         features=FeaturesDetail()
     )
-
+    pass
 
 class APIEndpoint:
     """ Base class for all API objects
@@ -137,6 +151,21 @@ class APIEndpoint:
     # Do not set this variable in your class, this is set by the
     # lifecycle methods and use to cache the configuration object
     __config__ = None
+
+    @classmethod
+    async def expire_discovery(cls):
+        """ Expires endpoint discovery information
+
+        Use this with caution as it significantly increases roundtrip times
+        and decreases API client performance.
+
+        Unless the server instance updates mid cycle, there should be no
+        reason for these discovered URLs to change.
+        """
+        Capabilities.CURRENT = DiscoveryResponse(
+           version="0.0.0",  # Indicates that it's not been discovered
+            features=FeaturesDetail()
+        )
 
     @classmethod
     async def get_config(cls) -> EndpointConfig:
@@ -171,7 +200,7 @@ class APIEndpoint:
         """
 
         if Capabilities.CURRENT.version != "0.0.0" and\
-                type(Capabilities.CURRENT.good_known_since) is datetime:
+                type(Capabilities.CURRENT._good_known_since) is datetime:
             # We've already discovered the endpoints as per HATEOAS
             # design requirement, however because the endpoint configuration is
             # dynamically populated, we have to call the get_config method
@@ -218,23 +247,15 @@ class APIEndpoint:
 
         Most resources can be searched which is exposed by this method.
         Resources also allow pagination which can be controlled by the skip
+
+        :param int skip: fetch responses from this anchor
         """
-        await cls._discover()
+        await cls._discover() # Discover must be here for dynamic config
 
-        async with httpx.AsyncClient() as _httpx_async:
-
-            response = await _httpx_async.get(
-                f'{cls.__config__.endpoint.href}',
-                headers=get_authorization_headers(),
-            )
-
-            await _httpx_async.aclose()
-
-            parsed_obj = cls.__config__.dto_list.model_validate(
-                response.json()
-            )
-
-            return parsed_obj
+        return await cls._get(
+            cls.__config__.endpoint.href,
+            cls.__config__.dto_list,
+        )
 
     @classmethod
     async def retrieve(cls, id):
@@ -243,23 +264,15 @@ class APIEndpoint:
         Most objects have an ID which is numeral or UUID. 
         Each resource also provides a href and pagination for
         children.
+
+        :param int id: identifier of the object to be fetched
         """
-        await cls._discover()
+        await cls._discover() # Discover must be here for dynamic config
 
-        async with httpx.AsyncClient() as _httpx_async:
-
-            response = await _httpx_async.get(
-                f'{cls.__config__.endpoint.href}/{id}',
-                headers=get_authorization_headers(),
-            )
-
-            await _httpx_async.aclose()
-
-            parsed_obj = cls.__config__.dto_retrieve.model_validate(
-                response.json()
-            )
-
-            return parsed_obj
+        return await cls._get(
+            f'{cls.__config__.endpoint.href}/{id}',
+            cls.__config__.dto_retrieve,
+        )        
 
     @classmethod
     async def modify(cls):
@@ -283,12 +296,13 @@ class APIEndpoint:
         cls._discover()
 
     @classmethod
-    async def search(cls,
-                     top: int = 100,
-                     sort: str = 'id',
-                     fields: str = 'defaults',
-                     **kwargs
-                     ):
+    async def search(
+        cls,
+        top: int = 100,
+        sort: str = 'id',
+        fields: str = 'defaults',
+        **kwargs
+    ):
         """ Search wrapper for most objects to dynamically search content
 
         Each object has a set of fields that you can query for, most searches
@@ -327,3 +341,159 @@ class APIEndpoint:
             )
 
             return parsed_obj
+        
+
+    # Follow links methods, these are valid based on if the response
+    # classes make available a next, previous or update href, otherwise
+    # the client raises an NotImplementedError
+
+    @classmethod
+    async def next(cls, response):
+        """ Fetches the next set of results
+
+        This is only valid if the response object has a next href
+        """
+        await cls._discover()
+
+        if not cls.__config__.endpoint.next:
+            raise UnsupportedPathException(
+                "Next not available"
+            )
+
+        return await cls._get(
+            cls.response.next.href,
+            cls.__config__.dto_list,
+        )
+
+
+    @classmethod
+    async def previous(cls, response):
+        """ Fetches the previous set of results
+
+        This is only valid if the response object has a previous href
+        """
+        await cls._discover()
+
+        if not cls.__config__.endpoint.previous:
+            raise UnsupportedPathException(
+                "Previous not available"
+            )
+
+        return await cls._get(
+            cls.response.previous.href,
+            cls.__config__.dto_list,
+        )
+
+    @classmethod
+    async def update(cls, response):
+        """ Fetches the updated set of results
+
+        Update follow the same pattern as next and previous, except
+        it keeps yielding results until the server has no more updates
+        """
+        await cls._discover()
+
+        if not cls.__config__.endpoint.update:
+            raise UnsupportedPathException(
+                "Update not available"
+            )
+
+        return await cls._get(
+            cls.response.update.href,
+            cls.__config__.dto_list,
+        )
+
+
+    # Proposed methods for internal use    
+    @classmethod
+    async def _get(
+        cls, 
+        url: str, 
+        response_class: AppBaseModel | None,
+    ):
+        """ Generic _get method for all endpoints
+
+        This is to be used if we can find a prepared url endpoint, this
+        is useful for follow on endpoints like commenting, next, previous
+        etc. The response_class is used to parse the returned object.
+
+        Note: that this does not run discover as it expects the endpoint to
+        be fully formed and callable. If you are calling this from a generic
+        endpoint like `list` please ensure you've called _discover first.
+
+        :param str url: URL to fetch the data from
+        :param AppBaseModel response_class: DTO to be used for list requests
+        """
+        async with httpx.AsyncClient() as _httpx_async:
+
+            try:
+
+                response = await _httpx_async.get(
+                    f'{url}', # required to turn pydantic object to str
+                    headers=get_authorization_headers(),
+                )
+
+                await _httpx_async.aclose()
+
+                if response.status_code == HTTPStatus.OK:
+
+                    if not response_class:
+                        return
+
+                    parsed_obj = response_class.model_validate(
+                        response.json()
+                    )
+
+                    return parsed_obj
+
+                elif response.status_code == HTTPStatus.NOT_FOUND:
+                    raise NotFoundException()
+                elif response.status_code == HTTPStatus.FORBIDDEN:
+                    raise UnlicensedFeatureException()
+                elif response.status_code == HTTPStatus.UNAUTHORIZED:
+                    raise AuthenticationError()
+
+            except httpx.RequestError as e:
+                pass
+
+    @classmethod
+    async def _post(
+        cls, 
+        url: str,
+        payload: AppBaseModel | None,
+        response_class: AppBaseModel | None = None,
+    ):
+        """
+        """
+        async with httpx.AsyncClient() as _httpx_async:
+
+            try:
+
+                response = await _httpx_async.post(
+                    f'{url}', # required to turn pydantic object to str
+                    json=payload.dict() if payload else None,
+                    headers=get_authorization_headers(),
+                )
+
+                await _httpx_async.aclose()
+
+                if response.status_code == HTTPStatus.OK:
+
+                    if not response_class:
+                        """ No response to parse """
+                        return
+
+                    parsed_obj = response_class.model_validate(
+                        response.json()
+                    )
+
+                    return parsed_obj
+
+                elif response.status_code == HTTPStatus.FORBIDDEN:
+                    raise UnlicensedFeatureException()
+                elif response.status_code == HTTPStatus.UNAUTHORIZED:
+                    raise AuthenticationError()
+
+            except httpx.RequestError as e:
+                raise(e)
+

@@ -1,4 +1,4 @@
-"""
+""" Summary
 
 
 """
@@ -10,7 +10,7 @@ from .access_group import (
 
 from .alarm import (
     AlarmSourceSummary,
-    AlarmZoneSummary,
+    AlarmSummary,
 )
 
 from .card_type import (
@@ -24,6 +24,10 @@ from .cardholder import (
 
 from .day_category import (
     DayCategorySummary,
+)
+
+from .division import (
+    DivisionSummary
 )
 
 from .door import (

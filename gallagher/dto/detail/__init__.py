@@ -7,6 +7,10 @@ from .access_group import (
     AccessGroupDetail,
 )
 
+from .alarm import (
+    AlarmDetail,
+)
+
 from .card_type import (
     CardTypeDetail,
 )

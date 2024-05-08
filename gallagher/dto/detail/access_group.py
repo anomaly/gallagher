@@ -3,10 +3,11 @@ from typing import Optional
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
-    HrefMixin
+    HrefMixin,
+    OptionalHrefMixin,
 )
 from ..summary import (
-    AlarmZoneSummary,
+    AlarmSummary,
     AccessSummary,
     SaltoAccessItemSummary,
 )
@@ -30,13 +31,13 @@ class AccessGroupDetail(
     description: Optional[str]
     parent: Optional[AccessGroupRef]
     division: IdentityMixin
-    cardholders: Optional[HrefMixin]
+    cardholders: OptionalHrefMixin
     server_display_name: Optional[str]
 
     description: Optional[str]
     parent: Optional[AccessGroupRef]
     division: DivisionDetail
-    cardholders: Optional[HrefMixin]
+    cardholders: OptionalHrefMixin
     server_display_name: Optional[str]
     children: list[AccessGroupRef]
     personal_data_definitions: list[PDFRef]
@@ -64,4 +65,4 @@ class AccessGroupDetail(
 
     access: list[AccessSummary]
     salto_access: list[SaltoAccessItemSummary]
-    alarm_zones: list[AlarmZoneSummary]
+    alarm_zones: list[AlarmSummary]

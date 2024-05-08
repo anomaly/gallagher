@@ -17,6 +17,9 @@
 
     The API client takes of appending the headers onto the requests.
 
+    The packages mimic the documentation structure presented by Gallagher on their
+    Github pages https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html
+
 
 """
 

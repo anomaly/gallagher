@@ -3,7 +3,7 @@ from typing import (
 )
 
 from ..utils import (
-    AppBaseModel,
+    AppBaseResponseModel,
 )
 
 from ..detail import (
@@ -12,7 +12,7 @@ from ..detail import (
 
 
 class DiscoveryResponse(
-    AppBaseModel,
+    AppBaseResponseModel,
 ):
     """ A response that outlines the capability of the server
 

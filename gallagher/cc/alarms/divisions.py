@@ -1,4 +1,4 @@
-"""
+""" Division
 
 """
 
@@ -13,7 +13,7 @@ from ...dto.detail import (
 )
 
 from ...dto.response import (
-    DivisionDetailResponse,
+    DivisionSummaryResponse,
 )
 
 
@@ -29,6 +29,6 @@ class Division(APIEndpoint):
     async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.divisions.divisions,
-            dto_list=DivisionDetailResponse,
+            dto_list=DivisionSummaryResponse,
             dto_retrieve=DivisionDetail,
         )

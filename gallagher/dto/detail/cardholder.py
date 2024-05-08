@@ -41,6 +41,33 @@ class CardholderDetail(
     user_extended_access_time: bool = False
     windows_login_enabled: bool = False
 
+    # personal_data_definitions
+    # cards
+    # access_groups
+    # operator_groups
+    # competencies
+
+    edit: HrefMixin
+    update_location: HrefMixin
+    notes: Optional[str] = None
+
+    # notifications
+    # relationships
+    # lockers
+    # elevator_groups
+    # updates
+    # redactions
+
+    def get_pdf(self, PDFRef):
+        """ Get a parsed PDF field from the cardholder given the PDF Ref
+
+        This assumes that you have access to the right PDF reference from 
+        the singleton that the API client would have parsed on initialisation.
+
+        For validation you must pass the PDFRef object to this method.
+        """
+        pass
+
     def __rich_repr__(self):
         return [
             f"[blue bold] person",

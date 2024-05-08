@@ -31,3 +31,8 @@ class GallagherCommandCentreAPI(Adapter):
     @staticmethod
     def parse_uri(uri: str) -> Tuple[str]:
         return (uri,)
+
+
+    def __init__(self, uri: str):
+        super().__init__()
+        self.uri = uri

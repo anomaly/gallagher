@@ -429,7 +429,7 @@ class APIEndpoint:
             try:
 
                 response = await _httpx_async.get(
-                    url,
+                    f'{url}',
                     headers=get_authorization_headers(),
                 )
 
@@ -470,7 +470,7 @@ class APIEndpoint:
             try:
 
                 response = await _httpx_async.post(
-                    url,
+                    f'{url}',
                     json=payload.dict() if payload else None,
                     headers=get_authorization_headers(),
                 )

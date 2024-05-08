@@ -23,6 +23,7 @@ from datetime import datetime
 from pydantic import (
     BaseModel,
     ConfigDict,
+    HttpUrl,
 )
 
 # Helper functions for parsing
@@ -53,7 +54,7 @@ class HrefMixin(BaseModel):
     This mixin is used to define the href field for all
     responses from the Gallagher API.
     """
-    href: str
+    href: HttpUrl
 
 
 class OptionalHref(BaseModel):
@@ -75,7 +76,7 @@ class OptionalHref(BaseModel):
     require a href. See Gallagher's documentation for
     confirmation.
     """
-    href: Optional[str] = None
+    href: Optional[HttpUrl] = None
 
 
 
@@ -96,6 +97,8 @@ class AppBaseModel(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         alias_generator=_to_lower_camel,
+        orm_mode=True,
+        allow_extra=True,
     )
 
     # Set to the last time each response was retrieved
@@ -142,9 +145,9 @@ class AppBaseResponseWithFollowModel(AppBaseResponseModel):
 
     """
 
-    next: Optional[HrefMixin] = None # None means it's the end of responses
-    previous: Optional[HrefMixin] = None # None means first set of responses
-    updates: Optional[HrefMixin] = None # None means no updates to watch for
+    next: OptionalHref = None # None means it's the end of responses
+    previous: OptionalHref = None # None means first set of responses
+    updates: OptionalHref = None # None means no updates to watch for
 
 
 

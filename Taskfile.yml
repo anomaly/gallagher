@@ -37,6 +37,10 @@ tasks:
     desc: runs python in the poetry shell
     cmds: 
       - poetry run python -- {{.CLI_ARGS}}
+  dev:docs:
+    desc: run the mkdocs server with appropriate flags
+    cmds: 
+      - cd docs && mkdocs serve --open -a localhost:8001
   debug:get:
     desc: use httpie to get payload from CC
     summary: |

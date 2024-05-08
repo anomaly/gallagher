@@ -12,6 +12,8 @@ from gallagher.dto.response import (
 )
 
 
+
+
 async def test_discover():
     """
 

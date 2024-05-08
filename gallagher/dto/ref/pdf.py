@@ -9,12 +9,14 @@ Note:
 """
 from ..utils import (
     AppBaseModel,
+    IdentityMixin,
     HrefMixin,
 )
 
 
 class PDFRef(
     AppBaseModel,
+    IdentityMixin,
     HrefMixin
 ):
     """ Personal Data Fields are custom fields for a card holder

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gallagher"
-version = "0.1.0-alpha.2"
+version = "0.1.0-alpha.3"
 description = "Python tools for Gallagher Security Centre"
 authors = ["Dev Mukherjee <devraj@gmail.com>"]
 readme = "README.md"
@@ -15,6 +15,10 @@ classifiers = [
     "Operating System :: OS Independent",
     "Framework :: Pydantic",
     "Framework :: Pydantic :: 2",
+    "Framework :: Typer",
+    "Framework :: Textual",
+    "Framework :: Rich",
+    "Framework :: Shillelagh",
 ]
 
 [tool.poetry.urls]
@@ -82,3 +86,7 @@ gtui = "gallagher.tui:main"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.plugins."shillelagh.adapter"]
+gacc = "gallagher.ext.shillelagh.GallagherCommandCentreAPI"

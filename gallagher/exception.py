@@ -23,17 +23,6 @@ class UnlicensedFeatureException(BaseException):
     """
     pass
 
-
-class AuthenticationError(BaseException):
-    """ Error authentication against the CC API
-
-    This is likely because the use has not provided an authentication
-    key or is not allowed to access this resources with this
-    particular key
-    """
-    pass
-
-
 class NotFoundException(BaseException):
     """ Raised if you tried to access an object that either does not
     exists or you don't have permission to access it.
@@ -48,9 +37,8 @@ class ComingSoonException(BaseException):
     but has not be released
     """
     pass
-
-class PathFollowNotSupportedError(BaseException):
-    """ Raised if the path is not supported by the client
+class DeadEndException(BaseException):
+    """ Raised if an API the path is a dead end
 
     This is raised if the API path is not supported by the client
     these related to next, previous or updates that certain
@@ -58,8 +46,17 @@ class PathFollowNotSupportedError(BaseException):
     """
     pass
 
-class DeadEndException(BaseException):
-    """ Raised if an API the path is a dead end
+class AuthenticationError(BaseException):
+    """ Error authentication against the CC API
+
+    This is likely because the use has not provided an authentication
+    key or is not allowed to access this resources with this
+    particular key
+    """
+    pass
+
+class PathFollowNotSupportedError(BaseException):
+    """ Raised if the path is not supported by the client
 
     This is raised if the API path is not supported by the client
     these related to next, previous or updates that certain

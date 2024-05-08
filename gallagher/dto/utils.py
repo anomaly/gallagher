@@ -97,7 +97,7 @@ class AppBaseModel(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         alias_generator=_to_lower_camel,
-        orm_mode=True,
+        from_attributes=True,
         allow_extra=True,
     )
 

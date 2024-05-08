@@ -3,7 +3,8 @@ from typing import Optional
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
-    HrefMixin
+    HrefMixin,
+    OptionalHrefMixin,
 )
 
 
@@ -18,7 +19,7 @@ class DivisionDetail(
     name: str
     description: Optional[str] = None
     server_display_name: Optional[str] = None
-    parent: Optional[HrefMixin] = None
+    parent: OptionalHrefMixin = None
 
     # TODO: Looks like we don't have access to visitor management
     # on our test instance at the moment

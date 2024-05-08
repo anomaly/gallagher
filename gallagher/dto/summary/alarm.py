@@ -4,6 +4,7 @@ from datetime import datetime
 from ..utils import (
     AppBaseModel,
     HrefMixin,
+    OptionalHrefMixin,
     IdentityMixin,
 )
 
@@ -45,15 +46,15 @@ class AlarmSummary(
     state: str
     active: bool
     division: HrefMixin
-    event: Optional[HrefMixin] = None
+    event: OptionalHrefMixin = None
     note_presets: list[str] = []
 
     # The following URLS should be used to follow through
     # on various actions that the system allows
     view: HrefMixin
     comment: HrefMixin
-    acknowledge: Optional[HrefMixin] = None
-    acknowledge_with_comment: Optional[HrefMixin] = None
-    process: Optional[HrefMixin] = None
-    process_with_comment: Optional[HrefMixin] = None
-    force_process: Optional[HrefMixin] = None
+    acknowledge: OptionalHrefMixin = None
+    acknowledge_with_comment: OptionalHrefMixin = None
+    process: OptionalHrefMixin = None
+    process_with_comment: OptionalHrefMixin = None
+    force_process: OptionalHrefMixin = None

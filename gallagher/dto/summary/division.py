@@ -6,7 +6,8 @@ from typing import Optional
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
-    HrefMixin
+    HrefMixin,
+    OptionalHrefMixin,
 )
 
 
@@ -24,7 +25,7 @@ class DivisionSummary(
     name: str
     description: Optional[str] = None
     server_display_name: Optional[str] = None
-    parent: Optional[HrefMixin] = None
+    parent: OptionalHrefMixin = None
 
 
     def __rich_repr__(self):

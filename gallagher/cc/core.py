@@ -429,7 +429,7 @@ class APIEndpoint:
             try:
 
                 response = await _httpx_async.get(
-                    f'{url}',
+                    f'{url}', # required to turn pydantic object to str
                     headers=get_authorization_headers(),
                 )
 
@@ -470,7 +470,7 @@ class APIEndpoint:
             try:
 
                 response = await _httpx_async.post(
-                    f'{url}',
+                    f'{url}', # required to turn pydantic object to str
                     json=payload.dict() if payload else None,
                     headers=get_authorization_headers(),
                 )

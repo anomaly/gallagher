@@ -25,6 +25,7 @@ from gallagher.exception import (
 
 from ..dto.utils import (
     AppBaseModel,
+    AppBaseResponseWithFollowModel,
 )
 
 from ..dto.detail import (
@@ -39,7 +40,8 @@ from ..exception import (
     UnlicensedFeatureException,
     NotFoundException,
     AuthenticationError,
-    UnsupportedPathException,
+    DeadEndException,
+    PathFollowNotSupportedError,
 )
 
 
@@ -355,13 +357,27 @@ class APIEndpoint:
         """
         await cls._discover()
 
-        if not cls.__config__.endpoint.next:
-            raise UnsupportedPathException(
-                "Next not available"
+        # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
+        # then we should raise an exception
+        if not issubclass(
+            cls.__config__.dto_list, 
+            AppBaseResponseWithFollowModel
+        ):
+            """ A response model must have a next, previous or update
+            """
+            raise PathFollowNotSupportedError(
+                "Endpoint does not support previous, next or updates"
+            )
+
+        if not response.next:
+            """ We have no where to go based on the passed response
+            """
+            raise DeadEndException(
+                "No further paths to follow for this endpoint"
             )
 
         return await cls._get(
-            cls.response.next.href,
+            response.next.href,
             cls.__config__.dto_list,
         )
 
@@ -374,9 +390,21 @@ class APIEndpoint:
         """
         await cls._discover()
 
-        if not cls.__config__.endpoint.previous:
-            raise UnsupportedPathException(
-                "Previous not available"
+        # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
+        # then we should raise an exception
+        if not issubclass(
+            cls.__config__.dto_list, 
+            AppBaseResponseWithFollowModel
+        ):
+            """ A response model must have a next, previous or update
+            """
+            raise PathFollowNotSupportedError(
+                "Endpoint does not support previous, next or updates"
+            )
+
+        if not response.previous:
+            raise DeadEndException(
+                "No path leads further back than this"
             )
 
         return await cls._get(
@@ -385,7 +413,7 @@ class APIEndpoint:
         )
 
     @classmethod
-    async def update(cls, response):
+    async def poll(cls, response):
         """ Fetches the updated set of results
 
         Update follow the same pattern as next and previous, except
@@ -393,10 +421,18 @@ class APIEndpoint:
         """
         await cls._discover()
 
-        if not cls.__config__.endpoint.update:
-            raise UnsupportedPathException(
-                "Update not available"
+        # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
+        # then we should raise an exception
+        if not issubclass(
+            cls.__config__.dto_list, 
+            AppBaseResponseWithFollowModel
+        ):
+            """ A response model must have a next, previous or update
+            """
+            raise PathFollowNotSupportedError(
+                "Endpoint does not support previous, next or updates"
             )
+
 
         return await cls._get(
             cls.response.update.href,

@@ -49,9 +49,17 @@ class ComingSoonException(BaseException):
     """
     pass
 
+class PathFollowNotSupportedError(BaseException):
+    """ Raised if the path is not supported by the client
 
-class UnsupportedPathException(BaseException):
-    """ Raised if an API Follow path is not supported
+    This is raised if the API path is not supported by the client
+    these related to next, previous or updates that certain
+    endpoints support.
+    """
+    pass
+
+class DeadEndException(BaseException):
+    """ Raised if an API the path is a dead end
 
     This is raised if the API path is not supported by the client
     these related to next, previous or updates that certain

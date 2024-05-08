@@ -45,7 +45,7 @@ from ..exception import (
 )
 
 
-def check_api_key_format(api_key):
+def _check_api_key_format(api_key):
     """ Validates that the Gallagher Key is in the right format.
 
     It's not possible for the API client to validate the key against
@@ -56,7 +56,7 @@ def check_api_key_format(api_key):
     return (api_tokens.count() == 8)
 
 
-def get_authorization_headers():
+def _get_authorization_headers():
     """ Creates an authorization header for Gallagher API calls
 
     The server expects an Authorization header with GGL-API-KEY
@@ -202,7 +202,10 @@ class APIEndpoint:
         """
 
         if Capabilities.CURRENT.version != "0.0.0" and\
-                type(Capabilities.CURRENT._good_known_since) is datetime:
+                isinstance(
+                    Capabilities.CURRENT._good_known_since,
+                    datetime
+                ):
             # We've already discovered the endpoints as per HATEOAS
             # design requirement, however because the endpoint configuration is
             # dynamically populated, we have to call the get_config method
@@ -215,7 +218,7 @@ class APIEndpoint:
         async with httpx.AsyncClient() as _httpx_async:
             response = await _httpx_async.get(
                 api_base,
-                headers=get_authorization_headers(),
+                headers=_get_authorization_headers(),
             )
 
             await _httpx_async.aclose()
@@ -239,7 +242,7 @@ class APIEndpoint:
             # that inherits from this class, the instance of EndpointConfig
             # will copy the None values from the Capabilities.CURRENT
             # object, this primarily because Capabilities.CURRENT is
-            # an instance of a pyndatic object and all values are thus
+            # an instance of a pydantic object and all values are thus
             # copied not referenced.
             cls.__config__ = await cls.get_config()
 
@@ -333,7 +336,7 @@ class APIEndpoint:
             response = await _httpx_async.get(
                 f'{cls.__config__.endpoint.href}',
                 params=params,
-                headers=get_authorization_headers(),
+                headers=_get_authorization_headers(),
             )
 
             await _httpx_async.aclose()
@@ -466,7 +469,7 @@ class APIEndpoint:
 
                 response = await _httpx_async.get(
                     f'{url}', # required to turn pydantic object to str
-                    headers=get_authorization_headers(),
+                    headers=_get_authorization_headers(),
                 )
 
                 await _httpx_async.aclose()
@@ -508,7 +511,7 @@ class APIEndpoint:
                 response = await _httpx_async.post(
                     f'{url}', # required to turn pydantic object to str
                     json=payload.dict() if payload else None,
-                    headers=get_authorization_headers(),
+                    headers=_get_authorization_headers(),
                 )
 
                 await _httpx_async.aclose()

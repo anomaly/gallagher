@@ -17,158 +17,158 @@ from ..utils import (
 class FeatureAccessGroupsRef(
     AppBaseModel,
 ):
-    access_groups: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    access_groups: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureAccessZonesRef(
     AppBaseModel,
 ):
-    access_zones: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    access_zones: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureAlarmZonesRef(
     AppBaseModel,
 ):
-    alarm_zones: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    alarm_zones: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureAlarmsRef(
     AppBaseModel,
 ):
-    alarms: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    divisions: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    updates: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    alarms: OptionalHrefMixin = OptionalHrefMixin()
+    divisions: OptionalHrefMixin = OptionalHrefMixin()
+    updates: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureCardTypesRef(
     AppBaseModel,
 ):
-    assign: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    card_types: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    assign: OptionalHrefMixin = OptionalHrefMixin()
+    card_types: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureCardholdersRef(
     AppBaseModel,
 ):
-    cardholders: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    changes: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    update_location_access_zones: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    cardholders: OptionalHrefMixin = OptionalHrefMixin()
+    changes: OptionalHrefMixin = OptionalHrefMixin()
+    update_location_access_zones: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureCompetenciesRef(
     AppBaseModel,
 ):
-    competencies: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    competencies: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureDayCategoriesRef(
     AppBaseModel,
 ):
-    day_categories: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    day_categories: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureDivisionsRef(
     AppBaseModel,
 ):
-    divisions: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    divisions: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureDoorsRef(
     AppBaseModel,
 ):
-    doors: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    doors: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureElevatorsRef(
     AppBaseModel,
 ):
-    elevator_groups: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    elevator_groups: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureEventsRef(
     AppBaseModel,
 ):
-    divisions: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    event_groups: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    events: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    updates: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    divisions: OptionalHrefMixin = OptionalHrefMixin()
+    event_groups: OptionalHrefMixin = OptionalHrefMixin()
+    events: OptionalHrefMixin = OptionalHrefMixin()
+    updates: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureFenceZonesRef(
     AppBaseModel,
 ):
-    fence_zones: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    fence_zones: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureInputsRef(
     AppBaseModel,
 ):
-    inputs: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    inputs: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureInterlockGroupsRef(
     AppBaseModel,
 ):
-    interlock_groups: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    interlock_groups: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureItemsRef(
     AppBaseModel,
 ):
-    item_types: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    items: Optional[OptionalHrefMixin] = OptionalHrefMixin()
-    updates: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    item_types: OptionalHrefMixin = OptionalHrefMixin()
+    items: OptionalHrefMixin = OptionalHrefMixin()
+    updates: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureLockerBanksRef(
     AppBaseModel,
 ):
-    locker_banks: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    locker_banks: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureMacrosRef(
     AppBaseModel,
 ):
-    macros: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    macros: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureOperatorGroupsRef(
     AppBaseModel,
 ):
-    operator_groups: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    operator_groups: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureOutputsRef(
     AppBaseModel,
 ):
-    outputs: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    outputs: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeaturePersonalDataFieldsRef(
     AppBaseModel,
 ):
-    personal_data_fields: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    personal_data_fields: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureReceptionsRef(
     AppBaseModel,
 ):
-    receptions: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    receptions: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureRolesRef(
     AppBaseModel,
 ):
-    roles: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    roles: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureSchedulesRef(
     AppBaseModel,
 ):
-    schedules: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    schedules: OptionalHrefMixin = OptionalHrefMixin()
 
 
 class FeatureVisitsRef(
     AppBaseModel,
 ):
-    visits: Optional[OptionalHrefMixin] = OptionalHrefMixin()
+    visits: OptionalHrefMixin = OptionalHrefMixin()

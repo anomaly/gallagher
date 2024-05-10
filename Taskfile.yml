@@ -13,6 +13,15 @@ tasks:
     summary:
       runs all the tests inside the virtualenv, optionally
       provide the name of the test as an argument to run a single test
+
+      this does not run coverage or provide tap output
+    cmds:
+      - poetry run coverage run -m pytest -s tests/{{.CLI_ARGS}}
+  test:tap:
+    desc: runs tests with tap output
+    summary:
+      runs all the tests inside the virtualenv, optionally
+      provide the name of the test as an argument to run a single test
     cmds:
       - poetry run coverage run -m pytest -s --tap tests/{{.CLI_ARGS}}
   test:list:

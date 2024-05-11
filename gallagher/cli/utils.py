@@ -15,6 +15,7 @@ this particular one uses asyncer to run the async function in a thread
 we're going in with this with the hope that the official solution is
 closer to this than a decorator per command.
 """
+
 import inspect
 
 from functools import (

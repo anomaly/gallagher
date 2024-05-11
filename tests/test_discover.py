@@ -15,9 +15,10 @@ from gallagher.dto.response import (
     DiscoveryResponse,
 )
 
+
 @pytest.fixture
 async def discover_response() -> DiscoveryResponse:
-    """ Makes sure that the API is discoverable as per HATEOAS
+    """Makes sure that the API is discoverable as per HATEOAS
 
     This is not an endpoint like the others, because it is a discovery
     protocol and must be run before any other items are executed.
@@ -33,17 +34,13 @@ async def discover_response() -> DiscoveryResponse:
 
         await _httpx_async.aclose()
 
-        parsed_obj = DiscoveryResponse.model_validate(
-            response.json()
-        )
+        parsed_obj = DiscoveryResponse.model_validate(response.json())
 
         return parsed_obj
 
-async def test_discover_response(
-    discover_response: DiscoveryResponse
-):
-    """ Process to see if the discovery method is legit
-    """
+
+async def test_discover_response(discover_response: DiscoveryResponse):
+    """Process to see if the discovery method is legit"""
     assert type(discover_response) is DiscoveryResponse
     assert type(discover_response.features) is FeaturesDetail
     assert type(discover_response.version) is str

@@ -13,7 +13,6 @@ from ..ref import (
 class DayCategoryResponse(
     AppBaseResponseWithFollowModel,
 ):
-    """ The response has a list of results and a link to the next page
-    """
+    """The response has a list of results and a link to the next page"""
 
     results: list[DayCategoryRef]

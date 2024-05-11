@@ -10,7 +10,6 @@ from ..summary import (
 class DoorSummaryResponse(
     AppBaseResponseModel,
 ):
-    """
+    """ """
 
-    """
     results: list[DoorSummary]

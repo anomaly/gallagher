@@ -20,7 +20,7 @@ from ...dto.response import (
 
 class ItemsTypes(APIEndpoint):
     """
-     Gallagher
+    Gallagher
     """
 
     @classmethod
@@ -35,7 +35,7 @@ class ItemsTypes(APIEndpoint):
 class Item(APIEndpoint):
     """
     Gallagher advises against hardcoding the URLs for divisions, and instead
-    recommends using the /api endpoint to discover the URLs from 
+    recommends using the /api endpoint to discover the URLs from
     events.divisions.href and alarms.division.href.
 
     """

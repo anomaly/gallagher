@@ -6,18 +6,12 @@ from ..utils import (
     IdentityMixin,
 )
 
-from ..summary import (
-    CardExpiryTypeSummary
-)
+from ..summary import CardExpiryTypeSummary
 
 
-class CardTypeDetail(
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-):
-    """ Card Types are cards mobile or physical that are supported at a site
-    """
+class CardTypeDetail(AppBaseModel, IdentityMixin, HrefMixin):
+    """Card Types are cards mobile or physical that are supported at a site"""
+
     name: str
     minimum_number: Optional[str] = None
     maximum_number: Optional[str] = None

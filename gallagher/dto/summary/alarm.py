@@ -8,9 +8,7 @@ from ..utils import (
     IdentityMixin,
 )
 
-from .event import (
-    EventTypeSummary
-)
+from .event import EventTypeSummary
 
 
 class AlarmSourceSummary(
@@ -18,8 +16,8 @@ class AlarmSourceSummary(
     HrefMixin,
     IdentityMixin,
 ):
-    """ AlarmSource represents a device that has triggered an alarm
-    """
+    """AlarmSource represents a device that has triggered an alarm"""
+
     name: str
 
 
@@ -28,7 +26,7 @@ class AlarmSummary(
     HrefMixin,
     IdentityMixin,
 ):
-    """ AlarmSummary gives us unactioned events from the CC
+    """AlarmSummary gives us unactioned events from the CC
 
     While the detail and summary would typically differ, it seems that
     the API endpoints return more detail in the summary endpoints.
@@ -37,6 +35,7 @@ class AlarmSummary(
     HATEOAS compliance as per the documentation.
 
     """
+
     time: datetime
     message: str
     source: AlarmSourceSummary

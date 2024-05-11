@@ -23,10 +23,11 @@ class EventSummaryResponse(
 class EventTypeResponse(
     AppBaseResponseModel,
 ):
-    """ Event Type Response
+    """Event Type Response
 
     Event Type Responses return a set of eventGroups which in turn
     has identifiers, names and event types.
 
     """
+
     event_groups: list[EventGroupSummary]

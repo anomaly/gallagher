@@ -22,8 +22,8 @@ class EventDetail(
     HrefMixin,
     IdentityMixin,
 ):
-    """ Details of an event that took place on a server
-    """
+    """Details of an event that took place on a server"""
+
     server_display_name: str
     time: datetime
     message: Optional[str]

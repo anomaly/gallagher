@@ -1,14 +1,7 @@
-from ..utils import (
-    AppBaseModel,
-    HrefMixin
-)
+from ..utils import AppBaseModel, HrefMixin
 
 
-class DoorRef(
-    AppBaseModel,
-    HrefMixin
-):
-    """ Door 
+class DoorRef(AppBaseModel, HrefMixin):
+    """Door"""
 
-    """
     name: str

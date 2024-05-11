@@ -16,17 +16,15 @@ from ..ref import (
     PDFRef,
 )
 
-from .division import (
-    DivisionDetail
-)
+from .division import DivisionDetail
 
 
 class AccessGroupDetail(
     AppBaseModel,
     HrefMixin,
 ):
-    """
-    """
+    """ """
+
     name: str
     description: Optional[str]
     parent: Optional[AccessGroupRef]

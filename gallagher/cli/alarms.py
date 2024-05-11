@@ -23,20 +23,14 @@ from gallagher.cc.alarms import (
     Alarms,
 )
 
-app = AsyncTyper(
-    help="list or query alarms in the command centre"
-)
+app = AsyncTyper(help="list or query alarms in the command centre")
 
 
 @app.command("list")
 async def list():
-    """ list current alarms
-    """
+    """list current alarms"""
     console = Console()
-    with console.status(
-        "[bold green]Fetching alarms...",
-        spinner="clock"
-    ):
+    with console.status("[bold green]Fetching alarms...", spinner="clock"):
         alarms = await Alarms.list()
         table = Table(title="Alarms")
         for header in alarms.cli_header:
@@ -50,13 +44,9 @@ async def list():
 
 @app.command("get")
 async def get(
-    id: Annotated[
-        int,
-        typer.Argument(help="alarm id")
-    ],
+    id: Annotated[int, typer.Argument(help="alarm id")],
 ):
-    """ get alarm details
-    """
+    """get alarm details"""
     console = Console()
 
 
@@ -66,14 +56,13 @@ async def comment(
     message: Annotated[
         str,
         typer.Option(
-            '-m',
-            '--message',
+            "-m",
+            "--message",
             help="comment to add to history",
-        )
+        ),
     ],
 ):
-    """ comment on an alarm
-    """
+    """comment on an alarm"""
     console = Console()
     with console.status(
         "[magenta] Commenting on alarm ...",
@@ -82,15 +71,11 @@ async def comment(
             console.log("Finding alarm ...")
             comment_detail = await Alarms.retrieve(id)
             console.log("Adding comment to history ...")
-            await Alarms.comment(
-                comment_detail,
-                message
-            )
+            await Alarms.comment(comment_detail, message)
             console.print("[green]Comment posted successfully[/green]")
         except NotFoundException as e:
             console.print(f"[red bold]No alarm with id={id} found")
             raise typer.Exit(code=1)
-
 
 
 @app.command("ack")
@@ -99,14 +84,13 @@ async def acknowledge(
     message: Annotated[
         Optional[str],
         typer.Option(
-             '-m',
-            '--message',
+            "-m",
+            "--message",
             help="comment to add to history",
-       )
+        ),
     ] = None,
 ):
-    """ acknowledge an alarm, optionally with a comment
-    """
+    """acknowledge an alarm, optionally with a comment"""
     console = Console()
 
 
@@ -116,14 +100,13 @@ async def acknowledge(
     message: Annotated[
         Optional[str],
         typer.Option(
-            '-m',
-            '--message',
+            "-m",
+            "--message",
             help="comment to add to history",
-        )
+        ),
     ] = None,
 ):
-    """ mark alarm as viewed, optionally with a comment
-    """
+    """mark alarm as viewed, optionally with a comment"""
     console = Console()
 
 
@@ -133,12 +116,11 @@ async def acknowledge(
     message: Annotated[
         Optional[str],
         typer.Option(
-            '-m',
-            '--message',
+            "-m",
+            "--message",
             help="comment to add to history",
-        )
+        ),
     ] = None,
 ):
-    """ mark alarm as processed, optionally with a comment
-    """
+    """mark alarm as processed, optionally with a comment"""
     console = Console()

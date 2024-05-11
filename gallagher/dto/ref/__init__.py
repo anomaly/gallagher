@@ -12,9 +12,7 @@ which identified race conditions with circular imports. This is caused
 mostly because of the nature of the data that the command centre exposes.
 """
 
-from .access_group import (
-    AccessGroupRef
-)
+from .access_group import AccessGroupRef
 
 from .alarm import (
     AlarmRef,

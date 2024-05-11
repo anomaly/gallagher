@@ -1,8 +1,4 @@
-from ..utils import (
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-)
+from ..utils import AppBaseModel, IdentityMixin, HrefMixin
 
 
 class DoorSummary(
@@ -10,7 +6,6 @@ class DoorSummary(
     IdentityMixin,
     HrefMixin,
 ):
-    """
+    """ """
 
-    """
     name: str

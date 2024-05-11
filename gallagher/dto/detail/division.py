@@ -8,13 +8,8 @@ from ..utils import (
 )
 
 
-class DivisionDetail(
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-):
-    """
-    """
+class DivisionDetail(AppBaseModel, IdentityMixin, HrefMixin):
+    """ """
 
     name: str
     description: Optional[str] = None
@@ -29,6 +24,5 @@ class DivisionDetail(
         return [
             self.id,
             self.name,
-            self.server_display_name if self.server_display_name\
-             else "unavailable"
+            self.server_display_name if self.server_display_name else "unavailable",
         ]

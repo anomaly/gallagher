@@ -28,37 +28,42 @@ from pydantic import (
 
 # Helper functions for parsing
 
+
 def _to_lower_camel(name: str) -> str:
-    """ Converts a snake_case string to lowerCamelCase
+    """Converts a snake_case string to lowerCamelCase
 
     Not designed for use outside of the scope of this package
     """
     upper = "".join(word.capitalize() for word in name.split("_"))
     return upper[:1].lower() + upper[1:]
 
+
 # Ensure that the primitive wrappers such as Mixins appear
 # before the generic classes for parsing utilities
 
+
 class IdentityMixin(BaseModel):
-    """ Identifier 
+    """Identifier
 
     This mixin is used to define the identifier field for all
     responses from the Gallagher API.
     """
+
     id: str
 
 
 class HrefMixin(BaseModel):
-    """ Href
+    """Href
 
     This mixin is used to define the href field for all
     responses from the Gallagher API.
     """
+
     href: HttpUrl
 
 
 class OptionalHrefMixin(BaseModel):
-    """ Optionally available Href
+    """Optionally available Href
 
     This mixin is used to define the href field for all
     responses from the Gallagher API.
@@ -66,7 +71,7 @@ class OptionalHrefMixin(BaseModel):
     Primarily used by the discovery endpoint, where the href
     may be absent if the feature is not available.
 
-    Reason for this so the API Endpoint configuration can 
+    Reason for this so the API Endpoint configuration can
     reference the href property (pre discovery), otherwise
     the Feature* classes have a None object for the object
 
@@ -76,12 +81,12 @@ class OptionalHrefMixin(BaseModel):
     require a href. See Gallagher's documentation for
     confirmation.
     """
+
     href: Optional[HttpUrl] = None
 
 
-
 class AppBaseModel(BaseModel):
-    """ Pydantic base model for applications
+    """Pydantic base model for applications
 
     This class is used to define the base model for all schema
     that we use in the Application, it configures pydantic to
@@ -94,6 +99,7 @@ class AppBaseModel(BaseModel):
     For a full set of options, see:
     https://pydantic-docs.helpmanual.io/usage/model_config/
     """
+
     model_config = ConfigDict(
         populate_by_name=True,
         alias_generator=_to_lower_camel,
@@ -119,7 +125,7 @@ class AppBaseModel(BaseModel):
 
 
 class AppBaseResponseModel(AppBaseModel):
-    """ Response Model
+    """Response Model
 
     Response classes should subclass this not AppBaseModel, so that
     the framework can differentiate between Model classes and responses.
@@ -129,25 +135,24 @@ class AppBaseResponseModel(AppBaseModel):
     set of results.
 
     """
+
     pass
 
+
 class AppBaseResponseWithFollowModel(AppBaseResponseModel):
-    """ Response with optional Follow links
+    """Response with optional Follow links
 
     Many responses from the Gallagher system return next, previous and update
     links. This is typical when there are a large number of responses
     where the absence of a next link denotes that the client has fetched
     all pending objects.
 
-    Some endpoints return an `update` URL which can be followed to poll 
+    Some endpoints return an `update` URL which can be followed to poll
     for responses.
 
 
     """
 
-    next: OptionalHrefMixin = None # None means it's the end of responses
-    previous: OptionalHrefMixin = None # None means first set of responses
-    updates: OptionalHrefMixin = None # None means no updates to watch for
-
-
-
+    next: OptionalHrefMixin = None  # None means it's the end of responses
+    previous: OptionalHrefMixin = None  # None means first set of responses
+    updates: OptionalHrefMixin = None  # None means no updates to watch for

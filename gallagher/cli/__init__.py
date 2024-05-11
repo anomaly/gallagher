@@ -7,12 +7,10 @@ use a wrapper to make it work. See utils.py for the AsyncTyper class.
 The cli should be pretty self documenting, however see docs/ for
 official documentation.
 """
+
 import os
 
-from gallagher import (
-    cc,
-    __version__
-)
+from gallagher import cc, __version__
 
 from .utils import AsyncTyper
 
@@ -46,7 +44,7 @@ app.add_typer(cardholders_app, name="ch")
 app.add_typer(events_app, name="event")
 
 if __name__ == "__main__":
-    """ In case you are invoking this via Python directly
+    """In case you are invoking this via Python directly
 
     This is probably never actually used but it is here for completeness.
     You'd execute this by running `python -m gallagher.cli`

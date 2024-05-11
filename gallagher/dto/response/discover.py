@@ -14,7 +14,7 @@ from ..detail import (
 class DiscoveryResponse(
     AppBaseResponseModel,
 ):
-    """ A response that outlines the capability of the server
+    """A response that outlines the capability of the server
 
     Gallagher requires customers to license individual features, if they are
     the server will return a 403 HTTP code. The purpose of this model is to
@@ -25,16 +25,15 @@ class DiscoveryResponse(
 
     This API client is updated to work with various versions of the server, the
     server responds with a version string that can be used to determine if
-    the API client can work with the server.  
+    the API client can work with the server.
     """
 
     version: Annotated[str, "The version of the server"] = "0.0.0"
-    features: Annotated[FeaturesDetail,
-                        "A list of features available on the server"
-                        ] = FeaturesDetail()
+    features: Annotated[
+        FeaturesDetail, "A list of features available on the server"
+    ] = FeaturesDetail()
 
     @property
     async def get_sem_ver(self):
-        """ Get a SemVer tuple from the version string
-        """
+        """Get a SemVer tuple from the version string"""
         return self.version.split(".")

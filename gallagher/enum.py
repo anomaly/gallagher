@@ -5,13 +5,12 @@ Our naming convention is ObjectIntent
 CustomerSearch
 
 """
+
 from enum import Enum
 
 
 class CustomerSort(Enum):
-    """ Sort descriptors for the Customer object
-
-    """
+    """Sort descriptors for the Customer object"""
 
     ID: str = "id"
     ID_DESC: str = "-id"

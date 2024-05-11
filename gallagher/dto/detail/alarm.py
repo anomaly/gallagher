@@ -3,6 +3,7 @@
 The following are used to parse the details of an alarm
 
 """
+
 from typing import Optional
 from datetime import datetime
 
@@ -14,32 +15,34 @@ from ..utils import (
 )
 
 from ..ref import (
-	CardholderRef,
-	OperatorRef,
-	InstructionRef,
+    CardholderRef,
+    OperatorRef,
+    InstructionRef,
 )
 
 from ..summary import (
-	EventTypeSummary,
+    EventTypeSummary,
     AlarmSourceSummary,
 )
 
+
 class AlarmHistoryDetail(
-	AppBaseModel,
+    AppBaseModel,
 ):
-    """ Alarm History presented in the details
-    """
+    """Alarm History presented in the details"""
+
     action: str
     time: datetime
-    comment: str # Comment provided as part of an action
+    comment: str  # Comment provided as part of an action
     operator: OperatorRef
+
 
 class AlarmDetail(
     AppBaseModel,
     HrefMixin,
     IdentityMixin,
 ):
-    """ AlarmSummary gives us unactioned events from the CC
+    """AlarmSummary gives us unactioned events from the CC
 
     While the detail and summary would typically differ, it seems that
     the API endpoints return more detail in the summary endpoints.
@@ -48,10 +51,11 @@ class AlarmDetail(
     HATEOAS compliance as per the documentation.
 
     """
+
     time: datetime
     message: str
     source: AlarmSourceSummary
-    type: str 
+    type: str
     event_type: Optional[EventTypeSummary] = None
     priority: int
     state: str

@@ -4,19 +4,13 @@ from ..utils import (
 )
 
 
-class AlarmRef(
-    AppBaseModel,
-    HrefMixin
-):
-    """ AlarmRef represents a single alarm
-    """
+class AlarmRef(AppBaseModel, HrefMixin):
+    """AlarmRef represents a single alarm"""
+
     state: str
 
 
-class AlarmZoneRef(
-    AppBaseModel,
-    HrefMixin
-):
-    """ AccessZone represents
-    """
+class AlarmZoneRef(AppBaseModel, HrefMixin):
+    """AccessZone represents"""
+
     name: str

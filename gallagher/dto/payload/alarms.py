@@ -4,8 +4,9 @@ from ..utils import (
 
 
 class AlarmCommentPayload(AppBaseModel):
-    """ Comment Payload
+    """Comment Payload
 
     This is the payload used to create a comment on an object.
     """
+
     comment: str

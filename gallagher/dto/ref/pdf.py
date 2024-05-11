@@ -7,6 +7,7 @@ Note:
 - Keys are prefixed with @
 - Presence of space in the field name
 """
+
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
@@ -14,12 +15,8 @@ from ..utils import (
 )
 
 
-class PDFRef(
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-):
-    """ Personal Data Fields are custom fields for a card holder
+class PDFRef(AppBaseModel, IdentityMixin, HrefMixin):
+    """Personal Data Fields are custom fields for a card holder
 
     These are defined per command centre installation and the fields
     are prefixed with @ e.g @Personal URL, note the presence of the space
@@ -28,4 +25,5 @@ class PDFRef(
     Since they are dynamic we will have to discover the personal data
     fields much like the URL discovery before we are able to parse the data
     """
+
     name: str

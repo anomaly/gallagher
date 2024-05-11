@@ -9,13 +9,14 @@ from ..utils import (
     HrefMixin,
 )
 
+
 class InstructionRef(
-	AppBaseModel,
-	HrefMixin,
+    AppBaseModel,
+    HrefMixin,
 ):
-	""" Operator reference
+    """Operator reference
 
-	At present used in Alarm details, revise as required.
-	"""
+    At present used in Alarm details, revise as required.
+    """
 
-	name: str
+    name: str

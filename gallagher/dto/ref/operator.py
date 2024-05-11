@@ -9,12 +9,13 @@ from ..utils import (
     AppBaseModel,
 )
 
+
 class OperatorRef(
-	AppBaseModel,
+    AppBaseModel,
 ):
-	""" Operator reference
+    """Operator reference
 
-	At present used in Alarm details, revsie as required.
-	"""
+    At present used in Alarm details, revsie as required.
+    """
 
-	name: str
+    name: str

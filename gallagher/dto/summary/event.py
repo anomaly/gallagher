@@ -32,8 +32,8 @@ class EventTypeSummary(
     AppBaseModel,
     IdentityMixin,
 ):
-    """ An event type has identifiers and names
-    """
+    """An event type has identifiers and names"""
+
     name: str
 
 
@@ -41,11 +41,12 @@ class EventGroupSummary(
     AppBaseModel,
     IdentityMixin,
 ):
-    """ Event Groups are a collection of event types
+    """Event Groups are a collection of event types
 
     Each group has names and event types. This is usually used
     in an Event Type Response.
     """
+
     name: str
     event_types: list[EventTypeSummary]
 
@@ -55,8 +56,8 @@ class EventSummary(
     HrefMixin,
     IdentityMixin,
 ):
-    """ Summary of events that have occurred on the server
-    """
+    """Summary of events that have occurred on the server"""
+
     server_display_name: Optional[str] = None
     time: datetime
     message: Optional[str] = None

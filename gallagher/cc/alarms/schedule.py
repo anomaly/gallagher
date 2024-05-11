@@ -2,20 +2,13 @@
 
 """
 
-from ..core import (
-    Capabilities,
-    APIEndpoint,
-    EndpointConfig
-)
+from ..core import Capabilities, APIEndpoint, EndpointConfig
 
-from ...dto.response import (
-    ScheduleSummaryResponse
-)
+from ...dto.response import ScheduleSummaryResponse
 
 
 class Schedule(APIEndpoint):
-    """ Schedules
-    """
+    """Schedules"""
 
     @classmethod
     async def get_config(cls) -> EndpointConfig:

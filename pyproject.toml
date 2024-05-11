@@ -56,6 +56,8 @@ textual-dev = "^1.4.0"
 mkdocs-typer = "^0.0.3"
 mkdocs = "^1.6.0"
 pytest-dependency = "^0.6.0"
+flake8 = "^7.0.0"
+black = "^24.4.2"
 
 
 [tool.poetry.group.cli.dependencies]

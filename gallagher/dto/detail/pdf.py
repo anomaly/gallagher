@@ -7,12 +7,9 @@ from ..utils import (
 )
 
 
-class PdfDetail(
-    AppBaseModel,
-    HrefMixin
-):
-    """ Personal Data Fields are custom fields for a card holder
-    """
+class PdfDetail(AppBaseModel, HrefMixin):
+    """Personal Data Fields are custom fields for a card holder"""
+
     name: str
     description: Optional[str]
     division: IdentityMixin

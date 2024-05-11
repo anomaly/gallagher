@@ -5,20 +5,15 @@ from ..utils import (
     AppBaseResponseWithFollowModel,
 )
 
-from ..summary import (
-    DivisionSummary
-)
+from ..summary import DivisionSummary
 
-from ..detail import (
-    DivisionDetail
-)
-
+from ..detail import DivisionDetail
 
 
 class DivisionSummaryResponse(
     AppBaseResponseWithFollowModel,
 ):
-    """ Division Summary 
+    """Division Summary
 
     This should return the summary and as per the documentation
     the detail should have more than what we have here
@@ -42,5 +37,3 @@ class DivisionSummaryResponse(
 
     def __str__(self):
         return f"{len(self.results)} divisions"
-
-

@@ -15,13 +15,14 @@ class CardholderDetail(
     AppBaseModel,
     IdentityMixin,
 ):
-    """ Displays a table of cardholders
+    """Displays a table of cardholders
 
     Gallagher command centre offers a summary of all the cardholders
     provisioned on the system. This command presents a summary table
     with the aim of using the identifier to get detailed information.
 
     """
+
     first_name: str
     last_name: str
     short_name: Optional[str] = None
@@ -59,9 +60,9 @@ class CardholderDetail(
     # redactions
 
     def get_pdf(self, PDFRef):
-        """ Get a parsed PDF field from the cardholder given the PDF Ref
+        """Get a parsed PDF field from the cardholder given the PDF Ref
 
-        This assumes that you have access to the right PDF reference from 
+        This assumes that you have access to the right PDF reference from
         the singleton that the API client would have parsed on initialisation.
 
         For validation you must pass the PDFRef object to this method.

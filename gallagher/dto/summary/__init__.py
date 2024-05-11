@@ -3,10 +3,7 @@
 
 """
 
-from .access_group import (
-    AccessSummary,
-    AccessGroupSummary
-)
+from .access_group import AccessSummary, AccessGroupSummary
 
 from .alarm import (
     AlarmSourceSummary,
@@ -26,9 +23,7 @@ from .day_category import (
     DayCategorySummary,
 )
 
-from .division import (
-    DivisionSummary
-)
+from .division import DivisionSummary
 
 from .door import (
     DoorSummary,

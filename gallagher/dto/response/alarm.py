@@ -11,7 +11,7 @@ from ..summary import (
 class AlarmSummaryResponse(
     AppBaseResponseModel,
 ):
-    """ AlarmSummaryResponse represents a single alarm
-    """
+    """AlarmSummaryResponse represents a single alarm"""
+
     alarms: list[AlarmSummary]
     updates: HrefMixin

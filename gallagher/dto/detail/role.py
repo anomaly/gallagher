@@ -1,23 +1,13 @@
 from typing import Optional
 
-from ..utils import (
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-)
+from ..utils import AppBaseModel, IdentityMixin, HrefMixin
 
-from ..ref import (
-    DivisionRef
-)
+from ..ref import DivisionRef
 
 
-class RoleDetail(
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-):
-    """
-    """
+class RoleDetail(AppBaseModel, IdentityMixin, HrefMixin):
+    """ """
+
     name: str
     server_display_name: str
     description: Optional[str]

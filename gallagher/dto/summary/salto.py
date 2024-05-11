@@ -12,9 +12,8 @@ from ..ref import (
 class SaltoAccessItemSummary(
     AppBaseModel,
 ):
-    """ A Summary of Salto items
+    """A Summary of Salto items"""
 
-    """
     salto_item_type: SaltoItemTypeRef
     salto_item: SaltoItemRef
     schedule: ScheduleRef

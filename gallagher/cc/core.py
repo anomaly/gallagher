@@ -11,6 +11,7 @@ to the endpoint in the DiscoveryResponse object. When initialised the
 endpoint will be assigned to None but will self heal as part of 
 the bootstrapping process.
 """
+
 from typing import Optional
 from datetime import datetime
 from dataclasses import dataclass
@@ -19,9 +20,7 @@ from http import HTTPStatus  # Provides constants for HTTP status codes
 
 import httpx
 
-from gallagher.exception import (
-    UnlicensedFeatureException
-)
+from gallagher.exception import UnlicensedFeatureException
 
 from ..dto.utils import (
     AppBaseModel,
@@ -46,18 +45,18 @@ from ..exception import (
 
 
 def _check_api_key_format(api_key):
-    """ Validates that the Gallagher Key is in the right format.
+    """Validates that the Gallagher Key is in the right format.
 
     It's not possible for the API client to validate the key against
     Gallagher servers but it will validate that the key is in the
     right format.
     """
-    api_tokens = api_key.split('-')
-    return (api_tokens.count() == 8)
+    api_tokens = api_key.split("-")
+    return api_tokens.count() == 8
 
 
 def _get_authorization_headers():
-    """ Creates an authorization header for Gallagher API calls
+    """Creates an authorization header for Gallagher API calls
 
     The server expects an Authorization header with GGL-API-KEY
     set to the API key provided by Gallagher Command Centre.
@@ -74,17 +73,18 @@ def _get_authorization_headers():
 
     """
     from . import api_key
+
     return {
-        'Content-Type': 'application/json',
-        'Authorization': f'GGL-API-KEY {api_key}'
+        "Content-Type": "application/json",
+        "Authorization": f"GGL-API-KEY {api_key}",
     }
 
 
 @dataclass
 class EndpointConfig:
-    """ A configuration for an API endpoint
+    """A configuration for an API endpoint
 
-    Each API endpoint has a configuration that defines how 
+    Each API endpoint has a configuration that defines how
     the APIBase should attempt to parse responses from the
     Gallagher servers.
 
@@ -98,6 +98,7 @@ class EndpointConfig:
     __config__ which is set to None by default.
 
     """
+
     endpoint: str  # partial path to the endpoint e.g. day_category
     dto_list: Optional[any] = None  # DTO to be used for list requests
     dto_retrieve: Optional[any] = None  # DTO to be used for retrieve requests
@@ -108,15 +109,13 @@ class EndpointConfig:
 
     @classmethod
     async def validate_endpoint(cls):
-        """ Check to see if the feature is licensed and available
+        """Check to see if the feature is licensed and available
 
         Gallagher REST API is licensed per feature, if a feature is not
         the endpoint is set to none and we should throw an exception
         """
         if not cls.endpoint:
-            raise UnlicensedFeatureException(
-                "Endpoint not defined"
-            )
+            raise UnlicensedFeatureException("Endpoint not defined")
 
 
 class Capabilities:
@@ -135,12 +134,13 @@ class Capabilities:
     # This value is memoized and should perform
     CURRENT = DiscoveryResponse(
         version="0.0.0",  # Indicates that it's not been discovered
-        features=FeaturesDetail()
+        features=FeaturesDetail(),
     )
     pass
 
+
 class APIEndpoint:
-    """ Base class for all API objects
+    """Base class for all API objects
 
     All API endpoints must inherit from this class and provide a Config class
     that automates the implementation of many of the API methods.
@@ -156,7 +156,7 @@ class APIEndpoint:
 
     @classmethod
     async def expire_discovery(cls):
-        """ Expires endpoint discovery information
+        """Expires endpoint discovery information
 
         Use this with caution as it significantly increases roundtrip times
         and decreases API client performance.
@@ -165,28 +165,26 @@ class APIEndpoint:
         reason for these discovered URLs to change.
         """
         Capabilities.CURRENT = DiscoveryResponse(
-           version="0.0.0",  # Indicates that it's not been discovered
-            features=FeaturesDetail()
+            version="0.0.0",  # Indicates that it's not been discovered
+            features=FeaturesDetail(),
         )
 
     @classmethod
     async def get_config(cls) -> EndpointConfig:
-        """ Returns the configuration for the endpoint
+        """Returns the configuration for the endpoint
 
         This method can be overridden by the child class to
         provide additional configuration options.
         """
-        raise NotImplementedError(
-            "get_config method not implemented"
-        )
+        raise NotImplementedError("get_config method not implemented")
 
     @classmethod
     async def _discover(cls):
-        """ The Command Centre root API endpoint 
+        """The Command Centre root API endpoint
 
         Much of Gallagher's API documentation suggests that we don't
-        hard code the URL, but instead use the discovery endpoint by 
-        calling the root endpoint. 
+        hard code the URL, but instead use the discovery endpoint by
+        calling the root endpoint.
 
         This should be a singleton which is instantiated upon initialisation
         and then used across the other endpoints.
@@ -201,11 +199,9 @@ class APIEndpoint:
         cls.method when executing a class method.
         """
 
-        if Capabilities.CURRENT.version != "0.0.0" and\
-                isinstance(
-                    Capabilities.CURRENT._good_known_since,
-                    datetime
-                ):
+        if Capabilities.CURRENT.version != "0.0.0" and isinstance(
+            Capabilities.CURRENT._good_known_since, datetime
+        ):
             # We've already discovered the endpoints as per HATEOAS
             # design requirement, however because the endpoint configuration is
             # dynamically populated, we have to call the get_config method
@@ -215,6 +211,7 @@ class APIEndpoint:
         # Auto-discovery of the API endpoints, this will
         # be called as part of the bootstrapping process
         from . import api_base
+
         async with httpx.AsyncClient() as _httpx_async:
             response = await _httpx_async.get(
                 api_base,
@@ -223,9 +220,7 @@ class APIEndpoint:
 
             await _httpx_async.aclose()
 
-            parsed_obj = DiscoveryResponse.model_validate(
-                response.json()
-            )
+            parsed_obj = DiscoveryResponse.model_validate(response.json())
 
             # Assign the capabilities to the class, this should
             # result in the endpoint
@@ -248,14 +243,14 @@ class APIEndpoint:
 
     @classmethod
     async def list(cls, skip=0):
-        """ For a list of objects for the given resource
+        """For a list of objects for the given resource
 
         Most resources can be searched which is exposed by this method.
         Resources also allow pagination which can be controlled by the skip
 
         :param int skip: fetch responses from this anchor
         """
-        await cls._discover() # Discover must be here for dynamic config
+        await cls._discover()  # Discover must be here for dynamic config
 
         return await cls._get(
             cls.__config__.endpoint.href,
@@ -264,51 +259,41 @@ class APIEndpoint:
 
     @classmethod
     async def retrieve(cls, id):
-        """ Retrieve a single object for the given resource
+        """Retrieve a single object for the given resource
 
-        Most objects have an ID which is numeral or UUID. 
+        Most objects have an ID which is numeral or UUID.
         Each resource also provides a href and pagination for
         children.
 
         :param int id: identifier of the object to be fetched
         """
-        await cls._discover() # Discover must be here for dynamic config
+        await cls._discover()  # Discover must be here for dynamic config
 
         return await cls._get(
-            f'{cls.__config__.endpoint.href}/{id}',
+            f"{cls.__config__.endpoint.href}/{id}",
             cls.__config__.dto_retrieve,
-        )        
+        )
 
     @classmethod
     async def modify(cls):
-        """
-
-        """
+        """ """
         pass
 
     @classmethod
     async def create(cls, **params):
-        """
-
-        """
+        """ """
         cls._discover()
 
     @classmethod
     async def delete(cls):
-        """
-
-        """
+        """ """
         cls._discover()
 
     @classmethod
     async def search(
-        cls,
-        top: int = 100,
-        sort: str = 'id',
-        fields: str = 'defaults',
-        **kwargs
+        cls, top: int = 100, sort: str = "id", fields: str = "defaults", **kwargs
     ):
-        """ Search wrapper for most objects to dynamically search content
+        """Search wrapper for most objects to dynamically search content
 
         Each object has a set of fields that you can query for, most searches
         also allow you to search for a partial string.
@@ -322,9 +307,9 @@ class APIEndpoint:
         await cls._discover()
 
         params = {
-            'top': top,
-            'sort': sort,
-            'fields': fields,
+            "top": top,
+            "sort": sort,
+            "fields": fields,
         }
 
         # Adds arbitrary fields to the search, these will be different
@@ -334,19 +319,16 @@ class APIEndpoint:
         async with httpx.AsyncClient() as _httpx_async:
 
             response = await _httpx_async.get(
-                f'{cls.__config__.endpoint.href}',
+                f"{cls.__config__.endpoint.href}",
                 params=params,
                 headers=_get_authorization_headers(),
             )
 
             await _httpx_async.aclose()
 
-            parsed_obj = cls.__config__.dto_list.model_validate(
-                response.json()
-            )
+            parsed_obj = cls.__config__.dto_list.model_validate(response.json())
 
             return parsed_obj
-        
 
     # Follow links methods, these are valid based on if the response
     # classes make available a next, previous or update href, otherwise
@@ -354,7 +336,7 @@ class APIEndpoint:
 
     @classmethod
     async def next(cls, response):
-        """ Fetches the next set of results
+        """Fetches the next set of results
 
         This is only valid if the response object has a next href
         """
@@ -362,32 +344,24 @@ class APIEndpoint:
 
         # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
         # then we should raise an exception
-        if not issubclass(
-            cls.__config__.dto_list, 
-            AppBaseResponseWithFollowModel
-        ):
-            """ A response model must have a next, previous or update
-            """
+        if not issubclass(cls.__config__.dto_list, AppBaseResponseWithFollowModel):
+            """A response model must have a next, previous or update"""
             raise PathFollowNotSupportedError(
                 "Endpoint does not support previous, next or updates"
             )
 
         if not response.next:
-            """ We have no where to go based on the passed response
-            """
-            raise DeadEndException(
-                "No further paths to follow for this endpoint"
-            )
+            """We have no where to go based on the passed response"""
+            raise DeadEndException("No further paths to follow for this endpoint")
 
         return await cls._get(
             response.next.href,
             cls.__config__.dto_list,
         )
 
-
     @classmethod
     async def previous(cls, response):
-        """ Fetches the previous set of results
+        """Fetches the previous set of results
 
         This is only valid if the response object has a previous href
         """
@@ -395,20 +369,14 @@ class APIEndpoint:
 
         # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
         # then we should raise an exception
-        if not issubclass(
-            cls.__config__.dto_list, 
-            AppBaseResponseWithFollowModel
-        ):
-            """ A response model must have a next, previous or update
-            """
+        if not issubclass(cls.__config__.dto_list, AppBaseResponseWithFollowModel):
+            """A response model must have a next, previous or update"""
             raise PathFollowNotSupportedError(
                 "Endpoint does not support previous, next or updates"
             )
 
         if not response.previous:
-            raise DeadEndException(
-                "No path leads further back than this"
-            )
+            raise DeadEndException("No path leads further back than this")
 
         return await cls._get(
             cls.response.previous.href,
@@ -417,7 +385,7 @@ class APIEndpoint:
 
     @classmethod
     async def poll(cls, response):
-        """ Fetches the updated set of results
+        """Fetches the updated set of results
 
         Update follow the same pattern as next and previous, except
         it keeps yielding results until the server has no more updates
@@ -426,31 +394,25 @@ class APIEndpoint:
 
         # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
         # then we should raise an exception
-        if not issubclass(
-            cls.__config__.dto_list, 
-            AppBaseResponseWithFollowModel
-        ):
-            """ A response model must have a next, previous or update
-            """
+        if not issubclass(cls.__config__.dto_list, AppBaseResponseWithFollowModel):
+            """A response model must have a next, previous or update"""
             raise PathFollowNotSupportedError(
                 "Endpoint does not support previous, next or updates"
             )
-
 
         return await cls._get(
             cls.response.update.href,
             cls.__config__.dto_list,
         )
 
-
-    # Proposed methods for internal use    
+    # Proposed methods for internal use
     @classmethod
     async def _get(
-        cls, 
-        url: str, 
+        cls,
+        url: str,
         response_class: AppBaseModel | None,
     ):
-        """ Generic _get method for all endpoints
+        """Generic _get method for all endpoints
 
         This is to be used if we can find a prepared url endpoint, this
         is useful for follow on endpoints like commenting, next, previous
@@ -468,7 +430,7 @@ class APIEndpoint:
             try:
 
                 response = await _httpx_async.get(
-                    f'{url}', # required to turn pydantic object to str
+                    f"{url}",  # required to turn pydantic object to str
                     headers=_get_authorization_headers(),
                 )
 
@@ -479,9 +441,7 @@ class APIEndpoint:
                     if not response_class:
                         return
 
-                    parsed_obj = response_class.model_validate(
-                        response.json()
-                    )
+                    parsed_obj = response_class.model_validate(response.json())
 
                     return parsed_obj
 
@@ -497,19 +457,18 @@ class APIEndpoint:
 
     @classmethod
     async def _post(
-        cls, 
+        cls,
         url: str,
         payload: AppBaseModel | None,
         response_class: AppBaseModel | None = None,
     ):
-        """
-        """
+        """ """
         async with httpx.AsyncClient() as _httpx_async:
 
             try:
 
                 response = await _httpx_async.post(
-                    f'{url}', # required to turn pydantic object to str
+                    f"{url}",  # required to turn pydantic object to str
                     json=payload.dict() if payload else None,
                     headers=_get_authorization_headers(),
                 )
@@ -519,12 +478,10 @@ class APIEndpoint:
                 if response.status_code == HTTPStatus.OK:
 
                     if not response_class:
-                        """ No response to parse """
+                        """No response to parse"""
                         return
 
-                    parsed_obj = response_class.model_validate(
-                        response.json()
-                    )
+                    parsed_obj = response_class.model_validate(response.json())
 
                     return parsed_obj
 
@@ -534,5 +491,4 @@ class APIEndpoint:
                     raise AuthenticationError()
 
             except httpx.RequestError as e:
-                raise(e)
-
+                raise (e)

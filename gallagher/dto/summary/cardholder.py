@@ -13,9 +13,9 @@ class CardholderSummary(
     HrefMixin,
 ):
     """
-    The cardholder search at /api/cardholders returns an array of these. 
-    It is a subset of what you get from a cardholder's detail page at 
-    /api/cardholders/{id} 
+    The cardholder search at /api/cardholders returns an array of these.
+    It is a subset of what you get from a cardholder's detail page at
+    /api/cardholders/{id}
 
     (linked as the href in this object), to be more suitable for large result sets.
     """
@@ -31,7 +31,7 @@ class CardholderSummary(
             self.id,
             self.first_name,
             self.last_name,
-            "yes" if self.authorised else "no"
+            "yes" if self.authorised else "no",
         ]
 
     def __str__(self):

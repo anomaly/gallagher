@@ -5,11 +5,7 @@ from ..utils import (
 )
 
 
-class AccessZoneRef(
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin
-):
-    """ AccessZone represents
-    """
+class AccessZoneRef(AppBaseModel, IdentityMixin, HrefMixin):
+    """AccessZone represents"""
+
     name: str

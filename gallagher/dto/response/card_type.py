@@ -5,14 +5,12 @@ from ..utils import (
     AppBaseResponseWithFollowModel,
 )
 
-from ..detail import (
-    CardTypeDetail
-)
+from ..detail import CardTypeDetail
 
 
 class CardTypeResponse(
     AppBaseResponseWithFollowModel,
 ):
-    """ Card Types are cards mobile or physical that are supported at a site
-    """
+    """Card Types are cards mobile or physical that are supported at a site"""
+
     results: list[CardTypeDetail]

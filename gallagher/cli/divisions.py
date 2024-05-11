@@ -1,30 +1,24 @@
 """ Divisions
 
 """
+
 from rich import print as rprint
 from rich.console import Console
 from rich.table import Table
 
 from .utils import AsyncTyper
 
-from gallagher.cc.alarms.divisions import (
-    Division
-)
+from gallagher.cc.alarms.divisions import Division
 
 
-app = AsyncTyper(
-    help="query or modify divisions"
-)
+app = AsyncTyper(help="query or modify divisions")
+
 
 @app.command("list")
 async def list():
-    """ list all divisions
-    """
+    """list all divisions"""
     console = Console()
-    with console.status(
-        "[bold green]Fetching divisions...",
-        spinner="clock"
-    ):
+    with console.status("[bold green]Fetching divisions...", spinner="clock"):
         divisions = await Division.list()
         table = Table(title="Divisions")
         for header in divisions.cli_header:
@@ -38,10 +32,6 @@ async def list():
 
 @app.command("get")
 async def get(id: int):
-    """ get a division by id
-    """
+    """get a division by id"""
     division = await Division.retrieve(id)
     [rprint(r) for r in division.__rich_repr__()]
-
-
-

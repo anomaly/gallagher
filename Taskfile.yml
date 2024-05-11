@@ -34,6 +34,14 @@ tasks:
     desc: runs coverage inside the server container
     cmds:
       - poetry run coverage report -m
+  lint:
+    desc: runs the linter
+    cmds:
+      - poetry run flake8 gallagher tests
+  black:
+    desc: runs black on the codebase
+    cmds:
+      - poetry run black gallagher tests
   dev:textual:
     desc: runs the textual cli
     cmds:

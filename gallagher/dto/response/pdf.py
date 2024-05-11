@@ -8,6 +8,7 @@ These fields appear either under the personalDataFields as
 href references or as individual fields in the user's profile.
 
 """
+
 from ..utils import (
     AppBaseResponseModel,
 )
@@ -20,10 +21,11 @@ from ..ref import (
 class PdfResponse(
     AppBaseResponseModel,
 ):
-    """ Personal Definition fields
+    """Personal Definition fields
 
     Returned as a set of results, each result is a PDFRef
     these are to be cached just as we do the URL endpoints,
     note that this must be done after the discovery completes
     """
+
     results: list[PDFRef]

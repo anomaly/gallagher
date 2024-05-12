@@ -1,12 +1,12 @@
 from typing import Optional
 
 from ..ref import (
-    DivisionRef
+    DivisionRef,
+    AccessGroupRef,
 )
 
 from ..utils import (
     AppBaseModel,
-    IdentityMixin,
     HrefMixin,
 )
 
@@ -26,7 +26,7 @@ class PdfDetail(AppBaseModel, HrefMixin):
     operator_access: Optional[str] = None
     sort_priority: int
 
-    # access_groups
+    access_groups: list[AccessGroupRef]
 
     regex: Optional[str] = None
     regex_description: Optional[str] = None

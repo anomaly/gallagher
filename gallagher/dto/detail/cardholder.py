@@ -17,6 +17,7 @@ class CardholderCard(
     IdentityMixin,
     HrefMixin,
 ):
+    pass
     
 
 class CardholderDetail(

@@ -1,3 +1,4 @@
+""" Cardholder Detail """
 from typing import Optional
 
 from ..utils import (
@@ -10,6 +11,13 @@ from ..ref import (
     DivisionRef,
 )
 
+
+class CardholderCard(
+    AppBaseModel,
+    IdentityMixin,
+    HrefMixin,
+):
+    
 
 class CardholderDetail(
     AppBaseModel,

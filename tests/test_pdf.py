@@ -9,6 +9,7 @@ See #1 to track how this was developed and tested.
 import pytest
 
 from gallagher.dto.response import PdfResponse
+from gallagher.dto.detail import PdfDetail
 
 from gallagher.cc.cardholders.cardholders import PdfDefinition
 
@@ -37,6 +38,6 @@ async def test_pdf_list(pdf_definition: PdfResponse):
 async def test_pdf_detail(pdf_definition: PdfResponse):
 
     for pdf in pdf_definition.results:
-        detail = await PdfDefinition.detail(pdf.id)
+        detail = await PdfDefinition.retrieve(pdf.id)
 
-        # assert type(detail) is PdfResponse
+        assert type(detail) is PdfDetail

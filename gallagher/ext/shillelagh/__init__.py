@@ -6,7 +6,16 @@ Gallagher API.
 [shillelagh](https://github.com/betodealmeida/shillelagh)
 """
 
-from typing import Any, Dict, Iterator, List, Optional, Tuple
+from typing import (
+    Any,
+    Dict,
+    Iterator,
+    List, 
+    Optional,
+    Tuple,
+)
+
+from shillelagh.adapters.base import Adapter
 
 
 class GallagherCommandCentreAPI(Adapter):

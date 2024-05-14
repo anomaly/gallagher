@@ -23,7 +23,7 @@ from gallagher.cc.alarms import (
     Alarms,
 )
 
-app = AsyncTyper(help="list or query alarms in the command centre")
+app = AsyncTyper(help="list, query, follow, act on alarms in the command centre")
 
 
 @app.command("list")
@@ -48,6 +48,24 @@ async def get(
 ):
     """get alarm details"""
     console = Console()
+
+    raise NotImplementedError("Not implemented")
+
+@app.command("history")
+async def history(
+    id: Annotated[int, typer.Argument(help="alarm id")],
+):
+    """show history of an alarm"""
+    console = Console()
+
+    raise NotImplementedError("Not implemented")
+
+@app.command("tail")
+async def tail():
+    """watch for alarm updates"""
+    console = Console()
+
+    raise NotImplementedError("Not implemented")
 
 
 @app.command("comment")

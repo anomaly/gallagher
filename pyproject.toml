@@ -92,4 +92,4 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry.plugins."shillelagh.adapter"]
-gacc = "gallagher.ext.shillelagh.GallagherCommandCentreAPI"
+gacc = "gallagher.ext.shillelagh:GallagherCommandCentreAPI"

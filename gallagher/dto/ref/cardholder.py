@@ -17,7 +17,7 @@ class CardholderRef(
     name: str
 
 
-class CardholderEventRef(
+class CardholderExtendedRef(
     AppBaseModel,
     IdentityMixin,
     OptionalHrefMixin,

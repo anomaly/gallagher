@@ -5,7 +5,6 @@ from ..utils import (
     IdentityMixin,
 )
 
-
 class CardExpiryTypeSummary(AppBaseModel):
     expiry_type: Optional[str] = None
 

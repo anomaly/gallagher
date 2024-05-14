@@ -11,7 +11,7 @@ from ..utils import (
 from ..ref import (
     AlarmRef,
     CardholderRef,
-    CardholderEventRef,
+    CardholderExtendedRef,
     DoorRef,
     AccessZoneRef,
     DivisionRef,
@@ -71,7 +71,7 @@ class EventSummary(
     type: Optional[EventTypeSummary] = None
     event_type: Optional[EventTypeSummary] = None
     division: Optional[DivisionRef] = None
-    cardholder: Optional[CardholderEventRef] = None
+    cardholder: Optional[CardholderExtendedRef] = None
     entry_access_zone: Optional[AccessZoneRef] = None
     exit_access_zone: Optional[AccessZoneRef] = None
     door: Optional[DoorRef] = None

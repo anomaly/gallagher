@@ -2,7 +2,10 @@
 from typing import Optional
 
 from ..ref import (
+    CardholderExtendedRef,
     DivisionRef,
+    PlaceholderRef,
+    RoleRef,
 )
 
 from ..summary import (
@@ -14,6 +17,14 @@ from ..utils import (
     IdentityMixin,
     HrefMixin,
 )
+
+class CardholderRelationshipDetail(
+    AppBaseModel,
+    HrefMixin,
+):
+    role: RoleRef
+    cardholder: CardholderExtendedRef
+    
 
 class CardholderDetail(
     AppBaseModel,
@@ -60,7 +71,7 @@ class CardholderDetail(
     # relationships
     # lockers
     # elevator_groups
-    # updates
+    updates: PlaceholderRef
     # redactions
 
     def get_pdf(self, PDFRef):

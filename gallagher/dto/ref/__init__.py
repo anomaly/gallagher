@@ -25,7 +25,7 @@ from .card_type import (
 
 from .cardholder import (
     CardholderRef,
-    CardholderEventRef,
+    CardholderExtendedRef,
 )
 
 from .day_category import (
@@ -72,6 +72,10 @@ from .event import (
     EventGroupRef,
 )
 
+from .ext import (
+    PlaceholderRef,
+)
+
 from .items import (
     ItemRef,
 )
@@ -89,12 +93,17 @@ from .schedule import (
     ScheduleRef,
 )
 
+
+from .misc import (
+    InstructionRef,
+)
+
 from .operator import (
     OperatorRef,
 )
 
-from .misc import (
-    InstructionRef,
+from .role import (
+    RoleRef,
 )
 
 from .zone import (

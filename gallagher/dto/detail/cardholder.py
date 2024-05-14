@@ -68,7 +68,7 @@ class CardholderDetail(
     notes: Optional[str] = None
 
     # notifications
-    # relationships
+    relationships: list[CardholderRelationshipDetail] = []
     # lockers
     # elevator_groups
     updates: PlaceholderRef

@@ -18,17 +18,30 @@ ignore them unless you are developing the client itself.
 from typing import (
     Optional,
 )
+from typing_extensions import Annotated
+
 from datetime import datetime
 
 from pydantic import (
     BaseModel,
     ConfigDict,
     HttpUrl,
+    Field,
 )
 
+# Annotations for fields that are reserved words in Python
+from_optional_datetime = Annotated[
+    Optional[datetime],
+    Field(..., alias="from")
+]
+
+until_optional_datetime = Annotated[
+    Optional[datetime],
+    Field(..., alias="until")
+]
+
+
 # Helper functions for parsing
-
-
 def _to_lower_camel(name: str) -> str:
     """Converts a snake_case string to lowerCamelCase
 

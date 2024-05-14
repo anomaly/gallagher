@@ -1,9 +1,7 @@
 from typing import Optional
-from typing_extensions import Annotated
 
 from datetime import datetime
 
-from pydantic import Field
 
 from ..ref import (
     CardTypeRef,
@@ -13,6 +11,8 @@ from ..utils import (
     AppBaseModel,
     IdentityMixin,
     HrefMixin,
+    from_optional_datetime,
+    until_optional_datetime,
 )
 
 
@@ -56,10 +56,20 @@ class CardholderCardStatusSummary(
     type: str
 
 
-from_datetime = Annotated[
-    Optional[datetime],
-    Field(..., alias="from")
-]
+class CardholderCardInvitationSummary(
+    AppBaseModel,
+    HrefMixin,
+):
+    """ Used by CardholderCardSummary to show status of an invitation
+
+    Invitations are sent by the Gallagher system to a cardholder via
+    email and then text messages for mobile credentials to activate
+    the app.
+    """
+    email: str
+    mobile: Optional[str] = None
+    single_factor_only: bool = False
+    status: str
 
 class CardholderCardSummary(
     AppBaseModel,
@@ -79,8 +89,11 @@ class CardholderCardSummary(
     status: CardholderCardStatusSummary
 
     type: CardTypeRef
-    valid_from: Optional[from_datetime] = None
-    until: Optional[datetime] = None
+
+    invitation: Optional[CardholderCardInvitationSummary] = None
+
+    valid_from: from_optional_datetime = None # Appears as from in the API
+    valid_until: until_optional_datetime = None
     credential_class: str
     trace: bool = False
     last_printed_or_encoded_time: Optional[datetime] = None

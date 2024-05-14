@@ -35,6 +35,14 @@ Base models:
 - `AppBaseResponseModel` - distinguishes between a model vs a response that encapsulates a objects
 - `AppBaseResponseWithFollowModel` - a response model with follow paths
 
+### Writing DTO classes
+
+Write about using OptionalHrefMixin
+
+Naming convensions of DTO classes.
+
+Organising DTO classes, where do extension resources like `CardholderAccessGroupSummary` go?
+
 ## API Client Core
 
 The `core` package in `cc` provides two important classes:

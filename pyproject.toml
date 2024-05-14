@@ -58,6 +58,7 @@ mkdocs = "^1.6.0"
 pytest-dependency = "^0.6.0"
 flake8 = "^7.0.0"
 black = "^24.4.2"
+tqdm = "^4.66.4"
 
 
 [tool.poetry.group.cli.dependencies]

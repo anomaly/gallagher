@@ -17,6 +17,7 @@ from .card_type import (
 
 from .cardholder import (
     CardholderSummary,
+    CardholderCardSummary,
 )
 
 from .day_category import (

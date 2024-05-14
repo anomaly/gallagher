@@ -40,3 +40,14 @@ class AccessGroupSummary(
     division: IdentityMixin
     cardholders: OptionalHrefMixin
     server_display_name: Optional[str]
+
+
+
+class CardholderAccessGroupSummary(
+    AppBaseModel,
+    IdentityMixin,
+    HrefMixin,
+):
+    """
+    """
+    pass

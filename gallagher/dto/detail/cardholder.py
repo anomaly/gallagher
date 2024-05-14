@@ -1,24 +1,19 @@
 """ Cardholder Detail """
 from typing import Optional
 
+from ..ref import (
+    DivisionRef,
+)
+
+from ..summary import (
+    CardholderCardSummary,
+)
+
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
     HrefMixin,
 )
-
-from ..ref import (
-    DivisionRef,
-)
-
-
-class CardholderCard(
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin,
-):
-    pass
-    
 
 class CardholderDetail(
     AppBaseModel,
@@ -52,7 +47,7 @@ class CardholderDetail(
     windows_login_enabled: bool = False
 
     # personal_data_definitions
-    # cards
+    cards: list[CardholderCardSummary] = []
     # access_groups
     # operator_groups
     # competencies

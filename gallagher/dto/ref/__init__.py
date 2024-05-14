@@ -19,6 +19,10 @@ from .alarm import (
     AlarmZoneRef,
 )
 
+from .card_type import (
+    CardTypeRef,
+)
+
 from .cardholder import (
     CardholderRef,
     CardholderEventRef,

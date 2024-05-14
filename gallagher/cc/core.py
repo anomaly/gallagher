@@ -469,7 +469,7 @@ class APIEndpoint:
 
                 response = await _httpx_async.post(
                     f"{url}",  # required to turn pydantic object to str
-                    json=payload.dict() if payload else None,
+                    json=payload.model_dump() if payload else None,
                     headers=_get_authorization_headers(),
                 )
 

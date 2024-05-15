@@ -12,7 +12,11 @@ endpoint will be assigned to None but will self heal as part of
 the bootstrapping process.
 """
 
-from typing import Optional
+from typing import (
+    Optional,
+    Tuple,
+)
+
 from datetime import datetime
 from dataclasses import dataclass
 
@@ -105,7 +109,12 @@ class EndpointConfig:
 
     top: Optional[int] = 10  # Number of response to download
     sort: Optional[str] = "id"  # Can be set to id or -id
-    # fields: list[str] = []  # Optional list of fields
+
+    fields: Tuple[str] = ()  # Optional list of fields, blank = all
+    search: Tuple[str] = () # If the endpoint supports search, blank = none
+
+    # TODO: prototyping shillelagh integration
+    sql = False  # If the endpoint supports SQL queries
 
     @classmethod
     async def validate_endpoint(cls):

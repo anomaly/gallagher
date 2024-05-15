@@ -6,7 +6,7 @@ Gallagher API.
 [shillelagh](https://github.com/betodealmeida/shillelagh)
 """
 import urllib
-
+import os
 
 import logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
@@ -17,6 +17,7 @@ from typing import (
     Any,
     Dict,
     Iterator,
+    AsyncIterator,
     List, 
     Optional,
     Tuple,
@@ -41,6 +42,11 @@ from shillelagh.fields import (
     Order,
     Boolean,
 )
+
+# TODO: refactor this to generic based on SQL.md
+from gallagher import cc
+from gallagher.cc.cardholders.cardholders import Cardholder
+
 
 class GallagherCommandCentreAPI(Adapter):
 
@@ -74,24 +80,32 @@ class GallagherCommandCentreAPI(Adapter):
 
     @staticmethod
     def parse_uri(uri: str) -> Tuple[str]:
-        return (uri, "api_key")
+        return (uri, os.environ.get('GACC_API_KEY'))
 
     def __init__(self, uri: str, api_key: Optional[str], **kwargs: Any):
         super().__init__()
 
         self.uri = uri
-        self.api_key = api_key
+        cc.api_key = api_key
 
     def get_data(  # pylint: disable=too-many-locals
         self,
         bounds: Dict[str, Filter],
         order: List[Tuple[str, RequestedOrder]],
         **kwargs: Any,
-    ) -> Iterator[Dict[str, Any]]:
-        yield {
-            "rowid": 1,
-            "id": 1,
-            "authorised": True,
-            "first_name": "Dev",
-            "last_name": "Mukherjee",
-        }
+    ) -> Iterator[Row]:
+        
+        # TODO: refactor this to see if can support asyncio
+        import asyncio
+        cardholders = asyncio.run(Cardholder.list())
+        # cardholders = await Cardholder.list()
+
+        for row in cardholders.results:
+            yield {
+                "rowid": row.id,
+                "id": row.id,
+                "authorised": row.authorised,
+                "first_name": row.first_name,
+                "last_name": row.last_name,
+            }
+

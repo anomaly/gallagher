@@ -23,7 +23,10 @@ class GallagherConsole(App):
 
     CSS_PATH = "gallagher.tcss"
 
-    BINDINGS = [("d", "toggle_dark", "Toggle dark mode"), ("ctrl+q", "quit", "Quit")]
+    BINDINGS = [
+        ("d", "toggle_dark", "Toggle dark mode"), 
+        ("ctrl+q", "quit", "Quit")
+    ]
 
     # Decorative constants
     TITLE = "Gallagher"
@@ -42,10 +45,17 @@ class GallagherConsole(App):
         self.dark = not self.dark
 
 
-def main():
-    app = GallagherConsole()
-    app.run()
+# Move this out side of __main__ so that textual cli
+# and python can find them as instance variables
+#
+# see service.tom and you can run this via the terminal
+# textual-web --config serve.toml 
+# to get a web interface, follow textual-web for further
+# development and how we can use it provide a demo
+app = GallagherConsole()
 
+def main():
+    app.run()
 
 if __name__ == "__main__":
     main()

@@ -17,10 +17,16 @@ from textual.widgets import (
 )
 
 
+class VisitTimelineWidget(Container):
+
+    def compose(self) -> ComposeResult:
+        """Visit timeline widget"""
+        with Grid():
+            yield Placeholder("Visit Timeline, changes")
+
 class Dashboard(Container):
 
     def compose(self) -> ComposeResult:
-        """Create child widgets for the app."""
+        """Dashboard for the command centre"""
         with Grid():
-            yield Placeholder("Dashboard")
-            yield Digits("3.141,592,653,5897", id="pi")
+            yield VisitTimelineWidget()

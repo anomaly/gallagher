@@ -1,0 +1,2 @@
+[app.Gallagher]
+command = "textual run gallagher.tui"

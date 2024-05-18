@@ -4,7 +4,7 @@ repo_url: https://github.com/anomaly/gallagher/
 site_author: Dev Mukherjee
 
 theme:
-  name: readthedocs
+  name: material
 
 markdown_extensions:
     - mkdocs-typer

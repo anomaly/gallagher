@@ -3,7 +3,7 @@
 > Python idiomatic REST API client, a command line interface and a text based console for Gallagher Command Centre API
 
 <div align="center">
-![GPT logo](https://raw.githubusercontent.com/anomaly/gallagher/master/assets/logo-gpt.png)
+<img src="https://raw.githubusercontent.com/anomaly/gallagher/master/assets/logo-gpt.png" alt="Gallagher Python Toolkit Logo" height=128 width=128/>
 </div>
 
 Gallagher Security manufacture a variety of [security products](https://security.gallagher.com) all of which are controlled by their [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Traditionally Command Centre has been a Windows based server product. Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests. Gallagher also provide a [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which allows third party integrations to securely communicate with the Command Centre on site.
@@ -225,4 +225,10 @@ To check your API key:
 
 ## License
 
-Distributed under the MIT License.
+Distributed under the MIT License except Artwork and Branding assets.
+
+## Credits
+
+- [Matthew Skiles](https://matthewskiles.com) for the beautiful logo for the project.
+- [Orion Edwards](https://github.com/borland) for all his support on getting @devraj started with the Gallagher API.
+- [Mick Lambert](https://www.linkedin.com/in/michael-lambert-au/), [Tim Harris](https://www.linkedin.com/in/timharris01/), [Andrew Donkin](https://github.com/andrewdonkin) from the Gallagher team for all their support.

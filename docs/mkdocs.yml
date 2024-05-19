@@ -8,6 +8,7 @@ theme:
 
 markdown_extensions:
     - mkdocs-typer
+    - codehilite
 
 nav:
   - Introduction: index.md

@@ -1,6 +1,12 @@
 # Gallagher Python Toolkit
 
-> Python idiomatic REST API client, a command line interface and a text based console for Gallagher Command Centre API
+> The missing piece for integrating with Gallagher Command Centre
+
+[![PyPI version](https://badge.fury.io/py/gallagher.svg)](https://badge.fury.io/py/gallagher)
+[![Python Version](https://img.shields.io/pypi/pyversions/gallagher)](https://pypi.org/project/gallagher/)
+[![Downloads](https://pepy.tech/badge/gallagher)](https://pepy.tech/project/gallagher)
+[![Downloads](https://pepy.tech/badge/gallagher/month)](https://pepy.tech/project/gallagher)
+[![Downloads](https://pepy.tech/badge/gallagher/week)](https://pepy.tech/project/gallagher)
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/anomaly/gallagher/master/assets/logo-gpt.png" alt="Gallagher Python Toolkit Logo" height=128 width=128/>
@@ -10,10 +16,12 @@ Gallagher Security manufacture a variety of [security products](https://security
 
 This project primarily provides the following:
 
-- Python SDK that provides an idiomatic client for the REST API and is designed to work locally or via the Cloud API Gateway.
-- Command Line Interface (CLI) that uses the API to interact with the Command Centre, and is designed to speed up power interactions with the Command Centre.
-- Terminal User Interface (TUI) that provides a text based interface for a subset of the Command Centre functionality.
-- SQL interface allowing you to use query the Command Centre using SQL. Additionally we provide a SQLALchemy `dialect` allowing you to interact with the REST API via the ORM.
+- **Python SDK** that provides an idiomatic client (featuring `asyncio`) for the REST API and is designed to work locally or via the Cloud API Gateway.
+- **Command Line Interface** (CLI) that uses the API to interact with the Command Centre, and is designed to speed up power interactions with the Command Centre.
+- **Terminal User Interface** (TUI) that provides a text based interface for a subset of the Command Centre functionality.
+- **SQL interface** allowing you to use query the Command Centre using SQL. Additionally we provide a SQLALchemy `dialect` allowing you to interact with the REST API via the ORM.
+
+> **Note:** this project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
 
 While Gallagher maintain a set of [Swagger definitions](https://github.com/gallaghersecurity/cc-rest-docs) for their API, they are primarily intended to generate the documentation [published on Github](https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html). They use a tool called [Spectacle](https://github.com/sourcey/spectacle). Gallagher explicitly state that the Swagger definitions are not intended to be used to generate code. Due to this the API client is hand built and not auto-generated.
 
@@ -56,7 +64,7 @@ cardholder.href
 cardholder.first_name
 ```
 
-> Note this project is **NOT** officially affiliated with Gallagher Security
+> We pride ourselves in providing a complete test suite as proof of high quality work that you can rely on. These tests constantly run against our _demo_ command centre hosted on the cloud.
 
 ## API Notes
 

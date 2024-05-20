@@ -4,9 +4,7 @@
 
 [![PyPI version](https://badge.fury.io/py/gallagher.svg)](https://badge.fury.io/py/gallagher)
 [![Python Version](https://img.shields.io/pypi/pyversions/gallagher)](https://pypi.org/project/gallagher/)
-[![Downloads](https://pepy.tech/badge/gallagher)](https://pepy.tech/project/gallagher)
-[![Downloads](https://pepy.tech/badge/gallagher/month)](https://pepy.tech/project/gallagher)
-[![Downloads](https://pepy.tech/badge/gallagher/week)](https://pepy.tech/project/gallagher)
+[![Build Status](https://github.com/anomaly/gallagher/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/anomaly/gallagher/actions?query=branch%3Amaster)
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/anomaly/gallagher/master/assets/logo-gpt.png" alt="Gallagher Python Toolkit Logo" height=128 width=128/>

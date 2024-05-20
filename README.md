@@ -8,7 +8,12 @@
 
 Gallagher Security manufacture a variety of [security products](https://security.gallagher.com) all of which are controlled by their [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Traditionally Command Centre has been a Windows based server product. Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests. Gallagher also provide a [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which allows third party integrations to securely communicate with the Command Centre on site.
 
-This API client is a Python wrapper around their REST API and is designed to work locally or via the Cloud API Gateway.
+This project primarily provides the following:
+
+- Python SDK that provides an idiomatic client for the REST API and is designed to work locally or via the Cloud API Gateway.
+- Command Line Interface (CLI) that uses the API to interact with the Command Centre, and is designed to speed up power interactions with the Command Centre.
+- Terminal User Interface (TUI) that provides a text based interface for a subset of the Command Centre functionality.
+- SQL interface allowing you to use query the Command Centre using SQL. Additionally we provide a SQLALchemy `dialect` allowing you to interact with the REST API via the ORM.
 
 While Gallagher maintain a set of [Swagger definitions](https://github.com/gallaghersecurity/cc-rest-docs) for their API, they are primarily intended to generate the documentation [published on Github](https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html). They use a tool called [Spectacle](https://github.com/sourcey/spectacle). Gallagher explicitly state that the Swagger definitions are not intended to be used to generate code. Due to this the API client is hand built and not auto-generated.
 

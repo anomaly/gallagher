@@ -1,6 +1,6 @@
 # Gallagher Python Toolkit
 
-> The missing piece for integrating with Gallagher Command Centre
+> The missing toolkit for extending Gallagher Command Centre
 
 [![PyPI version](https://badge.fury.io/py/gallagher.svg)](https://badge.fury.io/py/gallagher)
 [![Python Version](https://img.shields.io/pypi/pyversions/gallagher)](https://pypi.org/project/gallagher/)
@@ -14,10 +14,10 @@ Gallagher Security manufacture a variety of [security products](https://security
 
 This project primarily provides the following:
 
-- **Python SDK** that provides an idiomatic client (featuring `asyncio`) for the REST API and is designed to work locally or via the Cloud API Gateway.
-- **Command Line Interface** (CLI) that uses the API to interact with the Command Centre, and is designed to speed up power interactions with the Command Centre.
-- **Terminal User Interface** (TUI) that provides a text based interface for a subset of the Command Centre functionality.
-- **SQL interface** allowing you to use query the Command Centre using SQL. Additionally we provide a SQLALchemy `dialect` allowing you to interact with the REST API via the ORM.
+- **Python SDK** an idiomatic client (featuring `asyncio`) to build applications for the Command Centre.
+- **Command Line Interface** (CLI) to build powerful pipeline-based workflows.
+- **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
+- **SQL interface** query the REST API like a database or interact with via an ORM.
 
 > **Note:** this project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
 

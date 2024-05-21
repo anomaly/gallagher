@@ -27,9 +27,9 @@ class DivisionSummaryResponse(
     @property
     def cli_header(self):
         return [
-            "Id",
-            "Name",
-            "Server Display Name",
+            "id",
+            "name",
+            "server display name",
         ]
 
     def __rich_repr__(self):

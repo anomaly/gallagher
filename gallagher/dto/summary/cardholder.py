@@ -36,12 +36,12 @@ class CardholderSummary(
     authorised: bool = False
 
     def __rich_repr__(self):
-        return [
+        return (
             self.id,
             self.first_name,
             self.last_name,
             "yes" if self.authorised else "no",
-        ]
+        )
 
     def __str__(self):
         return f"{self.id} {self.first_name} {self.last_name}"

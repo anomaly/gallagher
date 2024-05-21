@@ -85,7 +85,7 @@ class CardholderDetail(
         pass
 
     def __rich_repr__(self):
-        return [
+        return (
             f"[blue bold] person",
             f"{'id':>20} {self.id}",
             f"{'first_name':>20} {self.first_name}",
@@ -98,4 +98,4 @@ class CardholderDetail(
             f"{'division':>20} {self.division.id}",
             f"[blue bold] hrefs",
             f"{'edit':>20} [link={self.edit.href}]edit[/link]",
-        ]
+        )

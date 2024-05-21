@@ -25,8 +25,10 @@ class DivisionSummary(AppBaseModel, IdentityMixin, HrefMixin):
     parent: OptionalHrefMixin = None
 
     def __rich_repr__(self):
-        return [
+        return (
             self.id,
             self.name,
-            self.server_display_name if self.server_display_name else "unavailable",
-        ]
+            self.server_display_name \
+                if self.server_display_name \
+                else "unavailable",
+        )

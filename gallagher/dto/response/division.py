@@ -26,14 +26,14 @@ class DivisionSummaryResponse(
 
     @property
     def cli_header(self):
-        return [
+        return (
             "id",
             "name",
             "server display name",
-        ]
+        )
 
     def __rich_repr__(self):
-        return [r.__rich_repr__() for r in self.results]
+        return (r.__rich_repr__() for r in self.results)
 
     def __str__(self):
         return f"{len(self.results)} divisions"

@@ -59,12 +59,12 @@ class AlarmSummary(
     force_process: OptionalHrefMixin = None
 
     def __rich_repr__(self):
-        return [
+        return (
             self.id,
             f"{self.priority}",
             self.time.strftime('%c'),
             self.type,
-        ]
+        )
 
     def __str__(self):
         return f"{self.id} {self.priority} {self.type}"

@@ -23,10 +23,10 @@ class CardholderSummaryResponse(
 
     @property
     def cli_header(self):
-        return ["Id", "First name", "Last name", "Authorised"]
+        return ("id", "first name", "last name", "authorised")
 
     def __rich_repr__(self):
-        return [r.__rich_repr__() for r in self.results]
+        return (r.__rich_repr__() for r in self.results)
 
     def __str__(self):
         return f"{len(self.results)} cardholders"

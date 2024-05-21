@@ -18,10 +18,10 @@ class AlarmSummaryResponse(
 
     @property
     def cli_header(self):
-        return ["id", "priority", "time", "type"]
+        return ("id", "priority", "time", "type")
 
     def __rich_repr__(self):
-        return [r.__rich_repr__() for r in self.alarms]
+        return (r.__rich_repr__() for r in self.alarms)
 
     def __str__(self):
         return f"{len(self.results)} cardholders"

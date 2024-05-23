@@ -74,6 +74,7 @@ textual = "^0.60.1"
 textual-dev = "^1.5.1"
 
 
+rich-pixels = "^3.0.1"
 [tool.poetry.group.sync.dependencies]
 sqlalchemy = "^2.0.30"
 alembic = "^1.13.1"

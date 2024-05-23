@@ -11,7 +11,9 @@ from .utils import AsyncTyper
 from gallagher.cc.alarms.divisions import Division
 
 
-app = AsyncTyper(help="query or modify divisions")
+app = AsyncTyper(
+    help="query or modify divisions"
+)
 
 
 @app.command("list")

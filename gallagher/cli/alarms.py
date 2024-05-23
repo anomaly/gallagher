@@ -23,16 +23,22 @@ from gallagher.cc.alarms import (
     Alarms,
 )
 
-app = AsyncTyper(help="list, query, follow, act on alarms in the command centre")
+app = AsyncTyper(
+    help="list, query, follow, act on alarms in the command centre"
+)
 
 
 @app.command("list")
 async def list():
     """list current alarms"""
+
     console = Console()
-    with console.status("[bold green]Fetching alarms...", spinner="clock"):
+
+    with console.status("[bold green]Fetching alarms...", spinner="dots"):
+
         alarms = await Alarms.list()
         table = Table(title="Alarms")
+
         for header in alarms.cli_header:
             table.add_column(header)
 
@@ -48,8 +54,14 @@ async def get(
 ):
     """get alarm details"""
     console = Console()
+    with console.status("[bold green]Fetching alarm...", spinner="dots"):
 
-    raise NotImplementedError("Not implemented")
+        try:
+            alarm = await Alarms.retrieve(id)
+            [console.print(r) for r in alarm.__rich_repr__()]
+        except NotFoundException as e:
+            console.print(f"[bold]No alarm with id={id} found[/bold]")
+            raise typer.Exit(code=1)
 
 @app.command("history")
 async def history(

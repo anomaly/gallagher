@@ -15,7 +15,9 @@ from gallagher.exception import (
     NotFoundException,
 )
 
-app = AsyncTyper(help="query or manage cardholders")
+app = AsyncTyper(
+    help="query or manage cardholders"
+)
 
 
 @app.command("list")
@@ -23,6 +25,7 @@ async def list():
     """list all cardholders"""
     console = Console()
     with console.status("[bold green]Fetching cardholders...", spinner="dots"):
+
         cardholders = await Cardholder.list()
 
         table = Table(title="Cardholders")
@@ -40,8 +43,8 @@ async def get(id: int):
     """get a cardholder by id"""
     console = Console()
     with console.status("[bold]Finding cardholder...", spinner="dots"):
-        try:
 
+        try:
             cardholder = await Cardholder.retrieve(id)
             [console.print(r) for r in cardholder.__rich_repr__()]
         except NotFoundException as e:

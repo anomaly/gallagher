@@ -47,7 +47,8 @@ class PdfDefinition(APIEndpoint):
     @classmethod
     async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.personal_data_fields.personal_data_fields,
+            endpoint=Capabilities.CURRENT.features.personal_data_fields\
+                .personal_data_fields,
             dto_list=PdfResponse,
             dto_retrieve=PdfDetail,
         )

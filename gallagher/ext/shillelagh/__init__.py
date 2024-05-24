@@ -8,10 +8,10 @@ Gallagher API.
 import urllib
 import os
 
-import logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
+# import logging
+# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
-logging.error("test")
+# logging.error("test")
 
 from typing import (
     Any,
@@ -56,8 +56,7 @@ class GallagherCommandCentreAPI(Adapter):
     # The adapter will receive a ``limit`` argument in the ``get_data``
     # method, and will be responsible for limiting the number of rows returned.
     supports_limit = True
-
-    supports_offset = False
+    supports_offset = True
 
     # Check to see if we can do this using the partial column feature
     supports_requested_columns = False
@@ -92,6 +91,8 @@ class GallagherCommandCentreAPI(Adapter):
         self,
         bounds: Dict[str, Filter],
         order: List[Tuple[str, RequestedOrder]],
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
         **kwargs: Any,
     ) -> Iterator[Row]:
         
@@ -100,7 +101,10 @@ class GallagherCommandCentreAPI(Adapter):
         cardholders = asyncio.run(Cardholder.list())
         # cardholders = await Cardholder.list()
 
+        rindex = 0
+
         for row in cardholders.results:
+
             yield {
                 "rowid": row.id,
                 "id": row.id,
@@ -108,4 +112,8 @@ class GallagherCommandCentreAPI(Adapter):
                 "first_name": row.first_name,
                 "last_name": row.last_name,
             }
+
+            rindex += 1
+            if rindex == limit:
+                break
 

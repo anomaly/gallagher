@@ -3,6 +3,10 @@
 
 from textual.app import App, ComposeResult
 
+from textual.screen import (
+    ModalScreen,
+)
+
 from textual.containers import (
     Container,
     Horizontal,
@@ -17,6 +21,14 @@ from textual.widgets import (
 
 from .dashboard import Dashboard
 
+class ModalScreen(ModalScreen):
+
+    def compose(self) -> ComposeResult:
+        # Make a two column grid and occupy the second half
+        # with a placeholder
+        with Container():
+            # yield Container()
+            yield Placeholder("This is a modal screen")
 
 class GallagherConsole(App):
     """A console interface for the Gallagher Command Centre."""
@@ -43,6 +55,10 @@ class GallagherConsole(App):
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
         self.dark = not self.dark
+
+    def key_m(self) -> None:
+        """Open the modal screen."""
+        self.push_screen(ModalScreen())
 
 
 # Move this out side of __main__ so that textual cli

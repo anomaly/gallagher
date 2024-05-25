@@ -12,6 +12,8 @@ Copied verbatam from [shillelagh](https://github.com/betodealmeida/shillelagh?ta
 
 [How to pronounce `shillelagh`](https://youtu.be/QHDZtvfTkz4?feature=shared) Shea-lay-lee
 
+### ORM integration
+
 ## Adapter Design
 
 `shillelagh` has appropriate documentation to [build your own adapters](https://shillelagh.readthedocs.io/en/latest/development.html#), the examples on the page go from implementing a simple adapter for the Weather API through to some tips to implement a more complex adapter that reads from an API e.g Google Sheets. It's recommended to study the source code to understand patterns of the how to provide data for more complex implementations.
@@ -30,7 +32,14 @@ The DTOs in particular capture the rules set out by the API documentation, prima
 
 It would thus make sense to extend the `EndpointConfig` class to include SQL specific configuration and the framework to inject the required configuration into the adapter.
 
-**Table names**: The URL of th endpoint maps as the table name e.g:
+The reason for extending `EndpointConfig` is to ensure that all related configuration is maintained in the base classes. The `adapter` amongst other things is an optional extension that:
+
+- depends on the base API client to exist and function in full
+- is optionally installed by the user
+
+### Table names
+
+The URL of th endpoint maps as the table name e.g:
 
 ```sql
 🍀> SELECT * FROM "https://commandcentre-api-au.security.gallagher.cloud/api/cardholders";
@@ -38,7 +47,7 @@ It would thus make sense to extend the `EndpointConfig` class to include SQL spe
 
 where `https://commandcentre-api-au.security.gallagher.cloud/api/cardholders` is the table. The `adapter` would have acknowledged that it can handle this endpoint. If we support more than one than one endpoint then we would have to validate that the URL is one of the many.
 
-**Field list**
+### Field list
 
 Each DTO is already aware of the fields and their types. If a type is a primitive then it's easy enough to handle.
 
@@ -46,14 +55,58 @@ If a field happens to be a relationship then we would have to return the ID of t
 
 `SELECT` queries often let you specify while columns you wish to return. This also happens to be the case for the Gallagher API. See [#36](https://github.com/anomaly/gallagher/issues/36) for more information. It would make sense to combine these two patterns.
 
-**Search fields**
+### Configuration
+
+### Search fields
 
 Search fields are determined by the API per endpoint. These should be defined as `tuples` in the `EndpointConfig` class (note that tuples are immutable hence it's ideal for a configuration).
 
-**Result Order**
+### Result Order
 
-**Offset and Limit**
+At this stage we support the defaults as defined by Shillelagh.
+
+### Offset and Limit
 
 The Gallagher API certain supports pagination, it does return a `next` link, and we might have to filter the results locally on the adapter. We should also cross reference our ticket on performance tuning [#14](https://github.com/anomaly/gallagher/issues/14)
 
+### Query costing
+
+Shillelagh has a method to calculate the cost of a query.
+
+### Mapping pyndatic attributes to shillelagh
+
+Our pyndatic classes use python typing to annotate fields for parsing. Shillelagh provides the `fields` package that allows developers of adapters to provide definition of fields handled by each virtual table.
+
+To make this manageable for developers we need to provide a way to:
+
+- register which endpoints are suited to work with our shillelagh adapters
+- automatically map the fields from the pyndatic classes to the shillelagh fields
+
+## Proposed API syntax
+
+```python
+    dto_list: Optional[any] = None  # DTO to be used for list requests
+    dto_retrieve: Optional[any] = None  # DTO to be used for retrieve requests
+```
+
+`dto_list` object field should be used to determine fields that are returned when a list of objects is requested. The `dto_retrieve` object field should be used to determine fields that are returned when a single object is requested.
+
+```python
+    search_fields: Optional[Tuple[str]] = None  # Fields that can be searched
+```
+
+```python
+    sql = False  # If the endpoint supports SQL queries
+    sql_limit_supported = False  # If the endpoint supports SQL LIMIT
+    sql_offset_supported = False # If the endpoint supports SQL OFFSET
+```
+
+SQL parsing things to check:
+
+- The fields in a select exists in the DTO class
+- Does an endpoint support offsets and limits
+- Examples of joins, group by, order by, where clauses
+
 ## SQLAlchemy `dialect` Design
+
+SQLAlchemy is a popular ORM (one of choice at Anomaly) and is supported by shillelagh. The `dialect` essentially makes available the endpoint as a virtual table to the ORM.

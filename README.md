@@ -12,7 +12,7 @@
 
 Gallagher Security manufacture a variety of [security products](https://security.gallagher.com) all of which are controlled by their [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Traditionally Command Centre has been a Windows based server product. Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests. Gallagher also provide a [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which allows third party integrations to securely communicate with the Command Centre on site.
 
-This project primarily provides the following:
+In principle we provides the following:
 
 - **Python SDK** an idiomatic client (featuring `asyncio`) to build applications for the Command Centre.
 - **Command Line Interface** (CLI) to build powerful pipeline-based workflows.
@@ -39,7 +39,7 @@ from gallagher import (
 from gallagher.dto.summary import (
     CardholderSummary,
 )
-from gallagher.cc.cardholders.cardholders import (
+from gallagher.cc.cardholders import (
     Cardholder
 )
 

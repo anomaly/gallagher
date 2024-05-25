@@ -12,8 +12,9 @@ markdown_extensions:
 
 nav:
   - Introduction: index.md
-  - Installation: installation.md
-  - Using the API Client: howto-api-client.md
+  - Installation & Usage: installation.md
+  - SQL and SQLAlchemy: sql.md
   - Command Line Inteface: cli.md
   - Terminal User Inteface: tui.md  
-  - API Client Design: design.md
+  - Using the API Client: howto-api-client.md
+  - Design: design.md

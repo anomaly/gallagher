@@ -1,4 +1,6 @@
-# Usage
+# Installation & Usage
+
+What you need to install will widely depend on if you are looking to use our tools, building software with our libraries or contributing to the project. This guide will get you set up for each one of the use cases. While the end user tools do not require software development experience, the other development tools are biased towards Python developers.
 
 ## Installation
 
@@ -9,8 +11,6 @@ poetry add gallagher
 ```
 
 ## Understanding the interface
-
-
 
 ## Developing the client
 
@@ -32,4 +32,3 @@ Some handy commands to get you started:
 - `mkdocs -h` - Print help message and exit.
 
 To start contributing please fork this repository, make the changes you desire and submit a pull request for us to merge your changes in. Alternatively consider [starting a discussion](https://github.com/anomaly/gallagher/discussions) or [raising an issue](https://github.com/anomaly/gallagher/issues). Be kind to our maintainers and check to see if a similar discussion is already in place and join the thread.
-

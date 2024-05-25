@@ -45,7 +45,7 @@ from shillelagh.fields import (
 
 # TODO: refactor this to generic based on SQL.md
 from gallagher import cc
-from gallagher.cc.cardholders.cardholders import Cardholder
+from gallagher.cc.cardholders import Cardholder
 
 
 class GallagherCommandCentreAPI(Adapter):

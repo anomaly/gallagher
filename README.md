@@ -185,6 +185,8 @@ In summary:
 - `Refs` are the minimal pathway to an object
 - `Summary` builds on a `Ref` and provides a subset of the attributes
 - `Detail` builds on a `Summary` and provides the full set of attributes
+- `Response` models the response layout that contains summaries
+- `Payload` is used to send a request to the API
 
 ### Resources
 

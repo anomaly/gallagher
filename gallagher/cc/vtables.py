@@ -8,6 +8,7 @@ when shillelagh supports async methods.
 """
 import asyncio
 import urllib
+import logging
 
 from functools import cached_property
 
@@ -31,25 +32,17 @@ class VirtualTableHelper():
             # others should then deffer to the cached property
             # 
             # Running this here saves us from having to run it in other places
-            import logging
-            logging.error(table)
-
             asyncio.run(table._discover())
 
     @cached_property
     def endpoint_urls(self):
         """ All endpoints for registered virtual tables"""
-        for table in self._all_tables:
-            __config__ = asyncio.run(table.get_config())
-            print(__config__.endpoint)
-
-        return []
+        return [
+            f"{table.__config__.endpoint.href}" for table in self._all_tables
+        ]
 
     def is_valid_endpoint(self, uri: str) -> bool:
         """ Check if the uri is a valid endpoint """
-        import logging
-        logging.error(self.endpoint_urls)
-
         if not uri in self.endpoint_urls:
             return False
         
@@ -57,7 +50,7 @@ class VirtualTableHelper():
         parsed_url = urllib.parse.urlparse(uri)
 
         import logging
-        logging.error(parsed_url.netloc)
+        logging.error(api_base)
 
         # Match the netloc property to be equal to the api_base
         if parsed_url.netloc != api_base:
@@ -66,4 +59,4 @@ class VirtualTableHelper():
         return True
 
 
-adapter_helper = VirtualTableHelper()
+

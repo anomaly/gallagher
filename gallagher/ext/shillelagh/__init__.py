@@ -5,7 +5,6 @@ Gallagher API.
 
 [shillelagh](https://github.com/betodealmeida/shillelagh)
 """
-import urllib
 import os
 
 import logging
@@ -45,8 +44,21 @@ from shillelagh.fields import (
 
 # TODO: refactor this to generic based on SQL.md
 from gallagher import cc
-from gallagher.cc.vtables import adapter_helper
+from gallagher.cc.vtables import VirtualTableHelper
 from gallagher.cc.cardholders import Cardholder
+
+# TODO: see if this can be made more efficient
+if not 'GACC_API_KEY' in os.environ:
+    raise ValueError(
+        "GACC_API_KEY environment variable must be set"
+    )
+
+# TODO: see if this can be made more efficient
+api_key = os.environ.get('GACC_API_KEY')
+cc.api_key = api_key
+
+# This is initialised after the API key is set
+_adapter_helper = VirtualTableHelper()
 
 class GallagherCommandCentreAPI(Adapter):
 
@@ -72,28 +84,13 @@ class GallagherCommandCentreAPI(Adapter):
         Because we share the cc object across multiple methods, it available
         outside the scope of this method
         """
-        # TODO: see if this can be made more efficient
-        if not 'GACC_API_KEY' in os.environ:
-            raise ValueError(
-                "GACC_API_KEY environment variable must be set"
-            )
-        
-        # TODO: see if this can be made more efficient
-        api_key = os.environ.get('GACC_API_KEY')
-        cc.api_key = api_key
         
         # Process the URL to see if it's valid based on
         # the configuration of the development environment
-        return adapter_helper.is_valid_endpoint(uri)
+        return _adapter_helper.is_valid_endpoint(uri)
 
     @staticmethod
     def parse_uri(uri: str) -> Tuple[str]:
-        # TODO: see if this can be made more efficient
-        if not 'GACC_API_KEY' in os.environ:
-            raise ValueError(
-                "GACC_API_KEY environment variable must be set"
-            )
-        
         return (uri, os.environ.get('GACC_API_KEY'))
 
     def __init__(self, uri: str, api_key: Optional[str], **kwargs: Any):

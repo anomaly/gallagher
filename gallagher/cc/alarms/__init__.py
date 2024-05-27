@@ -122,3 +122,8 @@ class Alarms(
     ) -> bool:
         """ """
         return False
+
+
+__shillelagh__ = (
+    Alarms,
+)

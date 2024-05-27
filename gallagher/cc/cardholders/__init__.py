@@ -57,3 +57,9 @@ class PdfDefinition(APIEndpoint):
     @classmethod
     async def search(cls, name: str, sort: str = "id", top: int = 100):
         pass
+
+
+
+__shillelagh__ = (
+    Cardholder,
+)

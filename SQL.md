@@ -18,7 +18,7 @@ Copied verbatam from [shillelagh](https://github.com/betodealmeida/shillelagh?ta
 
 `shillelagh` has appropriate documentation to [build your own adapters](https://shillelagh.readthedocs.io/en/latest/development.html#), the examples on the page go from implementing a simple adapter for the Weather API through to some tips to implement a more complex adapter that reads from an API e.g Google Sheets. It's recommended to study the source code to understand patterns of the how to provide data for more complex implementations.
 
-Couple of things to get note are:
+Few things to address design wise are:
 
 - Methods that allows shillelagh to [calculate the cost of a query](https://shillelagh.readthedocs.io/en/latest/development.html#estimating-query-cost)
 - Strategies in mapping URLs to virtual tables
@@ -55,7 +55,9 @@ If a field happens to be a relationship then we would have to return the ID of t
 
 `SELECT` queries often let you specify while columns you wish to return. This also happens to be the case for the Gallagher API. See [#36](https://github.com/anomaly/gallagher/issues/36) for more information. It would make sense to combine these two patterns.
 
-### Configuration
+> Shillelagh require us to send back a field called `rowid` which has a unique identifier, we are currently using the `id` of the object as the `rowid`.
+
+For partial queries we should take advantage of the fact that the CC API allows us to send a list of fields to return. This is a good way to reduce the amount of data that is returned.
 
 ### Search fields
 
@@ -63,7 +65,9 @@ Search fields are determined by the API per endpoint. These should be defined as
 
 ### Result Order
 
-At this stage we support the defaults as defined by Shillelagh.
+At this stage we support the defaults as defined by Shillelagh and allow the user to order results by any of the fields in the DTO.
+
+The CC API does provide a `sort` query parameter that can be used to sort the results. Where possible we should use this parameter to avoid local computation costs. Note also the use of `-id` the negative sign to sort in descending order.
 
 ### Offset and Limit
 
@@ -106,6 +110,20 @@ SQL parsing things to check:
 - The fields in a select exists in the DTO class
 - Does an endpoint support offsets and limits
 - Examples of joins, group by, order by, where clauses
+
+Each top level package in gallagher.cc will defined a `tuple` called `__shillelagh__` this deliberately mounts classes that are to be used by the shillelagh adapter.
+
+The framework calls the `get_columns` method which is to return a `Dict [str, Field]` where the key is the name of the field and the value is an instance of a `Field` class.
+
+It's advisable to instantiate a list of columns in `init` and not compute them in the `get_columns` method.
+
+### Mutations
+
+Not all endpoints support mutations. The configuration of each DTO endpoint should reflect this. Our adapter will have to reflect this and proxy the operation to the DTO endpoint.
+
+## Static references to Classes
+
+I've decided to ad static references to the classes that support SQL to avoid using introspection.
 
 ## SQLAlchemy `dialect` Design
 

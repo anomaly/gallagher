@@ -17,7 +17,7 @@ In principle we provides the following:
 - **Python SDK** an idiomatic client (featuring `asyncio`) to build applications for the Command Centre.
 - **Command Line Interface** (CLI) to build powerful pipeline-based workflows.
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
-- **SQL interface** query the REST API like a database or interact with via an ORM.
+- **SQL interface** query the REST API as if it were a database or interact with via an ORM.
 
 > **Note:** this project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
 

@@ -19,12 +19,12 @@ The offerings of this project are aimed at two significant groups of users:
 If you are a developer, the first things that might excite you are:
 
 - [Python idiomatic client](./python-client.md) that adheres to the standards outlined by Gallagher
-- [SQL interface to the REST API](./sql-interface.md) that allows you to interact with the API using SQL queries
+- [SQL interface to the REST API](./sql.md) that allows you to interact with the API using SQL queries
 
 As an advanced user or integrator, we recommend at looking at:
 
 - [Command line interface](./cli.md) that allows you to interact with the API from the terminal
-- [Terminal interface](./terminal-interface.md) that provides a subset of the command centre functions in a different viewpoint
+- [Terminal interface](./tui.md) that provides a subset of the command centre functions in a different viewpoint
 
 All of our tools are written using the Python programming languages. We provide binaries for most popular operating systems. If you are a developer and would like to contribute to the project, a good place to start is our [design document](./design.md).
 

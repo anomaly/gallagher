@@ -107,6 +107,8 @@ class EndpointConfig:
     dto_list: Optional[any] = None  # DTO to be used for list requests
     dto_retrieve: Optional[any] = None  # DTO to be used for retrieve requests
 
+    sql_model: Optional[any] = None  # SQL model to be used for SQL queries
+
     top: Optional[int] = 10  # Number of response to download
     sort: Optional[str] = "id"  # Can be set to id or -id
 

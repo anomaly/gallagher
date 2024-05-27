@@ -18,6 +18,7 @@ ignore them unless you are developing the client itself.
 from typing import (
     Optional,
 )
+from functools import cached_property
 from typing_extensions import Annotated
 
 from datetime import datetime
@@ -136,7 +137,8 @@ class AppBaseModel(BaseModel):
         """
         self._good_known_since = datetime.now()
 
-    def __shillelagh__(self) -> dict:
+    @classmethod
+    def __shillelagh__(cls) -> dict:
         """Return the model as a __shillelagh__ compatible attribute config
 
         Rules here are that we translate as many dictionary vars into
@@ -145,8 +147,47 @@ class AppBaseModel(BaseModel):
         If they are hrefs to other children then we select the id field for
         each one of those objects
         """
+        from shillelagh.fields import (
+            Field,
+            Integer,
+            String,
+            Boolean,
+            Blob,
+            Collection,
+            Date,
+            DateTime,
+            Float,
+            ISODate,
+            ISODateTime,
+            IntBoolean,
+            StringBlob,
+            StringBoolean,
+            StringDate,
+            StringDateTime,
+            StringDecimal,
+            StringDuration,
+            StringInteger,
+            StringTime,
+        )
 
-        return self.dict()
+        _map = {
+            int: Integer,
+            str: String,
+            bool: Boolean,
+            bytes: Blob,
+            list: Collection,
+            datetime: DateTime,
+            float: Float,
+        }
+
+        # Make a key, value pair of all the class attributes
+        # that are have a primitive type
+        table_fields = {
+            key: _map[value]()
+            for key, value in cls.__annotations__.items() # annotations not fields
+            if not key.startswith("_") and value in _map
+        }
+        return table_fields
 
     def __repr__(self) -> str:
         """Return a string representation of the model

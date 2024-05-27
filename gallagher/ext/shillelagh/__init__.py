@@ -8,8 +8,8 @@ Gallagher API.
 import os
 
 import logging
-# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
-logging.basicConfig(level=logging.ERROR, format='%(asctime)s %(levelname)s %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
+# logging.basicConfig(level=logging.ERROR, format='%(asctime)s %(levelname)s %(message)s')
 
 from typing import (
     Any,
@@ -90,7 +90,12 @@ class GallagherCommandCentreAPI(Adapter):
         return _adapter_helper.is_valid_endpoint(uri)
 
     @staticmethod
-    def parse_uri(uri: str) -> Tuple[str]:
+    def parse_uri(uri: str) -> Tuple[str, str]:
+        """ 
+
+        Returns:
+            Tuple[str, str]: The URI and the API key
+        """
         return (uri, os.environ.get('GACC_API_KEY'))
 
     def __init__(self, uri: str, api_key: Optional[str], **kwargs: Any):
@@ -98,17 +103,26 @@ class GallagherCommandCentreAPI(Adapter):
         super().__init__()
 
         self.uri = uri
+        # TODO: might be redundant due to moving this up the package level
         cc.api_key = api_key
 
 
     def get_columns(self) -> Dict[str, Field]:
+
+        cols = _adapter_helper.get_columns(self.uri)
+        import logging
+        print(cols)
+        return cols
+
         # Columns
-        return {
-            "id": Integer(),
-            "authorised": Boolean(),
-            "first_name": String(),
-            "last_name": String(),
-        }
+        # return {
+        #     # "id": Integer(),
+        #     "authorised": Boolean(),
+        #     "first_name": String(),
+        #     "last_name": String(),
+        #     "short_name": String(),
+        #     "description": String(),
+        # }
 
 
     def get_data(  # pylint: disable=too-many-locals

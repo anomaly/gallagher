@@ -4,10 +4,6 @@ The Command Centre API has a discovery endpoint that allows
 
 """
 
-from typing import (
-    Optional,
-)
-
 from ..utils import (
     AppBaseModel,
     OptionalHrefMixin,

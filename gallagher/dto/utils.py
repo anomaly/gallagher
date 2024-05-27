@@ -136,6 +136,28 @@ class AppBaseModel(BaseModel):
         """
         self._good_known_since = datetime.now()
 
+    def __shillelagh__(self) -> dict:
+        """Return the model as a __shillelagh__ compatible attribute config
+
+        Rules here are that we translate as many dictionary vars into
+        a __shillelagh__ compatible format.
+
+        If they are hrefs to other children then we select the id field for
+        each one of those objects
+        """
+
+        return self.dict()
+
+    def __repr__(self) -> str:
+        """Return a string representation of the model
+
+        This method is used to return the string representation of the
+        model, it's used for debugging purposes.
+
+        https://docs.python.org/3/reference/datamodel.html
+        """
+        return f"{self.__class__.__name__}({self.dict()})"
+
 
 class AppBaseResponseModel(AppBaseModel):
     """Response Model

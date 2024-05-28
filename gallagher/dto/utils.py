@@ -138,7 +138,7 @@ class AppBaseModel(BaseModel):
         self._good_known_since = datetime.now()
 
     @classmethod
-    def __shillelagh__(cls) -> dict:
+    def _shillelagh_columns(cls) -> dict:
         """Return the model as a __shillelagh__ compatible attribute config
 
         Rules here are that we translate as many dictionary vars into

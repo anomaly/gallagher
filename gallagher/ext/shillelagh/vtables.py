@@ -12,11 +12,11 @@ import logging
 
 from functools import cached_property
 
-from .alarms import __shillelagh__ as alarms_tables
-from .cardholders import __shillelagh__ as cardholders_tables
-from .status_overrides import __shillelagh__ as status_overrides_tables
+from ...cc.alarms import __shillelagh__ as alarms_tables
+from ...cc.cardholders import __shillelagh__ as cardholders_tables
+from ...cc.status_overrides import __shillelagh__ as status_overrides_tables
 
-from ..cc import api_base
+from ...cc import api_base
 
 # Iterate _all_tables and get the endpoint url
 class VirtualTableHelper():
@@ -81,7 +81,7 @@ class VirtualTableHelper():
             self._logger.debug(f"Finding suitable adapter for {uri}")
             if uri == f"{table.__config__.endpoint.href}":
                 self._logger.debug(f"Found helper class = {table}")
-                return table.__config__.sql_model.__shillelagh__()
+                return table.__config__.sql_model._shillelagh_columns()
         return {}
 
 

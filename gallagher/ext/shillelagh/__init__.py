@@ -6,8 +6,10 @@ Gallagher API.
 [shillelagh](https://github.com/betodealmeida/shillelagh)
 """
 import os
-
+import asyncio
 import logging
+import urllib
+
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 # logging.basicConfig(level=logging.ERROR, format='%(asctime)s %(levelname)s %(message)s')
 
@@ -44,23 +46,25 @@ from shillelagh.fields import (
 
 # TODO: refactor this to generic based on SQL.md
 from gallagher import cc
-from gallagher.cc.vtables import VirtualTableHelper
+from gallagher.cc.alarms import __shillelagh__ \
+    as alarms_tables
+from gallagher.cc.cardholders import __shillelagh__ \
+    as cardholders_tables
+from gallagher.cc.status_overrides import __shillelagh__ \
+    as status_overrides_tables
+
+# TODO: get rid of this
 from gallagher.cc.cardholders import Cardholder
-
-# TODO: see if this can be made more efficient
-if not 'GACC_API_KEY' in os.environ:
-    raise ValueError(
-        "GACC_API_KEY environment variable must be set"
-    )
-
-# TODO: see if this can be made more efficient
-api_key = os.environ.get('GACC_API_KEY')
-cc.api_key = api_key
-
-# This is initialised after the API key is set
-_adapter_helper = VirtualTableHelper()
-
 class GallagherCommandCentreAPI(Adapter):
+
+    # Use this to log messages to assist with shillelagh debugging
+    _logger = logging.getLogger(__name__)
+
+    # Concatenate all the tables into a single list for efficiency
+    # This is declared here because it's accessed by a static method
+    # because shillelagh's supports method is static
+    _all_tables = alarms_tables + cardholders_tables + \
+        status_overrides_tables
 
     # The adapter doesn't access the filesystem.
     safe = True
@@ -74,6 +78,42 @@ class GallagherCommandCentreAPI(Adapter):
     supports_requested_columns = False
 
     @staticmethod
+    def get_endpoint_urls() -> list[str]:
+        #TODO: we need to improve performance by cache this
+        #NOTE: this is a method because we need bootstrap to run first
+        return [
+            f"{table.__config__.endpoint.href}" for table \
+                in GallagherCommandCentreAPI._all_tables
+        ]
+
+
+    @staticmethod
+    def bootstrap_api_client():
+        """ Bootstrap the API client for the adapter 
+        
+        This checks for the availability of the GACC_API_KEY environment
+        and sets the variable in the API client
+        
+        Call this before any operations on the API client
+        """
+        if not 'GACC_API_KEY' in os.environ:
+            raise ValueError(
+                "GACC_API_KEY environment variable must be set"
+            )
+
+        api_key = os.environ.get('GACC_API_KEY')
+        cc.api_key = api_key
+
+        for table in GallagherCommandCentreAPI._all_tables:
+            # This should get us the url, and if not then we are in an invalid state
+            # Discover should only ever run for the first endpoint and all
+            # others should then deffer to the cached property
+            # 
+            # Running this here saves us from having to run it in other places
+            asyncio.run(table._discover())
+
+
+    @staticmethod
     def supports(uri: str, fast: bool = True, **kwargs: Any) -> Optional[bool]:
         """ Return the URL if it is a Gallagher Command Centre API URL
 
@@ -84,11 +124,32 @@ class GallagherCommandCentreAPI(Adapter):
         Because we share the cc object across multiple methods, it available
         outside the scope of this method
         """
+        GallagherCommandCentreAPI.bootstrap_api_client()
         
-        # Process the URL to see if it's valid based on
-        # the configuration of the development environment
-        return _adapter_helper.is_valid_endpoint(uri)
+        if not uri in GallagherCommandCentreAPI.get_endpoint_urls():
+            GallagherCommandCentreAPI._logger.debug(
+                f"{uri} not found in {GallagherCommandCentreAPI.get_endpoint_urls()}"
+            )
+            return False
 
+        # Parse the base url using urlparse for comparison        
+        # TODO: ensure this is loaded from the overridden API base
+        base_parsed_url = urllib.parse.urlparse(cc.api_base)
+
+        # Parse the endpoint using urlparse
+        parsed_url = urllib.parse.urlparse(uri)
+
+        # Match the netloc property to be equal to the api_base
+        # and the scheme to be equal to the base_parsed_url
+        #
+        # Note that do not match the path as it wil be different
+        # and it should have passed the check of being in the endpoint_urls
+        if not parsed_url.netloc == base_parsed_url.netloc or\
+            not parsed_url.scheme == base_parsed_url.scheme:
+            return False
+        
+        return True
+        
     @staticmethod
     def parse_uri(uri: str) -> Tuple[str, str]:
         """ 
@@ -109,20 +170,12 @@ class GallagherCommandCentreAPI(Adapter):
 
     def get_columns(self) -> Dict[str, Field]:
 
-        cols = _adapter_helper.get_columns(self.uri)
-        import logging
-        print(cols)
-        return cols
-
-        # Columns
-        # return {
-        #     # "id": Integer(),
-        #     "authorised": Boolean(),
-        #     "first_name": String(),
-        #     "last_name": String(),
-        #     "short_name": String(),
-        #     "description": String(),
-        # }
+        for table in self._all_tables:
+            self._logger.debug(f"Finding suitable adapter for {self.uri}")
+            if self.uri == f"{table.__config__.endpoint.href}":
+                self._logger.debug(f"Found helper class = {table}")
+                return table.__config__.sql_model._shillelagh_columns()
+        return {}
 
 
     def get_data(  # pylint: disable=too-many-locals
@@ -134,8 +187,6 @@ class GallagherCommandCentreAPI(Adapter):
         **kwargs: Any,
     ) -> Iterator[Row]:
         
-        # TODO: refactor this to see if can support asyncio
-        import asyncio
         cardholders = asyncio.run(Cardholder.list())
         # cardholders = await Cardholder.list()
 

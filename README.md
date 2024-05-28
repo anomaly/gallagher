@@ -19,11 +19,12 @@ In principle we provides the following:
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
 - **SQL interface** query the REST API as if it were a database or interact with via an ORM.
 
-> [!NOTE]\
+> [!NOTE]
 > This project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
 
 While Gallagher maintain a set of [Swagger definitions](https://github.com/gallaghersecurity/cc-rest-docs) for their API, they are primarily intended to generate the documentation [published on Github](https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html). They use a tool called [Spectacle](https://github.com/sourcey/spectacle). Gallagher explicitly state that the Swagger definitions are not intended to be used to generate code. Due to this the API client is hand built and not auto-generated.
 
+> [!IMPORTANT]
 > Due to custom annotations the YAML files will not parse with any standard parser.
 
 The client was designed while building products around the Gallagher API. It's design is highly opinionated and does not conform with how Gallagher design software interfaces. If you've worked with [stripe-python](https://github.com/stripe/stripe-python) the syntax may feel familiar.
@@ -63,6 +64,7 @@ cardholder.href
 cardholder.first_name
 ```
 
+> [!TIP]
 > We pride ourselves in providing a complete test suite as proof of high quality work that you can rely on. These tests constantly run against our _demo_ command centre hosted on the cloud.
 
 ## API Notes
@@ -86,6 +88,7 @@ through to self recursive references with additional attributes:
 }
 ```
 
+> [!NOTE]
 > Above examples have been taken from the Gallagher documentation
 
 Our `schemas` provide a set of `Mixins` that are used to construct the Models. These are repeatable patterns that need not be repeated. The typical patter would be to subclass from the `Mixins` e.g:
@@ -171,6 +174,7 @@ We use [Taskfile](https://taskfile.dev) to automate running tasks.
 
 The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license.
 
+> [!IMPORTANT]
 > It's **not recommended** to run tests against a production system.
 
 ### Data Transfer Objects
@@ -227,6 +231,7 @@ To check your API key:
 
 ## Python Libraries
 
+> [!TIP]
 > Following are Python libraries that I have found during the development of the Gallagher tools. They are not necessarily in use at the moment but a reference in case we need the functionality.
 
 - [plotext](https://github.com/piccolomo/plotext?tab=readme-ov-file) - plots directly on your terminal (something I found when I was exploring apps like [dolphie](https://github.com/charles-001/dolphie))

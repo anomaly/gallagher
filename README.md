@@ -19,7 +19,8 @@ In principle we provides the following:
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
 - **SQL interface** query the REST API as if it were a database or interact with via an ORM.
 
-> **Note:** this project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
+> [!NOTE]\
+> This project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
 
 While Gallagher maintain a set of [Swagger definitions](https://github.com/gallaghersecurity/cc-rest-docs) for their API, they are primarily intended to generate the documentation [published on Github](https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html). They use a tool called [Spectacle](https://github.com/sourcey/spectacle). Gallagher explicitly state that the Swagger definitions are not intended to be used to generate code. Due to this the API client is hand built and not auto-generated.
 

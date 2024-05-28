@@ -55,7 +55,7 @@ from gallagher.cc.status_overrides import __shillelagh__ \
 
 # TODO: get rid of this
 from gallagher.cc.cardholders import Cardholder
-class GallagherCommandCentreAPI(Adapter):
+class CCAPIAdapter(Adapter):
 
     # Use this to log messages to assist with shillelagh debugging
     _logger = logging.getLogger(__name__)
@@ -83,7 +83,7 @@ class GallagherCommandCentreAPI(Adapter):
         #NOTE: this is a method because we need bootstrap to run first
         return [
             f"{table.__config__.endpoint.href}" for table \
-                in GallagherCommandCentreAPI._all_tables
+                in CCAPIAdapter._all_tables
         ]
 
 
@@ -104,7 +104,7 @@ class GallagherCommandCentreAPI(Adapter):
         api_key = os.environ.get('GACC_API_KEY')
         cc.api_key = api_key
 
-        for table in GallagherCommandCentreAPI._all_tables:
+        for table in CCAPIAdapter._all_tables:
             # This should get us the url, and if not then we are in an invalid state
             # Discover should only ever run for the first endpoint and all
             # others should then deffer to the cached property
@@ -124,11 +124,11 @@ class GallagherCommandCentreAPI(Adapter):
         Because we share the cc object across multiple methods, it available
         outside the scope of this method
         """
-        GallagherCommandCentreAPI.bootstrap_api_client()
-        
-        if not uri in GallagherCommandCentreAPI.get_endpoint_urls():
-            GallagherCommandCentreAPI._logger.debug(
-                f"{uri} not found in {GallagherCommandCentreAPI.get_endpoint_urls()}"
+        CCAPIAdapter.bootstrap_api_client()
+
+        if not uri in CCAPIAdapter.get_endpoint_urls():
+            CCAPIAdapter._logger.debug(
+                f"{uri} not found in {CCAPIAdapter.get_endpoint_urls()}"
             )
             return False
 

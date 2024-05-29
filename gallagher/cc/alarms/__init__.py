@@ -64,7 +64,6 @@ class Alarms(
             endpoint=Capabilities.CURRENT.features.alarms.alarms,
             dto_list=AlarmSummaryResponse,
             dto_retrieve=AlarmDetail,
-            sql_model=AlarmSummary, # Temporary
         )
 
     @classmethod

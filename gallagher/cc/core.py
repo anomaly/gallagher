@@ -107,16 +107,11 @@ class EndpointConfig:
     dto_list: Optional[any] = None  # DTO to be used for list requests
     dto_retrieve: Optional[any] = None  # DTO to be used for retrieve requests
 
-    sql_model: Optional[any] = None  # SQL model to be used for SQL queries
-
     top: Optional[int] = 10  # Number of response to download
     sort: Optional[str] = "id"  # Can be set to id or -id
 
     fields: Tuple[str] = ()  # Optional list of fields, blank = all
     search: Tuple[str] = () # If the endpoint supports search, blank = none
-
-    # TODO: prototyping shillelagh integration
-    sql = False  # If the endpoint supports SQL queries
 
     @classmethod
     async def validate_endpoint(cls):

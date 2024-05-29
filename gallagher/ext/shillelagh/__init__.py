@@ -57,8 +57,6 @@ from gallagher.cc.cardholders import __shillelagh__ \
 from gallagher.cc.status_overrides import __shillelagh__ \
     as status_overrides_tables
 
-# TODO: get rid of this
-from gallagher.cc.cardholders import Cardholder
 class CCAPIAdapter(Adapter):
 
     # Use this to log messages to assist with shillelagh debugging
@@ -99,8 +97,8 @@ class CCAPIAdapter(Adapter):
 
     @staticmethod
     def get_endpoint_urls() -> list[str]:
-        #TODO: we need to improve performance by cache this
-        #NOTE: this is a method because we need bootstrap to run first
+        # TODO: we need to improve performance by cache this
+        # NOTE: this is a method because we need bootstrap to run first
         return [
             f"{table.__config__.endpoint.href}" for table \
                 in CCAPIAdapter._all_tables
@@ -153,7 +151,6 @@ class CCAPIAdapter(Adapter):
             return False
 
         # Parse the base url using urlparse for comparison        
-        # TODO: ensure this is loaded from the overridden API base
         base_parsed_url = urllib.parse.urlparse(cc.api_base)
 
         # Parse the endpoint using urlparse

@@ -4,9 +4,6 @@
 
 from ..core import Capabilities, APIEndpoint, EndpointConfig
 
-# TODO: remove
-from ...dto.summary import CardholderSummary
-
 from ...dto.detail import (
     CardholderDetail,
     PdfDetail,
@@ -32,7 +29,6 @@ class Cardholder(APIEndpoint):
             endpoint=Capabilities.CURRENT.features.cardholders.cardholders,
             dto_list=CardholderSummaryResponse,
             dto_retrieve=CardholderDetail,
-            sql_model=CardholderSummary, # Temporary
         )
 
     @classmethod

@@ -22,6 +22,16 @@ class CardholderSummaryResponse(
     results: list[CardholderSummary]
 
     @property
+    def result_set(self) -> list[CardholderSummary]:
+        """ Wrap summary response target property
+
+        the sql interface will call this property and each summary
+        response is expected to override this and return the appropriate
+        target property
+        """
+        return self.results
+
+    @property
     def cli_header(self):
         return ("id", "first name", "last name", "authorised")
 

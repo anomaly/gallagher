@@ -216,7 +216,7 @@ class CCAPIAdapter(Adapter):
         return {
             key: self._type_map[value]() # shillelagh requires an instance
             for key, value in \
-                self._api_endpoint.__config__.sql_model._accumulated_annotations()
+                self._api_endpoint.__config__.dto_retrieve._accumulated_annotations()
             if not key.startswith("_") and value in self._type_map
         }
 
@@ -232,7 +232,7 @@ class CCAPIAdapter(Adapter):
         
         dto_list = asyncio.run(self._api_endpoint.list())
 
-        for row in dto_list.results:
+        for row in dto_list.result_set:
 
             yield {
                 'rowid': row.id, # Append this for shillelagh

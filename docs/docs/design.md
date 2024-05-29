@@ -88,6 +88,7 @@ The discovered state of the server is stored in a singleton, that's used by all 
 
 For this reason all `APIEndpoint` classes return a configuration as a result of a function called `get_config` (an `async` method that at a `class` scope) as opposed to a statically assigned class variable (otherwise the URLs would always result to be the initial `None` value).
 
+> [!TIP]
 > If you want to force discovery of the endpoints call `expire_discovery` on the `APIEndpoint` before calling the API endpoint.
 
 ```python

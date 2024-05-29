@@ -9,7 +9,7 @@ from rich.table import Table
 
 from .utils import AsyncTyper
 
-from gallagher.cc.cardholders.cardholders import Cardholder
+from gallagher.cc.cardholders import Cardholder
 
 from gallagher.exception import (
     NotFoundException,

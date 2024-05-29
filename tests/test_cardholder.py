@@ -10,7 +10,7 @@ from gallagher.dto.detail import (
 
 from gallagher.dto.response import CardholderSummaryResponse
 
-from gallagher.cc.cardholders.cardholders import Cardholder
+from gallagher.cc.cardholders import Cardholder
 
 
 @pytest.fixture

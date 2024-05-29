@@ -18,6 +18,7 @@ ignore them unless you are developing the client itself.
 from typing import (
     Optional,
 )
+from functools import cached_property
 from typing_extensions import Annotated
 
 from datetime import datetime
@@ -120,6 +121,23 @@ class AppBaseModel(BaseModel):
         allow_extra=True,
     )
 
+    @classmethod
+    def _accumulated_annotations(cls) -> dict:
+        """Return a dictionary of all annotations
+
+        This method is used to return a dictionary of all the
+        annotations from itself and it's parent classes.
+
+        It is intended for use by the shillelagh extension
+        """
+        annotations = cls.__annotations__.copy() # TODO: should we  make copies?
+        for base in cls.__bases__:
+            if issubclass(base, BaseModel):
+                # Copy annotations from classes that are pydantic models
+                # they are the only things that form part of the response
+                annotations.update(base.__annotations__)
+        return annotations.items()
+
     # Set to the last time each response was retrieved
     # If it's set to None then the response was either created
     # by the API client or it wasn't retrieved from the server
@@ -135,6 +153,16 @@ class AppBaseModel(BaseModel):
         https://docs.pydantic.dev/2.0/api/main/#pydantic.main.BaseModel.model_post_init
         """
         self._good_known_since = datetime.now()
+
+    def __repr__(self) -> str:
+        """Return a string representation of the model
+
+        This method is used to return the string representation of the
+        model, it's used for debugging purposes.
+
+        https://docs.python.org/3/reference/datamodel.html
+        """
+        return f"{self.__class__.__name__}({self.dict()})"
 
 
 class AppBaseResponseModel(AppBaseModel):

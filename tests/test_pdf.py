@@ -11,7 +11,7 @@ import pytest
 from gallagher.dto.response import PdfResponse
 from gallagher.dto.detail import PdfDetail
 
-from gallagher.cc.cardholders.cardholders import PdfDefinition
+from gallagher.cc.cardholders import PdfDefinition
 
 
 @pytest.fixture

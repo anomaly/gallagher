@@ -1,3 +1,6 @@
+# SQlite databases
+*.sqlite
+
 # managed by direnv
 .envrc
 

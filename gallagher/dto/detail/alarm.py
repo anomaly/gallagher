@@ -87,7 +87,6 @@ class AlarmDetail(
             f"{'priority':>20} {self.priority}",
             f"{'type':>20} {self.type}",
             f"{'message':>20} {self.message}",
-            f"{'active':>20} {self.active}",
             f"{'active':>20} {'yes' if self.active else 'no'}",
             f"",
             f"[blue bold] hrefs",

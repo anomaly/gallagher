@@ -113,9 +113,6 @@ class EndpointConfig:
     fields: Tuple[str] = ()  # Optional list of fields, blank = all
     search: Tuple[str] = () # If the endpoint supports search, blank = none
 
-    # TODO: prototyping shillelagh integration
-    sql = False  # If the endpoint supports SQL queries
-
     @classmethod
     async def validate_endpoint(cls):
         """Check to see if the feature is licensed and available

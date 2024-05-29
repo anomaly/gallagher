@@ -6,7 +6,11 @@ Command Centre raised alarms for
 
 from typing import Optional
 
-from ..core import APIEndpoint, EndpointConfig, Capabilities
+from ..core import (
+    APIEndpoint,
+    EndpointConfig,
+    Capabilities,
+)
 
 from ...dto.ref import (
     AlarmRef,
@@ -122,3 +126,8 @@ class Alarms(
     ) -> bool:
         """ """
         return False
+
+
+__shillelagh__ = (
+    Alarms,
+)

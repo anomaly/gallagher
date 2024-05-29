@@ -121,6 +121,23 @@ class AppBaseModel(BaseModel):
         allow_extra=True,
     )
 
+    @classmethod
+    def _accumulated_annotations(cls) -> dict:
+        """Return a dictionary of all annotations
+
+        This method is used to return a dictionary of all the
+        annotations from itself and it's parent classes.
+
+        It is intended for use by the shillelagh extension
+        """
+        annotations = cls.__annotations__.copy() # TODO: should we  make copies?
+        for base in cls.__bases__:
+            if issubclass(base, BaseModel):
+                # Copy annotations from classes that are pydantic models
+                # they are the only things that form part of the response
+                annotations.update(base.__annotations__)
+        return annotations.items()
+
     # Set to the last time each response was retrieved
     # If it's set to None then the response was either created
     # by the API client or it wasn't retrieved from the server
@@ -136,58 +153,6 @@ class AppBaseModel(BaseModel):
         https://docs.pydantic.dev/2.0/api/main/#pydantic.main.BaseModel.model_post_init
         """
         self._good_known_since = datetime.now()
-
-    @classmethod
-    def _shillelagh_columns(cls) -> dict:
-        """Return the model as a __shillelagh__ compatible attribute config
-
-        Rules here are that we translate as many dictionary vars into
-        a __shillelagh__ compatible format.
-
-        If they are hrefs to other children then we select the id field for
-        each one of those objects
-        """
-        from shillelagh.fields import (
-            Field,
-            Integer,
-            String,
-            Boolean,
-            Blob,
-            Collection,
-            Date,
-            DateTime,
-            Float,
-            ISODate,
-            ISODateTime,
-            IntBoolean,
-            StringBlob,
-            StringBoolean,
-            StringDate,
-            StringDateTime,
-            StringDecimal,
-            StringDuration,
-            StringInteger,
-            StringTime,
-        )
-
-        _map = {
-            int: Integer,
-            str: String,
-            bool: Boolean,
-            bytes: Blob,
-            list: Collection,
-            datetime: DateTime,
-            float: Float,
-        }
-
-        # Make a key, value pair of all the class attributes
-        # that are have a primitive type
-        table_fields = {
-            key: _map[value]()
-            for key, value in cls.__annotations__.items() # annotations not fields
-            if not key.startswith("_") and value in _map
-        }
-        return table_fields
 
     def __repr__(self) -> str:
         """Return a string representation of the model

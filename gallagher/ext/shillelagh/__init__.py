@@ -9,6 +9,7 @@ import os
 import asyncio
 import logging
 import urllib
+from datetime import datetime
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 # logging.basicConfig(level=logging.ERROR, format='%(asctime)s %(levelname)s %(message)s')
@@ -42,6 +43,9 @@ from shillelagh.fields import (
     String,
     Order,
     Boolean,
+    DateTime,
+    Collection,
+    Blob,
 )
 
 # TODO: refactor this to generic based on SQL.md
@@ -65,6 +69,22 @@ class CCAPIAdapter(Adapter):
     # because shillelagh's supports method is static
     _all_tables = alarms_tables + cardholders_tables + \
         status_overrides_tables
+
+    # Maps the python types to the shillelagh fields
+    # initialised here so we don't have to keep redefining it
+    _type_map = {
+        int: Integer,
+        str: String,
+        bool: Boolean,
+        bytes: Blob,
+        list: Collection,
+        datetime: DateTime,
+        float: Float,
+    }
+
+    # API endpoint being used to parse this URL
+    # TODO: see if this changes with every instantiation
+    _api_endpoint = None
 
     # The adapter doesn't access the filesystem.
     safe = True
@@ -167,15 +187,38 @@ class CCAPIAdapter(Adapter):
         # TODO: might be redundant due to moving this up the package level
         cc.api_key = api_key
 
+        self._logger.debug(f"Finding suitable adapter for {self.uri}")
+
+        self._api_endpoint = next(
+            (table for table in self._all_tables if self.uri == f"{table.__config__.endpoint.href}"),
+            None
+        )
+
+        if self._api_endpoint:
+            self._logger.debug(f"Found helper class = {self._api_endpoint}")
+        else:
+            self._logger.debug("No suitable adapter found.")
 
     def get_columns(self) -> Dict[str, Field]:
+        """Return a pyndatic DTO as shil compatible attribute config
 
-        for table in self._all_tables:
-            self._logger.debug(f"Finding suitable adapter for {self.uri}")
-            if self.uri == f"{table.__config__.endpoint.href}":
-                self._logger.debug(f"Found helper class = {table}")
-                return table.__config__.sql_model._shillelagh_columns()
-        return {}
+        Rules here are that we translate as many dictionary vars into
+        a __shillelagh__ compatible format.
+
+        If they are hrefs to other children then we select the id field for
+        each one of those objects
+        """
+
+        if not self._api_endpoint:
+            self._logger.debug("No suitable adapter found while get_columns.")
+            return {}
+
+        return {
+            key: self._type_map[value]() # shillelagh requires an instance
+            for key, value in \
+                self._api_endpoint.__config__.sql_model._accumulated_annotations()
+            if not key.startswith("_") and value in self._type_map
+        }
 
 
     def get_data(  # pylint: disable=too-many-locals
@@ -187,22 +230,12 @@ class CCAPIAdapter(Adapter):
         **kwargs: Any,
     ) -> Iterator[Row]:
         
-        cardholders = asyncio.run(Cardholder.list())
-        # cardholders = await Cardholder.list()
+        dto_list = asyncio.run(self._api_endpoint.list())
 
-        rindex = 0
-
-        for row in cardholders.results:
+        for row in dto_list.results:
 
             yield {
-                "rowid": row.id,
-                "id": row.id,
-                "authorised": row.authorised,
-                "first_name": row.first_name,
-                "last_name": row.last_name,
+                'rowid': row.id, # Append this for shillelagh
+                **row.dict(), # Rest of the responses 
             }
-
-            rindex += 1
-            if rindex == limit:
-                break
 

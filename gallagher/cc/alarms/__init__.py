@@ -6,7 +6,11 @@ Command Centre raised alarms for
 
 from typing import Optional
 
-from ..core import APIEndpoint, EndpointConfig, Capabilities
+from ..core import (
+    APIEndpoint,
+    EndpointConfig,
+    Capabilities,
+)
 
 from ...dto.ref import (
     AlarmRef,
@@ -60,6 +64,7 @@ class Alarms(
             endpoint=Capabilities.CURRENT.features.alarms.alarms,
             dto_list=AlarmSummaryResponse,
             dto_retrieve=AlarmDetail,
+            sql_model=AlarmSummary, # Temporary
         )
 
     @classmethod

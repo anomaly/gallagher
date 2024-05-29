@@ -4,6 +4,7 @@
 
 from ..core import Capabilities, APIEndpoint, EndpointConfig
 
+# TODO: remove
 from ...dto.summary import CardholderSummary
 
 from ...dto.detail import (
@@ -29,9 +30,9 @@ class Cardholder(APIEndpoint):
     async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.cardholders.cardholders,
-            sql_model=CardholderSummary, # Temporary
             dto_list=CardholderSummaryResponse,
             dto_retrieve=CardholderDetail,
+            sql_model=CardholderSummary, # Temporary
         )
 
     @classmethod

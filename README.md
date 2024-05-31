@@ -19,15 +19,20 @@ In principle we provides the following:
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
 - **SQL interface** query the REST API as if it were a database or interact with via an ORM.
 
-> [!NOTE]
+> [!NOTE]\
 > This project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
 
 While Gallagher maintain a set of [Swagger definitions](https://github.com/gallaghersecurity/cc-rest-docs) for their API, they are primarily intended to generate the documentation [published on Github](https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html). They use a tool called [Spectacle](https://github.com/sourcey/spectacle). Gallagher explicitly state that the Swagger definitions are not intended to be used to generate code. Due to this the API client is hand built and not auto-generated.
 
-> [!IMPORTANT]
+> [!IMPORTANT]\
 > Due to custom annotations the YAML files will not parse with any standard parser.
 
-The client was designed while building products around the Gallagher API. It's design is highly opinionated and does not conform with how Gallagher design software interfaces. If you've worked with [stripe-python](https://github.com/stripe/stripe-python) the syntax may feel familiar.
+Everything this project provides hinges upon our Python SDK, designed to enhance the developer experience. It's design is highly opinionated from our experience in building APIs, we ensure conformance with Gallagher software design interfaces.
+
+> [!TIP]\
+> If you've worked with [stripe-python](https://github.com/stripe/stripe-python) the syntax may feel familiar.
+
+If you are using one of our user facing tools, it's not important for you to understand how the SDK works, however since it underpins everything, here's a rather sample example:
 
 ```python
 # Import core python libs
@@ -64,12 +69,20 @@ cardholder.href
 cardholder.first_name
 ```
 
-> [!TIP]
-> We pride ourselves in providing a complete test suite as proof of high quality work that you can rely on. These tests constantly run against our _demo_ command centre hosted on the cloud.
+> [!IMPORTANT]\
+> Gallagher infrastructure deals with the sensitive topic of perimeter security. We take this rather seriously by providing a complete test suite. These tests constantly run against our _demo_ command centre hosted on the cloud.
 
-## API Notes
+The rest of the README touches upon each of the tools we provide. If you like what you see so far we recommend you [head over to our documentation](https://anomaly.github.io/gallagher).
 
-The Gallagher API uses `href` attributes to provide a the destination of referenced objects in the responses. These are prefixed with the server origin i.e if you are using the Cloud Gateway then all your URLs will be prefixed with the appropriate gateway's address.
+## Using the CLI and TUI
+
+## Interacting via SQL
+
+## Command Centre API Notes
+
+The Gallagher API the principles of [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) which ensures that the API is self-descriptive and future proof.
+
+A `href` attribute provides a the destination of referenced objects in the responses. These are full qualified and will be prefixed with the server origin i.e if you are using the Cloud Gateway then all your URLs will be prefixed with the appropriate gateway's address.
 
 These appear in various forms, starting from as simple as the `href` itself:
 
@@ -79,7 +92,7 @@ These appear in various forms, starting from as simple as the `href` itself:
 }
 ```
 
-through to self recursive references with additional attributes:
+through to self recursive references (where the data is nested) with additional attributes:
 
 ```json
 "parent": {
@@ -88,8 +101,11 @@ through to self recursive references with additional attributes:
 }
 ```
 
-> [!NOTE]
-> Above examples have been taken from the Gallagher documentation
+> [!CAUTION]\
+> Following the design patterns outlined by HATEOAS, you must never hardcode any URLs. You should hit the base API URL which returns the `hrefs` of all other resources.
+> If you are using the Python SDK, then you don't have to worry about this, the client will handle this for you.
+
+### Schemas
 
 Our `schemas` provide a set of `Mixins` that are used to construct the Models. These are repeatable patterns that need not be repeated. The typical patter would be to subclass from the `Mixins` e.g:
 
@@ -203,9 +219,13 @@ Responses can be the object itself or a response layout
 
 ## Configuring the Command Centre
 
-The following requires you to have an understanding of the Gallagher Command Centre and how to configure it. If you are unsure, please contact your Gallagher representative.
+All of the above requires you to have an understanding of the Gallagher Command Centre and how to configure it.
 
-Before you being, please ensure:
+> [!IMPORTANT]\
+> You should either refer to the Gallagher Documentation for detailed information on configuring the Command Centre. You also require a license from Gallagher for this feature to work.
+> If you are unsure, please contact your Gallagher representative as misconfiguration can lead to security vulnerabilities.
+
+Your checklist, before you proceed to using the REST features:
 
 - You are running Command Centre version `8.60` or higher, older versions predate the gateway so cannot support it
 - The gateway enabled at the system level
@@ -229,7 +249,15 @@ To check your API key:
 
 ![Command Centre Cloud Connections](https://raw.githubusercontent.com/anomaly/gallagher/master/assets/gallagher-rest-properties.png)
 
-## Python Libraries
+> [!CAUTION]\
+> All operations require the use of the API key. Never distribute your API key or store it somewhere that is not secure.
+> For security it's recommended you read the API key from an environment variable.
+
+## Resources
+
+The following are resources that were discoverd during the design and development of this library.
+
+### Python Libraries
 
 > [!TIP]
 > Following are Python libraries that I have found during the development of the Gallagher tools. They are not necessarily in use at the moment but a reference in case we need the functionality.
@@ -240,7 +268,7 @@ To check your API key:
 
 ### Articles
 
-- [A year of building for the terminal](https://textual.textualize.io/blog/2022/12/20/a-year-of-building-for-the-terminal/) by @darrenburns
+- [A year of building for the terminal](https://textual.textualize.io/blog/2022/12/20/a-year-of-building-for-the-terminal/) by [@darrenburns](https://github.com/darrenburns)
 
 ## License
 

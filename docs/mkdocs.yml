@@ -15,6 +15,6 @@ nav:
   - Installation & Usage: installation.md
   - SQL and SQLAlchemy: sql.md
   - Command Line Inteface: cli.md
-  - Terminal User Inteface: tui.md  
-  - Using the API Client: howto-api-client.md
-  - Design: design.md
+  - Terminal User Inteface: tui.md 
+  - Python SDK: python-sdk.md
+  - Contributor's Manual: design.md

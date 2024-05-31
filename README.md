@@ -76,6 +76,26 @@ The rest of the README touches upon each of the tools we provide. If you like wh
 
 ## Using the CLI and TUI
 
+Our CLI is designed to automate custom workflows via scripts. Inspired by the greatest Unix tools out there, it does one thing and it does it well, leaving you to integrate it into a pipeline. The utility is able to speaking machine readable formats like JSON, YAML and CSV as well as producing formatted output.
+
+Here's an example of fetching the details of a `cardholder`:
+
+```
+(gallagher-py3.11) ➜  gallagher git:(alpha-3) gala ch get 8272
+ person
+                  id 8272
+          first_name Jerry
+           last_name Zurcher
+          short_name None
+         description None
+          authorised yes
+
+  disable_cipher_pad no
+            division 2
+ hrefs
+                edit edit
+```
+
 ## Interacting via SQL
 
 [Shillelagh](https://shillelagh.readthedocs.io/en/latest/) is a Python library that allows you to interact with REST APIs as if they were SQL databases, including the ability to provide a SQLAlchemy `dialect` allowing you to treat endpoints as a virtual table.

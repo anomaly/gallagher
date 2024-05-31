@@ -15,5 +15,3 @@
 ## Deletion
 
 # Next and Updates
-
-

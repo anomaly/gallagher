@@ -18,7 +18,7 @@ The offerings of this project are aimed at two significant groups of users:
 
 If you are a developer, the first things that might excite you are:
 
-- [Python idiomatic client](./python-client.md) that adheres to the standards outlined by Gallagher
+- [Python idiomatic client](./python-sdk.md) that adheres to the standards outlined by Gallagher
 - [SQL interface to the REST API](./sql.md) that allows you to interact with the API using SQL queries
 
 As an advanced user or integrator, we recommend at looking at:

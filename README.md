@@ -70,13 +70,31 @@ cardholder.first_name
 ```
 
 > [!IMPORTANT]\
-> Gallagher infrastructure deals with the sensitive topic of perimeter security. We take this rather seriously by providing a complete test suite. These tests constantly run against our _demo_ command centre hosted on the cloud.
+> Gallagher infrastructure deals with perimeter security. We take this extremely seriously and providing a complete test suite to provide that our software meets all standards. These tests constantly run against our _demo_ command centre hosted on the cloud.
 
 The rest of the README touches upon each of the tools we provide. If you like what you see so far we recommend you [head over to our documentation](https://anomaly.github.io/gallagher).
 
 ## Using the CLI and TUI
 
 ## Interacting via SQL
+
+[Shillelagh](https://shillelagh.readthedocs.io/en/latest/) is a Python library that allows you to interact with REST APIs as if they were SQL databases, including the ability to provide a SQLAlchemy `dialect` allowing you to treat endpoints as a virtual table.
+
+Assuming you had the SQL extensions installed, a simplistic example of querying Cardholders from the command would look like this:
+
+```sql
+🍀> SELECT * FROM "https://commandcentre-api-au.security.gallagher.cloud/api/cardholders" WHERE id=8427;
+```
+
+which would return a result set of:
+
+```
+first_name    last_name    authorised    id
+------------  -----------  ------------ ----
+Cammy         Albares      True         8427
+(1 row in 0.23s)
+
+```
 
 ## Command Centre API Notes
 
@@ -105,7 +123,44 @@ through to self recursive references (where the data is nested) with additional 
 > Following the design patterns outlined by HATEOAS, you must never hardcode any URLs. You should hit the base API URL which returns the `hrefs` of all other resources.
 > If you are using the Python SDK, then you don't have to worry about this, the client will handle this for you.
 
-### Schemas
+## Python SDK Design
+
+This API client primarily depends on the following libraries:
+
+- [httpx](https://www.python-httpx.org), fo transporting and parsing HTTP requests
+- [pydantic](https://pydantic.dev), for validating responses and constructing request bodies
+
+We use [Taskfile](https://taskfile.dev) to automate running tasks.
+
+The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license.
+
+> [!IMPORTANT]
+> It's **not recommended** to run tests against a production system.
+
+### Data Transfer Objects
+
+There are three types of schema definitions, each one of them suffixed with their intent:
+
+- **Ref** are `References` to other objects, they using contain a `href` and possibly additional meta data such as a `name` or `id`
+- **Summary** is what is returned by the Gallagher API in operations such as [searches](https://gallaghersecurity.github.io/cc-rest-docs/ref/cardholders.html), these are generally a subset of the full object
+- **Detail** are the full object found at a particular `href`, they compound on the `Summary` schema and add additional attributes
+- **Response** is a collection of `Summary` objects with other paths like `next` and `previous` for pagination and `updates` for polling results
+- **Payload** is used to send a request to the API
+
+In summary the properties of each are as follows:
+
+- `Refs` are the minimal pathway to an object
+- `Summary` builds on a `Ref` and provides a subset of the attributes
+- `Detail` builds on a `Summary` and provides the full set of attributes
+- `Response` encapsulates a collection of `Summary` objects, they typically have `next` and `previous` paths for pagination
+- `Payload` are verbose and match the schema definition on the documentation
+
+Each `resource` endpoint subclasses the `APIEndpoint` which marks a resource as `fetchable`, `queryable`, `creatable`, `updatable` and `deletable`. This is determined by the configuration defined using an `EndpointConfig` class.
+
+> [!TIP]
+> The above is meant to be a summary, please see [our documentation](https://anomaly.github.io/gallagher) for more details.
+
+### Schema Design Patterns
 
 Our `schemas` provide a set of `Mixins` that are used to construct the Models. These are repeatable patterns that need not be repeated. The typical patter would be to subclass from the `Mixins` e.g:
 
@@ -120,6 +175,49 @@ class AccessGroupRef(
     """
     name: str
 ```
+
+where the `HrefMixin` (see also `OptionalHrefMixin` for use where the `href` is not always present) provides the `href` attribute:
+
+```python
+class HrefMixin(BaseModel):
+    """ Href
+
+    This mixin is used to define the href field for all
+    responses from the Gallagher API.
+    """
+    href: str
+```
+
+These `Mixin` classes can also be used to declare attributes that seek to use the same pattern:
+
+````python
+class DivisionDetail(
+    AppBaseModel,
+    IdentityMixin,
+):
+    """ Defines a Division on the Gallagher Command Centre
+    """
+
+    name: str
+    description: Optional[str] = None
+    server_display_name: Optional[str] = None
+    parent: OptionalHrefMixin = None
+
+### Schemas
+
+Our `schemas` provide a set of `Mixins` that are used to construct the Models. These are repeatable patterns that need not be repeated. The typical patter would be to subclass from the `Mixins` e.g:
+
+```python
+from .utils import AppBaseModel, IdentityMixin, HrefMixin
+
+class AccessGroupRef(
+    AppBaseModel,
+    HrefMixin
+):
+    """ Access Groups is what a user is assigned to to provide access to doors
+    """
+    name: str
+````
 
 where the `HrefMixin` provides the `href` attribute:
 
@@ -140,7 +238,7 @@ class DivisionDetail(
     AppBaseModel,
     IdentityMixin,
 ):
-    """
+    """ Outlines the definition of a Division on the Gallagher Command Centre
     """
 
     name: str
@@ -179,43 +277,35 @@ In this example the `AppGroupRef` has a `name` attribute which is not present in
 
 > Please see the schema section for naming conventions for `schema` classes
 
-## Design
+where `parent` is simply an `href` without any other attributes. In the cases where these attributes have more than just an `href` we defined `Reference` classes:
 
-This API client primarily depends on the following libraries:
+```python
+class AccessGroupRef(
+    AppBaseModel,
+    HrefMixin
+):
+    """ Access Groups is what a user is assigned to to provide access to doors
+    """
+    name: str
+```
 
-- [httpx](https://www.python-httpx.org), fo transporting and parsing HTTP requests
-- [pydantic](https://pydantic.dev), for validating responses and constructing request bodies
+and use them to populate the attributes:
 
-We use [Taskfile](https://taskfile.dev) to automate running tasks.
+```python
+class VisitorTypeDetail(
+    AppBaseModel,
+    IdentityMixin
+):
+    """
+    """
+    access_group : AccessGroupRef
+    host_access_groups: list[AccessGroupSummary]
+    visitor_access_groups: list[AccessGroupSummary]
+```
 
-The project provides a comprehensive set of tests which can be run with `task test`. These tests do create objects in the Command Centre, we advice you to obtain a test license.
+In this example the `AppGroupRef` has a `name` attribute which is not present in the `HrefMixin` class.
 
-> [!IMPORTANT]
-> It's **not recommended** to run tests against a production system.
-
-### Data Transfer Objects
-
-There are three types of schema definitions, each one of them suffixed with their intent:
-
-- **Ref** are `References` to other objects, they using contain a `href` and possibly additional meta data such as a `name` or `id`
-- **Summary** is what is returned by the Gallagher API in operations such as [searches](https://gallaghersecurity.github.io/cc-rest-docs/ref/cardholders.html), these are generally a subset of the full object
-- **Detail** are the full object found at a particular `href`, they compound on the `Summary` schema and add additional attributes
-
-In summary:
-
-- `Refs` are the minimal pathway to an object
-- `Summary` builds on a `Ref` and provides a subset of the attributes
-- `Detail` builds on a `Summary` and provides the full set of attributes
-- `Response` models the response layout that contains summaries
-- `Payload` is used to send a request to the API
-
-### Resources
-
-Resources are `fetchable`, `queryable`, `creatable`, `updatable` and `deletable`.
-
-### Responses
-
-Responses can be the object itself or a response layout
+> Please see the schema section for naming conventions for `schema` classes
 
 ## Configuring the Command Centre
 

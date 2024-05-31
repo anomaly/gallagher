@@ -29,6 +29,15 @@ from shillelagh.typing import (
     RequestedOrder, 
     Row,
 )
+
+from shillelagh.exceptions import (
+    ImpossibleFilterError,
+    InterfaceError,
+    InternalError,
+    ProgrammingError,
+    UnauthenticatedError,
+)
+
 from shillelagh.filters import (
     Filter,
     Impossible,
@@ -120,6 +129,12 @@ class CCAPIAdapter(Adapter):
             )
 
         api_key = os.environ.get('GACC_API_KEY')
+
+        if not api_key:
+            raise UnauthenticatedError(
+                "GACC_API_KEY environment variable must be set"
+            )
+        
         cc.api_key = api_key
 
         for table in CCAPIAdapter._all_tables:

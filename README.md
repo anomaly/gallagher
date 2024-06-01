@@ -10,11 +10,11 @@
 <img src="https://raw.githubusercontent.com/anomaly/gallagher/master/assets/logo-gpt.png" alt="Gallagher Python Toolkit Logo" height=128 width=128/>
 </div>
 
-Gallagher Security manufacture a variety of [security products](https://security.gallagher.com) all of which are controlled by their [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Traditionally Command Centre has been a Windows based server product. Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests. Gallagher also provide a [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which allows third party integrations to securely communicate with the Command Centre on site.
+Gallagher Security manufacture a variety of perimeter [security products](https://security.gallagher.com). At the hear of these is the [Command Centre](https://products.security.gallagher.com/security/au/en_AU/products/software/command-centre/p/C201311) software. Command Centre is deployed locally (in simplistic terms, the complexity varies for every use case). Version `8.6` introduced a REST API which allows you to interact with the system via HTTP requests locally or via Gallagher's [Cloud API Gateway](https://gallaghersecurity.github.io/docs/Command%20Centre%20Cloud%20Api%20Gateway%20TIP.pdf) which eliminates the need for maintaining proxies and VPNs.
 
-In principle we provides the following:
+Our Python Toolkit focuses on enhancing the developer experience (DX) around the REST API. In principle we provide the following:
 
-- **Python SDK** an idiomatic client (featuring `asyncio`) to build applications for the Command Centre.
+- **Python SDK** an idiomatic client (including `asyncio` support) to extend the CC functionality.
 - **Command Line Interface** (CLI) to build powerful pipeline-based workflows.
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
 - **SQL interface** query the REST API as if it were a database or interact with via an ORM.

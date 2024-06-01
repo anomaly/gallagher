@@ -1,4 +1,12 @@
-# API Client Design
+# Contribution's Manual
+
+## CLI
+
+## TUI
+
+## SQL
+
+## SDK
 
 A central feature to this project is the API client, focused on a superior developer experience and performance we spent substantial time in designing the Python interface to ensure it scales. We also ensure that we follow forward compatibility design patterns outlined by Gallagher (e.g [HATEOAS](https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html)) so you as a developer don't have to worry about it.
 

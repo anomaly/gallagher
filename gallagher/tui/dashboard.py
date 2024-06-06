@@ -26,6 +26,8 @@ class VisitTimelineWidget(Container):
 
 class Dashboard(Container):
 
+    CSS_PATH = "gallagher.tcss"
+
     def compose(self) -> ComposeResult:
         """Dashboard for the command centre"""
         with Grid():

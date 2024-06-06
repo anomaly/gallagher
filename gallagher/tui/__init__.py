@@ -48,7 +48,7 @@ class GallagherConsole(App):
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
-        yield Header()
+        yield Header(show_clock=True)
         yield Dashboard()
         yield Footer()
 

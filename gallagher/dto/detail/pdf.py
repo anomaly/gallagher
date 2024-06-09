@@ -1,15 +1,16 @@
 from typing import Optional
 
-from ..ref import (
-    DivisionRef,
-    AccessGroupRef,
-)
-
 from ..utils import (
     AppBaseModel,
     HrefMixin,
 )
 
+from ..ref import (
+    DivisionRef,
+    AccessGroupRef,
+)
+
+from ..enum import PdfType
 
 class PdfDetail(AppBaseModel, HrefMixin):
     """Personal Data Fields are custom fields for a card holder"""
@@ -18,7 +19,7 @@ class PdfDetail(AppBaseModel, HrefMixin):
     server_display_name: Optional[str] = None
     description: Optional[str] = None
     division: DivisionRef
-    type: str
+    type: PdfType
     default: Optional[str] = None
     required: bool = False
     unique: bool = False

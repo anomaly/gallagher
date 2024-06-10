@@ -75,6 +75,24 @@ class HrefMixin(BaseModel):
 
     href: HttpUrl
 
+class TypeValuePair(BaseModel):
+    """Type Value Pair
+
+    This class is used to represent a type value pair in the
+    Gallagher system. It is used in many places to represent
+    a key value pair.
+
+    eg this appears in CardholderDetail:
+
+    {
+        "type": "active",
+        "value": "Active"
+    }
+
+    """
+
+    type: str
+    value: str
 
 class OptionalHrefMixin(BaseModel):
     """Optionally available Href

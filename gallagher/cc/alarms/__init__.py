@@ -75,9 +75,22 @@ class Alarms(
     async def mark_as_viewed(
         cls,
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
-    ):
-        """ """
-        pass
+        comment: Optional[str],
+    ) -> bool:
+        """ Mark an alarm as viewed
+
+        arguments:
+        alarm: AlarmRef | AlarmSummary | AlarmDetail
+            The alarm to mark as viewed
+        comment: Optional[str]
+            A comment to add to the alarm 
+        """
+        await cls._post(
+            alarm.view.href,
+            AlarmCommentPayload(comment=comment) if comment else None,
+        )
+
+        return alarm.href is not None
 
     @classmethod
     async def comment(
@@ -92,6 +105,12 @@ class Alarms(
 
         You must pass a Ref, Summary or Detail which will be used
         to get the href of the Alarm
+
+        arguments:
+        alarm: AlarmRef | AlarmSummary | AlarmDetail
+            The alarm to comment on
+        comment: str
+            The comment to add to the alarm
         """
 
         await cls._post(
@@ -107,8 +126,20 @@ class Alarms(
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
         comment: Optional[str],
     ) -> bool:
-        """ """
-        return False
+        """ Mark an alarm as acknowledged
+
+        arguments:
+        alarm: AlarmRef | AlarmSummary | AlarmDetail
+            The alarm to mark as acknowledged
+        comment: Optional[str]
+            A comment to add to the alarm
+        """
+        await cls._post(
+            alarm.acknowledge.href,
+            AlarmCommentPayload(comment=comment) if comment else None,
+        )
+
+        return alarm.href is not None
 
     @classmethod
     async def mark_as_processed(
@@ -116,16 +147,41 @@ class Alarms(
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
         comment: Optional[str],
     ) -> bool:
-        """ """
-        return len(comment) > 0
+        """ Mark an alarm as processed
+
+        arguments:
+        alarm: AlarmRef | AlarmSummary | AlarmDetail
+            The alarm to mark as processed
+        comment: Optional[str]
+            A comment to add to the alarm 
+        """
+        await cls._post(
+            alarm.process.href,
+            AlarmCommentPayload(comment=comment) if comment else None,
+        )
+
+        return alarm.href is not None
 
     @classmethod
     async def mark_as_force_processed(
         cls,
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
     ) -> bool:
-        """ """
-        return False
+        """ Mark an alarm as force processed
+
+        arguments:
+        alarm: AlarmRef | AlarmSummary | AlarmDetail
+            The alarm to mark as force processed
+
+        returns:
+        bool: True if the alarm was force processed 
+        """
+        await cls._post(
+            alarm.force_process.href,
+            None,
+        )
+
+        return alarm.href is not None
 
 
 __shillelagh__ = (

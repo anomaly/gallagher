@@ -3,7 +3,11 @@
 
 """
 
-from .access_group import AccessSummary, AccessGroupSummary
+from .access_group import (
+    AccessSummary,
+    AccessGroupSummary,
+    CardholderAccessGroupSummary,
+)
 
 from .alarm import (
     AlarmSourceSummary,

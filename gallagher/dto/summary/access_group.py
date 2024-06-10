@@ -5,6 +5,9 @@ from ..utils import (
     IdentityMixin,
     HrefMixin,
     OptionalHrefMixin,
+    TypeValuePair,
+    from_optional_datetime,
+    until_optional_datetime,
 )
 
 from ..ref import (
@@ -45,9 +48,15 @@ class AccessGroupSummary(
 
 class CardholderAccessGroupSummary(
     AppBaseModel,
-    IdentityMixin,
     HrefMixin,
 ):
+    """ An Access Group assigned to a cardholder.
+
+    Essentially when an access group is assigned to a cardholder
+    it inherits the properties and additionally a start and end date
     """
-    """
-    pass
+    access_group: AccessGroupRef
+    status: TypeValuePair
+
+    valid_from: from_optional_datetime = None # Appears as from in the API
+    valid_until: until_optional_datetime = None

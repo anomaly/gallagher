@@ -1,6 +1,12 @@
 """ Cardholder Detail """
 from typing import Optional
 
+from ..utils import (
+    AppBaseModel,
+    IdentityMixin,
+    HrefMixin,
+)
+
 from ..ref import (
     CardholderExtendedRef,
     DivisionRef,
@@ -10,22 +16,18 @@ from ..ref import (
 
 from ..summary import (
     CardholderCardSummary,
-)
-
-from ..utils import (
-    AppBaseModel,
-    IdentityMixin,
-    HrefMixin,
+    CardholderAccessGroupSummary,
 )
 
 class CardholderRelationshipDetail(
     AppBaseModel,
     HrefMixin,
 ):
+    """ 
+    """
     role: RoleRef
     cardholder: CardholderExtendedRef
     
-
 class CardholderDetail(
     AppBaseModel,
     IdentityMixin,
@@ -59,7 +61,7 @@ class CardholderDetail(
 
     # personal_data_definitions
     cards: list[CardholderCardSummary] = []
-    # access_groups
+    access_groups: list[CardholderAccessGroupSummary] = []
     # operator_groups
     # competencies
 

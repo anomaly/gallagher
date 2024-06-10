@@ -51,6 +51,12 @@ Naming convensions of DTO classes.
 
 Organising DTO classes, where do extension resources like `CardholderAccessGroupSummary` go?
 
+### Python Reserved Words
+
+`from_optional_datetime` and `until_optional_datetime`
+
+`type` as a variable name is acceptable for now
+
 ## API Client Core
 
 The `core` package in `cc` provides two important classes:

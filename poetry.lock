@@ -222,13 +222,13 @@ files = [
 
 [[package]]
 name = "asyncer"
-version = "0.0.5"
+version = "0.0.7"
 description = "Asyncer, async and await, focused on developer experience."
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = ">=3.8"
 files = [
-    {file = "asyncer-0.0.5-py3-none-any.whl", hash = "sha256:ba06d6de3c750763868dffacf89b18d40b667605b0241d31c2ee43f188e2ab74"},
-    {file = "asyncer-0.0.5.tar.gz", hash = "sha256:2979f3e04cbedfe5cfeb79027dcf7d004fcc4430a0ca0066ae20490f218ec06e"},
+    {file = "asyncer-0.0.7-py3-none-any.whl", hash = "sha256:f0d579d4f67c4ead52ede3a45c854f462cae569058a8a6a68a4ebccac1c335d8"},
+    {file = "asyncer-0.0.7.tar.gz", hash = "sha256:d5e563fb0f56eb87b97257984703658a4f5bbdb52ff851b3e8ed864cc200b1d2"},
 ]
 
 [package.dependencies]
@@ -2169,13 +2169,13 @@ yaml = ["PyYAML (>=5.1)", "more-itertools"]
 
 [[package]]
 name = "textual"
-version = "0.65.2"
+version = "0.67.1"
 description = "Modern Text User Interface framework"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "textual-0.65.2-py3-none-any.whl", hash = "sha256:f01ce9ee3d2a613c63b9255900bf5a709b9ff7931d54d42f438e15495fa4ad3c"},
-    {file = "textual-0.65.2.tar.gz", hash = "sha256:05d4d39eedffac977b9bce9bea307dfefefdaaaa5081722549472cbb1d32e53f"},
+    {file = "textual-0.67.1-py3-none-any.whl", hash = "sha256:6c65e37f2114b5c8d74499586769aee763c14238a7671e0d0cf823b5f47ee6ac"},
+    {file = "textual-0.67.1.tar.gz", hash = "sha256:9d8708b2d1bf82de800b7da2202de26e6059d6106c67bf91e47b8a4763b3e8f5"},
 ]
 
 [package.dependencies]
@@ -2451,4 +2451,4 @@ tui = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "435e5e30c6c3b802bba0ec786b8a63524171aa5756c5937468b243d36776539b"
+content-hash = "3a7d183d900e0a6da2524c3037368bb00046813b5ae5ceff3f1670c6ed8fcb0d"

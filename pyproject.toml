@@ -64,13 +64,13 @@ tqdm = "^4.66.4"
 mkdocs-material = "^9.5.23"
 pygments = "^2.18.0"
 [tool.poetry.group.cli.dependencies]
-asyncer = "^0.0.5"
+asyncer = "^0.0.7"
 typer = "^0.12.3"
 rich = "^13.7.1"
 
 
 [tool.poetry.group.tui.dependencies]
-textual = "^0.65.2"
+textual = "^0.67.1"
 textual-dev = "^1.5.1"
 
 

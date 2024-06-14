@@ -484,8 +484,9 @@ class APIEndpoint:
                 if response.status_code == HTTPStatus.OK:
 
                     if not response_class:
+                        # TODO: should this return a boolean?
                         """No response to parse"""
-                        return
+                        return True
 
                     parsed_obj = response_class.model_validate(response.json())
 

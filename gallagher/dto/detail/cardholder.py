@@ -1,5 +1,7 @@
 """ Cardholder Detail """
-from typing import Optional
+from typing import Optional, Any
+
+from pydantic import Extra, model_validator, ValidationError
 
 from ..utils import (
     AppBaseModel,
@@ -75,6 +77,19 @@ class CardholderDetail(
     # elevator_groups
     updates: PlaceholderRef
     # redactions
+
+    @model_validator(mode='before')
+    @classmethod
+    def validate_pdf(cls, data: Any) -> Any:
+
+        known_fields = { "@Company Name" }
+
+        for key in data:
+            if key not in known_fields:
+                print(key)
+
+        return data
+
 
     def get_pdf(self, PDFRef):
         """Get a parsed PDF field from the cardholder given the PDF Ref

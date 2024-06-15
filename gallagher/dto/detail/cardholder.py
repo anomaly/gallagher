@@ -1,7 +1,7 @@
 """ Cardholder Detail """
 from typing import Optional, Any
 
-from pydantic import Extra, model_validator, ValidationError
+from pydantic import field_validator, model_validator
 
 from ..utils import (
     AppBaseModel,
@@ -19,16 +19,48 @@ from ..ref import (
 from ..summary import (
     CardholderCardSummary,
     CardholderAccessGroupSummary,
+    PdfSummary,
 )
 
 class CardholderRelationshipDetail(
     AppBaseModel,
     HrefMixin,
 ):
-    """ 
+    """ A role that a cardholder has 
+
+    Think of this as a representation of a many to many relationship
+    where this cardholder has a role in the system. Other users can
+    have the same role.
     """
     role: RoleRef
     cardholder: CardholderExtendedRef
+
+
+class CardholderPersonalDataField(
+    AppBaseModel,
+    HrefMixin,
+):
+    """ A PDF field as defined in the Cardholders personal data
+
+    A definition that defines the cardholder's personal data. This
+    is essentially the Summary of the Pdf field, along with a string
+    value, which also is accessible using the key at the dictionary level.
+    """
+    definition: PdfSummary
+    value: Optional[str] = ""
+    notifications: Optional[bool] = False # Local to the @Email field
+
+class CardholderPersonalDataDefinition(
+    AppBaseModel,
+):
+    """ A personal data definition for the cardholder
+
+    This is sent back as the personalDataDefinitions field in the
+    CardholderDetail response. It has a peculiar structure that 
+    we have outlined in the parse_personal_data_definitions method
+    """
+    name: str
+    contents: CardholderPersonalDataField
     
 class CardholderDetail(
     AppBaseModel,
@@ -61,7 +93,7 @@ class CardholderDetail(
     user_extended_access_time: bool = False
     windows_login_enabled: bool = False
 
-    # personal_data_definitions
+    personal_data_definitions: list[CardholderPersonalDataDefinition] = []
     cards: list[CardholderCardSummary] = []
     access_groups: list[CardholderAccessGroupSummary] = []
     # operator_groups
@@ -80,26 +112,34 @@ class CardholderDetail(
 
     @model_validator(mode='before')
     @classmethod
-    def validate_pdf(cls, data: Any) -> Any:
+    def parse_personal_data_definitions(cls, data: Any) -> Any:
+        """ Rewrite the personalDataDefinition for it to be parseable
 
-        known_fields = { "@Company Name" }
+        The personalDataDefinitions field is a list of objects, each one of 
+        which has a single object with key being the personal data field name
+        and the value being the value of the field.
 
-        for key in data:
-            if key not in known_fields:
-                print(key)
+        This method rewrites that to be an object with name and contents fields
+        which allows us to use pydantic to parse it and make it available to the
+        user as a list of objects.
+
+        The results of this will also be used to dynamically parse the values
+        for the cardholder's PDF fields.
+        """
+
+        if 'personalDataDefinitions' in data:
+            data['personalDataDefinitions'] = [
+                {
+                    'name': name, 
+                    'contents': contents
+                } \
+                    for item in data['personalDataDefinitions'] \
+                    for name, contents in item.items()
+            ]
 
         return data
 
 
-    def get_pdf(self, PDFRef):
-        """Get a parsed PDF field from the cardholder given the PDF Ref
-
-        This assumes that you have access to the right PDF reference from
-        the singleton that the API client would have parsed on initialisation.
-
-        For validation you must pass the PDFRef object to this method.
-        """
-        pass
 
     def __rich_repr__(self):
         return (

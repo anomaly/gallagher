@@ -57,3 +57,7 @@ from .visitor import (
     VisitorManagementSummary,
     VisitorTypeSummary,
 )
+
+from .pdf import (
+    PdfSummary,
+)

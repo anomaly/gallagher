@@ -143,29 +143,6 @@ class Capabilities:
         features=FeaturesDetail(),
     )
 
-    # Personal Data Fields are defined per instance of the command centre
-    # Upon discover, the client core must fetch the PDF and cache it for
-    # use by various other endpoints such as Cardholers.
-    # 
-    # Note that the response returns a list of keys that don't conform to
-    # the snake_case naming convention, they contain spaces and when referenced
-    # by the other fields have an @ prefix in most instances
-    PERSONAL_DATA_FIELDS = None # When discovered this should at least be []
-
-    @classmethod
-    def pdf_field_names(cls):
-        """Returns a list of PDF names"""
-        return [pdf.name for pdf in cls.PERSONAL_DATA_FIELDS]
-    
-    @classmethod
-    def pdf_field_name_to_attribute_map(cls):
-        """Returns a dictionary of PDF names to attributes"""
-        return {
-            pdf.name: pdf.name.replace(' ', '_').lower()\
-                  for pdf in cls.PERSONAL_DATA_FIELDS
-        }
-
-
 class APIEndpoint:
     """Base class for all API objects
 
@@ -269,9 +246,6 @@ class APIEndpoint:
             # an instance of a pydantic object and all values are thus
             # copied not referenced.
             cls.__config__ = await cls.get_config()
-
-            from .cardholders import PdfDefinition
-            Capabilities.PERSONAL_DATA_FIELDS = await PdfDefinition.list()
 
 
     @classmethod

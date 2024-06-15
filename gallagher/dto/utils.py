@@ -180,7 +180,7 @@ class AppBaseModel(BaseModel):
 
         https://docs.python.org/3/reference/datamodel.html
         """
-        return f"{self.__class__.__name__}({self.dict()})"
+        return f"{self.__class__.__name__}({self.model_dump()})"
 
 
 class AppBaseResponseModel(AppBaseModel):

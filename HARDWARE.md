@@ -24,3 +24,5 @@ Official video tutorials from Gallagher Security:
 Official documentation:
 
 - [Controller 7000 Single door](https://products.security.gallagher.com/security/global/en/products/access-control-hardware/controller-7000-single-door/p/BVC400011)
+
+- [Controller 7000 Single door documents](https://media.gallagher.com/web/1a00857c7c9c8d7/single-door-controller-7000-qr-code/?viewType=grid)

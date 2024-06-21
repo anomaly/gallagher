@@ -136,7 +136,7 @@ class AppBaseModel(BaseModel):
         populate_by_name=True,
         alias_generator=_to_lower_camel,
         from_attributes=True,
-        allow_extra=True,
+        arbitrary_types_allowed=True,
     )
 
     @classmethod

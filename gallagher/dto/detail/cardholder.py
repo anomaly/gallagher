@@ -1,7 +1,8 @@
 """ Cardholder Detail """
 from typing import Optional, Any
+from typing_extensions import Self
 
-from pydantic import field_validator, model_validator
+from pydantic import model_validator, Field
 
 from ..utils import (
     AppBaseModel,
@@ -61,6 +62,17 @@ class CardholderPersonalDataDefinition(
     """
     name: str
     contents: CardholderPersonalDataField
+
+
+class PdfAccessorWrapper:
+    """ Wrapper that holds a dictionary of accessible PDF 
+
+    The aim is to make these accessible in as python a way as possible
+
+    Note: this is not a pydantic class, and is used as a placeholder
+    to dynamically populate the dictionary of personal data fields
+    """
+    pass
     
 class CardholderDetail(
     AppBaseModel,
@@ -110,6 +122,10 @@ class CardholderDetail(
     updates: PlaceholderRef
     # redactions
 
+    # Note this is not a pyndatic class and hence utils.py
+    # has the configuration set to allow arbitrary types
+    pdf: PdfAccessorWrapper = PdfAccessorWrapper()
+
     @model_validator(mode='before')
     @classmethod
     def parse_personal_data_definitions(cls, data: Any) -> Any:
@@ -138,6 +154,24 @@ class CardholderDetail(
             ]
 
         return data
+    
+    @model_validator(mode='after')
+    def populate_pdf_accessor(self) -> Self:
+        # For each key in the personal_data_definitions, create a new
+        # attribute on the pdf object with the key as the name
+        for pdf_field in self.personal_data_definitions:
+            # Note this sets a reference from personal_data_definitions
+            # if you compare these in the tests, they should be the same
+            setattr(
+                self.pdf, 
+                # replace spaces with underscores and make it lowercase
+                # ignore the prefixed @ symbol
+                pdf_field.name[1:].replace(' ', '_').lower(),
+                pdf_field.contents
+            )
+
+        return self
+
 
 
 

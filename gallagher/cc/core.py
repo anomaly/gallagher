@@ -137,13 +137,11 @@ class Capabilities:
     # then the path will be set to None, if the client attempts
     # to access the endpoint then the library will throw an exception
     #
-    # This value is memoized and should perform
+    # This value is memoized and should be performant
     CURRENT = DiscoveryResponse(
         version="0.0.0",  # Indicates that it's not been discovered
         features=FeaturesDetail(),
     )
-    pass
-
 
 class APIEndpoint:
     """Base class for all API objects
@@ -203,6 +201,8 @@ class APIEndpoint:
 
         Note that references to Capabilities.CURRENT as a singleton, while
         cls.method when executing a class method.
+
+        :params class cls: The class that is calling the method
         """
 
         if Capabilities.CURRENT.version != "0.0.0" and isinstance(
@@ -246,6 +246,7 @@ class APIEndpoint:
             # an instance of a pydantic object and all values are thus
             # copied not referenced.
             cls.__config__ = await cls.get_config()
+
 
     @classmethod
     async def list(cls, skip=0):

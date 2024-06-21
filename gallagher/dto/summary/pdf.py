@@ -19,4 +19,4 @@ class PdfSummary(
     """
     
     name: str
-    type: PdfType
+    type: PdfType # See gallagher docs for enum

@@ -21,3 +21,14 @@ class PdfType(str, Enum):
     phone = "phone"
     email = "email"
     mobile = "mobile"
+
+
+class CredentialsClass(str, Enum):    
+    card = "card"
+    digitalId = "digitalId"
+    govPass = "govPass"
+    mobile = "mobile"
+    piv = "piv"
+    pivi = "pivi"
+    trackingTag = "trackingTag"
+    transact = "transact"

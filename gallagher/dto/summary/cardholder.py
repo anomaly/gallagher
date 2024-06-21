@@ -2,11 +2,6 @@ from typing import Optional
 
 from datetime import datetime
 
-
-from ..ref import (
-    CardTypeRef,
-)
-
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
@@ -15,6 +10,11 @@ from ..utils import (
     until_optional_datetime,
 )
 
+from ..ref import (
+    CardTypeRef,
+)
+
+from ..enum import CredentialsClass
 
 class CardholderSummary(
     AppBaseModel,
@@ -94,7 +94,7 @@ class CardholderCardSummary(
 
     valid_from: from_optional_datetime = None # Appears as from in the API
     valid_until: until_optional_datetime = None
-    credential_class: str
+    credential_class: CredentialsClass
     trace: bool = False
     last_printed_or_encoded_time: Optional[datetime] = None
     last_printed_or_encoded_issue_level: int = 0

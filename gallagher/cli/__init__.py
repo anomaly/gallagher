@@ -22,7 +22,7 @@ from .events import app as events_app
 _help_text = """
 gala is a command line interface for the gallagher security command centre.\n
 It works by accessing and mutating objects on the command centre via it's\n
-JSON REST like API, directly or via the cloud gateway.\n
+JSON API, directly or via the cloud gateway.\n
 \n
 It's intent it to make available scriptable endpoints to ease automation.
 """

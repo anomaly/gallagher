@@ -172,9 +172,6 @@ class CardholderDetail(
 
         return self
 
-
-
-
     def __rich_repr__(self):
         return (
             f"[blue bold] person",

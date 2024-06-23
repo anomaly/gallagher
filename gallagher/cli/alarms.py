@@ -52,7 +52,12 @@ async def list():
 async def get(
     id: Annotated[int, typer.Argument(help="alarm id")],
 ):
-    """get alarm details"""
+    """get alarm details
+    
+    These are details of the alarm that are given by the command centre\n
+    - Item one\n
+    - Items two
+    """
     console = Console()
     with console.status("[bold green]Fetching alarm...", spinner="dots"):
 

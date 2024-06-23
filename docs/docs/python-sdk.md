@@ -15,3 +15,9 @@
 ## Deletion
 
 # Next and Updates
+
+# Hidden Gems
+
+## Personal Data Definitions
+
+`cardholder.pdf.email`

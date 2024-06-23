@@ -9,12 +9,19 @@ theme:
 markdown_extensions:
     - mkdocs-typer
     - codehilite
+    - pymdownx.highlight:
+        anchor_linenums: true
+        line_spans: __span
+        pygments_lang_class: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
 
 nav:
   - Introduction: index.md
   - Installation & Usage: installation.md
   - SQL and SQLAlchemy: sql.md
-  - Command Line Inteface: cli.md
-  - Terminal User Inteface: tui.md 
+  - Command Line Interface: cli.md
+  - Terminal User Interface: tui.md 
   - Python SDK: python-sdk.md
   - Contributor's Manual: design.md

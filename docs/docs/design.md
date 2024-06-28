@@ -1,10 +1,43 @@
 # Contribution's Manual
 
-## CLI
+The following guide is aimed at developers who are looking to understand the toolkit at a deeper level or wish to contribute to the project. The aim is to outline the design thinking behind various components of the project.
 
-## TUI
+## Layout
 
-## SQL
+It's handy to know where each portion of the project lives, so you can find your way around. Majority of the source is located under the `gallagher` directory, which is what is shipped via `pypi`. `tests` are not part of the distribution and `examples` are intended to be runnable examples a developer can copy and paste.
+
+```
+.
+├── assets                          assets for the github/pypi project
+├── docs                            documentation via mkdocs
+│   └── docs                        where the markdown files are stored
+├── examples                        examples of how to use the API client
+├── gallagher                       the main package
+│   ├── cc
+│   │   ├── alarms                  alarms endpoint
+│   │   ├── cardholders             cardholders endpoint
+│   │   └── status_overrides        status overrides endpoint
+│   ├── cli                         command line interface
+│   ├── tui                         terminal user interface
+│   ├── dto                         data transfer objects
+│   │   ├── detail                  detail objects
+│   │   ├── payload                 payloads for requests
+│   │   ├── ref                     reference objects
+│   │   ├── response                response objects
+│   │   └── summary                 summary objects
+│   └── ext                         extensions to the core package e.g SQL
+└── tests                           tests for the project
+```
+
+## Toolchain
+
+Majority of the development was conducted on macOS, but the toolchain should be compatible with any operating system. All elements of the project were developed in `python` with standard tooling. Our major dependencies are `httpx` and `pydantic`.
+
+In addition to the usual suspects (e.g pytest) we use:
+
+- `task` - as the task runner of choice, it's widely available on platforms and supports Github actions. All endpoints are documented within the command line tool.
+- `poetry` as our package manager of choice for the python project
+- `mkdocs` for documentation, maintained using markdown
 
 ## SDK
 
@@ -102,8 +135,9 @@ The discovered state of the server is stored in a singleton, that's used by all 
 
 For this reason all `APIEndpoint` classes return a configuration as a result of a function called `get_config` (an `async` method that at a `class` scope) as opposed to a statically assigned class variable (otherwise the URLs would always result to be the initial `None` value).
 
-> [!TIP]
-> If you want to force discovery of the endpoints call `expire_discovery` on the `APIEndpoint` before calling the API endpoint.
+!!! tip
+
+    If you want to force discovery of the endpoints call `expire_discovery` on the `APIEndpoint` before calling the API endpoint. e.g `Cardholder.expire_discovery()`
 
 ```python
 from ..core import (
@@ -175,35 +209,8 @@ class CardholderSummaryResponse(
         return f"{len(self.results)} cardholders"
 ```
 
-## Layout
+## CLI
 
-Layout of our files
+## TUI
 
-```
-.
-├── assets
-├── docs
-│   └── docs
-├── gallagher
-│   ├── cc
-│   │   ├── alarms
-│   │   ├── cardholders
-│   │   └── status_overrides
-│   ├── cli
-│   ├── dto
-│   │   ├── detail
-│   │   ├── ref
-│   │   ├── response
-│   │   └── summary
-│   └── tui
-└── tests
-```
-
-## Toolchain
-
-Majority of the development was conducted on macOS, but the toolchain should be compatible with any operating system. All elements of the project were developed in `python` with standard tooling
-
-In addition we use:
-
-- `task` - as the task runner of choice, it's widely avilable on platforms and supports Github actions. All endpoints are documented within the command line tool.
-- `poetry` as our package manager of choice for the python project
+## SQL

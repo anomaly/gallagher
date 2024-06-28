@@ -57,6 +57,8 @@ If you are fetching a `detail` then they are returned on their own as part of th
 
 # Basic Usage
 
+We encourage the use of `asyncio` where possible.
+
 ```python title="Basic Usage"
 # Import core python libs
 import os
@@ -147,7 +149,7 @@ and we had used the API client to fetch the cardholder detail (partial example):
 cardholder = await Cardholder.retrieve(340)
 ```
 
-you could access the `Email` field either via the dictionary as `cardholder.personal_data_definitions['@Email']` or the parsed shortcut `cardholder.pdf.email`.
+you could access the `Email` field either via iterating over `cardholder.personal_data_definitions` and looking to match the `key` attribute of the object to `@Email` or using the parsed shortcut `cardholder.pdf.email`.
 
 The above is achieved by dynamically populating a placeholder object with dynamically generated keys. These are parsed and populate _once_ when the object has successfully parsed the `JSON` payload.
 

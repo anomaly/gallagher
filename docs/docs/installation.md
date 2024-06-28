@@ -44,7 +44,9 @@ To contribute to the library, please fork this repository and lodge a pull reque
 
 All the `tasks` are quite logically grouped and most of them will need you to have a `virtualenv` initialised via `poetry`.
 
-> Our Github workflows use [Task](https://taskfile.dev/installation/#github-actions) via the Github action.
+!!! info
+
+    Our Github workflows use [Task](https://taskfile.dev/installation/#github-actions) via the Github action.
 
 Some of the `task` targets take parameters e.g.
 

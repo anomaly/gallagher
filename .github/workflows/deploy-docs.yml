@@ -17,5 +17,6 @@ jobs:
       - run: pip install mkdocs
       - run: pip install mkdocs-material
       - run: pip install mkdocs-typer
-      - run: pip install .
+      - run: pip install poetry
+      - run: poetry install
       - run: cd docs && mkdocs gh-deploy --force --clean --verbose

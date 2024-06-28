@@ -1,4 +1,4 @@
-name: build
+name: build-docs
 on:
   push:
     branches:
@@ -16,4 +16,5 @@ jobs:
       - run: pip install mkdocs
       - run: pip install mkdocs-material
       - run: pip install mkdocs-typer
+      - run: poetry install
       - run: cd docs && mkdocs gh-deploy --force --clean --verbose

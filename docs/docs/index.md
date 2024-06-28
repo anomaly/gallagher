@@ -9,7 +9,9 @@ Our Python Toolkit focuses on enhancing the developer experience (DX) around the
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
 - **SQL interface** query the REST API as if it were a database or interact with via an ORM.
 
-> **Note:** While Anomaly is part of Gallagher's Technical Partner Program, this project is not officially affiliated with Gallagher.
+!!! note
+
+    While Anomaly is part of Gallagher's Technical Partner Program, this project is not officially affiliated with Gallagher.
 
 ## How to get started?
 
@@ -38,7 +40,9 @@ While this is all you need to get started, it can be overwhelming to interact wi
 
 Our Python Toolkit aims to encapsulate the design requirements of the API and provide a Python interface for you to build your integrations. Simply put:
 
-> "You write Python, we speak REST to Gallagher's standards."
+!!! tip
+
+    "You write Python, we speak REST to Gallagher's standards."
 
 As we provided the viability of our commercial projects around Gallagher's infrastructure our support load went through the roof, the CLI, TUI and SQL interfaces are a formal expression of scripts, REST payload snippets that we used in the early days to perform tasks like adding cards to cardholders or keeping track of visits.
 

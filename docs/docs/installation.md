@@ -38,6 +38,18 @@ Anomaly has a demo Command Centre set up in the cloud that we run tests against.
 
 To contribute to the library, please fork this repository and lodge a pull request for us to accept your changes.
 
+### Taskfile
+
+[Task](https://taskfile.dev) is a task runner / build tool that aims to be simpler and easier to use than, for example, GNU Make. Gallagher Python Toolkit uses Task to run common tasks such as testing, linting, and building the documentation. First follow the [installation steps](https://taskfile.dev/installation/) to install Task on your system.
+
+All the `tasks` are quite logically grouped and most of them will need you to have a `virtualenv` initialised via `poetry`.
+
+> Our Github workflows use [Task](https://taskfile.dev/installation/#github-actions) via the Github action.
+
+Some of the `task` targets take parameters e.g.
+
+`task test` will run the entire test suite, while `task test -- test_cardholder.py` will run only the tests in `test_cardholder.py`.
+
 ### Building the Docs
 
 The documentation is build using [mkdocs](https://www.mkdocs.org) and hosted on [Github pages](https://anomaly.github.io/gallagher/). The project repository is configured to build and publish the documentation on every commit to the `master` branch.
@@ -48,5 +60,7 @@ Some handy commands to get you started:
 - `mkdocs serve -a localhost:8003` - Start the live-reloading docs server, `-a` allows you to provide a custom address.
 - `mkdocs build` - Build the documentation site.
 - `mkdocs -h` - Print help message and exit.
+
+We have a wrapper for running the `mkdocs` web server at `task dev:docs` which runs the server on port `8001`.
 
 To start contributing please fork this repository, make the changes you desire and submit a pull request for us to merge your changes in. Alternatively consider [starting a discussion](https://github.com/anomaly/gallagher/discussions) or [raising an issue](https://github.com/anomaly/gallagher/issues). Be kind to our maintainers and check to see if a similar discussion is already in place and join the thread.

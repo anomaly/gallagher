@@ -8,27 +8,34 @@ ensure that we are receive or send the correct values.
 """
 from enum import Enum
 
-# Pdf type enumeration
-# string, image, strEnum, numeric, date, address, phone, email, mobile
-
 class PdfType(str, Enum):
-    string = "string"
-    image = "image"
-    strEnum = "strEnum"
-    numeric = "numeric"
-    date = "date"
-    address = "address"
-    phone = "phone"
-    email = "email"
-    mobile = "mobile"
+    """ Personal Data Field Types
+
+    Types of acceptable personal data fields allowed by the server
+    these are in accordance with the API endpoints
+    """
+    STRING = "string"
+    IMAGE = "image"
+    STR_ENUM = "strEnum"
+    NUMERIC = "numeric"
+    DATE = "date"
+    ADDRESS = "address"
+    PHONE = "phone"
+    EMAIL = "email"
+    MOBILE = "mobile"
 
 
-class CredentialsClass(str, Enum):    
-    card = "card"
-    digitalId = "digitalId"
-    govPass = "govPass"
-    mobile = "mobile"
-    piv = "piv"
-    pivi = "pivi"
-    trackingTag = "trackingTag"
-    transact = "transact"
+class CredentialsClass(str, Enum):
+    """ Credential Class related to different card types
+
+    A card type must be one of the following credential classes
+    """
+    CARD = "card"
+    DIGITAL_ID = "digitalId"
+    GOV_PASS = "govPass"
+    MOBILE = "mobile"
+    PVI = "piv"
+    PIVI = "pivi"
+    TRACKING_TAG = "trackingTag"
+    TRANSACT = "transact"
+    FIOD2 = "fido2"

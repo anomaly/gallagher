@@ -48,7 +48,7 @@ class CardholderPersonalDataField(
     value, which also is accessible using the key at the dictionary level.
     """
     definition: PdfSummary
-    value: Optional[str] = ""
+    value: str | HrefMixin
     notifications: Optional[bool] = False # Local to the @Email field
 
 class CardholderPersonalDataDefinition(

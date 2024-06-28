@@ -84,7 +84,7 @@ class CardholderCardSummary(
     """
     number: str
     card_serial_number: Optional[str] = None
-    issue_level: int
+    issue_level: Optional[int] = None
 
     status: CardholderCardStatusSummary
 
@@ -102,5 +102,9 @@ class CardholderCardSummary(
     visitor_contractor: bool = False
     owned_by_site: bool = False
     credential_id: str = "reserved" # TODO: Reserved for future use?
-    ble_facility_id: str = "reserved" # TODO: Reserved for future use?
+    # TODO: Reserved for future use?
+    # Test instance returns an int when a mobile credential is assigned
+    # the docs still suggest this should be a string instead, leaving this
+    # here to check into the future
+    ble_facility_id:  str | int = "reserved" 
 

@@ -3,6 +3,11 @@ version: '3'
 dotenv: ['.env']
 
 tasks:
+  publish:tag:
+    desc: tags the current commit
+    cmds:
+      - git tag -a v$(poetry version | awk '{print $2}') -m "v$(poetry version | awk '{print $2}')"
+      - git push origin v$(poetry version | awk '{print $2}')
   build:image:
     prompt: Have you made sure the version number is up to date?
     desc: builds publishable python package

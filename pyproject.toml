@@ -54,7 +54,7 @@ black = "^24.4.2"
 tqdm = "^4.66.4"
 
 
-mkdocs-material = "^9.5.23"
+mkdocs-material = {extras = ["imaging"], version = "^9.5.27"}
 pygments = "^2.18.0"
 [tool.poetry.group.cli.dependencies]
 asyncer = "^0.0.7"

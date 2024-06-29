@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "gallagher"
 version = "0.1.0-alpha.5"
-description = "Python tools for Gallagher Security Centre"
+description = "The missing developer toolkit for Gallagher Command Centre"
 authors = ["Dev Mukherjee <devraj@gmail.com>"]
 readme = "README.md"
 license = "MIT"

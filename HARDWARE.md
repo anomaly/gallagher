@@ -11,8 +11,14 @@ A big thank you to [Gallagher Security](http://security.gallagher.com) for provi
 
 - [Controller 7000 Single door](https://products.security.gallagher.com/security/global/en/products/access-control-hardware/controller-7000-single-door/p/BVC400011)
 - [T15 Multi Tech Reader](https://products.security.gallagher.com/security/global/en/products/access-control-hardware/readers-and-terminals/t15-multi-tech-reader/p/BVC300480)
-- [Gallagher Command Centre](http://security.gallagher.com) software
-- [Gallagher Mobile Connect](http://security.gallagher.com) app
+- [Gallagher Command Centre](http://security.gallagher.com) central command centre software (hosted on an AWS EC2 instance)
+- [Gallagher Mobile Connect](http://security.gallagher.com) app to unlock the door
+
+## Writing
+
+## Setup
+
+## AWS and the Local Setup
 
 ## Reference videos
 

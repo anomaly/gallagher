@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gallagher"
-version = "0.1.0-alpha.3"
+version = "0.1.0-alpha.4"
 description = "Python tools for Gallagher Security Centre"
 authors = ["Dev Mukherjee <devraj@gmail.com>"]
 readme = "README.md"

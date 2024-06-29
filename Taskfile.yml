@@ -4,11 +4,14 @@ dotenv: ['.env']
 
 tasks:
   publish:tag:
-    prompt: "Before we build, is the version number up to date?"
+    vars:
+      PROJ_VERSION: 
+        sh: poetry version | awk '{print $2}'
+    prompt: "Before we build, is the version {{.PROJ_VERSION}} number up to date?"
     desc: tags the current commit
     cmds:
-      - git tag -a v$(poetry version | awk '{print $2}') -m "v$(poetry version | awk '{print $2}')"
-      - git push origin v$(poetry version | awk '{print $2}')
+      - git tag -a v${{.PROJ_VERSION}} -m "v{{.PROJ_VERSION}}"
+      - git push origin v${{.PROJ_VERSION}}
   build:image:
     prompt: Have you made sure the version number is up to date?
     desc: builds publishable python package

@@ -4,6 +4,7 @@ dotenv: ['.env']
 
 tasks:
   publish:tag:
+    prompt: "Before we build, is the version number up to date?"
     desc: tags the current commit
     cmds:
       - git tag -a v$(poetry version | awk '{print $2}') -m "v$(poetry version | awk '{print $2}')"

@@ -1,9 +1,6 @@
 name: ci
 run-name: Run tests by @${{ github.actor }}
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master

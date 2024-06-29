@@ -1,19 +1,25 @@
-name: build-docs
+name: publish-docs
+run-name: Publish Docs to GitHub Pages by @${{ github.actor }}
 on:
   push:
     branches:
       - master
     paths:
       - docs/**
-      - .github/**
+      - .github/workflows/deploy-docs.yml
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - run: pip install poetry
-      - run: poetry install
-      - run: cd docs && poetry run mkdocs gh-deploy --force --clean --verbose
+      - name: Install poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install
+      - name: Build and Publish to GH Pages
+        run: cd docs && poetry run mkdocs gh-deploy --force --clean --verbose

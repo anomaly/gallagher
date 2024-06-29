@@ -15,10 +15,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Framework :: Pydantic",
     "Framework :: Pydantic :: 2",
-    "Framework :: Typer",
-    "Framework :: Textual",
-    "Framework :: Rich",
-    "Framework :: Shillelagh",
 ]
 
 [tool.poetry.urls]

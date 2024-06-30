@@ -24,7 +24,7 @@ markdown_extensions:
 plugins: 
   - social
   - search
-
+  - mkdocstrings
 
 nav:
   - Introduction: index.md

@@ -106,6 +106,12 @@ cardholder.first_name
 
 # Next and Updates
 
+# Error Handling
+
+## Exceptions
+
+## Warnings
+
 # Additional Features
 
 In addition to a nicely validated wrapper around the data sent by the Command Centre API, we provide provide the following helper interface to keep your interaction `pythonic` wherever possible.

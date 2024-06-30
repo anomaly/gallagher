@@ -55,6 +55,14 @@ In addition to DTOs, you will see a number of :
 
 If you are fetching a `detail` then they are returned on their own as part of the response. They typically contain `href` to related objects.
 
+# API Endpoint Lifecycle
+
+Each endpoint inherits from a base class called `APIEndpoint` defined in `gallagher/cc/core.py`, it wrraps
+
+`_discover`
+
+`get_config`
+
 # Basic Usage
 
 We encourage the use of `asyncio` where possible.
@@ -72,7 +80,7 @@ from gallagher.dto.summary import (
     CardholderSummary,
 )
 from gallagher.cc.cardholders import (
-    Cardholder
+    Cardholder,
 )
 
 # Set the API key from the environment
@@ -105,6 +113,10 @@ cardholder.first_name
 ## Deletion
 
 # Next and Updates
+
+`next`
+
+`previous`
 
 # Error Handling
 

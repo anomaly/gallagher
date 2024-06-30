@@ -47,7 +47,7 @@ from gallagher.dto.summary import (
     CardholderSummary,
 )
 from gallagher.cc.cardholders import (
-    Cardholder
+    Cardholder,
 )
 
 # Set the API key from the environment

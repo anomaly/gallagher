@@ -29,8 +29,8 @@ plugins:
 nav:
   - Introduction: index.md
   - Installation & Usage: installation.md
+  - Python SDK: python-sdk.md
   - SQL and SQLAlchemy: sql.md
   - Command Line Interface: cli.md
   - Terminal User Interface: tui.md 
-  - Python SDK: python-sdk.md
   - Contributor's Manual: design.md

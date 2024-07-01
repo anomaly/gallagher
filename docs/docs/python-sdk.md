@@ -173,17 +173,80 @@ cardholder.first_name
     We encourage the use of `asyncio` where possible. In case you are unable to use `asyncio`
     please refer to our advanced guide for strategies to work around this.
 
-We provide a streamlined pattern of calls that the developers can use across data types to access the various Gallagher API Endpoints.
+We provide a streamlined pattern of calls that the developers can use across data types to access the various Gallagher API Endpoints. For the purposes for this guide we will use the `Item` endpoint to elaborate how the SDK wraps the usual suspects and additional methods (where applicable to endpoints).
+
+Each Endpoint has a configuration that determines which ones of the following methods are available. While our documentation outlines what is available, you will be met with an exception if you happen to call a method that isn't supported by the endpoint.
 
 ### Lists
 
+The simplest interaction you can have with objects is to get a summary of objects. We refer to this operation as a `list` and they can be accessed by calling the `list` method on the appropriate endpoint. Each list method returns a `Response` object which contains a list of `Summary` or `Ref` objects.
+
+These summary of ref objects are contained in a collection usually called `results` (this can vary per endpoint), the results are iterable, each item will be parsed object of the nominated model.
+
+```python
+from gallagher.dto.summary import (
+    ItemSummary,
+)
+
+from gallagher.dto.response import (
+    ItemTypesResponse,
+    ItemsSummaryResponse,
+)
+
+from gallagher.cc.alarms.items import Item
+
+# Get a list of items
+response = await Item.list()
+
+# Print the href to prove we have results
+for item in response.results:
+    print(item.href)
+```
+
 ### Detail
+
+You can fetch a detail of an object by calling the `retrieve` method on the appropriate endpoint. The `retrieve` method requires an `id` for the object and returns a `Detail` object which contains the full set of attributes for the object.
+
+```python
+from gallagher.dto.summary import (
+    ItemSummary,
+)
+
+from gallagher.dto.response import (
+    ItemTypesResponse,
+    ItemsSummaryResponse,
+)
+
+from gallagher.cc.alarms.items import Item
+
+# Get a list of items
+detail_response = await Item.retrieve(399)
+```
+
+!!! note
+
+    The `retrieve` method uses `id` instead of a reference to an object because it's a generic
+    wrapper wants to construct the URL based on the parameter rather than the developer
+    passing in a `href` which could result in the user passing in an `href` to a different object.
 
 ### Search
 
 ### Creating
 
 ### Deletion
+
+### Additional Methods
+
+Many of the endpoints provide additional mutations to interact with the Command Centre. The SDK makes sensible decisions to combine endpoints where it makes sense. For example, the `Alarm` endpoint provides an endpoint to mark an alarm as viewed, additionally with a comment.
+
+```python
+    @classmethod
+    async def mark_as_viewed(
+        cls,
+        alarm: AlarmRef | AlarmSummary | AlarmDetail,
+        comment: Optional[str],
+    ) -> bool:
+```
 
 ## Next and Updates
 

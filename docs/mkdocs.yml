@@ -1,7 +1,10 @@
 site_name: Gallagher Python Toolkit
+site_description: |
+  The official manuals for the Gallagher Python Toolkit.
+copyright: Anomaly Software
 site_url: https://anomaly.github.io/gallagher/
 repo_url: https://github.com/anomaly/gallagher/
-site_author: Dev Mukherjee
+site_author: Anomaly Software
 
 theme:
   name: material
@@ -18,11 +21,16 @@ markdown_extensions:
     - pymdownx.superfences
     - admonition
 
+plugins: 
+  - social
+  - search
+  - mkdocstrings
+
 nav:
   - Introduction: index.md
   - Installation & Usage: installation.md
+  - Python SDK: python-sdk.md
   - SQL and SQLAlchemy: sql.md
   - Command Line Interface: cli.md
   - Terminal User Interface: tui.md 
-  - Python SDK: python-sdk.md
   - Contributor's Manual: design.md

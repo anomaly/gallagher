@@ -1,6 +1,6 @@
 # Gallagher Python Toolkit
 
-> The missing toolkit for extending Gallagher Command Centre
+> The missing developer toolkit for Gallagher Command Centre
 
 [![PyPI version](https://badge.fury.io/py/gallagher.svg)](https://badge.fury.io/py/gallagher)
 [![Python Version](https://img.shields.io/pypi/pyversions/gallagher)](https://pypi.org/project/gallagher/)
@@ -47,7 +47,7 @@ from gallagher.dto.summary import (
     CardholderSummary,
 )
 from gallagher.cc.cardholders import (
-    Cardholder
+    Cardholder,
 )
 
 # Set the API key from the environment

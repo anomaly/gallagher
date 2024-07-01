@@ -24,6 +24,7 @@ from http import HTTPStatus  # Provides constants for HTTP status codes
 
 import httpx
 
+from . import proxy as proxy_address
 from gallagher.exception import UnlicensedFeatureException
 
 from ..dto.utils import (
@@ -218,7 +219,7 @@ class APIEndpoint:
         # be called as part of the bootstrapping process
         from . import api_base
 
-        async with httpx.AsyncClient() as _httpx_async:
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
             response = await _httpx_async.get(
                 api_base,
                 headers=_get_authorization_headers(),
@@ -323,7 +324,7 @@ class APIEndpoint:
         # for each type of object that calls the base function
         params.update(kwargs)
 
-        async with httpx.AsyncClient() as _httpx_async:
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
 
             response = await _httpx_async.get(
                 f"{cls.__config__.endpoint.href}",
@@ -432,7 +433,7 @@ class APIEndpoint:
         :param str url: URL to fetch the data from
         :param AppBaseModel response_class: DTO to be used for list requests
         """
-        async with httpx.AsyncClient() as _httpx_async:
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
 
             try:
 
@@ -470,7 +471,7 @@ class APIEndpoint:
         response_class: AppBaseModel | None = None,
     ):
         """ """
-        async with httpx.AsyncClient() as _httpx_async:
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
 
             try:
 

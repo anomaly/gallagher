@@ -299,7 +299,11 @@ class APIEndpoint:
 
     @classmethod
     async def search(
-        cls, top: int = 100, sort: str = "id", fields: str = "defaults", **kwargs
+        cls,
+        top: int = 100,
+        sort: str = "id",
+        fields: str = "defaults",
+        **kwargs,
     ):
         """Search wrapper for most objects to dynamically search content
 
@@ -470,7 +474,14 @@ class APIEndpoint:
         payload: AppBaseModel | None,
         response_class: AppBaseModel | None = None,
     ):
-        """ """
+        """ Generic POST wrapper with error handling
+
+        Use this internally for all POST requests, this will handle
+        exception handling and configuration of proxies.
+
+        The behaviour is very similar to the _get method, except
+        parsing and sending out a body as part of the request. 
+        """
         async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
 
             try:

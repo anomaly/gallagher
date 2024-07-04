@@ -14,9 +14,42 @@ A big thank you to [Gallagher Security](http://security.gallagher.com) for provi
 - [Gallagher Command Centre](http://security.gallagher.com) central command centre software (hosted on an AWS EC2 instance)
 - [Gallagher Mobile Connect](http://security.gallagher.com) app to unlock the door
 
-## Writing
+## Wiring
 
-## Setup
+Our T15 Multi Tech Reader is connected to the Controller 7000 Single Door. Our setup has a single reader and our wiring is as follows on the controller:
+
+```
+┌───┐
+│ A │  Green and Orange
+│ B │  Brown
+│ - │  Black
+│ + │  Red
+└───┘
+```
+
+> [!NOTE]
+> Since we have the one reader, the orange wire signifies it it to be the terminating reader and hence the green and orange are banded together on the A terminal.
+
+## Command Centre Setup
+
+Before you begin you will require:
+
+- MAC address of the Controller 7000 Single Door (found on the inside of the controller)
+- Serial number of the T15 Multi Tech Reader (found on the back of the reader)
+
+Hardware
+
+Door
+
+Reader
+
+Controller Input
+
+Controller Output
+
+Alarm Zone
+
+Access Group
 
 ## AWS and the Local Setup
 

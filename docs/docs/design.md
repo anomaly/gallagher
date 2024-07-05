@@ -177,8 +177,11 @@ If a command centre does not have a certain capability then the objects are set 
 These wrappers raise the following `Exceptions` when they encounter the corresponding HTTP codes:
 
 - `gallagher.exception.UnlicensedFeatureException` on `HTTPStatus.FORBIDDEN` when an unlicensed endpoint is accessed (see the discovery section for details)
+- `gallagher.exception.NotFoundException`on`HTTPStatus.NOT_FOUND`(GET only) - raised if a HTTP endpoint wasn't found e.g A`Detail` object wasn't found
+- `gallagher.exception.ComingSoonException` - raised if a feature is marked as "coming soon" by Gallagher
+- `gallagher.exception.DeadEndException` - raised if you try and follow a path i.e `next` or `previous` on an endpoint that supports it but no longer has a path forward or back.
 - `gallagher.exception.AuthenticationError` on `HTTPStatus.UNAUTHORIZED` if there are issues with authentication
-- gallagher.exception.NotFoundException`on`HTTPStatus.NOT_FOUND`(GET only) - raised if a HTTP endpoint wasn't found e.g A`Detail` object wasn't found
+- `gallagher.exception.PathFollowNotSupportedError` - raised if you try and call `next` or `previous` on an endpoint that does not support path follow.
 
 ### Designing Endpoint Consumers
 

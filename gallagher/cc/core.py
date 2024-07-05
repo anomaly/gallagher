@@ -506,7 +506,7 @@ class APIEndpoint:
                     raise AuthenticationError()
 
             except httpx.RequestError as e:
-                pass
+                raise (e)
 
     @classmethod
     async def _post(

@@ -9,8 +9,12 @@ CustomerSearch
 from enum import Enum
 
 
-class CustomerSort(Enum):
-    """Sort descriptors for the Customer object"""
+class SearchSortOrder(Enum):
+    """Sort descriptors for search operations.
+    
+    If an endpoint needs to customise the sort order, 
+    it should subclass this Enum and add the additional params.
+    """
 
     ID: str = "id"
     ID_DESC: str = "-id"

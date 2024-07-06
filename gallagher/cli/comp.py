@@ -1,4 +1,4 @@
-""" Cardholder events
+""" Competenacy
 
 
 """

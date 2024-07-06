@@ -24,7 +24,7 @@ from gallagher.cc.alarms import (
 )
 
 app = AsyncTyper(
-    help="list, query, follow, act on alarms in the command centre"
+    help="List, query, follow, act on alarms in the command centre"
 )
 
 

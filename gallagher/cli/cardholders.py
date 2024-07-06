@@ -20,7 +20,7 @@ from gallagher.exception import (
 )
 
 app = AsyncTyper(
-    help="query or manage cardholders"
+    help="List, query or manage or watch changes to cardholders"
 )
 
 

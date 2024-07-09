@@ -59,11 +59,12 @@ class AlarmSummary(
     force_process: OptionalHrefMixin = None
 
     def __rich_repr__(self):
+        from gallagher.cli.const import SEVERITY_COLOURS
         return (
             self.id,
-            f"{self.priority}",
+            f"[{SEVERITY_COLOURS[self.priority]}]{self.priority}",
             self.time.strftime('%c'),
-            self.type,
+            f"[{SEVERITY_COLOURS[self.priority]}]{self.type}",
         )
 
     def __str__(self):

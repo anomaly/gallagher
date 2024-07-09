@@ -170,6 +170,30 @@ async def acknowledge(
 ):
     """mark alarm as viewed, optionally with a comment"""
     console = Console()
+    with console.status(
+        "[magenta] Marking alarm as viewed ...",
+    ) as status:
+        try:
+
+            # Get the alarm
+            console.log("Finding alarm ...")
+            alarm_detail = await Alarms.retrieve(id)
+
+            if not alarm_detail.view:
+                # alarm has already been acknowledged
+                console.log(f'[red]Alarm {alarm_detail.id} has already been viewed[/red]')
+                raise typer.Exit(code=2)
+
+            console.log(
+                f'Marking as viewed {alarm_detail.id} {"with" if message else "[yellow]without[/yellow]"} comment ...')
+
+            await Alarms.mark_as_viewed(alarm_detail, message)
+            console.print("[green]Viewed alarm[/green]")
+
+
+        except NotFoundException as e:
+            console.print(f"[red bold]No alarm with id={id} found")
+            raise typer.Exit(code=1)
 
 
 @app.command("process")
@@ -201,11 +225,10 @@ async def acknowledge(
                 raise typer.Exit(code=2)
 
             console.log(
-                f'Processing {alarm_detail.id} {"with" if message else "[yello]without[/yellow]"} comment ...')
+                f'Processing {alarm_detail.id} {"with" if message else "[yellow]without[/yellow]"} comment ...')
 
             await Alarms.mark_as_acknowledged(alarm_detail, message)
             console.print("[green]Processed alarm[/green]")
-
 
         except NotFoundException as e:
             console.print(f"[red bold]No alarm with id={id} found")

@@ -6,6 +6,7 @@ from ..utils import (
     AppBaseModel,
     IdentityMixin,
     HrefMixin,
+    OptionalHrefMixin,
     from_optional_datetime,
     until_optional_datetime,
 )
@@ -58,7 +59,7 @@ class CardholderCardStatusSummary(
 
 class CardholderCardInvitationSummary(
     AppBaseModel,
-    HrefMixin,
+    OptionalHrefMixin,
 ):
     """ Used by CardholderCardSummary to show status of an invitation
 

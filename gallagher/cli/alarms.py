@@ -103,11 +103,15 @@ async def comment(
         "[magenta] Commenting on alarm ...",
     ) as status:
         try:
+
             console.log("Finding alarm ...")
-            comment_detail = await Alarms.retrieve(id)
+            alarm_detail = await Alarms.retrieve(id)
+
             console.log("Adding comment to history ...")
-            await Alarms.comment(comment_detail, message)
+            await Alarms.comment(alarm_detail, message)
+
             console.print("[green]Comment posted successfully[/green]")
+
         except NotFoundException as e:
             console.print(f"[red bold]No alarm with id={id} found")
             raise typer.Exit(code=1)
@@ -127,6 +131,29 @@ async def acknowledge(
 ):
     """acknowledge an alarm, optionally with a comment"""
     console = Console()
+    with console.status(
+        "[magenta] Commenting on alarm ...",
+    ) as status:
+        try:
+
+            # Get the alarm
+            console.log("Finding alarm ...")
+            alarm_detail = await Alarms.retrieve(id)
+
+            if not alarm_detail.acknowledge:
+                # alarm has already been acknowledged
+                console.log(f'[red]Alarm {alarm_detail.id} has already been acknowledged[/red]')
+                raise typer.Exit(code=2)
+
+            console.log(
+                f'Acknowledging {alarm_detail.id} {"with" if message else "[yellow]without[/yellow]"} comment ...')
+
+            await Alarms.mark_as_acknowledged(alarm_detail, message)
+            console.print("[green]Acknowledged alarm[/green]")
+
+        except NotFoundException as e:
+            console.print(f"[red bold]No alarm with id={id} found")
+            raise typer.Exit(code=1)
 
 
 @app.command("view")
@@ -159,3 +186,27 @@ async def acknowledge(
 ):
     """mark alarm as processed, optionally with a comment"""
     console = Console()
+    with console.status(
+        "[magenta] Commenting on alarm ...",
+    ) as status:
+        try:
+
+            # Get the alarm
+            console.log("Finding alarm ...")
+            alarm_detail = await Alarms.retrieve(id)
+
+            if not alarm_detail.process:
+                # alarm has already been acknowledged
+                console.log(f'[red]Alarm {alarm_detail.id} has already been processed[/red]')
+                raise typer.Exit(code=2)
+
+            console.log(
+                f'Processing {alarm_detail.id} {"with" if message else "[yello]without[/yellow]"} comment ...')
+
+            await Alarms.mark_as_acknowledged(alarm_detail, message)
+            console.print("[green]Processed alarm[/green]")
+
+
+        except NotFoundException as e:
+            console.print(f"[red bold]No alarm with id={id} found")
+            raise typer.Exit(code=1)

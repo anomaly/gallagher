@@ -227,7 +227,7 @@ async def acknowledge(
             console.log(
                 f'Processing {alarm_detail.id} {"with" if message else "[yellow]without[/yellow]"} comment ...')
 
-            await Alarms.mark_as_acknowledged(alarm_detail, message)
+            await Alarms.mark_as_processed(alarm_detail, message)
             console.print("[green]Processed alarm[/green]")
 
         except NotFoundException as e:

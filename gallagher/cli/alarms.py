@@ -128,12 +128,21 @@ async def acknowledge(
             help="comment to add to history",
         ),
     ] = None,
+    yes: Annotated[
+        bool,
+        typer.Option(
+            "-y",
+            "--yes",
+            help="acknowledge without confirmation",
+        )
+     ] = False,
 ):
     """acknowledge an alarm, optionally with a comment"""
     console = Console()
 
     # ask for confirmation if multiple alarms are to be acknowledged
     if len(ids) > 1 and \
+        not yes and \
         not typer.confirm(
             "Are you sure you want to acknowledge multiple alarms?"
         ):
@@ -220,11 +229,20 @@ async def acknowledge(
             help="comment to add to history",
         ),
     ] = None,
+    yes: Annotated[
+        bool,
+        typer.Option(
+            "-y",
+            "--yes",
+            help="acknowledge without confirmation",
+        )
+     ] = False,
 ):
     """mark alarm as processed, optionally with a comment"""
     console = Console()
     # ask for confirmation if multiple alarms are to be acknowledged
     if len(ids) > 1 and \
+        not yes and \
         not typer.confirm(
             "Are you sure you want to process multiple alarms?"
         ):

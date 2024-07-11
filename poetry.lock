@@ -2193,13 +2193,13 @@ rich = ">=12.0.0"
 
 [[package]]
 name = "setuptools"
-version = "70.2.0"
+version = "70.3.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "setuptools-70.2.0-py3-none-any.whl", hash = "sha256:b8b8060bb426838fbe942479c90296ce976249451118ef566a5a0b7d8b78fb05"},
-    {file = "setuptools-70.2.0.tar.gz", hash = "sha256:bd63e505105011b25c3c11f753f7e3b8465ea739efddaccef8f0efac2137bac1"},
+    {file = "setuptools-70.3.0-py3-none-any.whl", hash = "sha256:fe384da74336c398e0d956d1cae0669bc02eed936cdb1d49b57de1990dc11ffc"},
+    {file = "setuptools-70.3.0.tar.gz", hash = "sha256:f171bab1dfbc86b132997f26a119f6056a57950d058587841a0082e8830f9dc5"},
 ]
 
 [package.extras]
@@ -2219,13 +2219,13 @@ files = [
 
 [[package]]
 name = "shillelagh"
-version = "1.2.19"
+version = "1.2.20"
 description = "Making it easy to query APIs via SQL"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "shillelagh-1.2.19-py2.py3-none-any.whl", hash = "sha256:69765ad4f53ab3335c3400e9821ff087cd0fdab860556111c554b2ddae0ac7c6"},
-    {file = "shillelagh-1.2.19.tar.gz", hash = "sha256:3218ddbe9aabf9248eb3171e7a6a677222c475797c59bca6c57b066a506db569"},
+    {file = "shillelagh-1.2.20-py2.py3-none-any.whl", hash = "sha256:6cc7e0f1edf861506a55136134f016e59d3eefa22d40ee744fd7176b3207df64"},
+    {file = "shillelagh-1.2.20.tar.gz", hash = "sha256:40041641a60536145f1143ce88d90188ad2953093198f3ac420ce56d97ac0fbb"},
 ]
 
 [package.dependencies]
@@ -2251,7 +2251,7 @@ htmltableapi = ["beautifulsoup4 (>=4.11.1)", "html5lib (>=1.1)", "pandas (>=1.2.
 pandasmemory = ["pandas (>=1.2.2)"]
 s3selectapi = ["boto3 (>=1.24.28)"]
 systemapi = ["psutil (>=5.8.0)"]
-testing = ["PyYAML (>=5.4)", "appdirs (>=1.4.4)", "beautifulsoup4 (>=4.11.1)", "boto3 (>=1.24.28)", "codespell (>=2.1.0)", "defusedxml (>=0.7.1)", "dill (>=0.3.6)", "freezegun (>=1.1.0)", "google-auth (>=1.23.0)", "holidays (>=0.23)", "html5lib (>=1.1)", "pandas (>=1.2.2)", "pip-tools (>=6.4.0)", "pre-commit (>=2.13.0)", "prison (>=0.2.1)", "prompt-toolkit (>=3)", "psutil (>=5.8.0)", "pyfakefs (>=4.3.3)", "pygments (>=2.8)", "pylint (>=2.16.2)", "pytest (>=7.2.0)", "pytest-cov (>=2.11.1)", "pytest-integration (==0.2.2)", "pytest-mock (>=3.5.1)", "python-jsonpath (>=0.10.3)", "requests-mock (>=1.8.0)", "tabulate (>=0.8.9)", "yarl (>=1.8.1)"]
+testing = ["PyYAML (>=5.4)", "appdirs (>=1.4.4)", "beautifulsoup4 (>=4.11.1)", "boto3 (>=1.24.28)", "codespell (>=2.1.0)", "defusedxml (>=0.7.1)", "dill (>=0.3.6)", "freezegun (>=1.1.0)", "google-auth (>=1.23.0)", "holidays (>=0.23)", "html5lib (>=1.1)", "pandas (>=1.2.2)", "pip-compile-multi (>=2.6.3)", "pip-tools (>=6.4.0)", "pre-commit (>=2.13.0)", "prison (>=0.2.1)", "prompt-toolkit (>=3)", "psutil (>=5.8.0)", "pyfakefs (>=4.3.3)", "pygments (>=2.8)", "pylint (>=2.16.2)", "pytest (>=7.2.0)", "pytest-cov (>=2.11.1)", "pytest-integration (==0.2.2)", "pytest-mock (>=3.5.1)", "python-jsonpath (>=0.10.3)", "requests-mock (>=1.8.0)", "ruff (>=0.3.7)", "tabulate (>=0.8.9)", "yarl (>=1.8.1)"]
 
 [[package]]
 name = "six"
@@ -2378,13 +2378,13 @@ yaml = ["PyYAML (>=5.1)", "more-itertools"]
 
 [[package]]
 name = "textual"
-version = "0.71.0"
+version = "0.72.0"
 description = "Modern Text User Interface framework"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "textual-0.71.0-py3-none-any.whl", hash = "sha256:60500cc63ffd98a4aff8679976a1530d5e99a881e13bb040d26558a2c45f49d8"},
-    {file = "textual-0.71.0.tar.gz", hash = "sha256:a38a3bd7e450ed173b59ab1c93a3aa8174d95bc5c79647f220a50243236ce70a"},
+    {file = "textual-0.72.0-py3-none-any.whl", hash = "sha256:a9886eb96bd6391b8795244d2b8fe592204556c42264ea7513a1211584e17366"},
+    {file = "textual-0.72.0.tar.gz", hash = "sha256:14174ce8d49016a85aa6c0669d0881b5419e98cf46d429f263314295409ed262"},
 ]
 
 [package.dependencies]
@@ -2689,4 +2689,4 @@ tui = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1dceb6b96ba081a04c4c445f55539e8b733ccb51ef89d70b21228f37221efe4c"
+content-hash = "22f6110a2cdc778f42817b783974c2ac696eb9d6fe3c1e55cc9b36d4ec76cf3a"

@@ -131,10 +131,18 @@ async def acknowledge(
 ):
     """acknowledge an alarm, optionally with a comment"""
     console = Console()
+
+    # ask for confirmation if multiple alarms are to be acknowledged
+    if len(ids) > 1 and \
+        not typer.confirm(
+            "Are you sure you want to acknowledge multiple alarms?"
+        ):
+            raise typer.Abort()
+
     with console.status(
-        "[magenta] Commenting on alarm ...",
+        "[magenta] Acknowledging alarms ...",
     ) as status:
-        
+                
         for id in ids:
             try:
 
@@ -176,7 +184,7 @@ async def acknowledge(
     """mark alarm as viewed, optionally with a comment"""
     console = Console()
     with console.status(
-        "[magenta] Marking alarm as viewed ...",
+        "[magenta] Attempting to view alarm ...",
     ) as status:
         try:
 
@@ -215,8 +223,15 @@ async def acknowledge(
 ):
     """mark alarm as processed, optionally with a comment"""
     console = Console()
+    # ask for confirmation if multiple alarms are to be acknowledged
+    if len(ids) > 1 and \
+        not typer.confirm(
+            "Are you sure you want to process multiple alarms?"
+        ):
+            raise typer.Abort()
+
     with console.status(
-        "[magenta] Commenting on alarm ...",
+        "[magenta] Processing alarms ...",
     ) as status:
         
         for id in ids:

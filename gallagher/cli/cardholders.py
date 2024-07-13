@@ -64,7 +64,7 @@ async def find(
         typer.Argument(help="First or last name to search for")
     ],
     sort: Annotated[
-        SearchSortOrder,
+        Optional[SearchSortOrder],
         typer.Option(help='Sort order')
     ] = SearchSortOrder.NAME,
     description: Annotated[

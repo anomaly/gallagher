@@ -42,9 +42,7 @@ class GallagherConsole(App):
 
     # Decorative constants
     TITLE = "Gallagher"
-    SUB_TITLE = "power tools for the console"
-
-    # def on_mount(self) -> None:
+    SUB_TITLE = "power tools for gallagher"
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""

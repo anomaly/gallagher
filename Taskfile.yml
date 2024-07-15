@@ -79,7 +79,13 @@ tasks:
 
       by no suffix is provided CC returns a list of hateoas
       compliant endpoints.
+    cmds:
+      - |
+        http get \
+        https://commandcentre-api-au.security.gallagher.cloud/api/{{.CLI_ARGS}} \
+        "Authorization: GGL-API-KEY $GACC_API_KEY"
   debug:delete:
+    prompt: "Are you sure you want to delete {{.CLI_ARGS}}??"
     desc: use httpie to delete resource from CC
     summary: |
       runs a httpie get against the gallagher aus gateway
@@ -90,7 +96,7 @@ tasks:
       along with any parameters.
     cmds:
       - |
-        http get \
+        http delete \
         https://commandcentre-api-au.security.gallagher.cloud/api/{{.CLI_ARGS}} \
         "Authorization: GGL-API-KEY $GACC_API_KEY"
 

@@ -300,3 +300,23 @@ class CardholderSummaryResponse(
 ## TUI
 
 ## SQL
+
+## Maintainers Notes
+
+This section primarily contains notes for the managers of the project, it covers topics like publication of releases.
+
+Much of this is automated via Github actions, these actions depend on the following secrets that have been set at a project level (and can only be updated by the project owners):
+
+- `PYPI_API_KEY` - the API key for PyPI that is used to publish the package
+- `GACC_API_KEY` - the API key for the Gallagher Command Centre that is used to run tests against.
+
+### Publishing a Release
+
+The action `.github/workflows/publish-package.yml` is responsible for publishing a release. This is triggered by a tag being pushed to the repository. The tag must be in the format `vX.Y.Z` where `X`, `Y` and `Z` are integers.
+
+The `release` action will run the set of tests, and if they pass, it will publish the package to PyPI.
+
+> [!IMPORTANT]
+> In most instances you should not have to publish a release by hand. If there is ever a need to do that, we recommend that appropriate notes be left against the release.
+
+### Writing Release Notes

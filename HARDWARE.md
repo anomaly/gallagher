@@ -32,7 +32,17 @@ Our T15 Multi Tech Reader is connected to the Controller 7000 Single Door. Our s
 
 ## Command Centre Setup
 
-Before you begin you will require:
+> [!IMPORTANT]\
+> You should either refer to the Gallagher Documentation for detailed information on configuring the Command Centre. You also require a license from Gallagher for this feature to work.
+> If you are unsure, please contact your Gallagher representative as misconfiguration can lead to security vulnerabilities.
+
+Your checklist, before you proceed to using the REST features:
+
+- You are running Command Centre version `8.60` or higher, older versions predate the gateway so cannot support it
+- The gateway enabled at the system level
+- If it is, has the gateway been enabled for your specific API key
+
+You will also require:
 
 - MAC address of the Controller 7000 Single Door (found on the inside of the controller)
 - Serial number of the T15 Multi Tech Reader (found on the back of the reader)
@@ -50,6 +60,32 @@ Controller Output
 Alarm Zone
 
 Access Group
+
+### Enabling the REST API Cloud Gateway
+
+All of the above requires you to have an understanding of the Gallagher Command Centre and how to configure it.
+
+To check the system level gateway status:
+
+- Open the Command Centre Configuration Client
+- From the `Configure` menu, select `Services and Workstations`
+- Find the `Command Centre Cloud` item and double-click it
+- Switch to the `Configuration` page, it should look something like this:
+
+![Command Centre Cloud Configuration](https://raw.githubusercontent.com/anomaly/gallagher/master/assets/gallagher-command-centre-properties.png)
+
+To check your API key:
+
+- Open the Command Centre Configuration Client
+- From the `Configure` menu, select `Services and Workstations`
+- Find the item that represents your REST Client
+- Switch to the `Connections` page, it should look something like this
+
+![Command Centre Cloud Connections](https://raw.githubusercontent.com/anomaly/gallagher/master/assets/gallagher-rest-properties.png)
+
+> [!CAUTION]\
+> All operations require the use of the API key. Never distribute your API key or store it somewhere that is not secure.
+> For security it's recommended you read the API key from an environment variable.
 
 ## AWS and the Local Setup
 

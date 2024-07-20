@@ -327,45 +327,9 @@ In this example the `AppGroupRef` has a `name` attribute which is not present in
 
 > Please see the schema section for naming conventions for `schema` classes
 
-## Configuring the Command Centre
-
-All of the above requires you to have an understanding of the Gallagher Command Centre and how to configure it.
-
-> [!IMPORTANT]\
-> You should either refer to the Gallagher Documentation for detailed information on configuring the Command Centre. You also require a license from Gallagher for this feature to work.
-> If you are unsure, please contact your Gallagher representative as misconfiguration can lead to security vulnerabilities.
-
-Your checklist, before you proceed to using the REST features:
-
-- You are running Command Centre version `8.60` or higher, older versions predate the gateway so cannot support it
-- The gateway enabled at the system level
-- If it is, has the gateway been enabled for your specific API key
-
-To check the system level gateway status:
-
-- Open the Command Centre Configuration Client
-- From the `Configure` menu, select `Services and Workstations`
-- Find the `Command Centre Cloud` item and double-click it
-- Switch to the `Configuration` page, it should look something like this:
-
-![Command Centre Cloud Configuration](https://raw.githubusercontent.com/anomaly/gallagher/master/assets/gallagher-command-centre-properties.png)
-
-To check your API key:
-
-- Open the Command Centre Configuration Client
-- From the `Configure` menu, select `Services and Workstations`
-- Find the item that represents your REST Client
-- Switch to the `Connections` page, it should look something like this
-
-![Command Centre Cloud Connections](https://raw.githubusercontent.com/anomaly/gallagher/master/assets/gallagher-rest-properties.png)
-
-> [!CAUTION]\
-> All operations require the use of the API key. Never distribute your API key or store it somewhere that is not secure.
-> For security it's recommended you read the API key from an environment variable.
-
 ## Resources
 
-The following are resources that were discoverd during the design and development of this library.
+The following are resources that were discoverd during the design and development of these tools. Not all of them are in use by the toolkit, they were discovered as the library evolved.
 
 ### Python Libraries
 

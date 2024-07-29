@@ -2,6 +2,8 @@ from typing import Optional
 
 from datetime import datetime
 
+from pydantic import EmailStr
+
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
@@ -67,7 +69,7 @@ class CardholderCardInvitationSummary(
     email and then text messages for mobile credentials to activate
     the app.
     """
-    email: str
+    email: Optional[EmailStr] = None
     mobile: Optional[str] = None
     single_factor_only: bool = False
     status: str

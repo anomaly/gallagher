@@ -30,7 +30,12 @@ app = AsyncTyper(
 
 @app.command("list")
 async def list():
-    """list current alarms"""
+    """Lists current alarms
+    
+    Provides a summary of alarms in the system, colour coded by severity,\n
+    use this to get an overview of your current alarms and use their IDs\n
+    in subsequent operations\n
+    """
 
     console = Console()
 
@@ -52,11 +57,10 @@ async def list():
 async def get(
     id: Annotated[int, typer.Argument(help="alarm id")],
 ):
-    """get alarm details
+    """Get details of an alarm by ID
     
-    These are details of the alarm that are given by the command centre\n
-    - Item one\n
-    - Items two
+    Fetches details of am alarm by the identifier and presents\n
+    the hrefs as clickable links.
     """
     console = Console()
     with console.status("[bold green]Fetching alarm...", spinner="dots"):
@@ -72,14 +76,19 @@ async def get(
 async def history(
     id: Annotated[int, typer.Argument(help="alarm id")],
 ):
-    """show history of an alarm"""
+    """Show history of an alarm
+    
+    """
     console = Console()
 
     raise NotImplementedError("Not implemented")
 
 @app.command("tail")
 async def tail():
-    """watch for alarm updates"""
+    """Watch for alarm updates
+    
+    Keeps following an alarm for updates with you having to 
+    """
     console = Console()
 
     raise NotImplementedError("Not implemented")
@@ -97,7 +106,11 @@ async def comment(
         ),
     ],
 ):
-    """comment on an alarm"""
+    """Comment on an alarm
+    
+    Leave a comment on a particular alarm, note that \n
+    this does not mark the alarm as acknowledged or processed\n
+    """
     console = Console()
     with console.status(
         "[magenta] Commenting on alarm ...",
@@ -137,7 +150,11 @@ async def acknowledge(
         )
      ] = False,
 ):
-    """acknowledge an alarm, optionally with a comment"""
+    """Acknowledge alarms, optionally with a comment
+    
+    Acknowledge one or more alarms, optionally with a comment\n
+    use this to bulk process alarms, handy for automation.
+    """
     console = Console()
 
     # ask for confirmation if multiple alarms are to be acknowledged
@@ -190,7 +207,11 @@ async def acknowledge(
         ),
     ] = None,
 ):
-    """mark alarm as viewed, optionally with a comment"""
+    """Mark one or more alarm as viewed, optionally with a comment
+    
+    Use this to mark an alarm as viewed, this is useful when you\n
+    want to keep track of alarms that have been seen by the team.
+    """
     console = Console()
     with console.status(
         "[magenta] Attempting to view alarm ...",
@@ -219,7 +240,7 @@ async def acknowledge(
 
 
 @app.command("process")
-async def acknowledge(
+async def process(
     ids: Annotated[List[int], typer.Argument(help="alarm id")],
     message: Annotated[
         Optional[str],
@@ -238,7 +259,11 @@ async def acknowledge(
         )
      ] = False,
 ):
-    """mark alarm as processed, optionally with a comment"""
+    """Mark one or more alarms as processed, optionally with a comment
+
+    Use this to mark an alarm as processed, this is useful when you\n
+    want to keep track of alarms that have been actioned by the team.
+    """
     console = Console()
     # ask for confirmation if multiple alarms are to be acknowledged
     if len(ids) > 1 and \

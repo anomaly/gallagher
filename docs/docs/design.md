@@ -320,3 +320,9 @@ The `release` action will run the set of tests, and if they pass, it will publis
 > In most instances you should not have to publish a release by hand. If there is ever a need to do that, we recommend that appropriate notes be left against the release.
 
 ### Writing Release Notes
+
+Features
+
+Improvements
+
+Bug Fixes

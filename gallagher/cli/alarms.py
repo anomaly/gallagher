@@ -179,12 +179,15 @@ async def acknowledge(
                 if not alarm_detail.acknowledge:
                     # alarm has already been acknowledged
                     console.log(
-                        f'[red]Alarm {alarm_detail.id} has already been acknowledged[/red]'
+                        f'[red]Alarm {alarm_detail.id} has already '
+                        f'been acknowledged[/red]'
                     )
                     continue
 
                 console.log(
-                    f'Acknowledging {alarm_detail.id} {"with" if message else "[yellow]without[/yellow]"} comment ...'
+                    f'Acknowledging {alarm_detail.id} '
+                    f'{"with" if message else "[yellow]without[/yellow]"} '
+                    f'comment ...'
                 )
 
                 await Alarms.mark_as_acknowledged(alarm_detail, message)
@@ -224,11 +227,17 @@ async def acknowledge(
 
             if not alarm_detail.view:
                 # alarm has already been acknowledged
-                console.log(f'[red]Alarm {alarm_detail.id} has already been viewed[/red]')
+                console.log(
+                    f'[red]Alarm {alarm_detail.id} has already '
+                    f'been viewed[/red]'
+                )
                 raise typer.Exit(code=2)
 
             console.log(
-                f'Marking as viewed {alarm_detail.id} {"with" if message else "[yellow]without[/yellow]"} comment ...')
+                f'Marking as viewed {alarm_detail.id} '
+                f'{"with" if message else "[yellow]without[/yellow]"} '
+                f'comment ...'
+            )
 
             await Alarms.mark_as_viewed(alarm_detail, message)
             console.print("[green]Viewed alarm[/green]")
@@ -287,12 +296,15 @@ async def process(
                 if not alarm_detail.process:
                     # alarm has already been acknowledged
                     console.log(
-                        f'[red]Alarm {alarm_detail.id} has already been processed[/red]'
+                        f'[red]Alarm {alarm_detail.id} has already '
+                        f'been processed[/red]'
                     )
                     continue
 
                 console.log(
-                    f'Processing {alarm_detail.id} {"with" if message else "[yellow]without[/yellow]"} comment ...'
+                    f'Processing {alarm_detail.id} '
+                    f'{"with" if message else "[yellow]without[/yellow]"} '
+                    f'comment ...'
                 )
 
                 await Alarms.mark_as_processed(alarm_detail, message)

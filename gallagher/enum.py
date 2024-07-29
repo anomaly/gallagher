@@ -9,7 +9,7 @@ CustomerSearch
 from enum import Enum
 
 
-class SearchSortOrder(Enum):
+class SearchSortOrder(str, Enum):
     """Sort descriptors for search operations.
     
     If an endpoint needs to customise the sort order, 

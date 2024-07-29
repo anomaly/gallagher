@@ -116,7 +116,6 @@ async def comment(
         "[magenta] Commenting on alarm ...",
     ) as status:
         try:
-
             console.log("Finding alarm ...")
             alarm_detail = await Alarms.retrieve(id)
 
@@ -171,7 +170,6 @@ async def acknowledge(
                 
         for id in ids:
             try:
-
                 # Get the alarm
                 console.log("Finding alarm ...")
                 alarm_detail = await Alarms.retrieve(id)
@@ -220,7 +218,6 @@ async def acknowledge(
         "[magenta] Attempting to view alarm ...",
     ) as status:
         try:
-
             # Get the alarm
             console.log("Finding alarm ...")
             alarm_detail = await Alarms.retrieve(id)
@@ -287,8 +284,8 @@ async def process(
     ) as status:
         
         for id in ids:
-            try:
 
+            try:
                 # Get the alarm
                 console.log("Finding alarm ...")
                 alarm_detail = await Alarms.retrieve(id)

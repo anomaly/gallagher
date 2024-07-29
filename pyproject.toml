@@ -27,7 +27,7 @@ tui = ["textual"]
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.27.0"
-pydantic = "^2.7.1"
+pydantic = {version = "^2.8.2", extras = ["email"]}
 typing-extensions = "^4.11.0"
 annotated-types = "^0.7.0"
 certifi = "^2024.2.2"
@@ -64,7 +64,7 @@ rich = "^13.7.1"
 
 
 [tool.poetry.group.tui.dependencies]
-textual = "^0.73.0"
+textual = "^0.74.0"
 textual-dev = "^1.5.1"
 
 

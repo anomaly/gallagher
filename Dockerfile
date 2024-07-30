@@ -33,9 +33,23 @@ RUN pip3 install poetry
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-root
 
+# Build and install the package
+COPY gallagher gallagher
+# README is reference by the package
+COPY README.md README.md
+RUN poetry build
+
+# Install the package
+RUN pip install dist/*.whl
+
+# Remove the source
+RUN rm -rf gallagher
+RUN rm -rf dist
+RUN rm README.md
+
 # Copy the files in the src directory which is the app package
 # and the dependency matrix dedescribed by pyproject.toml
-WORKDIR /opt/${PROJ_NAME}
+WORKDIR /opt/gallagher
 
 # Run the CLI
 ENTRYPOINT [ "gala" ]

@@ -2,26 +2,12 @@
 FROM python:3.12-slim-bookworm  
 
 # Install system packages required by Wagtail and Django.
-RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
-    build-essential \
-    libpq-dev \
-    postgresql-client \
-    curl \
-    libjpeg62-turbo-dev \
-    zlib1g-dev \
-    libwebp-dev \
-    libpango-1.0-0 \
-    libpangoft2-1.0-0 \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update --yes --quiet 
+RUN apt-get install --yes --quiet --no-install-recommends build-essential
+RUN rm -rf /var/lib/apt/lists/*
 
-
-# Install task from their servers, not this requires curl
-# so you must only have this tkas post the apt updates
-RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" \
-    -- -d -b /usr/local/bin
-
+# Copy poetry files and get ready to install package
 WORKDIR /opt
-COPY Taskfile.yml Taskfile.yml
 COPY poetry.lock poetry.lock
 COPY pyproject.toml pyproject.toml
 
@@ -40,7 +26,7 @@ COPY README.md README.md
 RUN poetry build
 
 # Install the package
-RUN pip install dist/*.whl
+RUN pip3 install dist/*.whl
 
 # Remove the source
 RUN rm -rf gallagher

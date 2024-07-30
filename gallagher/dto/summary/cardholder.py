@@ -2,10 +2,13 @@ from typing import Optional
 
 from datetime import datetime
 
+from pydantic import EmailStr
+
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
     HrefMixin,
+    OptionalHrefMixin,
     from_optional_datetime,
     until_optional_datetime,
 )
@@ -58,7 +61,7 @@ class CardholderCardStatusSummary(
 
 class CardholderCardInvitationSummary(
     AppBaseModel,
-    HrefMixin,
+    OptionalHrefMixin,
 ):
     """ Used by CardholderCardSummary to show status of an invitation
 
@@ -66,7 +69,7 @@ class CardholderCardInvitationSummary(
     email and then text messages for mobile credentials to activate
     the app.
     """
-    email: str
+    email: Optional[EmailStr] = None
     mobile: Optional[str] = None
     single_factor_only: bool = False
     status: str

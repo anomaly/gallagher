@@ -31,11 +31,6 @@ class Cardholder(APIEndpoint):
             dto_retrieve=CardholderDetail,
         )
 
-    @classmethod
-    async def search(cls, name: str, sort: str = "id", top: int = 100):
-        pass
-
-
 class PdfDefinition(APIEndpoint):
     """PDF Definitions provide a list of support PDF definitions for the instance.
 
@@ -52,11 +47,6 @@ class PdfDefinition(APIEndpoint):
             dto_list=PdfResponse,
             dto_retrieve=PdfDetail,
         )
-
-    @classmethod
-    async def search(cls, name: str, sort: str = "id", top: int = 100):
-        pass
-
 
 
 __shillelagh__ = (

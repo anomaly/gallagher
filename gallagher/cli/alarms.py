@@ -4,7 +4,7 @@ Sub commands to interact with the alarms data
 
 """
 
-from typing import Optional
+from typing import Optional, List
 from typing_extensions import Annotated
 
 import typer
@@ -24,13 +24,18 @@ from gallagher.cc.alarms import (
 )
 
 app = AsyncTyper(
-    help="list, query, follow, act on alarms in the command centre"
+    help="List, query, follow, act on alarms in the command centre"
 )
 
 
 @app.command("list")
 async def list():
-    """list current alarms"""
+    """Lists current alarms
+    
+    Provides a summary of alarms in the system, colour coded by severity,\n
+    use this to get an overview of your current alarms and use their IDs\n
+    in subsequent operations\n
+    """
 
     console = Console()
 
@@ -52,11 +57,10 @@ async def list():
 async def get(
     id: Annotated[int, typer.Argument(help="alarm id")],
 ):
-    """get alarm details
+    """Get details of an alarm by ID
     
-    These are details of the alarm that are given by the command centre\n
-    - Item one\n
-    - Items two
+    Fetches details of am alarm by the identifier and presents\n
+    the hrefs as clickable links.
     """
     console = Console()
     with console.status("[bold green]Fetching alarm...", spinner="dots"):
@@ -72,14 +76,19 @@ async def get(
 async def history(
     id: Annotated[int, typer.Argument(help="alarm id")],
 ):
-    """show history of an alarm"""
+    """Show history of an alarm
+    
+    """
     console = Console()
 
     raise NotImplementedError("Not implemented")
 
 @app.command("tail")
 async def tail():
-    """watch for alarm updates"""
+    """Watch for alarm updates
+    
+    Keeps following an alarm for updates with you having to 
+    """
     console = Console()
 
     raise NotImplementedError("Not implemented")
@@ -97,17 +106,24 @@ async def comment(
         ),
     ],
 ):
-    """comment on an alarm"""
+    """Comment on an alarm
+    
+    Leave a comment on a particular alarm, note that \n
+    this does not mark the alarm as acknowledged or processed\n
+    """
     console = Console()
     with console.status(
         "[magenta] Commenting on alarm ...",
     ) as status:
         try:
             console.log("Finding alarm ...")
-            comment_detail = await Alarms.retrieve(id)
+            alarm_detail = await Alarms.retrieve(id)
+
             console.log("Adding comment to history ...")
-            await Alarms.comment(comment_detail, message)
+            await Alarms.comment(alarm_detail, message)
+
             console.print("[green]Comment posted successfully[/green]")
+
         except NotFoundException as e:
             console.print(f"[red bold]No alarm with id={id} found")
             raise typer.Exit(code=1)
@@ -115,7 +131,7 @@ async def comment(
 
 @app.command("ack")
 async def acknowledge(
-    id: Annotated[int, typer.Argument(help="alarm id")],
+    ids: Annotated[List[int], typer.Argument(help="alarm id")],
     message: Annotated[
         Optional[str],
         typer.Option(
@@ -124,9 +140,60 @@ async def acknowledge(
             help="comment to add to history",
         ),
     ] = None,
+    yes: Annotated[
+        bool,
+        typer.Option(
+            "-y",
+            "--yes",
+            help="acknowledge without confirmation",
+        )
+     ] = False,
 ):
-    """acknowledge an alarm, optionally with a comment"""
+    """Acknowledge alarms, optionally with a comment
+    
+    Acknowledge one or more alarms, optionally with a comment\n
+    use this to bulk process alarms, handy for automation.
+    """
     console = Console()
+
+    # ask for confirmation if multiple alarms are to be acknowledged
+    if len(ids) > 1 and \
+        not yes and \
+        not typer.confirm(
+            "Are you sure you want to acknowledge multiple alarms?"
+        ):
+            raise typer.Abort()
+
+    with console.status(
+        "[magenta] Acknowledging alarms ...",
+    ) as status:
+                
+        for id in ids:
+            try:
+                # Get the alarm
+                console.log("Finding alarm ...")
+                alarm_detail = await Alarms.retrieve(id)
+
+                if not alarm_detail.acknowledge:
+                    # alarm has already been acknowledged
+                    console.log(
+                        f'[red]Alarm {alarm_detail.id} has already '
+                        f'been acknowledged[/red]'
+                    )
+                    continue
+
+                console.log(
+                    f'Acknowledging {alarm_detail.id} '
+                    f'{"with" if message else "[yellow]without[/yellow]"} '
+                    f'comment ...'
+                )
+
+                await Alarms.mark_as_acknowledged(alarm_detail, message)
+                console.print("[green]Acknowledged alarm[/green]")
+
+            except NotFoundException as e:
+                console.print(f"[red bold]No alarm with id={id} found")
+                raise typer.Exit(code=1)
 
 
 @app.command("view")
@@ -141,13 +208,46 @@ async def acknowledge(
         ),
     ] = None,
 ):
-    """mark alarm as viewed, optionally with a comment"""
+    """Mark one or more alarm as viewed, optionally with a comment
+    
+    Use this to mark an alarm as viewed, this is useful when you\n
+    want to keep track of alarms that have been seen by the team.
+    """
     console = Console()
+    with console.status(
+        "[magenta] Attempting to view alarm ...",
+    ) as status:
+        try:
+            # Get the alarm
+            console.log("Finding alarm ...")
+            alarm_detail = await Alarms.retrieve(id)
+
+            if not alarm_detail.view:
+                # alarm has already been acknowledged
+                console.log(
+                    f'[red]Alarm {alarm_detail.id} has already '
+                    f'been viewed[/red]'
+                )
+                raise typer.Exit(code=2)
+
+            console.log(
+                f'Marking as viewed {alarm_detail.id} '
+                f'{"with" if message else "[yellow]without[/yellow]"} '
+                f'comment ...'
+            )
+
+            await Alarms.mark_as_viewed(alarm_detail, message)
+            console.print("[green]Viewed alarm[/green]")
+
+
+        except NotFoundException as e:
+            console.print(f"[red bold]No alarm with id={id} found")
+            raise typer.Exit(code=1)
 
 
 @app.command("process")
-async def acknowledge(
-    id: Annotated[int, typer.Argument(help="alarm id")],
+async def process(
+    ids: Annotated[List[int], typer.Argument(help="alarm id")],
     message: Annotated[
         Optional[str],
         typer.Option(
@@ -156,6 +256,57 @@ async def acknowledge(
             help="comment to add to history",
         ),
     ] = None,
+    yes: Annotated[
+        bool,
+        typer.Option(
+            "-y",
+            "--yes",
+            help="acknowledge without confirmation",
+        )
+     ] = False,
 ):
-    """mark alarm as processed, optionally with a comment"""
+    """Mark one or more alarms as processed, optionally with a comment
+
+    Use this to mark an alarm as processed, this is useful when you\n
+    want to keep track of alarms that have been actioned by the team.
+    """
     console = Console()
+    # ask for confirmation if multiple alarms are to be acknowledged
+    if len(ids) > 1 and \
+        not yes and \
+        not typer.confirm(
+            "Are you sure you want to process multiple alarms?"
+        ):
+            raise typer.Abort()
+
+    with console.status(
+        "[magenta] Processing alarms ...",
+    ) as status:
+        
+        for id in ids:
+
+            try:
+                # Get the alarm
+                console.log("Finding alarm ...")
+                alarm_detail = await Alarms.retrieve(id)
+
+                if not alarm_detail.process:
+                    # alarm has already been acknowledged
+                    console.log(
+                        f'[red]Alarm {alarm_detail.id} has already '
+                        f'been processed[/red]'
+                    )
+                    continue
+
+                console.log(
+                    f'Processing {alarm_detail.id} '
+                    f'{"with" if message else "[yellow]without[/yellow]"} '
+                    f'comment ...'
+                )
+
+                await Alarms.mark_as_processed(alarm_detail, message)
+                console.print("[green]Processed alarm[/green]")
+
+            except NotFoundException as e:
+                console.print(f"[red bold]No alarm with id={id} found")
+                raise typer.Exit(code=1)

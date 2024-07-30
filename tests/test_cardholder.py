@@ -2,6 +2,7 @@
 
 """
 
+import random
 import pytest
 
 from gallagher.dto.detail import (
@@ -32,6 +33,22 @@ async def test_cardholder_list(cardholder_summary: CardholderSummaryResponse):
     assert type(cardholder_summary) is CardholderSummaryResponse
     assert type(cardholder_summary.results) is list
     assert len(cardholder_summary.results) > 0
+
+
+async def test_cardholder_search(cardholder_summary: CardholderSummaryResponse):
+    """Test for the cardholder search"""
+
+    # Get a random cardholder in the list
+    cardholder = random.choice(cardholder_summary.results)
+
+    # Search for the cardholder
+    search_results = await Cardholder.search(
+        name=cardholder.first_name,
+    )
+
+    # We should fine at least one cardholder with the same name
+    assert type(search_results) is CardholderSummaryResponse
+    assert len(search_results.results) > 0
 
 
 async def test_cardholder_detail(cardholder_summary: CardholderSummaryResponse):

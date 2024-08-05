@@ -20,6 +20,7 @@ from .cardholders import app as cardholders_app
 from .events import app as events_app
 from .item import app as items_app
 from .azone import app as azone_app
+from .agroup import app as agroup_app
 from .day import app as day_app
 from .door import app as door_app
 from .elevator import app as elevator_app
@@ -60,7 +61,8 @@ app.add_typer(divisions_app, name="div")
 app.add_typer(cardholders_app, name="ch")
 app.add_typer(events_app, name="event")
 app.add_typer(items_app, name="item")
-app.add_typer(azone_app, name="azone")
+app.add_typer(azone_app, name="az")
+app.add_typer(agroup_app, name="ag")
 app.add_typer(day_app, name="day")
 app.add_typer(door_app, name="door")
 app.add_typer(elevator_app, name="elevator")

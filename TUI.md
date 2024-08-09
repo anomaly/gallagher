@@ -10,6 +10,8 @@ Think of it as the Terminal GUI equivalent of what the command line tool provide
 
 Command Centre has the View, Report and Configure style interfaces (that we should not mimic).
 
+## Proposed User Experience
+
 ## Dashboard
 
 ## Cardholder management

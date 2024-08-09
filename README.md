@@ -352,4 +352,4 @@ Distributed under the MIT License except Artwork and Branding assets.
 
 - [Matthew Skiles](https://matthewskiles.com) for the beautiful logo for the project.
 - [Orion Edwards](https://github.com/borland) for all his support on getting @devraj started with the Gallagher API.
-- [Mick Lambert](https://www.linkedin.com/in/michael-lambert-au/), [Tim Harris](https://www.linkedin.com/in/timharris01/), [Andrew Donkin](https://github.com/andrewdonkin) from the Gallagher team for all their support.
+- [Mick Lambert](https://www.linkedin.com/in/michael-lambert-au/), [Tim Harris](https://www.linkedin.com/in/timharris01/), [Andrew Donkin](https://github.com/andrewdonkin), [Mike Margrain](https://www.linkedin.com/in/mike-margrain-b914381a/), [Nathan Matera](https://www.linkedin.com/in/nathan-matera-0a30b6240/) from the Gallagher team for all their support.

@@ -6,4 +6,4 @@
 from .utils import AsyncTyper
 
 
-app = AsyncTyper(help="query command centre events")
+app = AsyncTyper(help="Events can queried")

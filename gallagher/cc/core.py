@@ -15,6 +15,8 @@ the bootstrapping process.
 from typing import (
     Optional,
     Tuple,
+    Any,
+    List,
 )
 
 from datetime import datetime
@@ -24,6 +26,7 @@ from http import HTTPStatus  # Provides constants for HTTP status codes
 
 import httpx
 
+from . import proxy as proxy_address
 from gallagher.exception import UnlicensedFeatureException
 
 from ..dto.utils import (
@@ -37,6 +40,10 @@ from ..dto.detail import (
 
 from ..dto.response import (
     DiscoveryResponse,
+)
+
+from ..enum import (
+    SearchSortOrder,
 )
 
 from ..exception import (
@@ -58,6 +65,22 @@ def _check_api_key_format(api_key):
     api_tokens = api_key.split("-")
     return api_tokens.count() == 8
 
+
+def _sanitise_name_param(name: str) -> str:
+    """
+    Limits the returned items to those with a name that matches this string. 
+    Without surrounding quotes or a percent sign or underscore, 
+    it is a substring match; surround the parameter with double quotes "..." 
+    for an exact match. Without quotes, a percent sign % will match any substring 
+    and an underscore will match any single character.
+    """
+    if name.startswith('"') and name.endswith('"'):
+        return name
+
+    if name.startswith("%") or name.startswith("_"):
+        return name
+
+    return f"%{name}%"
 
 def _get_authorization_headers():
     """Creates an authorization header for Gallagher API calls
@@ -218,7 +241,8 @@ class APIEndpoint:
         # be called as part of the bootstrapping process
         from . import api_base
 
-        async with httpx.AsyncClient() as _httpx_async:
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
+            # Don't use the _get wrapper here, we need to get the raw response
             response = await _httpx_async.get(
                 api_base,
                 headers=_get_authorization_headers(),
@@ -298,15 +322,30 @@ class APIEndpoint:
 
     @classmethod
     async def search(
-        cls, top: int = 100, sort: str = "id", fields: str = "defaults", **kwargs
+        cls,
+        sort: SearchSortOrder = SearchSortOrder.ID,
+        top: int = 100,
+        name: Optional[str] = None, # TODO: en
+        division: str = None, # TODO: use division type
+        direct_division: str = None, # TODO: use division type
+        description: Optional[str] = None,
+        fields: str | List[str] = "defaults",
+        **kwargs,
     ):
         """Search wrapper for most objects to dynamically search content
 
-        Each object has a set of fields that you can query for, most searches
-        also allow you to search for a partial string.
+        We typically use the detail endpoint to run the query once the parameters
+        have been constructed from the set defined in this method, and any
+        extras that are passed as part of the kwargs.
+
+        direct_division is a division whos ancestors are not included in the search
 
         :param int top: Number of results to return
         :param str sort: Sort order, can be set to id or -id
+        :param str name: Name of the object to search for
+        :param str division: Division to search for
+        :param str direct_division: Direct division to search for
+        :param str description: Description to search for
         :param str fields: List of fields to return
         :param kwargs: Fields to search for
 
@@ -319,23 +358,28 @@ class APIEndpoint:
             "fields": fields,
         }
 
+        if name:
+            params["name"] = name
+
+        if division:
+            params["division"] = division
+
+        if direct_division:
+            params["directDivision"] = direct_division
+
+        if description:
+            params["description"] = description
+
         # Adds arbitrary fields to the search, these will be different
         # for each type of object that calls the base function
         params.update(kwargs)
 
-        async with httpx.AsyncClient() as _httpx_async:
+        return await cls._get(
+            cls.__config__.endpoint.href,
+            cls.__config__.dto_list,
+            params=params,
+        )
 
-            response = await _httpx_async.get(
-                f"{cls.__config__.endpoint.href}",
-                params=params,
-                headers=_get_authorization_headers(),
-            )
-
-            await _httpx_async.aclose()
-
-            parsed_obj = cls.__config__.dto_list.model_validate(response.json())
-
-            return parsed_obj
 
     # Follow links methods, these are valid based on if the response
     # classes make available a next, previous or update href, otherwise
@@ -418,6 +462,7 @@ class APIEndpoint:
         cls,
         url: str,
         response_class: AppBaseModel | None,
+        params: dict[str, Any] = {},
     ):
         """Generic _get method for all endpoints
 
@@ -432,13 +477,14 @@ class APIEndpoint:
         :param str url: URL to fetch the data from
         :param AppBaseModel response_class: DTO to be used for list requests
         """
-        async with httpx.AsyncClient() as _httpx_async:
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
 
             try:
 
                 response = await _httpx_async.get(
                     f"{url}",  # required to turn pydantic object to str
                     headers=_get_authorization_headers(),
+                    params=params,
                 )
 
                 await _httpx_async.aclose()
@@ -460,7 +506,7 @@ class APIEndpoint:
                     raise AuthenticationError()
 
             except httpx.RequestError as e:
-                pass
+                raise (e)
 
     @classmethod
     async def _post(
@@ -469,8 +515,15 @@ class APIEndpoint:
         payload: AppBaseModel | None,
         response_class: AppBaseModel | None = None,
     ):
-        """ """
-        async with httpx.AsyncClient() as _httpx_async:
+        """ Generic POST wrapper with error handling
+
+        Use this internally for all POST requests, this will handle
+        exception handling and configuration of proxies.
+
+        The behaviour is very similar to the _get method, except
+        parsing and sending out a body as part of the request. 
+        """
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
 
             try:
 

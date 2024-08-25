@@ -1,6 +1,6 @@
 from ..utils import (
     AppBaseResponseModel,
-    HrefMixin,
+    OptionalHrefMixin,
 )
 
 from ..summary import (
@@ -14,7 +14,7 @@ class AlarmSummaryResponse(
     """AlarmSummaryResponse represents a single alarm"""
 
     alarms: list[AlarmSummary]
-    updates: HrefMixin
+    updates: OptionalHrefMixin = None
 
     @property
     def result_set(self) -> list[AlarmSummary]:

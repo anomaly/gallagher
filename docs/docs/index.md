@@ -61,3 +61,7 @@ Born out of solving our client's use cases, we built the Python client to intera
 We believe that open sourcing these tools will result in a vibrant community of developers that will be able to leverage Gallagher's technology to build incredibly practical applications.
 
 The design pattern of the API client is opinionated from our experience as software engineers. We goto great lengths to document our thought process and expression of the work we do. We look forward to your comments and feedback and can't wait to see what you build with our tools.
+
+## Resources
+
+- [Security Hub](https://resources.security.gallagher.com/)

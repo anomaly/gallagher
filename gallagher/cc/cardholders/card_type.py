@@ -22,3 +22,4 @@ class CardType(APIEndpoint):
             dto_list=CardTypeResponse,
             dto_retrieve=CardTypeResponse,
         )
+    

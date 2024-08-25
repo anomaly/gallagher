@@ -54,11 +54,11 @@ tasks:
   dev:textual:
     desc: runs the textual cli
     cmds:
-      - poetry run textual --dev --
+      - poetry run textual -- {{.CLI_ARGS}} 
   dev:tui:
     desc: runs text gallagher console in dev mode
     cmds:
-      - poetry run textual run --dev gallagher.tui:main
+      - poetry run textual run --dev gallagher.tui
   dev:py:
     desc: runs python in the poetry shell
     cmds: 
@@ -82,6 +82,21 @@ tasks:
     cmds:
       - |
         http get \
+        https://commandcentre-api-au.security.gallagher.cloud/api/{{.CLI_ARGS}} \
+        "Authorization: GGL-API-KEY $GACC_API_KEY"
+  debug:delete:
+    prompt: "Are you sure you want to delete {{.CLI_ARGS}}??"
+    desc: use httpie to delete resource from CC
+    summary: |
+      runs a httpie get against the gallagher aus gateway
+      appends the required headers, assumes the environment
+      variables are set.
+
+      you must pass in the partial url (past /api), 
+      along with any parameters.
+    cmds:
+      - |
+        http delete \
         https://commandcentre-api-au.security.gallagher.cloud/api/{{.CLI_ARGS}} \
         "Authorization: GGL-API-KEY $GACC_API_KEY"
 

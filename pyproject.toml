@@ -37,6 +37,8 @@ pluggy = "^1.3.0"
 anyio = "^4.3.0"
 aiohttp = "^3.9.4"
 
+pytz = "^2024.2"
+email-validator = "^2.2.0"
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^5.0.0"
 coverage = "^7.5.1"

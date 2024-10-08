@@ -210,7 +210,7 @@ class HrefMixin(BaseModel):
 
 These `Mixin` classes can also be used to declare attributes that seek to use the same pattern:
 
-````python
+```python
 class DivisionDetail(
     AppBaseModel,
     IdentityMixin,
@@ -222,6 +222,7 @@ class DivisionDetail(
     description: Optional[str] = None
     server_display_name: Optional[str] = None
     parent: OptionalHrefMixin = None
+```
 
 ### Schemas
 
@@ -237,7 +238,7 @@ class AccessGroupRef(
     """ Access Groups is what a user is assigned to to provide access to doors
     """
     name: str
-````
+```
 
 where the `HrefMixin` provides the `href` attribute:
 

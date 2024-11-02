@@ -26,3 +26,5 @@ class IP_ADDR:
     CLOUD_GATEWAY_AU = ["3.106.1.6", "3.106.100.112"]
 
     CLOUD_GATEWAY_US = ["44.193.42.111", "3.209.194.103"]
+
+

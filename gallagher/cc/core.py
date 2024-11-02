@@ -148,19 +148,20 @@ class EndpointConfig:
 
 
 class Capabilities:
-
-    # Discover response object, each endpoint will reference
-    # one of the instance variable Href property to get the
-    # path to the endpoint.
-    #
-    # Gallagher recommends that the endpoints not be hardcoded
-    # into the client and instead be discovered at runtime.
-    #
-    # Note that if a feature has not been licensed by a client
-    # then the path will be set to None, if the client attempts
-    # to access the endpoint then the library will throw an exception
-    #
-    # This value is memoized and should be performant
+    """
+    Discover response object, each endpoint will reference
+    one of the instance variable Href property to get the
+    path to the endpoint.
+    
+    Gallagher recommends that the endpoints not be hardcoded
+    into the client and instead be discovered at runtime.
+    
+    Note that if a feature has not been licensed by a client
+    then the path will be set to None, if the client attempts
+    to access the endpoint then the library will throw an exception
+    
+    This value is memoized and should be performant
+    """
     CURRENT = DiscoveryResponse(
         version="0.0.0",  # Indicates that it's not been discovered
         features=FeaturesDetail(),
@@ -435,26 +436,96 @@ class APIEndpoint:
         )
 
     @classmethod
-    async def poll(cls, response):
-        """Fetches the updated set of results
+    async def updates(
+        cls,
+        params: dict[str, Any] = {},
+    ):
+        """ Follow for updates
 
-        Update follow the same pattern as next and previous, except
-        it keeps yielding results until the server has no more updates
+        - You should get no more than 100 items at a time
+        - If you do then you have fallen behind 
+        - On an interval you will always get a response, even if 
+          there are no updates
+        - Simply follow the next href to get the next set of updates
+
+        See also HATEOAS on how to follow hrefs         
         """
         await cls._discover()
 
-        # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
-        # then we should raise an exception
-        if not issubclass(cls.__config__.dto_list, AppBaseResponseWithFollowModel):
-            """A response model must have a next, previous or update"""
-            raise PathFollowNotSupportedError(
-                "Endpoint does not support previous, next or updates"
-            )
+        # throw an exception if the class configuration does not 
+        # implement an updates method
+        # if not cls.__config__.endpoint:
+        #     raise PathFollowNotSupportedError(
+        #         "Endpoint does not support updates"
+        #     )
 
-        return await cls._get(
-            cls.response.update.href,
-            cls.__config__.dto_list,
-        )
+        print(cls.__config__)
+
+        for i in range(10):
+            yield i
+
+        # yield await cls._follow(
+        #     cls.__config__.endpoint.updates,
+        #     cls.__config__.dto_list,
+        #     params=params,
+        # )        
+
+    @classmethod
+    async def _follow(
+        cls,
+        url: str,
+        response_class: AppBaseResponseWithFollowModel,
+        params: dict[str, Any] = {},
+    ):
+        """Fetches update and follows next to get the next set of results
+
+        Long poll behaviour in the Gallagher API uses the following pattern:
+        - The request will wait until there's a new set of changes
+        - If no changes are detected in 30 seconds then the server returns
+          a blank response with a new next link
+        - Follow the next link to get the next set of changes
+        - This repeats until you stop listening
+
+        This behaviour is followed by updates and changes endpoints, this method
+        should be used a helper for the updates and changes methods.
+        """
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
+            while True:
+                try:
+                    response = await _httpx_async.get(
+                        f"{url}",  # required to turn pydantic object to str
+                        headers=_get_authorization_headers(),
+                        params=params,
+                        timeout=30.0, # Next Gallagher CC wait
+                    )
+
+                    await _httpx_async.aclose()
+
+                    if response.status_code == HTTPStatus.OK:
+
+                        parsed_obj = response_class.model_validate(
+                            response.json()
+                        )
+
+                        # send this back to the caller
+                        yield parsed_obj
+
+                        if not parsed_obj.next:
+                            break
+
+                        # set the url to the next follow and we should
+                        # be able to follow this endlessly
+                        url = parsed_obj.next
+
+                    elif response.status_code == HTTPStatus.NOT_FOUND:
+                        raise NotFoundException()
+                    elif response.status_code == HTTPStatus.FORBIDDEN:
+                        raise UnlicensedFeatureException()
+                    elif response.status_code == HTTPStatus.UNAUTHORIZED:
+                        raise AuthenticationError()
+
+                except httpx.RequestError as e:
+                    raise (e)
 
     # Proposed methods for internal use
     @classmethod
@@ -494,7 +565,9 @@ class APIEndpoint:
                     if not response_class:
                         return
 
-                    parsed_obj = response_class.model_validate(response.json())
+                    parsed_obj = response_class.model_validate(
+                        response.json()
+                    )
 
                     return parsed_obj
 
@@ -542,7 +615,9 @@ class APIEndpoint:
                         """No response to parse"""
                         return True
 
-                    parsed_obj = response_class.model_validate(response.json())
+                    parsed_obj = response_class.model_validate(
+                        response.json()
+                    )
 
                     return parsed_obj
 

@@ -12,26 +12,11 @@ from ..core import (
     Capabilities,
 )
 
-from ...dto.ref import (
-    AlarmRef,
-)
-
-from ...dto.summary import (
-    AlarmSummary,
-)
-
-from ...dto.detail import (
-    AlarmDetail,
-)
-
-from ...dto.response import (
-    AlarmSummaryResponse,
-)
-
-from ...dto.payload import (
-    AlarmCommentPayload,
-)
-
+from ...dto.ref import AlarmRef
+from ...dto.summary import AlarmSummary
+from ...dto.detail import AlarmDetail
+from ...dto.response import AlarmSummaryResponse
+from ...dto.payload import AlarmCommentPayload
 
 class Alarms(
     APIEndpoint,
@@ -65,11 +50,6 @@ class Alarms(
             dto_list=AlarmSummaryResponse,
             dto_retrieve=AlarmDetail,
         )
-
-    @classmethod
-    async def follow(cls, href: str) -> bool:
-        """ """
-        return False
 
     @classmethod
     async def mark_as_viewed(
@@ -184,6 +164,7 @@ class Alarms(
         return alarm.href is not None
 
 
+# Write up Alarms for querying via the SQL interface
 __shillelagh__ = (
     Alarms,
 )

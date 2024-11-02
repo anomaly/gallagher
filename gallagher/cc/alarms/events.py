@@ -27,7 +27,6 @@ class Event(APIEndpoint):
             dto_retrieve=EventDetail,
         )
 
-
 class EventType(APIEndpoint):
     """EventType"""
 

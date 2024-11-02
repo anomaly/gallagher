@@ -30,6 +30,16 @@ class ItemsTypes(APIEndpoint):
             dto_list=ItemTypesResponse,
             dto_retrieve=ItemTypesResponse,
         )
+    
+    @classmethod
+    async def updates(cls, href: str) -> bool:
+        """Follow updates on an item
+
+        Arguments:
+        cls: class reference
+        href: href to follow
+        """
+        return await cls.follow(href)
 
 
 class Item(APIEndpoint):

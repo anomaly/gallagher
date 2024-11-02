@@ -87,7 +87,8 @@ async def history(
 async def tail():
     """Watch for alarm updates
     
-    Keeps following an alarm for updates with you having to 
+    Keeps following alarms without you having to run the command\n
+    to get updates.
     """
     console = Console()
 

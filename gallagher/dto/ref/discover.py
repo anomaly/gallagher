@@ -1,7 +1,13 @@
 """ Command Centre API discovery
 
-The Command Centre API has a discovery endpoint that allows
+The Command Centre API follows the HATEOAS principle, and all clients are meant
+to discover the API by following the links provided by the server.
 
+An instance of this class is used across the library to provide to dynamically
+link to the API endpoints.
+
+WARNING: please do not hardcode any URLs in the code, if you see this then please
+report this as a bug.
 """
 
 from ..utils import (

@@ -52,6 +52,7 @@ from ..exception import (
     AuthenticationError,
     DeadEndException,
     PathFollowNotSupportedError,
+    NoAPIKeyProvidedError,
 )
 
 
@@ -63,7 +64,7 @@ def _check_api_key_format(api_key):
     right format.
     """
     api_tokens = api_key.split("-")
-    return api_tokens.count() == 8
+    return len(api_tokens) == 8
 
 
 def _sanitise_name_param(name: str) -> str:
@@ -101,6 +102,23 @@ def _get_authorization_headers():
     """
     from . import api_key
 
+    if not api_key:
+        """ API key cannot be empty
+
+        Trap this exception to ensure that you have configured the
+        client properly.
+        """
+        raise NoAPIKeyProvidedError()
+    
+    if not _check_api_key_format(api_key):
+        """ API key is not in the right format
+
+        The API key is not in the right format, this is likely because
+        the client has not copied the key correctly from the Gallagher
+        Command Centre.
+        """
+        raise ValueError("API key is not in the right format")
+
     return {
         "Content-Type": "application/json",
         "Authorization": f"GGL-API-KEY {api_key}",
@@ -127,11 +145,12 @@ class EndpointConfig:
     """
 
     endpoint: str  # partial path to the endpoint e.g. day_category
+    endpoint_follow: str | None = None  # partial path to the follow endpoint
     dto_list: Optional[any] = None  # DTO to be used for list requests
     dto_retrieve: Optional[any] = None  # DTO to be used for retrieve requests
 
-    top: Optional[int] = 10  # Number of response to download
-    sort: Optional[str] = "id"  # Can be set to id or -id
+    top: int = 10  # Number of response to download
+    sort: str = "id"  # Can be set to id or -id
 
     fields: Tuple[str] = ()  # Optional list of fields, blank = all
     search: Tuple[str] = () # If the endpoint supports search, blank = none
@@ -163,7 +182,7 @@ class Capabilities:
     This value is memoized and should be performant
     """
     CURRENT = DiscoveryResponse(
-        version="0.0.0",  # Indicates that it's not been discovered
+        version="0.0.0.0",  # Indicates that it's not been discovered
         features=FeaturesDetail(),
     )
 
@@ -193,7 +212,7 @@ class APIEndpoint:
         reason for these discovered URLs to change.
         """
         Capabilities.CURRENT = DiscoveryResponse(
-            version="0.0.0",  # Indicates that it's not been discovered
+            version="0.0.0.0",  # Indicates that it's not been discovered
             features=FeaturesDetail(),
         )
 
@@ -229,7 +248,7 @@ class APIEndpoint:
         :params class cls: The class that is calling the method
         """
 
-        if Capabilities.CURRENT.version != "0.0.0" and isinstance(
+        if Capabilities.CURRENT.version != "0.0.0.0" and isinstance(
             Capabilities.CURRENT._good_known_since, datetime
         ):
             # We've already discovered the endpoints as per HATEOAS
@@ -454,21 +473,16 @@ class APIEndpoint:
 
         # throw an exception if the class configuration does not 
         # implement an updates method
-        # if not cls.__config__.endpoint:
-        #     raise PathFollowNotSupportedError(
-        #         "Endpoint does not support updates"
-        #     )
+        if not cls.__config__.endpoint_follow:
+            raise PathFollowNotSupportedError(
+                "Endpoint does not support updates"
+            )
 
-        print(cls.__config__)
-
-        for i in range(10):
-            yield i
-
-        # yield await cls._follow(
-        #     cls.__config__.endpoint.updates,
-        #     cls.__config__.dto_list,
-        #     params=params,
-        # )        
+        return cls._follow(
+            cls.__config__.endpoint_follow,
+            cls.__config__.dto_list,
+            params=params,
+        )
 
     @classmethod
     async def _follow(

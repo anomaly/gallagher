@@ -24,6 +24,23 @@ poetry add gallagher[all]
 
 ### SDK
 
+To use the API (or the associated tools, as they use the API client in return) you must have an API key supplied by the Command Centre instance. The same key is used if you were were using the API on premise or in the cloud.
+
+You would typically read the API key from an environment variable or a secrets manager, depending on your setup.
+
+You should only ever setup the API key once in your application instance. The rest of the client is designed to discover. An example of how you would do this would look like:
+
+```python
+from gallagher import cc
+api_key = os.environ.get("GACC_API_KEY")
+cc.api_key = api_key
+```
+
+following this you can call any of the SDK methods and the client will performance the necessary discovery and authentication. If you fail to set the API key, the client will raise the following exceptions:
+
+- `NoAPIKeyProvidedError` - If the API key is not set.
+- `ValueError` - If the API key does not conform to the expected format (which looks like eight tokens separated by `-`).
+
 ### Command Line Interface
 
 ### Terminal User Interface

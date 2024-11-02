@@ -21,6 +21,7 @@ from .cardholder import (
 
 from .discover import (
     FeaturesDetail,
+    VersionsDetail,
 )
 
 from .division import (

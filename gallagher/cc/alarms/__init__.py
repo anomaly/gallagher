@@ -15,7 +15,10 @@ from ..core import (
 from ...dto.ref import AlarmRef
 from ...dto.summary import AlarmSummary
 from ...dto.detail import AlarmDetail
-from ...dto.response import AlarmSummaryResponse
+from ...dto.response import (
+    AlarmSummaryResponse,
+    AlarmUpdateResponse,
+)
 from ...dto.payload import AlarmCommentPayload
 
 class Alarms(
@@ -48,6 +51,7 @@ class Alarms(
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.alarms.alarms,
             endpoint_follow=Capabilities.CURRENT.features.alarms.updates,
+            dto_follow=AlarmUpdateResponse,
             dto_list=AlarmSummaryResponse,
             dto_retrieve=AlarmDetail,
         )

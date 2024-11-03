@@ -150,6 +150,8 @@ class EndpointConfig:
 
     endpoint: str  # partial path to the endpoint e.g. day_category
     endpoint_follow: str | None = None  # partial path to the follow endpoint
+
+    dto_follow: Optional[any] = None  # DTO to be used for follow requests
     dto_list: Optional[any] = None  # DTO to be used for list requests
     dto_retrieve: Optional[any] = None  # DTO to be used for retrieve requests
 
@@ -459,40 +461,8 @@ class APIEndpoint:
         )
 
     @classmethod
-    async def updates(
+    async def follow(
         cls,
-        params: dict[str, Any] = {},
-    ):
-        """ Follow for updates
-
-        - You should get no more than 100 items at a time
-        - If you do then you have fallen behind 
-        - On an interval you will always get a response, even if 
-          there are no updates
-        - Simply follow the next href to get the next set of updates
-
-        See also HATEOAS on how to follow hrefs         
-        """
-        await cls._discover()
-
-        # throw an exception if the class configuration does not 
-        # implement an updates method
-        if not cls.__config__.endpoint_follow:
-            raise PathFollowNotSupportedError(
-                "Endpoint does not support updates"
-            )
-
-        return cls._follow(
-            cls.__config__.endpoint_follow,
-            cls.__config__.dto_list,
-            params=params,
-        )
-
-    @classmethod
-    async def _follow(
-        cls,
-        url: str,
-        response_class: AppBaseResponseWithFollowModel,
         event: Event,
         params: dict[str, Any] = {},
     ):
@@ -508,6 +478,16 @@ class APIEndpoint:
         This behaviour is followed by updates and changes endpoints, this method
         should be used a helper for the updates and changes methods.
         """
+        await cls._discover()
+
+        if not cls.__config__.endpoint_follow:
+            raise PathFollowNotSupportedError(
+                "Endpoint does not support previous, next or updates"
+            )
+
+        # Initial url is set to endpoint_follow
+        url = f"{cls.__config__.endpoint_follow.href}"
+
         async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
             while event.is_set():
                 try:
@@ -520,7 +500,7 @@ class APIEndpoint:
 
                     if response.status_code == HTTPStatus.OK:
 
-                        parsed_obj = response_class.model_validate(
+                        parsed_obj = cls.__config__.dto_follow.model_validate(
                             response.json()
                         )
 

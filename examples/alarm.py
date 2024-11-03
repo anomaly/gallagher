@@ -9,7 +9,6 @@ import asyncio
 
 from gallagher import cc
 from gallagher.cc.alarms import Alarms
-from gallagher.dto.response import AlarmUpdateResponse
 
 async def main():
     api_key = os.environ.get("GACC_API_KEY")
@@ -21,7 +20,9 @@ async def main():
     async for updates in Alarms.follow(
         event=event,
     ):
-        print(f"Found update {len(updates.updates)}")
+        
+        for update in updates.updates:
+            print(update)
 
         if len(updates.updates) == 0:
             event.clear()

@@ -36,3 +36,19 @@ class AlarmSummaryResponse(
     def __str__(self):
         return f"{len(self.results)} cardholders"
 
+
+class AlarmUpdateResponse(
+    AppBaseResponseModel,
+
+):
+    """Alarm updates for long poll
+
+    updates: list[AlarmSummary]
+    next: OptionalHrefMixin = None
+
+    You should follow this response infinitely until the next
+    href is None, this should update every 30 seconds or if
+    there are changes to the alarms
+    """
+    updates: list[AlarmSummary]
+    next: OptionalHrefMixin = None

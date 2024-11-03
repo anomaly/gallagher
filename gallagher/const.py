@@ -28,3 +28,11 @@ class IP_ADDR:
     CLOUD_GATEWAY_US = ["44.193.42.111", "3.209.194.103"]
 
 
+class TRANSPORT:
+    """ Constants for the transport layer
+
+    These are at present used to configure the httpx client
+    they are based on the documentation provided by Gallagher
+    """
+
+    TIMEOUT_POLL = 60.0 # seconds, CC says it should be around 30 seconds

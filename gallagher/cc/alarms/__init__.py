@@ -47,6 +47,7 @@ class Alarms(
         """
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.alarms.alarms,
+            endpoint_follow=Capabilities.CURRENT.features.alarms.updates,
             dto_list=AlarmSummaryResponse,
             dto_retrieve=AlarmDetail,
         )

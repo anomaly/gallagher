@@ -301,12 +301,18 @@ class CardholderSummaryResponse(
 
 ## SQL
 
+The SQL interface is built using the `shillelagh` library. The library exposes various `metadata` which the extension gathers to construct the SQL interface. The following is a guide to outline how that works and what you require to populate should you wish to extend or contribute to the SQL interface.
+
+Each API Endpoint configuration that wishes to support the SQL interfaces returns a constant named `__shillelagh__` which is a tuple of classes that are used to query the endpoint. The classes must be a subclass of `AppBaseResponseModel` and must implement a `result_set` property that returns a reference to the property that provides the resultset for the SQL queries.
+
 ```python
 # Write up Alarms for querying via the SQL interface
 __shillelagh__ = (
     Alarms,
 )
 ```
+
+The following demonstrates two examples where `CardholderSummaryResponse` returns the `results` property
 
 ```python
 class CardholderSummaryResponse(AppBaseResponseModel):
@@ -330,6 +336,8 @@ class CardholderSummaryResponse(AppBaseResponseModel):
         return self.results
 ```
 
+whereas `AlarmSummaryResponse` nominates the `alarms` property.
+
 ```python
 class AlarmSummaryResponse(AppBaseResponseModel):
     """AlarmSummaryResponse represents a single alarm"""
@@ -349,6 +357,8 @@ class AlarmSummaryResponse(AppBaseResponseModel):
 
 ```
 
+Both of these make for the `results` of the SQL
+
 ## Maintainers Notes
 
 This section primarily contains notes for the managers of the project, it covers topics like publication of releases.
@@ -364,8 +374,9 @@ The action `.github/workflows/publish-package.yml` is responsible for publishing
 
 The `release` action will run the set of tests, and if they pass, it will publish the package to PyPI.
 
-> [!IMPORTANT]
-> In most instances you should not have to publish a release by hand. If there is ever a need to do that, we recommend that appropriate notes be left against the release.
+!!! Important
+
+    In most instances you should not have to publish a release by hand. If there is ever a need to do that, we recommend that appropriate notes be left against the release.
 
 ### Writing Release Notes
 

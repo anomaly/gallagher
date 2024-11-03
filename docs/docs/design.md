@@ -301,6 +301,54 @@ class CardholderSummaryResponse(
 
 ## SQL
 
+```python
+# Write up Alarms for querying via the SQL interface
+__shillelagh__ = (
+    Alarms,
+)
+```
+
+```python
+class CardholderSummaryResponse(AppBaseResponseModel):
+    """Summary response for cardholder list and search
+
+    /api/cardholders is generally the endpoint that responds
+    to the query, it is dynamically configured from the discovery
+
+    """
+
+    results: list[CardholderSummary]
+
+    @property
+    def result_set(self) -> list[CardholderSummary]:
+        """ Wrap summary response target property
+
+        the sql interface will call this property and each summary
+        response is expected to override this and return the appropriate
+        target property
+        """
+        return self.results
+```
+
+```python
+class AlarmSummaryResponse(AppBaseResponseModel):
+    """AlarmSummaryResponse represents a single alarm"""
+
+    alarms: list[AlarmSummary]
+    updates: OptionalHrefMixin = None
+
+    @property
+    def result_set(self) -> list[AlarmSummary]:
+        """ Wrap summary response target property
+
+        the sql interface will call this property and each summary
+        response is expected to override this and return the appropriate
+        target property
+        """
+        return self.alarms
+
+```
+
 ## Maintainers Notes
 
 This section primarily contains notes for the managers of the project, it covers topics like publication of releases.

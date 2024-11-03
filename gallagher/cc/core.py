@@ -29,6 +29,8 @@ import httpx
 from . import proxy as proxy_address
 from gallagher.exception import UnlicensedFeatureException
 
+from ..const import TRANSPORT
+
 from ..dto.utils import (
     AppBaseModel,
     AppBaseResponseWithFollowModel,
@@ -510,10 +512,8 @@ class APIEndpoint:
                         f"{url}",  # required to turn pydantic object to str
                         headers=_get_authorization_headers(),
                         params=params,
-                        timeout=30.0, # Next Gallagher CC wait
+                        timeout=TRANSPORT.TIMEOUT_POLL, # Next Gallagher CC wait
                     )
-
-                    await _httpx_async.aclose()
 
                     if response.status_code == HTTPStatus.OK:
 
@@ -525,11 +525,12 @@ class APIEndpoint:
                         yield parsed_obj
 
                         if not parsed_obj.next:
-                            break
+                            return
 
                         # set the url to the next follow and we should
                         # be able to follow this endlessly
-                        url = parsed_obj.next
+                        url = f"{parsed_obj.next.href}"
+                        print(url)
 
                     elif response.status_code == HTTPStatus.NOT_FOUND:
                         raise NotFoundException()

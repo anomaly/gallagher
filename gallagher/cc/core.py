@@ -22,6 +22,8 @@ from typing import (
 from datetime import datetime
 from dataclasses import dataclass
 
+from asyncio import Event
+
 from http import HTTPStatus  # Provides constants for HTTP status codes
 
 import httpx
@@ -491,6 +493,7 @@ class APIEndpoint:
         cls,
         url: str,
         response_class: AppBaseResponseWithFollowModel,
+        event: Event,
         params: dict[str, Any] = {},
     ):
         """Fetches update and follows next to get the next set of results
@@ -506,7 +509,7 @@ class APIEndpoint:
         should be used a helper for the updates and changes methods.
         """
         async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
-            while True:
+            while event.is_set():
                 try:
                     response = await _httpx_async.get(
                         f"{url}",  # required to turn pydantic object to str
@@ -542,7 +545,6 @@ class APIEndpoint:
                 except httpx.RequestError as e:
                     raise (e)
 
-    # Proposed methods for internal use
     @classmethod
     async def _get(
         cls,

@@ -18,9 +18,7 @@ async def main():
     event = asyncio.Event()
     event.set()
 
-    async for updates in Alarms._follow(
-        'https://commandcentre-api-au.security.gallagher.cloud/api/alarms/updates',
-        AlarmUpdateResponse,
+    async for updates in Alarms.follow(
         event=event,
     ):
         print(f"Found update {len(updates.updates)}")

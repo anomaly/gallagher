@@ -1,8 +1,6 @@
 from typing import Optional
 
 from ..utils import (
-    HrefMixin,
-    IdentityMixin,
     AppBaseResponseModel,
     AppBaseResponseWithFollowModel,
 )
@@ -12,13 +10,13 @@ from ..summary import (
     EventSummary,
 )
 
-
 class EventSummaryResponse(
     AppBaseResponseWithFollowModel,
 ):
+    """ Event Summary Response
+    """
 
     events: list[EventSummary]
-
 
 class EventTypeResponse(
     AppBaseResponseModel,
@@ -27,7 +25,7 @@ class EventTypeResponse(
 
     Event Type Responses return a set of eventGroups which in turn
     has identifiers, names and event types.
-
     """
 
     event_groups: list[EventGroupSummary]
+

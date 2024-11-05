@@ -27,6 +27,8 @@ class ItemsTypes(APIEndpoint):
     async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.items.item_types,
+            endpoint_follow=Capabilities.CURRENT.features.items.updates,
+            dto_follow=ItemsSummaryResponse,
             dto_list=ItemTypesResponse,
             dto_retrieve=ItemTypesResponse,
         )

@@ -4,7 +4,11 @@ Command Centre has about 80 event types that occur when somebody
 authenticates at a device, usually by badging a card.
 """
 
-from ..core import Capabilities, APIEndpoint, EndpointConfig
+from ..core import (
+    Capabilities,
+    APIEndpoint,
+    EndpointConfig,
+)
 
 from ...dto.detail import (
     EventDetail,

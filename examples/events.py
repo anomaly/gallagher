@@ -9,6 +9,7 @@ import asyncio
 
 from gallagher import cc
 from gallagher.cc.alarms.events import Event
+from gallagher.cc.cardholders import Cardholder
 
 async def main():
     api_key = os.environ.get("GACC_API_KEY")
@@ -17,18 +18,14 @@ async def main():
     event = asyncio.Event()
     event.set()
 
-    print("here")
     async for updates in Event.follow(
         event=event,
     ):
-        
-        print("here")
-        for update in updates.updates:
-            print(update)
+        for update_event in updates.events:
+            if update_event.cardholder:
 
-        if len(updates.events) == 0:
-            event.clear()
-
+                ch = await Cardholder.retrieve(update_event.cardholder.id)
+                print(ch)
     
 
 if __name__ == "__main__":

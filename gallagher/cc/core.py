@@ -513,7 +513,6 @@ class APIEndpoint:
                         # set the url to the next follow and we should
                         # be able to follow this endlessly
                         url = f"{parsed_obj.next.href}"
-                        print(url)
 
                     elif response.status_code == HTTPStatus.NOT_FOUND:
                         raise NotFoundException()

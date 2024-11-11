@@ -58,10 +58,10 @@ tqdm = "^4.66.4"
 
 mkdocs-material = { extras = ["imaging"], version = "^9.5.27" }
 pygments = "^2.18.0"
-mkdocstrings = "^0.26.0"
+mkdocstrings = "^0.27.0"
 [tool.poetry.group.cli.dependencies]
 asyncer = "^0.0.8"
-typer = "^0.12.3"
+typer = "^0.13.0"
 rich = "^13.7.1"
 
 

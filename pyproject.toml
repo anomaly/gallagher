@@ -66,8 +66,8 @@ rich = "^13.7.1"
 
 
 [tool.poetry.group.tui.dependencies]
-textual = "^0.85.1"
-textual-dev = "^1.5.1"
+textual = "^0.86.3"
+textual-dev = "^1.7.0"
 
 
 rich-pixels = "^3.0.1"

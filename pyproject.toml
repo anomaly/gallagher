@@ -26,7 +26,7 @@ tui = ["textual"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-httpx = "^0.27.2"
+httpx = "^0.28.0"
 pydantic = {version = "^2.10.0b1", allow-prereleases = true}
 typing-extensions = "^4.11.0"
 annotated-types = "^0.7.0"
@@ -61,12 +61,12 @@ pygments = "^2.18.0"
 mkdocstrings = "^0.27.0"
 [tool.poetry.group.cli.dependencies]
 asyncer = "^0.0.8"
-typer = "^0.13.0"
+typer = "^0.14.0"
 rich = "^13.7.1"
 
 
 [tool.poetry.group.tui.dependencies]
-textual = "^0.86.3"
+textual = "^0.88.0"
 textual-dev = "^1.7.0"
 
 

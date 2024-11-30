@@ -43,7 +43,7 @@ In addition to the usual suspects (e.g pytest) we use:
 
 A central feature to this project is the API client, focused on a superior developer experience and performance we spent substantial time in designing the Python interface to ensure it scales. We also ensure that we follow forward compatibility design patterns outlined by Gallagher (e.g [HATEOAS](https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html)) so you as a developer don't have to worry about it.
 
-While it's optional to read this chapter if you are simply using the API client or the tools. If you choose to develop the client further then this is a must read.
+This chapter is optional if you are simply using the API client or the tools. It's aimed towards developers who choose to extend the client further.
 
 ## Data Transfer Objects
 
@@ -233,7 +233,7 @@ class Division(APIEndpoint):
 
 [Typer](https://typer.tiangolo.com) enhances [click](https://click.palletsprojects.com/en/8.1.x/) by providing a mode `FastAPI` like developer experience (having been created by the developers of FastAPI). The design of our `cli` is highly inspired by tools like `git`, and follows the subcommand pattern.
 
-While we pride ourselves in providing a complete set of CLI commands, this section outlines thoughts on the design of the command line interface for those working on extending it.
+This section outlines thoughts on the design of the command line interface for those working on extending it.
 
 ### Extending DTOs for the CLI
 

@@ -49,7 +49,7 @@ If you are fetching a `detail` then they are returned on their own as part of th
 
 ## API Endpoint Lifecycle
 
-While it's not important for SDK users to understand how it works under the hood, it does pay to understand what its doing to fulfil your requests. Each endpoint inherits from a base class called `APIEndpoint` defined in `gallagher/cc/core.py` and provides a configuration that describes the behaviour of the endpoint (in accordance with the Command Centre API).
+You do not need to look under the hood to work with the API client. This section was written for you to understand how we implement Gallagher's requirements for standard based development. Each endpoint inherits from a base class called `APIEndpoint` defined in `gallagher/cc/core.py` and provides a configuration that describes the behaviour of the endpoint (in accordance with the Command Centre API).
 
 Before your request is sent, the endpoint will:
 

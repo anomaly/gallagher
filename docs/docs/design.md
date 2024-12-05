@@ -380,8 +380,17 @@ The `release` action will run the set of tests, and if they pass, it will publis
 
 ### Writing Release Notes
 
-Features
+With every release we must ensure that this documentation is kept relevant and we leave a trace of what has changed in beautifully written release notes.
 
-Improvements
+> " If you don't have documentation, you don't have a minimum viable product." - [Paige Bailey](https://github.com/dynamicwebpaige#-if-you-dont-have-documentation-you-dont-have-a-minimum-viable-product)
 
-Bug Fixes
+The project recommends the following pattern, which is enforced by a template in our Github workflow. We understand that you can use generative AI tools to write your release notes, but we believe that users of this library want to hear what us the maintainers thought is important as opposed to a computed list of changes.
+
+We understand it takes that little bit longer to do this right, doing this well shows our level of care.
+
+- **Preamble**, a summary of the release where we outline the major motivation (be it a feature or a service release)
+- **Features**, a concise list of what we have added to this release and did not exist before
+- **Improvements**, a list of improvements made to existing features
+- **Bug Fixes**, this is different to `improvements` these are genuine issues that were found
+
+> Includes the sections relevant and leave out what's not. Be as human as possible, this is a conversation with our users.

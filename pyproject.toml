@@ -60,7 +60,7 @@ mkdocstrings = "^0.27.0"
 mkdocs-material = {version = "^9.5.46", extras = ["imaging"]}
 [tool.poetry.group.cli.dependencies]
 asyncer = "^0.0.8"
-typer = "^0.14.0"
+typer = "^0.15.1"
 rich = "^13.7.1"
 
 

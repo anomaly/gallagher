@@ -105,6 +105,7 @@ def _get_authorization_headers():
 
     """
     from . import api_key
+    from .. import __version__
 
     if not api_key:
         """ API key cannot be empty
@@ -125,6 +126,7 @@ def _get_authorization_headers():
 
     return {
         "Content-Type": "application/json",
+        "User-Agent": f"GallagherPyToolkit/{__version__}",
         "Authorization": f"GGL-API-KEY {api_key}",
     }
 

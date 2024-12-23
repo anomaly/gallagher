@@ -33,6 +33,23 @@ from ..ref import (
 )
 
 
+class SemVerDetail(AppBaseModel):
+    """Semantic Versioning details
+    
+    As defined by https://semver.org/ and implemented by the API
+    the API client sends this back for the API and the command centre
+    """
+    major: int
+    minor: int
+    revision: int
+    build: int
+
+
+class VersionsDetail(AppBaseModel):
+    """A detailed list of versions that are available on the server"""
+    command_centre: Optional[SemVerDetail] = None
+    api: Optional[SemVerDetail] = None
+
 class FeaturesDetail(
     AppBaseModel,
 ):

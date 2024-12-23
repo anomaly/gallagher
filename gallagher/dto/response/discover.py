@@ -8,6 +8,7 @@ from ..utils import (
 
 from ..detail import (
     FeaturesDetail,
+    VersionsDetail,
 )
 
 
@@ -28,7 +29,11 @@ class DiscoveryResponse(
     the API client can work with the server.
     """
 
-    version: Annotated[str, "The version of the server"] = "0.0.0"
+    version: Annotated[str, "The version of the server"] = "0.0.0.0"
+    versions: Annotated[
+        VersionsDetail, 
+        "A list of versions available on the server"
+    ] = VersionsDetail()
     features: Annotated[
         FeaturesDetail, "A list of features available on the server"
     ] = FeaturesDetail()

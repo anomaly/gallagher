@@ -1,10 +1,11 @@
-"""
+""" Alarms, Events, Items
 
 
 """
 
 from .alarm import (
     AlarmSummaryResponse,
+    AlarmUpdateResponse,
 )
 
 from .card_type import (

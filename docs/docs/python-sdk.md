@@ -49,7 +49,7 @@ If you are fetching a `detail` then they are returned on their own as part of th
 
 ## API Endpoint Lifecycle
 
-While it's not important for SDK users to understand how it works under the hood, it does pay to understand what its doing to fulfil your requests. Each endpoint inherits from a base class called `APIEndpoint` defined in `gallagher/cc/core.py` and provides a configuration that describes the behaviour of the endpoint (in accordance with the Command Centre API).
+You do not need to look under the hood to work with the API client. This section was written for you to understand how we implement Gallagher's requirements for standard based development. Each endpoint inherits from a base class called `APIEndpoint` defined in `gallagher/cc/core.py` and provides a configuration that describes the behaviour of the endpoint (in accordance with the Command Centre API).
 
 Before your request is sent, the endpoint will:
 
@@ -269,6 +269,76 @@ while items_summary.next:
     You don't provide a `url` or `href` to the `next` or `previous` methods, they are automatically
     determined from the response object. This ensures that we can update the SDK as the API changes
     leaving your code intact.
+
+# Updates and Changes
+
+Entities like `Cardholders`, `Alarms`, `Items`, and `Event` provide `updates` or `changes`, that can be monitored for updates. Essentially these are long poll endpoints that:
+
+- Provide a set of recent update as a `Summary` Response
+- End with an `next` URL which provides the next set of updates
+- Returns an empty set of updates if there are no updates within around 30 seconds
+- Always returns a `next` URL to follow, even in the case of an empty set of updates
+
+The SDK provide a clean `async` way of following these updates where you can run a `for` loop over an `async` generator which `yields` updates as they are available.
+
+It uses an `asyncio` event to control the loop, and you can stop the loop by calling `event.clear()`. This is so you can control the event loop based on an application level trigger e.g a user navigating to a particular interface.
+
+Here's a sample of how you can follow updates and stop the loop if there are no updates:
+
+```python
+import os
+import asyncio
+
+from gallagher import cc
+from gallagher.cc.alarms import Alarms
+
+async def main():
+    api_key = os.environ.get("GACC_API_KEY")
+    cc.api_key = api_key
+
+    # Used to control the event loop
+    event = asyncio.Event()
+    event.set()
+
+    async for updates in Alarms.follow(
+        event=event,
+    ):
+
+        for update in updates.updates:
+            print(update)
+
+        # Examples of stopping the loop if
+        # we got no updates
+        if len(updates.updates) == 0:
+            event.clear()
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+Endpoints that provide either an `update` or a `change` method will provide:
+
+- `endpoint_follow` which will be the HATEOS discovered endpoint
+- `dto_follow` which is a DTO class (typically a Summary) to be used to parse the updates
+
+Following is an extract from the `Alarm` class to demonstrate how it's configured:
+
+```python
+@classmethod
+async def get_config(cls) -> EndpointConfig:
+    """Return the configuration for Alarms
+
+    Arguments:
+    cls: class reference
+    """
+    return EndpointConfig(
+        endpoint=Capabilities.CURRENT.features.alarms.alarms,
+        endpoint_follow=Capabilities.CURRENT.features.alarms.updates,
+        dto_follow=AlarmUpdateResponse,
+        dto_list=AlarmSummaryResponse,
+        dto_retrieve=AlarmDetail,
+    )
+```
 
 ## Error Handling
 

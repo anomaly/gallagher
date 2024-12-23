@@ -43,7 +43,7 @@ In addition to the usual suspects (e.g pytest) we use:
 
 A central feature to this project is the API client, focused on a superior developer experience and performance we spent substantial time in designing the Python interface to ensure it scales. We also ensure that we follow forward compatibility design patterns outlined by Gallagher (e.g [HATEOAS](https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html)) so you as a developer don't have to worry about it.
 
-While it's optional to read this chapter if you are simply using the API client or the tools. If you choose to develop the client further then this is a must read.
+This chapter is optional if you are simply using the API client or the tools. It's aimed towards developers who choose to extend the client further.
 
 ## Data Transfer Objects
 
@@ -233,7 +233,7 @@ class Division(APIEndpoint):
 
 [Typer](https://typer.tiangolo.com) enhances [click](https://click.palletsprojects.com/en/8.1.x/) by providing a mode `FastAPI` like developer experience (having been created by the developers of FastAPI). The design of our `cli` is highly inspired by tools like `git`, and follows the subcommand pattern.
 
-While we pride ourselves in providing a complete set of CLI commands, this section outlines thoughts on the design of the command line interface for those working on extending it.
+This section outlines thoughts on the design of the command line interface for those working on extending it.
 
 ### Extending DTOs for the CLI
 
@@ -301,6 +301,64 @@ class CardholderSummaryResponse(
 
 ## SQL
 
+The SQL interface is built using the `shillelagh` library. The library exposes various `metadata` which the extension gathers to construct the SQL interface. The following is a guide to outline how that works and what you require to populate should you wish to extend or contribute to the SQL interface.
+
+Each API Endpoint configuration that wishes to support the SQL interfaces returns a constant named `__shillelagh__` which is a tuple of classes that are used to query the endpoint. The classes must be a subclass of `AppBaseResponseModel` and must implement a `result_set` property that returns a reference to the property that provides the resultset for the SQL queries.
+
+```python
+# Write up Alarms for querying via the SQL interface
+__shillelagh__ = (
+    Alarms,
+)
+```
+
+The following demonstrates two examples where `CardholderSummaryResponse` returns the `results` property
+
+```python
+class CardholderSummaryResponse(AppBaseResponseModel):
+    """Summary response for cardholder list and search
+
+    /api/cardholders is generally the endpoint that responds
+    to the query, it is dynamically configured from the discovery
+
+    """
+
+    results: list[CardholderSummary]
+
+    @property
+    def result_set(self) -> list[CardholderSummary]:
+        """ Wrap summary response target property
+
+        the sql interface will call this property and each summary
+        response is expected to override this and return the appropriate
+        target property
+        """
+        return self.results
+```
+
+whereas `AlarmSummaryResponse` nominates the `alarms` property.
+
+```python
+class AlarmSummaryResponse(AppBaseResponseModel):
+    """AlarmSummaryResponse represents a single alarm"""
+
+    alarms: list[AlarmSummary]
+    updates: OptionalHrefMixin = None
+
+    @property
+    def result_set(self) -> list[AlarmSummary]:
+        """ Wrap summary response target property
+
+        the sql interface will call this property and each summary
+        response is expected to override this and return the appropriate
+        target property
+        """
+        return self.alarms
+
+```
+
+Both of these make for the `results` of the SQL
+
 ## Maintainers Notes
 
 This section primarily contains notes for the managers of the project, it covers topics like publication of releases.
@@ -316,13 +374,23 @@ The action `.github/workflows/publish-package.yml` is responsible for publishing
 
 The `release` action will run the set of tests, and if they pass, it will publish the package to PyPI.
 
-> [!IMPORTANT]
-> In most instances you should not have to publish a release by hand. If there is ever a need to do that, we recommend that appropriate notes be left against the release.
+!!! Important
+
+    In most instances you should not have to publish a release by hand. If there is ever a need to do that, we recommend that appropriate notes be left against the release.
 
 ### Writing Release Notes
 
-Features
+With every release we must ensure that this documentation is kept relevant and we leave a trace of what has changed in beautifully written release notes.
 
-Improvements
+> " If you don't have documentation, you don't have a minimum viable product." - [Paige Bailey](https://github.com/dynamicwebpaige#-if-you-dont-have-documentation-you-dont-have-a-minimum-viable-product)
 
-Bug Fixes
+The project recommends the following pattern, which is enforced by a template in our Github workflow. We understand that you can use generative AI tools to write your release notes, but we believe that users of this library want to hear what us the maintainers thought is important as opposed to a computed list of changes.
+
+We understand it takes that little bit longer to do this right, doing this well shows our level of care.
+
+- **Preamble**, a summary of the release where we outline the major motivation (be it a feature or a service release)
+- **Features**, a concise list of what we have added to this release and did not exist before
+- **Improvements**, a list of improvements made to existing features
+- **Bug Fixes**, this is different to `improvements` these are genuine issues that were found
+
+> Includes the sections relevant and leave out what's not. Be as human as possible, this is a conversation with our users.

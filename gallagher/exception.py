@@ -55,6 +55,11 @@ class AuthenticationError(GCCBaseException):
     particular key
     """
 
+class NoAPIKeyProvidedError(GCCBaseException):
+    """Raised if no API key is provided
+
+    This is raised if no API key is provided to the client
+    """
 
 class PathFollowNotSupportedError(GCCBaseException):
     """Raised if the path is not supported by the client

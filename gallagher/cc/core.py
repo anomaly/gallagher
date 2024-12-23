@@ -22,12 +22,16 @@ from typing import (
 from datetime import datetime
 from dataclasses import dataclass
 
+from asyncio import Event
+
 from http import HTTPStatus  # Provides constants for HTTP status codes
 
 import httpx
 
 from . import proxy as proxy_address
 from gallagher.exception import UnlicensedFeatureException
+
+from ..const import TRANSPORT
 
 from ..dto.utils import (
     AppBaseModel,
@@ -52,6 +56,7 @@ from ..exception import (
     AuthenticationError,
     DeadEndException,
     PathFollowNotSupportedError,
+    NoAPIKeyProvidedError,
 )
 
 
@@ -63,7 +68,7 @@ def _check_api_key_format(api_key):
     right format.
     """
     api_tokens = api_key.split("-")
-    return api_tokens.count() == 8
+    return len(api_tokens) == 8
 
 
 def _sanitise_name_param(name: str) -> str:
@@ -100,9 +105,28 @@ def _get_authorization_headers():
 
     """
     from . import api_key
+    from .. import __version__
+
+    if not api_key:
+        """ API key cannot be empty
+
+        Trap this exception to ensure that you have configured the
+        client properly.
+        """
+        raise NoAPIKeyProvidedError()
+    
+    if not _check_api_key_format(api_key):
+        """ API key is not in the right format
+
+        The API key is not in the right format, this is likely because
+        the client has not copied the key correctly from the Gallagher
+        Command Centre.
+        """
+        raise ValueError("API key is not in the right format")
 
     return {
         "Content-Type": "application/json",
+        "User-Agent": f"GallagherPyToolkit/{__version__}",
         "Authorization": f"GGL-API-KEY {api_key}",
     }
 
@@ -127,11 +151,14 @@ class EndpointConfig:
     """
 
     endpoint: str  # partial path to the endpoint e.g. day_category
+    endpoint_follow: str | None = None  # partial path to the follow endpoint
+
+    dto_follow: Optional[any] = None  # DTO to be used for follow requests
     dto_list: Optional[any] = None  # DTO to be used for list requests
     dto_retrieve: Optional[any] = None  # DTO to be used for retrieve requests
 
-    top: Optional[int] = 10  # Number of response to download
-    sort: Optional[str] = "id"  # Can be set to id or -id
+    top: int = 10  # Number of response to download
+    sort: str = "id"  # Can be set to id or -id
 
     fields: Tuple[str] = ()  # Optional list of fields, blank = all
     search: Tuple[str] = () # If the endpoint supports search, blank = none
@@ -148,21 +175,22 @@ class EndpointConfig:
 
 
 class Capabilities:
-
-    # Discover response object, each endpoint will reference
-    # one of the instance variable Href property to get the
-    # path to the endpoint.
-    #
-    # Gallagher recommends that the endpoints not be hardcoded
-    # into the client and instead be discovered at runtime.
-    #
-    # Note that if a feature has not been licensed by a client
-    # then the path will be set to None, if the client attempts
-    # to access the endpoint then the library will throw an exception
-    #
-    # This value is memoized and should be performant
+    """
+    Discover response object, each endpoint will reference
+    one of the instance variable Href property to get the
+    path to the endpoint.
+    
+    Gallagher recommends that the endpoints not be hardcoded
+    into the client and instead be discovered at runtime.
+    
+    Note that if a feature has not been licensed by a client
+    then the path will be set to None, if the client attempts
+    to access the endpoint then the library will throw an exception
+    
+    This value is memoized and should be performant
+    """
     CURRENT = DiscoveryResponse(
-        version="0.0.0",  # Indicates that it's not been discovered
+        version="0.0.0.0",  # Indicates that it's not been discovered
         features=FeaturesDetail(),
     )
 
@@ -192,7 +220,7 @@ class APIEndpoint:
         reason for these discovered URLs to change.
         """
         Capabilities.CURRENT = DiscoveryResponse(
-            version="0.0.0",  # Indicates that it's not been discovered
+            version="0.0.0.0",  # Indicates that it's not been discovered
             features=FeaturesDetail(),
         )
 
@@ -228,7 +256,7 @@ class APIEndpoint:
         :params class cls: The class that is calling the method
         """
 
-        if Capabilities.CURRENT.version != "0.0.0" and isinstance(
+        if Capabilities.CURRENT.version != "0.0.0.0" and isinstance(
             Capabilities.CURRENT._good_known_since, datetime
         ):
             # We've already discovered the endpoints as per HATEOAS
@@ -435,28 +463,69 @@ class APIEndpoint:
         )
 
     @classmethod
-    async def poll(cls, response):
-        """Fetches the updated set of results
+    async def follow(
+        cls,
+        event: Event,
+        params: dict[str, Any] = {},
+    ):
+        """Fetches update and follows next to get the next set of results
 
-        Update follow the same pattern as next and previous, except
-        it keeps yielding results until the server has no more updates
+        Long poll behaviour in the Gallagher API uses the following pattern:
+        - The request will wait until there's a new set of changes
+        - If no changes are detected in 30 seconds then the server returns
+          a blank response with a new next link
+        - Follow the next link to get the next set of changes
+        - This repeats until you stop listening
+
+        This behaviour is followed by updates and changes endpoints, this method
+        should be used a helper for the updates and changes methods.
         """
         await cls._discover()
 
-        # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
-        # then we should raise an exception
-        if not issubclass(cls.__config__.dto_list, AppBaseResponseWithFollowModel):
-            """A response model must have a next, previous or update"""
+        if not cls.__config__.endpoint_follow:
             raise PathFollowNotSupportedError(
                 "Endpoint does not support previous, next or updates"
             )
 
-        return await cls._get(
-            cls.response.update.href,
-            cls.__config__.dto_list,
-        )
+        # Initial url is set to endpoint_follow
+        url = f"{cls.__config__.endpoint_follow.href}"
 
-    # Proposed methods for internal use
+        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
+            while event.is_set():
+                try:
+                    response = await _httpx_async.get(
+                        f"{url}",  # required to turn pydantic object to str
+                        headers=_get_authorization_headers(),
+                        params=params,
+                        timeout=TRANSPORT.TIMEOUT_POLL, # Next Gallagher CC wait
+                    )
+
+                    if response.status_code == HTTPStatus.OK:
+
+                        parsed_obj = cls.__config__.dto_follow.model_validate(
+                            response.json()
+                        )
+
+                        # send this back to the caller
+                        yield parsed_obj
+
+                        if not parsed_obj.next:
+                            return
+
+                        # set the url to the next follow and we should
+                        # be able to follow this endlessly
+                        url = f"{parsed_obj.next.href}"
+
+                    elif response.status_code == HTTPStatus.NOT_FOUND:
+                        raise NotFoundException()
+                    elif response.status_code == HTTPStatus.FORBIDDEN:
+                        raise UnlicensedFeatureException()
+                    elif response.status_code == HTTPStatus.UNAUTHORIZED:
+                        raise AuthenticationError()
+
+                except httpx.RequestError as e:
+                    raise (e)
+
     @classmethod
     async def _get(
         cls,
@@ -494,7 +563,9 @@ class APIEndpoint:
                     if not response_class:
                         return
 
-                    parsed_obj = response_class.model_validate(response.json())
+                    parsed_obj = response_class.model_validate(
+                        response.json()
+                    )
 
                     return parsed_obj
 
@@ -542,7 +613,9 @@ class APIEndpoint:
                         """No response to parse"""
                         return True
 
-                    parsed_obj = response_class.model_validate(response.json())
+                    parsed_obj = response_class.model_validate(
+                        response.json()
+                    )
 
                     return parsed_obj
 

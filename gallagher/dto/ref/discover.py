@@ -1,7 +1,13 @@
 """ Command Centre API discovery
 
-The Command Centre API has a discovery endpoint that allows
+The Command Centre API follows the HATEOAS principle, and all clients are meant
+to discover the API by following the links provided by the server.
 
+An instance of this class is used across the library to provide to dynamically
+link to the API endpoints.
+
+WARNING: please do not hardcode any URLs in the code, if you see this then please
+report this as a bug.
 """
 
 from ..utils import (
@@ -9,162 +15,87 @@ from ..utils import (
     OptionalHrefMixin,
 )
 
-
-class FeatureAccessGroupsRef(
-    AppBaseModel,
-):
+class FeatureAccessGroupsRef(AppBaseModel):
     access_groups: OptionalHrefMixin = None
 
-
-class FeatureAccessZonesRef(
-    AppBaseModel,
-):
+class FeatureAccessZonesRef(AppBaseModel):
     access_zones: OptionalHrefMixin = None
 
-
-class FeatureAlarmZonesRef(
-    AppBaseModel,
-):
+class FeatureAlarmZonesRef(AppBaseModel):
     alarm_zones: OptionalHrefMixin = None
 
-
-class FeatureAlarmsRef(
-    AppBaseModel,
-):
+class FeatureAlarmsRef(AppBaseModel):
     alarms: OptionalHrefMixin = None
     divisions: OptionalHrefMixin = None
     updates: OptionalHrefMixin = None
 
-
-class FeatureCardTypesRef(
-    AppBaseModel,
-):
+class FeatureCardTypesRef(AppBaseModel):
     assign: OptionalHrefMixin = None
     card_types: OptionalHrefMixin = None
 
-
-class FeatureCardholdersRef(
-    AppBaseModel,
-):
+class FeatureCardholdersRef(AppBaseModel):
     cardholders: OptionalHrefMixin = None
     changes: OptionalHrefMixin = None
     update_location_access_zones: OptionalHrefMixin = None
 
-
-class FeatureCompetenciesRef(
-    AppBaseModel,
-):
+class FeatureCompetenciesRef(AppBaseModel):
     competencies: OptionalHrefMixin = None
 
-
-class FeatureDayCategoriesRef(
-    AppBaseModel,
-):
+class FeatureDayCategoriesRef(AppBaseModel):
     day_categories: OptionalHrefMixin = None
 
-
-class FeatureDivisionsRef(
-    AppBaseModel,
-):
+class FeatureDivisionsRef(AppBaseModel):
     divisions: OptionalHrefMixin = None
 
-
-class FeatureDoorsRef(
-    AppBaseModel,
-):
+class FeatureDoorsRef(AppBaseModel):
     doors: OptionalHrefMixin = None
 
-
-class FeatureElevatorsRef(
-    AppBaseModel,
-):
+class FeatureElevatorsRef(AppBaseModel):
     elevator_groups: OptionalHrefMixin = None
 
-
-class FeatureEventsRef(
-    AppBaseModel,
-):
+class FeatureEventsRef(AppBaseModel):
     divisions: OptionalHrefMixin = None
     event_groups: OptionalHrefMixin = None
     events: OptionalHrefMixin = None
     updates: OptionalHrefMixin = None
 
-
-class FeatureFenceZonesRef(
-    AppBaseModel,
-):
+class FeatureFenceZonesRef(AppBaseModel):
     fence_zones: OptionalHrefMixin = None
 
-
-class FeatureInputsRef(
-    AppBaseModel,
-):
+class FeatureInputsRef(AppBaseModel):
     inputs: OptionalHrefMixin = None
 
-
-class FeatureInterlockGroupsRef(
-    AppBaseModel,
-):
+class FeatureInterlockGroupsRef(AppBaseModel):
     interlock_groups: OptionalHrefMixin = None
 
-
-class FeatureItemsRef(
-    AppBaseModel,
-):
+class FeatureItemsRef(AppBaseModel):
     item_types: OptionalHrefMixin = None
     items: OptionalHrefMixin = None
     updates: OptionalHrefMixin = None
 
-
-class FeatureLockerBanksRef(
-    AppBaseModel,
-):
+class FeatureLockerBanksRef(AppBaseModel):
     locker_banks: OptionalHrefMixin = None
 
-
-class FeatureMacrosRef(
-    AppBaseModel,
-):
+class FeatureMacrosRef(AppBaseModel):
     macros: OptionalHrefMixin = None
 
-
-class FeatureOperatorGroupsRef(
-    AppBaseModel,
-):
+class FeatureOperatorGroupsRef(AppBaseModel):
     operator_groups: OptionalHrefMixin = None
 
-
-class FeatureOutputsRef(
-    AppBaseModel,
-):
+class FeatureOutputsRef(AppBaseModel):
     outputs: OptionalHrefMixin = None
 
-
-class FeaturePersonalDataFieldsRef(
-    AppBaseModel,
-):
+class FeaturePersonalDataFieldsRef(AppBaseModel):
     personal_data_fields: OptionalHrefMixin = None
 
-
-class FeatureReceptionsRef(
-    AppBaseModel,
-):
+class FeatureReceptionsRef(AppBaseModel):
     receptions: OptionalHrefMixin = None
 
-
-class FeatureRolesRef(
-    AppBaseModel,
-):
+class FeatureRolesRef(AppBaseModel):
     roles: OptionalHrefMixin = None
 
-
-class FeatureSchedulesRef(
-    AppBaseModel,
-):
+class FeatureSchedulesRef(AppBaseModel):
     schedules: OptionalHrefMixin = None
 
-
-class FeatureVisitsRef(
-    AppBaseModel,
-):
+class FeatureVisitsRef(AppBaseModel):
     visits: OptionalHrefMixin = None

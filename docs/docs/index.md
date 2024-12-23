@@ -11,7 +11,7 @@ Our Python Toolkit focuses on enhancing the developer experience (DX) around the
 
 !!! note
 
-    While Anomaly is part of Gallagher's Technical Partner Program, this project is not officially affiliated with Gallagher.
+    Anomaly is part of Gallagher's Technical Partner Program, however this project is **not** officially affiliated with Gallagher and is solely maintained by Anomaly.
 
 ## How to get started?
 
@@ -36,7 +36,7 @@ All of our tools are written using the Python programming languages. We provide 
 
 Gallagher publish their [API reference](https://gallaghersecurity.github.io/cc-rest-docs/ref/index.html) which is built from an OpenAPI spec with [Spectacle](https://github.com/sourcey/spectacle) documentation generator flavours. The OpenAPI spec is maintained by hand and [can be found on Github](https://github.com/GallagherSecurity/cc-rest-docs/tree/master/swagger).
 
-While this is all you need to get started, it can be overwhelming to interact with the API directly.
+Even with substantial documentation, it can be overwhelming to interact with the API directly due to concerns of security, understanding various Internet standards.
 
 Our Python Toolkit aims to encapsulate the design requirements of the API and provide a Python interface for you to build your integrations. Simply put:
 
@@ -48,7 +48,7 @@ As we provided the viability of our commercial projects around Gallagher's infra
 
 The API client draws inspiration from the works of [Stripe](https://stripe.com) or [pyndatic](https://pydantic.dev) who are known for providing a superb developer experience. Our aim is to provide a similar quality of developer experience for Gallagher projects.
 
-While the entire project was built in self interest, we hope that many of you out there enjoy the developer experience if brings.
+This project was started off in solving a problem for ourselves, but we hope that many of you out there enjoy the developer experience if brings.
 
 ## Background
 

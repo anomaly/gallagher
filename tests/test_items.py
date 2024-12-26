@@ -73,13 +73,20 @@ async def test_items_follow_next(items_summary: ItemsSummaryResponse):
 
     follow_item_summary = items_summary
 
-    while follow_item_summary.next:
+    # Because this can go on forever, we'll just do 10 pages
+    page_number = 1
+
+    while page_number < 5:
+
         # Get the next page if there is one
         # assign it to the summary and keep it going
         follow_item_summary = await Item.next(follow_item_summary)
+
         assert type(follow_item_summary) is ItemsSummaryResponse
         assert type(follow_item_summary.results) is list
         assert len(follow_item_summary.results) > 0
+
+        page_number += 1
 
 
 async def test_item_detail(items_summary: ItemsSummaryResponse):

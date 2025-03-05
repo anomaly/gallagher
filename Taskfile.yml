@@ -1,11 +1,11 @@
-version: '3'
+version: "3"
 
-dotenv: ['.env']
+dotenv: [".env"]
 
 tasks:
   publish:tag:
     vars:
-      PROJ_VERSION: 
+      PROJ_VERSION:
         sh: poetry version | awk '{print $2}'
     prompt: "Before we build, is the version {{.PROJ_VERSION}} number up to date?"
     desc: tags the current commit
@@ -19,8 +19,7 @@ tasks:
       - poetry build
   test:
     desc: runs tests inside the virtualenv
-    summary:
-      runs all the tests inside the virtualenv, optionally
+    summary: runs all the tests inside the virtualenv, optionally
       provide the name of the test as an argument to run a single test
 
       this does not run coverage or provide tap output
@@ -28,15 +27,13 @@ tasks:
       - poetry run coverage run -m pytest -s tests/{{.CLI_ARGS}}
   test:tap:
     desc: runs tests with tap output
-    summary:
-      runs all the tests inside the virtualenv, optionally
+    summary: runs all the tests inside the virtualenv, optionally
       provide the name of the test as an argument to run a single test
     cmds:
       - poetry run coverage run -m pytest -s --tap tests/{{.CLI_ARGS}}
   test:list:
     desc: lists the available tests
-    summary:
-      runs collect only on pytest to list the tests available
+    summary: runs collect only on pytest to list the tests available
     cmds:
       - poetry run pytest --co
   test:coverreport:
@@ -54,19 +51,19 @@ tasks:
   dev:textual:
     desc: runs the textual cli
     cmds:
-      - poetry run textual -- {{.CLI_ARGS}} 
+      - poetry run textual -- {{.CLI_ARGS}}
   dev:tui:
     desc: runs text gallagher console in dev mode
     cmds:
       - poetry run textual run --dev gallagher.tui
   dev:py:
     desc: runs python in the poetry shell
-    cmds: 
+    cmds:
       - poetry run python -- {{.CLI_ARGS}}
   dev:docs:
     desc: run the mkdocs server with appropriate flags
-    cmds: 
-      - cd docs && mkdocs serve --open -a localhost:8001
+    cmds:
+      - cd docs && poetry run mkdocs serve --open -a localhost:8001
   debug:get:
     desc: use httpie to get payload from CC
     summary: |
@@ -99,4 +96,3 @@ tasks:
         http delete \
         https://commandcentre-api-au.security.gallagher.cloud/api/{{.CLI_ARGS}} \
         "Authorization: GGL-API-KEY $GACC_API_KEY"
-

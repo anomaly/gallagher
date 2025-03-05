@@ -41,6 +41,77 @@ following this you can call any of the SDK methods and the client will performan
 - `NoAPIKeyProvidedError` - If the API key is not set.
 - `ValueError` - If the API key does not conform to the expected format (which looks like eight tokens separated by `-`).
 
+#### Using TLS Certificates
+
+Command Centre optionally allows you to use self signed client side TLS certificates for authentication. You can use this along side your API key as an additional layer of security.
+
+You can use `openssl` to generate yourself a client side certificate and key.
+
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout client.key -out client.pem
+```
+
+Fill in the required details for the certificate and then generate a `sha1` hash of the certificate.
+
+```bash
+openssl x509 -in client.pem -noout -fingerprint -sha1
+```
+
+> Note that the Command Centre does not use the `colon` separated format, see their documentation for more information.
+
+Once you have completed these steps all you have to do is provide the path to the certificate and key files to the client.
+
+```python
+from gallagher import cc
+api_key = os.environ.get("GACC_API_KEY")
+cc.api_key = api_key
+
+cc.file_tls_certificate = '/path/to/client.pem'
+cc.file_private_key = '/path/to/client.key'
+```
+
+The rest of the requests and operations remain the same, the library will use an `SSL Context` to do the needful.
+
+> Our testsuites are configured to run with and without TLS certificates to ensure that we support both modes of operation.
+
+In instances (such as Github actions, where we store the certificate and key in the Github secrets manager) where you can't store the certficiate and key in the filesystem, you can use Python's `tempfile` module to create temporary files and clean up once you are done using them.
+
+```python
+import tempfile
+
+# Read these from the environment variables, if they exists
+# they will be written to temporary files
+certificate_anomaly = os.environ.get("CERTIFICATE_ANOMALY")
+private_key_anomaly = os.environ.get("PRIVATE_KEY_ANOMALY")
+
+# Create temporary files to store the certificate and private key
+temp_file_certificate = tempfile.NamedTemporaryFile(
+    suffix=".crt",
+    delete=False
+)
+temp_file_private_key = tempfile.NamedTemporaryFile(
+    suffix=".key",
+    delete=False
+)
+
+# Write the certificate and private key to temporary files
+if certificate_anomaly and temp_file_certificate:
+    temp_file_certificate.write(certificate_anomaly.encode('utf-8'))
+
+if private_key_anomaly and temp_file_private_key:
+    temp_file_private_key.write(private_key_anomaly.encode('utf-8'))
+```
+
+You can assign these temporary files to the client as shown above.
+
+```python
+from gallagher import cc
+
+cc.api_key = api_key
+cc.file_tls_certificate = temp_file_certificate.name
+cc.file_private_key = temp_file_private_key.name
+```
+
 ### Command Line Interface
 
 ### Terminal User Interface

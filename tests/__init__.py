@@ -31,40 +31,28 @@ def setup_module(module):
     certificate_anomaly = os.environ.get("CERTIFICATE_ANOMALY")
     private_key_anomaly = os.environ.get("PRIVATE_KEY_ANOMALY")
 
-    # Write the certificate_anomaly and private_key_anomaly to files
-    # if they exist
-    if certificate_anomaly:
-        with open('certificate.pem', 'w') as f:
-            f.write(certificate_anomaly)
-
-    if private_key_anomaly:
-        with open('private_key.pem', 'w') as f:
-            f.write(private_key_anomaly)
-
     # Create temporary files to store the certificate and private key
-    # temp_file_certificate = tempfile.NamedTemporaryFile(
-    #   suffix=".crt",
-    #   delete=False
-    # )
-    # temp_file_private_key = tempfile.NamedTemporaryFile(
-    #   suffix=".key",
-    #   delete=False
-    # )
+    temp_file_certificate = tempfile.NamedTemporaryFile(
+      suffix=".crt",
+      delete=False
+    )
+    temp_file_private_key = tempfile.NamedTemporaryFile(
+      suffix=".key",
+      delete=False
+    )
 
     # Write the certificate and private key to temporary files
-    # if certificate_anomaly and temp_file_certificate:
-    #   temp_file_certificate.write(certificate_anomaly.encode('utf-8'))
+    if certificate_anomaly and temp_file_certificate:
+      temp_file_certificate.write(certificate_anomaly.encode('utf-8'))
 
-    # if private_key_anomaly and temp_file_private_key:
-    #   temp_file_private_key.write(private_key_anomaly.encode('utf-8'))
+    if private_key_anomaly and temp_file_private_key:
+      temp_file_private_key.write(private_key_anomaly.encode('utf-8'))
 
     from gallagher import cc
 
     cc.api_key = api_key
-    # cc.file_tls_certificate = temp_file_certificate.name
-    # cc.file_private_key = temp_file_private_key.name
-    cc.file_tls_certificate = 'certificate.pem'
-    cc.file_private_key = 'private_key.pem'
+    cc.file_tls_certificate = temp_file_certificate.name
+    cc.file_private_key = temp_file_private_key.name
 
 
 def teardown_module(module):

@@ -26,6 +26,7 @@ from asyncio import Event
 
 from http import HTTPStatus  # Provides constants for HTTP status codes
 
+import ssl
 import httpx
 
 from . import proxy as proxy_address
@@ -232,6 +233,23 @@ class APIEndpoint:
         provide additional configuration options.
         """
         raise NotImplementedError("get_config method not implemented")
+    
+    @classmethod
+    def _ssl_context(cls):
+        """Returns the SSL context for the endpoint
+
+        This method can be overridden by the child class to
+        provide additional SSL context options.
+        """
+        from . import file_tls_certificate, file_private_key
+
+        if not file_tls_certificate:
+            """TLS certificate is required for SSL context"""
+            return None
+        
+        context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        context.load_cert_chain(file_tls_certificate, file_private_key)
+        return context
 
     @classmethod
     async def _discover(cls):
@@ -269,7 +287,10 @@ class APIEndpoint:
         # be called as part of the bootstrapping process
         from . import api_base
 
-        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
+        async with httpx.AsyncClient(
+                proxy=proxy_address,
+                verify=cls._ssl_context(),
+            ) as _httpx_async:
             # Don't use the _get wrapper here, we need to get the raw response
             response = await _httpx_async.get(
                 api_base,
@@ -490,7 +511,11 @@ class APIEndpoint:
         # Initial url is set to endpoint_follow
         url = f"{cls.__config__.endpoint_follow.href}"
 
-        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
+        async with httpx.AsyncClient(
+                proxy=proxy_address,
+                verify=cls._ssl_context(),
+            ) as _httpx_async:
+
             while event.is_set():
                 try:
                     response = await _httpx_async.get(
@@ -546,7 +571,10 @@ class APIEndpoint:
         :param str url: URL to fetch the data from
         :param AppBaseModel response_class: DTO to be used for list requests
         """
-        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
+        async with httpx.AsyncClient(
+                proxy=proxy_address,
+                verify=cls._ssl_context(),
+            ) as _httpx_async:
 
             try:
 
@@ -594,7 +622,10 @@ class APIEndpoint:
         The behaviour is very similar to the _get method, except
         parsing and sending out a body as part of the request. 
         """
-        async with httpx.AsyncClient(proxy=proxy_address) as _httpx_async:
+        async with httpx.AsyncClient(
+                proxy=proxy_address,
+                verify=cls._ssl_context(),
+            ) as _httpx_async:
 
             try:
 

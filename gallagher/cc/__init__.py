@@ -29,6 +29,12 @@ from ..const import URL
 # to obtain an API key
 api_key: str = None
 
+# Certificate file to be used for authentication
+file_tls_certificate: str = None
+
+# Private key file to be used for authentication
+file_private_key: str = None
+
 # By default the base API is set to the Australian Gateway
 # Override this with the US gateway or a local DNS/IP address
 api_base: str = URL.CLOUD_GATEWAY_AU

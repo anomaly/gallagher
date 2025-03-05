@@ -132,6 +132,14 @@ Our current aliases are:
 
 `type` is another `key` that that constant appears in the `JSON` payloads, while this is a reserved function name in Python, it does not conflict with the compiler when used as a variable name. For now we've chosen not to wrap this in an alias.
 
+## Custom Headers
+
+The `httpx` wrappers sets the following headers for all requests sent to the command centre:
+
+- `Content-Type` set to `application/json` to let the command centre know that we are sending JSON payloads
+- `User-Agent` set of `GallagherPyToolkit/1.0` where `1.0` is the version number discovered from `gallagher/__init__.py`
+- `Authorization` set to `GGL-API-KEY 9939-00-` as prescribed by the official documentation
+
 ## API Client Core
 
 The `core` package in `cc` provides two important classes:

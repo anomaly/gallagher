@@ -12,6 +12,7 @@
   TODO: check if setup and teardown can be turned into async
 
 """
+import tempfile
 
 
 def setup_module(module):
@@ -25,9 +26,33 @@ def setup_module(module):
 
     api_key = os.environ.get("GACC_API_KEY")
 
+    # Read these from the environment variables, if they exists
+    # they will be written to temporary files
+    certificate_anomaly = os.environ.get("CERTIFICATE_ANOMALY")
+    private_key_anomaly = os.environ.get("PRIVATE_KEY_ANOMALY")
+
+    # Create temporary files to store the certificate and private key
+    temp_file_certificate = tempfile.NamedTemporaryFile(
+      suffix=".crt",
+      delete=False
+    )
+    temp_file_private_key = tempfile.NamedTemporaryFile(
+      suffix=".key",
+      delete=False
+    )
+
+    # Write the certificate and private key to temporary files
+    if certificate_anomaly and temp_file_certificate:
+      temp_file_certificate.write(certificate_anomaly.encode('utf-8'))
+
+    if private_key_anomaly and temp_file_private_key:
+      temp_file_private_key.write(private_key_anomaly.encode('utf-8'))
+
     from gallagher import cc
 
     cc.api_key = api_key
+    cc.file_tls_certificate = temp_file_certificate.name
+    cc.file_private_key = temp_file_private_key.name
 
 
 def teardown_module(module):

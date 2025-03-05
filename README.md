@@ -40,15 +40,9 @@ import os
 import asyncio
 
 # Import the client and models
-from gallagher import (
-    cc,
-)
-from gallagher.dto.summary import (
-    CardholderSummary,
-)
-from gallagher.cc.cardholders import (
-    Cardholder,
-)
+from gallagher import cc
+from gallagher.dto.summary import CardholderSummary
+from gallagher.cc.cardholders import Cardholder
 
 # Set the API key from the environment
 api_key = os.environ.get("GACC_API_KEY")
@@ -287,8 +281,6 @@ class VisitorTypeDetail(
     AppBaseModel,
     IdentityMixin
 ):
-    """
-    """
     access_group : AccessGroupRef
     host_access_groups: list[AccessGroupSummary]
     visitor_access_groups: list[AccessGroupSummary]
@@ -317,8 +309,6 @@ class VisitorTypeDetail(
     AppBaseModel,
     IdentityMixin
 ):
-    """
-    """
     access_group : AccessGroupRef
     host_access_groups: list[AccessGroupSummary]
     visitor_access_groups: list[AccessGroupSummary]

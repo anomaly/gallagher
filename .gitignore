@@ -5,6 +5,7 @@
 .envrc
 
 # Byte-compiled / optimized / DLL files
+.certs
 .secret
 .DS_Store
 __pycache__/

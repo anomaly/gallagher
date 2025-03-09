@@ -2,6 +2,7 @@
 
 """
 
+import ssl
 import pytest
 import httpx
 
@@ -26,7 +27,19 @@ async def discover_response() -> DiscoveryResponse:
     :return: DiscoveryResponse
     """
 
-    async with httpx.AsyncClient() as _httpx_async:
+    ssl_context = None
+
+    if cc.file_tls_certificate and cc.file_private_key:
+        ssl_context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        ssl_context.load_cert_chain(
+            cc.file_tls_certificate,
+            cc.file_private_key
+        )
+
+    async with httpx.AsyncClient(
+        proxy=cc.proxy,
+        verify=ssl_context,
+    ) as _httpx_async:
         response = await _httpx_async.get(
             cc.api_base,
             headers=core._get_authorization_headers(),

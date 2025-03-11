@@ -185,8 +185,6 @@ class AccessGroupRef(
     AppBaseModel,
     HrefMixin
 ):
-    """ Access Groups is what a user is assigned to to provide access to doors
-    """
     name: str
 ```
 
@@ -194,11 +192,6 @@ where the `HrefMixin` (see also `OptionalHrefMixin` for use where the `href` is 
 
 ```python
 class HrefMixin(BaseModel):
-    """ Href
-
-    This mixin is used to define the href field for all
-    responses from the Gallagher API.
-    """
     href: str
 ```
 
@@ -209,9 +202,6 @@ class DivisionDetail(
     AppBaseModel,
     IdentityMixin,
 ):
-    """ Defines a Division on the Gallagher Command Centre
-    """
-
     name: str
     description: Optional[str] = None
     server_display_name: Optional[str] = None
@@ -229,8 +219,6 @@ class AccessGroupRef(
     AppBaseModel,
     HrefMixin
 ):
-    """ Access Groups is what a user is assigned to to provide access to doors
-    """
     name: str
 ```
 
@@ -238,11 +226,6 @@ where the `HrefMixin` provides the `href` attribute:
 
 ```python
 class HrefMixin(BaseModel):
-    """ Href
-
-    This mixin is used to define the href field for all
-    responses from the Gallagher API.
-    """
     href: str
 ```
 
@@ -253,9 +236,6 @@ class DivisionDetail(
     AppBaseModel,
     IdentityMixin,
 ):
-    """ Outlines the definition of a Division on the Gallagher Command Centre
-    """
-
     name: str
     description: Optional[str]
     server_display_name: str
@@ -269,8 +249,6 @@ class AccessGroupRef(
     AppBaseModel,
     HrefMixin
 ):
-    """ Access Groups is what a user is assigned to to provide access to doors
-    """
     name: str
 ```
 
@@ -297,8 +275,6 @@ class AccessGroupRef(
     AppBaseModel,
     HrefMixin
 ):
-    """ Access Groups is what a user is assigned to to provide access to doors
-    """
     name: str
 ```
 

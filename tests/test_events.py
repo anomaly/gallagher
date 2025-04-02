@@ -10,6 +10,10 @@ from gallagher.dto.response import (
     EventSummaryResponse,
 )
 
+from gallagher.dto.summary.event import (
+    EventSummary,
+)
+
 from gallagher.cc.alarms.events import (
     EventType,
     Event,
@@ -68,10 +72,8 @@ async def test_event_updates():
         asyncio_event=event,
     ):
         for update_event in updates.events:
-
-            print(update_event.message)
+            assert type(update_event) is EventSummary
             count += 1
-
-            # if count > 10:
-            #     event.clear()
-            #     break
+            if count > 3:
+                event.clear()
+                break

@@ -66,7 +66,7 @@ class EventSummary(
     alarm: Optional[AlarmRef] = None
 
     operator: Optional[CardholderRef] = None
-    source: ItemRef
+    source: Optional[ItemRef] = None
     group: Optional[EventGroupRef] = None
     type: Optional[EventTypeSummary] = None
     event_type: Optional[EventTypeSummary] = None

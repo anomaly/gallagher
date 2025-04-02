@@ -1,6 +1,6 @@
 from typing import Optional
 
-from ..utils import AppBaseModel, IdentityMixin, HrefMixin
+from ..utils import AppBaseModel, IdentityMixin, OptionalHrefMixin
 
 
 class ItemTypeSummary(
@@ -19,7 +19,7 @@ class ItemTypeSummary(
 
 class ItemSummary(
     AppBaseModel,
-    HrefMixin,
+    OptionalHrefMixin,
     IdentityMixin,
 ):
     """Summary of an Item which adds the notes and

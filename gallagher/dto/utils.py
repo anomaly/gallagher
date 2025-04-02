@@ -65,15 +65,15 @@ class IdentityMixin(BaseModel):
 
     id: str
 
+class OptionalIdentityMixin(BaseModel):
+    """Optionally available Identifier
 
-class HrefMixin(BaseModel):
-    """Href
+    This is used to define identifiers when they aren't available
+    in cases of event streams and the likes.
 
-    This mixin is used to define the href field for all
-    responses from the Gallagher API.
+    See https://github.com/anomaly/gallagher/issues/71 for the origin story.
     """
-
-    href: HttpUrl
+    id: Optional[str] = None
 
 class TypeValuePair(BaseModel):
     """Type Value Pair
@@ -93,6 +93,15 @@ class TypeValuePair(BaseModel):
 
     type: str
     value: str
+
+class HrefMixin(BaseModel):
+    """Href
+
+    This mixin is used to define the href field for all
+    responses from the Gallagher API.
+    """
+
+    href: HttpUrl
 
 class OptionalHrefMixin(BaseModel):
     """Optionally available Href

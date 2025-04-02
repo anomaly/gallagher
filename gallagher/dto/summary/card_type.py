@@ -2,7 +2,7 @@ from typing import Optional
 
 from ..utils import (
     AppBaseModel,
-    IdentityMixin,
+    OptionalIdentityMixin,
 )
 
 class CardExpiryTypeSummary(AppBaseModel):
@@ -11,7 +11,7 @@ class CardExpiryTypeSummary(AppBaseModel):
 
 class CardSummary(
     AppBaseModel,
-    IdentityMixin,
+    OptionalIdentityMixin,
 ):
     """Card summary as sent by the Event objects
 

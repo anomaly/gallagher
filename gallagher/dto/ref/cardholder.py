@@ -2,7 +2,6 @@ from typing import Optional
 
 from ..utils import (
     AppBaseModel,
-    HrefMixin,
     IdentityMixin,
     OptionalHrefMixin,
 )
@@ -10,7 +9,7 @@ from ..utils import (
 
 class CardholderRef(
     AppBaseModel,
-    HrefMixin,
+    OptionalHrefMixin,
 ):
     """Reference to a Cardholder"""
 

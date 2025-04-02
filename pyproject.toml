@@ -27,7 +27,7 @@ tui = ["textual"]
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.28.0"
-pydantic = { version = "^2.10.0b1", allow-prereleases = true }
+pydantic = "^2.11.1"
 typing-extensions = "^4.11.0"
 annotated-types = "^0.7.0"
 certifi = "^2025.1.31"

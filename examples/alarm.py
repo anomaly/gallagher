@@ -18,7 +18,7 @@ async def main():
     event.set()
 
     async for updates in Alarms.follow(
-        event=event,
+        asyncio_event=event,
     ):
         
         for update in updates.updates:

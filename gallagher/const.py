@@ -23,9 +23,9 @@ class IP_ADDR:
     https://gallaghersecurity.github.io/commandcentre-cloud-api-gateway.html
     """
 
-    CLOUD_GATEWAY_AU = ["3.106.1.6", "3.106.100.112"]
+    CLOUD_GATEWAY_AU: list[str] = ["3.106.1.6", "3.106.100.112"]
 
-    CLOUD_GATEWAY_US = ["44.193.42.111", "3.209.194.103"]
+    CLOUD_GATEWAY_US: list[str] = ["44.193.42.111", "3.209.194.103"]
 
 
 class TRANSPORT:

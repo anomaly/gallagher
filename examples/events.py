@@ -49,7 +49,7 @@ async def main():
     event.set()
 
     async for updates in Event.follow(
-        event=event,
+        asyncio_event=event,
     ):
         for update_event in updates.events:
             print("Processing event")

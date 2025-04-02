@@ -27,7 +27,7 @@ tui = ["textual"]
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.28.0"
-pydantic = { version = "^2.10.0b1", allow-prereleases = true }
+pydantic = "^2.11.1"
 typing-extensions = "^4.11.0"
 annotated-types = "^0.7.0"
 certifi = "^2025.1.31"
@@ -67,7 +67,7 @@ rich = "^13.7.1"
 
 
 [tool.poetry.group.tui.dependencies]
-textual = "^2.1.1"
+textual = "^3.0.0"
 textual-dev = "^1.7.0"
 
 
@@ -80,7 +80,7 @@ shillelagh = "^1.2.19"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.4.3"
-pytest-asyncio = "^0.25.0"
+pytest-asyncio = "^0.26.0"
 
 [tool.poetry.scripts]
 gala = "gallagher.cli:app"

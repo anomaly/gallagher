@@ -44,6 +44,10 @@ from gallagher import cc
 from gallagher.dto.summary import CardholderSummary
 from gallagher.cc.cardholders import Cardholder
 
+# Optionally provide a client certificate and key
+cert_path = os.path.join(os.getcwd(), "client.pem")
+key_path = os.path.join(os.getcwd(), "client.key")
+
 # Set the API key from the environment
 api_key = os.environ.get("GACC_API_KEY")
 cc.api_key = api_key

@@ -297,11 +297,11 @@ async def main():
     cc.api_key = api_key
 
     # Used to control the event loop
-    event = asyncio.Event()
-    event.set()
+    asyncio_event = asyncio.Event()
+    asyncio_event.set()
 
     async for updates in Alarms.follow(
-        event=event,
+        asyncio_event=asyncio_event,
     ):
 
         for update in updates.updates:
@@ -310,7 +310,7 @@ async def main():
         # Examples of stopping the loop if
         # we got no updates
         if len(updates.updates) == 0:
-            event.clear()
+            asyncio_event.clear()
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -22,8 +22,6 @@ from ...dto.response import (
 
 class Event(APIEndpoint):
     """Event
-
-
     
     How updates differ from GET:
 

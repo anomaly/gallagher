@@ -22,7 +22,7 @@ from typing import (
 from datetime import datetime
 from dataclasses import dataclass
 
-from asyncio import Event
+from asyncio import Event as AsyncioEvent  # Used for signalling events
 
 from http import HTTPStatus  # Provides constants for HTTP status codes
 
@@ -486,10 +486,14 @@ class APIEndpoint:
     @classmethod
     async def follow(
         cls,
-        event: Event,
+        asyncio_event: AsyncioEvent, # Not to be confused with Gallagher event
         params: dict[str, Any] = {},
     ):
         """Fetches update and follows next to get the next set of results
+
+        parameters:
+        - event: asyncio.Event object to signal when to stop
+        - params: dictionary of parameters to pass to the endpoint
 
         Long poll behaviour in the Gallagher API uses the following pattern:
         - The request will wait until there's a new set of changes
@@ -516,7 +520,7 @@ class APIEndpoint:
                 verify=cls._ssl_context(),
             ) as _httpx_async:
 
-            while event.is_set():
+            while asyncio_event.is_set():
                 try:
                     response = await _httpx_async.get(
                         f"{url}",  # required to turn pydantic object to str

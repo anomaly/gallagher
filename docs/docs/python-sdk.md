@@ -26,7 +26,7 @@ poetry add gallagher
 
 For production application please make sure you target a particular version of the API client to avoid breaking changes.
 
-## Data Transfer Objects (DTO) Premiere
+## Data Transfer Objects (DTO) premiere
 
 The Data Transfer Objects or DTOs are the centre piece of the Python SDK. These are built using the much loved [pyndatic](https://pydantic.dev) library. The aim is strict validation of responses and request payloads to ensure that the SDK never falls out of line with Gallagher' REST API.
 
@@ -47,7 +47,7 @@ In addition to DTOs, you will see a number of :
 
 If you are fetching a `detail` then they are returned on their own as part of the response. They typically contain `href` to related objects.
 
-## API Endpoint Lifecycle
+## API endpoint lifecycle
 
 You do not need to look under the hood to work with the API client. This section was written for you to understand how we implement Gallagher's requirements for standard based development. Each endpoint inherits from a base class called `APIEndpoint` defined in `gallagher/cc/core.py` and provides a configuration that describes the behaviour of the endpoint (in accordance with the Command Centre API).
 
@@ -115,7 +115,7 @@ cc.api_base = URL.CLOUD_GATEWAY_US
 
 In cases where you are targeting a local Command Centre, you can set the `api_base` to the FQDN or IP address of the Command Centre that's locally accessible on the network.
 
-### Proxy Support
+### Proxy support
 
 Thanks to `httpx` we have proxy support built in out of the box. By default the `proxy` is set to `None` indicating that one isn't in use. If you wish to use a proxy for your use case, then simply set the `proxy` attribute on the `cc` object like you would the `api_base` or `api_key`.
 
@@ -270,7 +270,7 @@ while items_summary.next:
     determined from the response object. This ensures that we can update the SDK as the API changes
     leaving your code intact.
 
-# Updates and Changes
+## Follow for changes
 
 Entities like `Cardholders`, `Alarms`, `Items`, and `Event` provide `updates` or `changes`, that can be monitored for updates. Essentially these are long poll endpoints that:
 
@@ -339,6 +339,10 @@ async def get_config(cls) -> EndpointConfig:
         dto_retrieve=AlarmDetail,
     )
 ```
+
+!!! warning
+
+    As a breaking change in `8.90` the operator must have the 'Create Events and Alarms' privilege in the division of the source item, if your request specifies a source item. Current versions only require that the operator has that privilege on at least one division.
 
 ## Error Handling
 

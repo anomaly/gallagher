@@ -41,7 +41,7 @@ following this you can call any of the SDK methods and the client will performan
 - `NoAPIKeyProvidedError` - If the API key is not set.
 - `ValueError` - If the API key does not conform to the expected format (which looks like eight tokens separated by `-`).
 
-#### Using TLS Certificates
+#### Using TLS certificates
 
 Command Centre optionally allows you to use self signed client side TLS certificates for authentication. You can use this along side your API key as an additional layer of security.
 
@@ -74,7 +74,7 @@ The rest of the requests and operations remain the same, the library will use an
 
 > Our testsuites are configured to run with and without TLS certificates to ensure that we support both modes of operation.
 
-In instances (such as Github actions, where we store the certificate and key in the Github secrets manager) where you can't store the certficiate and key in the filesystem, you can use Python's `tempfile` module to create temporary files and clean up once you are done using them.
+In instances (such as Github actions, where we store the certificate and key in the Github secrets manager) where you can't store the certificate and key in the filesystem, you can use Python's `tempfile` module to create temporary files and clean up once you are done using them.
 
 ```python
 import tempfile
@@ -112,13 +112,13 @@ cc.file_tls_certificate = temp_file_certificate.name
 cc.file_private_key = temp_file_private_key.name
 ```
 
-### Command Line Interface
+### Command line interface
 
-### Terminal User Interface
+### Terminal user interface
 
-### SQL Support
+### SQL support
 
-## Developer Notes
+## Developer notes
 
 This library uses [httpx](https://www.python-httpx.org) as the HTTP transport and [pydantic](https://pydantic.dev) to construct and ingest payloads. We use [taskfile](https://taskfile.dev) to run tasks. Our test suite is setup using `pytest`.
 
@@ -140,7 +140,7 @@ Some of the `task` targets take parameters e.g.
 
 `task test` will run the entire test suite, while `task test -- test_cardholder.py` will run only the tests in `test_cardholder.py`.
 
-### Building the Docs
+### Building the docs
 
 The documentation is build using [mkdocs](https://www.mkdocs.org) and hosted on [Github pages](https://anomaly.github.io/gallagher/). The project repository is configured to build and publish the documentation on every commit to the `master` branch.
 

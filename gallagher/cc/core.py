@@ -526,7 +526,6 @@ class APIEndpoint:
                         f"{url}",  # required to turn pydantic object to str
                         headers=_get_authorization_headers(),
                         params=params,
-                        timeout=TRANSPORT.TIMEOUT_POLL, # Next Gallagher CC wait
                     )
 
                     if response.status_code == HTTPStatus.OK:

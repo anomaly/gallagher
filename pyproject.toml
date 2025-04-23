@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gallagher"
-version = "0.1.0-alpha.9"
+version = "0.1.0-alpha.10"
 description = "The missing developer toolkit for Gallagher Command Centre"
 authors = ["Dev Mukherjee <devraj@gmail.com>"]
 readme = "README.md"

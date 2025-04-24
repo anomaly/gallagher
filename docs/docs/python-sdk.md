@@ -367,6 +367,7 @@ Personal Data Definitions are fields associated to a cardholder and are defined 
 - children of the `personalDataFields` key in the cardholder detail
 - accessible via key name prefixed with the `@` symbol i.e the personal data field `Email` is accessible via the key `@Email`
 
+
 !!! tip
 
     Note that the `personDataFields` has a `list` of objects, and each object has a single key which is the nae of the personal data field and the value is the related data.
@@ -399,10 +400,33 @@ and we had used the API client to fetch the cardholder detail (partial example):
 cardholder = await Cardholder.retrieve(340)
 ```
 
-you could access the `Email` field either via iterating over `cardholder.personal_data_definitions` and looking to match the `key` attribute of the object to `@Email` or using the parsed shortcut `cardholder.pdf.email`.
+`cardholder` would have two fields:
+- `personal_data_definitions` which is a list of `CardholderPersonalDataDefinition` objects
+- `pdf` which is a parsed object of the personal data fields
 
-The above is achieved by dynamically populating a placeholder object with dynamically generated keys. These are parsed and populate _once_ when the object has successfully parsed the `JSON` payload.
+`cardholder.personal_data_definitions` is iterable, each instance exposing a `name` and `contents` fields. Use the `value` attribute of `contents` to access the PDF value:
+
+```python
+for pdf in cardholder.personal_data_definitions:
+    if pdf.name == '@Email':
+        print(pdf.name, pdf.contents.value)
+```
 
 !!! tip
 
     See pyndatic's [Model validator](https://docs.pydantic.dev/latest/concepts/validators/#model-validators) feature in v2, in particular the `@model_validator(mode='after')` constructor.
+
+The `cardholder` object will also expose a special attribute called `pdf`. Each instance available in the `personal_data_definitions` field will be mapped to a Pythonic `snake_cased` key, that lets you access the same  `CardholderPersonalDataDefinition` object via the `@` prefixed key name. So the above example of accessing the `@Email` field can be done as follows:
+
+```python
+cardholder.pdf.email.value
+```
+
+The `pdf` attribute is dynamically populated object with dynamically generated keys. Here are some examples of how `PDF` field names are mapped to `snake_case` keys:
+
+- `@Cardholder UID` would become `pdf.cardholder_uid`
+- `@City` would become `pdf.city`
+- `@Company Name` would become `pdf.company_name`
+- `@PINNumber` would become `pdf.pin_number`
+
+Both approaches have their merits and you should use the one that suits your use case.

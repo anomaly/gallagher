@@ -18,7 +18,9 @@ ignore them unless you are developing the client itself.
 from typing import (
     Optional,
 )
-from functools import cached_property
+
+import re
+
 from typing_extensions import Annotated
 
 from datetime import datetime
@@ -52,9 +54,35 @@ def _to_lower_camel(name: str) -> str:
     return upper[:1].lower() + upper[1:]
 
 
+def _to_snake_case_key(key: str) -> str:
+    """ Changes keys to snake_case
+
+    This is used to convert keys from the Gallagher API to
+    snake_case. Primarily used to change PDF field names to
+    snake_case fields that are dynamically created.
+
+    1. Strip leading '@'
+    2. Replace spaces or dashes with underscores
+    3. Split acronym/word boundary: e.g. PINNumber → PIN_Number
+    4. Split camelCase boundary: e.g. fooBar → foo_Bar
+    5. Collapse multiple underscores
+    6. Lowercase
+    """
+    # 1) remove leading '@'
+    key = key.lstrip('@')
+    # 2) normalize spaces/dashes to underscore
+    key = re.sub(r'[\s\-]+', '_', key)
+    # 3) acronym boundary: uppercase-seq → uppercase + lowercase
+    key = re.sub(r'(?<=[A-Z])(?=[A-Z][a-z])', '_', key)
+    # 4) camelCase boundary: lowercase/digit → uppercase
+    key = re.sub(r'(?<=[a-z0-9])(?=[A-Z])', '_', key)
+    # 5) collapse multiple underscores
+    key = re.sub(r'__+', '_', key)
+    # 6) lowercase
+    return key.lower()
+
 # Ensure that the primitive wrappers such as Mixins appear
 # before the generic classes for parsing utilities
-
 
 class IdentityMixin(BaseModel):
     """Identifier

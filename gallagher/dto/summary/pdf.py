@@ -4,13 +4,13 @@ from ..enum import PdfType
 
 from ..utils import (
     AppBaseModel,
-    HrefMixin,
+    OptionalHrefMixin,
     IdentityMixin,
 )
 
 class PdfSummary(
     AppBaseModel,
-    HrefMixin,
+    OptionalHrefMixin,
     IdentityMixin,
 ):
     """ Personal Data Field Summary

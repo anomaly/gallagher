@@ -26,7 +26,7 @@ poetry add gallagher
 
 For production application please make sure you target a particular version of the API client to avoid breaking changes.
 
-## Data Transfer Objects (DTO) Premiere
+## Data Transfer Objects (DTO) premiere
 
 The Data Transfer Objects or DTOs are the centre piece of the Python SDK. These are built using the much loved [pyndatic](https://pydantic.dev) library. The aim is strict validation of responses and request payloads to ensure that the SDK never falls out of line with Gallagher' REST API.
 
@@ -47,7 +47,7 @@ In addition to DTOs, you will see a number of :
 
 If you are fetching a `detail` then they are returned on their own as part of the response. They typically contain `href` to related objects.
 
-## API Endpoint Lifecycle
+## API endpoint lifecycle
 
 You do not need to look under the hood to work with the API client. This section was written for you to understand how we implement Gallagher's requirements for standard based development. Each endpoint inherits from a base class called `APIEndpoint` defined in `gallagher/cc/core.py` and provides a configuration that describes the behaviour of the endpoint (in accordance with the Command Centre API).
 
@@ -115,7 +115,7 @@ cc.api_base = URL.CLOUD_GATEWAY_US
 
 In cases where you are targeting a local Command Centre, you can set the `api_base` to the FQDN or IP address of the Command Centre that's locally accessible on the network.
 
-### Proxy Support
+### Proxy support
 
 Thanks to `httpx` we have proxy support built in out of the box. By default the `proxy` is set to `None` indicating that one isn't in use. If you wish to use a proxy for your use case, then simply set the `proxy` attribute on the `cc` object like you would the `api_base` or `api_key`.
 
@@ -270,7 +270,7 @@ while items_summary.next:
     determined from the response object. This ensures that we can update the SDK as the API changes
     leaving your code intact.
 
-# Updates and Changes
+## Follow for changes
 
 Entities like `Cardholders`, `Alarms`, `Items`, and `Event` provide `updates` or `changes`, that can be monitored for updates. Essentially these are long poll endpoints that:
 
@@ -340,6 +340,10 @@ async def get_config(cls) -> EndpointConfig:
     )
 ```
 
+!!! warning
+
+    As a breaking change in `8.90` the operator must have the 'Create Events and Alarms' privilege in the division of the source item, if your request specifies a source item. Current versions only require that the operator has that privilege on at least one division.
+
 ## Error Handling
 
 ### Exceptions
@@ -362,6 +366,7 @@ Personal Data Definitions are fields associated to a cardholder and are defined 
 
 - children of the `personalDataFields` key in the cardholder detail
 - accessible via key name prefixed with the `@` symbol i.e the personal data field `Email` is accessible via the key `@Email`
+
 
 !!! tip
 
@@ -395,10 +400,33 @@ and we had used the API client to fetch the cardholder detail (partial example):
 cardholder = await Cardholder.retrieve(340)
 ```
 
-you could access the `Email` field either via iterating over `cardholder.personal_data_definitions` and looking to match the `key` attribute of the object to `@Email` or using the parsed shortcut `cardholder.pdf.email`.
+`cardholder` would have two fields:
+- `personal_data_definitions` which is a list of `CardholderPersonalDataDefinition` objects
+- `pdf` which is a parsed object of the personal data fields
 
-The above is achieved by dynamically populating a placeholder object with dynamically generated keys. These are parsed and populate _once_ when the object has successfully parsed the `JSON` payload.
+`cardholder.personal_data_definitions` is iterable, each instance exposing a `name` and `contents` fields. Use the `value` attribute of `contents` to access the PDF value:
+
+```python
+for pdf in cardholder.personal_data_definitions:
+    if pdf.name == '@Email':
+        print(pdf.name, pdf.contents.value)
+```
 
 !!! tip
 
     See pyndatic's [Model validator](https://docs.pydantic.dev/latest/concepts/validators/#model-validators) feature in v2, in particular the `@model_validator(mode='after')` constructor.
+
+The `cardholder` object will also expose a special attribute called `pdf`. Each instance available in the `personal_data_definitions` field will be mapped to a Pythonic `snake_cased` key, that lets you access the same  `CardholderPersonalDataDefinition` object via the `@` prefixed key name. So the above example of accessing the `@Email` field can be done as follows:
+
+```python
+cardholder.pdf.email.value
+```
+
+The `pdf` attribute is dynamically populated object with dynamically generated keys. Here are some examples of how `PDF` field names are mapped to `snake_case` keys:
+
+- `@Cardholder UID` would become `pdf.cardholder_uid`
+- `@City` would become `pdf.city`
+- `@Company Name` would become `pdf.company_name`
+- `@PINNumber` would become `pdf.pin_number`
+
+Both approaches have their merits and you should use the one that suits your use case.

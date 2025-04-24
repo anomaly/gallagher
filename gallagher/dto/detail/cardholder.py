@@ -2,12 +2,14 @@
 from typing import Optional, Any
 from typing_extensions import Self
 
-from pydantic import model_validator, Field
+from pydantic import model_validator
 
 from ..utils import (
     AppBaseModel,
     IdentityMixin,
     HrefMixin,
+    OptionalHrefMixin,
+    _to_snake_case_key,
 )
 
 from ..ref import (
@@ -111,8 +113,8 @@ class CardholderDetail(
     # operator_groups
     # competencies
 
-    edit: HrefMixin
-    update_location: HrefMixin
+    edit: OptionalHrefMixin = None
+    update_location: OptionalHrefMixin = None
     notes: Optional[str] = None
 
     # notifications
@@ -164,9 +166,9 @@ class CardholderDetail(
             # if you compare these in the tests, they should be the same
             setattr(
                 self.pdf, 
-                # replace spaces with underscores and make it lowercase
+                # turn the key into a snake case key
                 # ignore the prefixed @ symbol
-                pdf_field.name[1:].replace(' ', '_').lower(),
+                _to_snake_case_key(pdf_field.name),
                 pdf_field.contents
             )
 

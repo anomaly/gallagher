@@ -65,7 +65,6 @@ async def test_event_updates():
     # Make an asyncio Event, this is used to signal the event to stop
     # use this to cancel the loop
     event = asyncio.Event()
-    event.set()
     count = 0
 
     async for updates in Event.follow(
@@ -75,5 +74,4 @@ async def test_event_updates():
             assert type(update_event) is EventSummary
             count += 1
             if count > 3:
-                event.clear()
-                break
+                event.set()

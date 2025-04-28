@@ -298,7 +298,6 @@ async def main():
 
     # Used to control the event loop
     asyncio_event = asyncio.Event()
-    asyncio_event.set()
 
     async for updates in Alarms.follow(
         asyncio_event=asyncio_event,
@@ -310,7 +309,7 @@ async def main():
         # Examples of stopping the loop if
         # we got no updates
         if len(updates.updates) == 0:
-            asyncio_event.clear()
+            asyncio_event.set()
 
 if __name__ == "__main__":
     asyncio.run(main())

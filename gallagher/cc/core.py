@@ -520,7 +520,7 @@ class APIEndpoint:
                 verify=cls._ssl_context(),
             ) as _httpx_async:
 
-            while asyncio_event.is_set():
+            while not asyncio_event.is_set():
                 try:
                     response = await _httpx_async.get(
                         f"{url}",  # required to turn pydantic object to str

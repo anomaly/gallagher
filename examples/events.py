@@ -46,7 +46,6 @@ async def main():
     cc.api_key = api_key
 
     event = asyncio.Event()
-    event.set()
 
     async for updates in Event.follow(
         asyncio_event=event,

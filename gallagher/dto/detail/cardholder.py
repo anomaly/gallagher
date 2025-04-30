@@ -1,5 +1,6 @@
 """ Cardholder Detail """
 from typing import Optional, Any
+from datetime import datetime
 from typing_extensions import Self
 
 from pydantic import model_validator
@@ -17,6 +18,7 @@ from ..ref import (
     DivisionRef,
     PlaceholderRef,
     RoleRef,
+    AccessZoneRef,
 )
 
 from ..summary import (
@@ -93,6 +95,10 @@ class CardholderDetail(
     short_name: Optional[str] = None
     description: Optional[str] = None
     authorised: bool
+
+    last_successful_access_time: Optional[datetime] = None
+    # last_successful_access_zone: Optional[AccessZoneRef] = None
+    server_display_name: Optional[str] = None
 
     disable_cipher_pad: bool = False
     division: DivisionRef

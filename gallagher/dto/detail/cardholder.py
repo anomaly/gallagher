@@ -97,7 +97,7 @@ class CardholderDetail(
     authorised: bool
 
     last_successful_access_time: Optional[datetime] = None
-    # last_successful_access_zone: Optional[AccessZoneRef] = None
+    last_successful_access_zone: Optional[AccessZoneRef] = None
     server_display_name: Optional[str] = None
 
     disable_cipher_pad: bool = False

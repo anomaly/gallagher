@@ -7,4 +7,12 @@
  Distributed under the terms of the MIT License.
 """
 
-__version__ = "0.1.0-alpha.9"
+# Assumed we are running Python 3.8 or later
+# https://docs.python.org/3.8/library/importlib.metadata.html
+from importlib.metadata import version, PackageNotFoundError
+__package_name__ = __name__.split(".", 1)[0]
+
+try:
+    __version__ = version(__package_name__)
+except PackageNotFoundError:
+    __version__ = "0.0.0"  # fallback for local dev

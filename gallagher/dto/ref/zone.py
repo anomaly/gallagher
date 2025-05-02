@@ -1,14 +1,14 @@
 from ..utils import (
     AppBaseModel,
     OptionalIdentityMixin,
-    HrefMixin,
+    OptionalHrefMixin,
 )
 
 
 class AccessZoneRef(
     AppBaseModel,
     OptionalIdentityMixin,
-    HrefMixin
+    OptionalHrefMixin,
 ):
     """AccessZone represents"""
 

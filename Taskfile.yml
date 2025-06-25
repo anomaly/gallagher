@@ -6,7 +6,7 @@ tasks:
   publish:tag:
     vars:
       PROJ_VERSION:
-        sh: poetry version | awk '{print $2}'
+        sh: uv version | awk '{print $2}'
     prompt: "Before we build, is the version {{.PROJ_VERSION}} number up to date?"
     desc: tags the current commit
     cmds:
@@ -16,7 +16,7 @@ tasks:
     prompt: Have you made sure the version number is up to date?
     desc: builds publishable python package
     cmds:
-      - poetry build
+      - uv build
   test:
     desc: runs tests inside the virtualenv
     summary: runs all the tests inside the virtualenv, optionally
@@ -24,46 +24,46 @@ tasks:
 
       this does not run coverage or provide tap output
     cmds:
-      - poetry run coverage run -m pytest -s tests/{{.CLI_ARGS}}
+      - uv run coverage run -m pytest -s tests/{{.CLI_ARGS}}
   test:tap:
     desc: runs tests with tap output
     summary: runs all the tests inside the virtualenv, optionally
       provide the name of the test as an argument to run a single test
     cmds:
-      - poetry run coverage run -m pytest -s --tap tests/{{.CLI_ARGS}}
+      - uv run coverage run -m pytest -s --tap tests/{{.CLI_ARGS}}
   test:list:
     desc: lists the available tests
     summary: runs collect only on pytest to list the tests available
     cmds:
-      - poetry run pytest --co
+      - uv run pytest --co
   test:coverreport:
     desc: runs coverage inside the server container
     cmds:
-      - poetry run coverage report -m
+      - uv run coverage report -m
   lint:
     desc: runs the linter
     cmds:
-      - poetry run flake8 gallagher tests
+      - uv run flake8 gallagher tests
   black:
     desc: runs black on the codebase
     cmds:
-      - poetry run black gallagher tests
+      - uv run black gallagher tests
   dev:textual:
     desc: runs the textual cli
     cmds:
-      - poetry run textual -- {{.CLI_ARGS}}
+      - uv run textual -- {{.CLI_ARGS}}
   dev:tui:
     desc: runs text gallagher console in dev mode
     cmds:
-      - poetry run textual run --dev gallagher.tui
+      - uv run textual run --dev gallagher.tui
   dev:py:
-    desc: runs python in the poetry shell
+    desc: runs python in the uv shell
     cmds:
-      - poetry run python -- {{.CLI_ARGS}}
+      - uv run python -- {{.CLI_ARGS}}
   dev:docs:
     desc: run the mkdocs server with appropriate flags
     cmds:
-      - cd docs && poetry run mkdocs serve --open -a localhost:8001
+      - cd docs && uv run mkdocs serve --open -a localhost:8001
   debug:get:
     desc: use httpie to get payload from CC
     summary: |

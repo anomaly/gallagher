@@ -18,10 +18,10 @@ Install via `pip` as follows:
 pip install gallagher
 ```
 
-or if you are using `poetry`:
+or if you are using `uv`:
 
 ```bash
-poetry add gallagher
+uv add gallagher
 ```
 
 For production application please make sure you target a particular version of the API client to avoid breaking changes.
@@ -315,117 +315,4 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Endpoints that provide either an `update` or a `change` method will provide:
-
-- `endpoint_follow` which will be the HATEOS discovered endpoint
-- `dto_follow` which is a DTO class (typically a Summary) to be used to parse the updates
-
-Following is an extract from the `Alarm` class to demonstrate how it's configured:
-
-```python
-@classmethod
-async def get_config(cls) -> EndpointConfig:
-    """Return the configuration for Alarms
-
-    Arguments:
-    cls: class reference
-    """
-    return EndpointConfig(
-        endpoint=Capabilities.CURRENT.features.alarms.alarms,
-        endpoint_follow=Capabilities.CURRENT.features.alarms.updates,
-        dto_follow=AlarmUpdateResponse,
-        dto_list=AlarmSummaryResponse,
-        dto_retrieve=AlarmDetail,
-    )
-```
-
-!!! warning
-
-    As a breaking change in `8.90` the operator must have the 'Create Events and Alarms' privilege in the division of the source item, if your request specifies a source item. Current versions only require that the operator has that privilege on at least one division.
-
-## Error Handling
-
-### Exceptions
-
-These wrappers raise the following `Exceptions` when they encounter the corresponding HTTP codes:
-
-- `gallagher.exception.UnlicensedFeatureException` on `HTTPStatus.FORBIDDEN` when an unlicensed endpoint is accessed (see the discovery section for details)
-- `gallagher.exception.AuthenticationError` on `HTTPStatus.UNAUTHORIZED` if there are issues with authentication
-- gallagher.exception.NotFoundException`on`HTTPStatus.NOT_FOUND`(GET only) - raised if a HTTP endpoint wasn't found e.g A`Detail` object wasn't found
-
-### Warnings
-
-## Additional Features
-
-In addition to a nicely validated wrapper around the data sent by the Command Centre API, we provide provide the following helper interface to keep your interaction `pythonic` wherever possible.
-
-## Personal Data Definitions
-
-Personal Data Definitions are fields associated to a cardholder and are defined at a Command Centre level. These are dynamically discovered by calling the `/api/personal_data_fields`. When you fetch a cardholder detail, the API returns the `personal_data_fields` as part of the response in the following manner:
-
-- children of the `personalDataFields` key in the cardholder detail
-- accessible via key name prefixed with the `@` symbol i.e the personal data field `Email` is accessible via the key `@Email`
-
-
-!!! tip
-
-    Note that the `personDataFields` has a `list` of objects, and each object has a single key which is the nae of the personal data field and the value is the related data.
-
-To make things more `pythonic` i.e consider the following payload (partially represented):
-
-```json
-{
-  "@Cardholder UID": "2",
-  "@City": "Hamilton",
-  "@Company Name": "Gallagher Group",
-  "@Country": "New Zealand",
-  "@Email": "emma.bennett@gallagher.co",
-  "@Personal URL": "C:\\DemoFiles\\CardholderURLs\\Emma Bennet.htm",
-  "@Phone": "+64 7 838 9800",
-  "@Photo": {
-    "href": "https://commandcentre-api-au.security.gallagher.cloud/api/cardholders/340/personal_data/6550"
-  },
-  "firstName": "Emma",
-  "href": "https://commandcentre-api-au.security.gallagher.cloud/api/cardholders/340",
-  "id": "340",
-  "lastName": "Bennett",
-  "lastSuccessfulAccessTime": "2014-10-16T02:56:43Z"
-}
-```
-
-and we had used the API client to fetch the cardholder detail (partial example):
-
-```python title="Personal Data Fields"
-cardholder = await Cardholder.retrieve(340)
-```
-
-`cardholder` would have two fields:
-- `personal_data_definitions` which is a list of `CardholderPersonalDataDefinition` objects
-- `pdf` which is a parsed object of the personal data fields
-
-`cardholder.personal_data_definitions` is iterable, each instance exposing a `name` and `contents` fields. Use the `value` attribute of `contents` to access the PDF value:
-
-```python
-for pdf in cardholder.personal_data_definitions:
-    if pdf.name == '@Email':
-        print(pdf.name, pdf.contents.value)
-```
-
-!!! tip
-
-    See pyndatic's [Model validator](https://docs.pydantic.dev/latest/concepts/validators/#model-validators) feature in v2, in particular the `@model_validator(mode='after')` constructor.
-
-The `cardholder` object will also expose a special attribute called `pdf`. Each instance available in the `personal_data_definitions` field will be mapped to a Pythonic `snake_cased` key, that lets you access the same  `CardholderPersonalDataDefinition` object via the `@` prefixed key name. So the above example of accessing the `@Email` field can be done as follows:
-
-```python
-cardholder.pdf.email.value
-```
-
-The `pdf` attribute is dynamically populated object with dynamically generated keys. Here are some examples of how `PDF` field names are mapped to `snake_case` keys:
-
-- `@Cardholder UID` would become `pdf.cardholder_uid`
-- `@City` would become `pdf.city`
-- `@Company Name` would become `pdf.company_name`
-- `@PINNumber` would become `pdf.pin_number`
-
-Both approaches have their merits and you should use the one that suits your use case.
+Endpoints that provide either an `

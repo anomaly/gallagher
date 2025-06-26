@@ -18,6 +18,7 @@ Our Python Toolkit focuses on enhancing the developer experience (DX) around the
 - **Command Line Interface** (CLI) to build powerful pipeline-based workflows.
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
 - **SQL interface** query the REST API as if it were a database or interact with via an ORM.
+- **MCP Server** for AI assistants to query Gallagher Command Centre data through the Model Context Protocol.
 
 > [!NOTE]\
 > This project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
@@ -113,6 +114,51 @@ Cammy         Albares      True         8427
 (1 row in 0.23s)
 
 ```
+
+## AI Assistant Integration via MCP
+
+The toolkit includes an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that allows AI assistants to query Gallagher Command Centre data directly. This enables AI assistants to help with cardholder management, access control queries, and system monitoring.
+
+### Quick Start
+
+```bash
+# Start the MCP server
+gala mcp serve
+
+# Test the server functionality
+gala mcp test
+
+# Show configuration information
+gala mcp config
+```
+
+### Claude Desktop Configuration
+
+Add to your Claude Desktop MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "gallagher": {
+      "command": "python",
+      "args": ["-m", "gallagher.mcp.server"],
+      "env": {
+        "GACC_API_KEY": "your-gallagher-api-key-here"
+      }
+    }
+  }
+}
+```
+
+### Available Tools
+
+- **list_cardholders** - List all cardholders in the system
+- **search_cardholders** - Search for cardholders by name or criteria
+- **get_cardholder** - Get detailed information about a specific cardholder
+- **get_cardholder_cards** - Get all cards assigned to a cardholder
+- **get_cardholder_access_groups** - Get all access groups assigned to a cardholder
+
+For detailed documentation, see [MCP Server Documentation](docs/docs/mcp.md).
 
 ## Command Centre API Notes
 

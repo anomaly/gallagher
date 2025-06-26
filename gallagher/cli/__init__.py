@@ -36,6 +36,7 @@ from .reception import app as reception_app
 from .redaction import app as redaction_app
 from .roles import app as roles_app
 from .visits import app as visits_app
+from .mcp import app as mcp_app
 
 _help_text = """
 gala is a command line interface for the gallagher security command centre.\n
@@ -78,6 +79,7 @@ app.add_typer(reception_app, name="reception")
 app.add_typer(redaction_app, name="redaction")
 app.add_typer(roles_app, name="roles")
 app.add_typer(visits_app, name="visits")
+app.add_typer(mcp_app, name="mcp")
 
 if __name__ == "__main__":
     """In case you are invoking this via Python directly

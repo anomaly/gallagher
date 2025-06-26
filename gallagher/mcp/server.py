@@ -2,12 +2,14 @@
 
 import asyncio
 import json
+import socket
 from typing import Any, Dict, List, Optional, Sequence
 from datetime import datetime
 
-from mcp.server import Server
+from mcp.server import Server, NotificationOptions
 from mcp.server.models import InitializationOptions
 from mcp.server.stdio import stdio_server
+from mcp.server.streamable_http import StreamableHTTPServerTransport
 from mcp.types import (
     CallToolRequest,
     CallToolResult,
@@ -489,27 +491,68 @@ class GallagherMCPServer:
                 isError=True
             )
 
-    async def run(self):
-        """Run the MCP server"""
-        async with stdio_server() as (read_stream, write_stream):
-            await self.server.run(
-                read_stream,
-                write_stream,
-                InitializationOptions(
+    async def run(self, host: str = "localhost", port: Optional[int] = None):
+        """Run the MCP server
+
+        Args:
+            host: Host to bind to (default: localhost)
+            port: Port to bind to (if None, uses stdio)
+        """
+        if port is not None:
+            # Run as TCP server
+            transport = StreamableHTTPServerTransport()
+            await transport.run_server(
+                self.server,
+                host=host,
+                port=port,
+                initialization_options=InitializationOptions(
                     server_name="gallagher-mcp",
                     server_version="1.0.0",
                     capabilities=self.server.get_capabilities(
-                        notification_options=None,
+                        notification_options=NotificationOptions(
+                            prompts_changed=False,
+                            resources_changed=False,
+                            tools_changed=False,
+                        ),
                         experimental_capabilities=None,
                     ),
                 ),
             )
+        else:
+            # Run as stdio server (default)
+            async with stdio_server() as (read_stream, write_stream):
+                await self.server.run(
+                    read_stream,
+                    write_stream,
+                    InitializationOptions(
+                        server_name="gallagher-mcp",
+                        server_version="1.0.0",
+                        capabilities=self.server.get_capabilities(
+                            notification_options=NotificationOptions(
+                                prompts_changed=False,
+                                resources_changed=False,
+                                tools_changed=False,
+                            ),
+                            experimental_capabilities=None,
+                        ),
+                    ),
+                )
 
 
 async def main():
     """Main entry point for the MCP server"""
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Gallagher MCP Server")
+    parser.add_argument("--host", default="localhost",
+                        help="Host to bind to (default: localhost)")
+    parser.add_argument("--port", type=int,
+                        help="Port to bind to (if not specified, uses stdio)")
+
+    args = parser.parse_args()
+
     server = GallagherMCPServer()
-    await server.run()
+    await server.run(host=args.host, port=args.port)
 
 
 if __name__ == "__main__":

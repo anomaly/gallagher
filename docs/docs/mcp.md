@@ -37,8 +37,11 @@ export GACC_API_KEY="your-gallagher-api-key-here"
 #### Via CLI
 
 ```bash
-# Start the MCP server
+# Start the MCP server (stdio mode)
 gala mcp serve
+
+# Start the MCP server (TCP mode)
+gala mcp serve --port 8080 --host 0.0.0.0
 
 # Show configuration information
 gala mcp config
@@ -50,8 +53,32 @@ gala mcp test
 #### Direct Module Execution
 
 ```bash
+# Stdio mode (default)
 python -m gallagher.mcp
+
+# TCP mode
+python -m gallagher.mcp.server --port 8080 --host 0.0.0.0
 ```
+
+### Transport Modes
+
+The MCP server supports two transport modes:
+
+#### Stdio Mode (Default)
+
+- Runs on standard input/output
+- Used by MCP clients that spawn subprocesses
+- Secure for local use
+- No network exposure
+
+#### TCP Mode
+
+- Runs on a network port
+- Accessible via HTTP
+- Suitable for external AI services like ChatGPT
+- Requires network security considerations
+
+For detailed TCP server documentation, see [TCP Server Guide](tcp-server.md).
 
 ### Claude Desktop Configuration
 
@@ -70,6 +97,20 @@ Add the following to your Claude Desktop MCP configuration:
   }
 }
 ```
+
+### ChatGPT and External AI Services
+
+For services that don't support subprocess-based MCP servers:
+
+```bash
+# Start TCP server
+gala mcp serve --port 8080 --host 0.0.0.0
+```
+
+Then configure your AI service to connect to:
+
+- **URL**: `http://your-server-ip:8080`
+- **Protocol**: MCP over HTTP
 
 ### Other MCP Clients
 

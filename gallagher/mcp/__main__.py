@@ -12,6 +12,7 @@ This is equivalent to running the server through the CLI:
 import asyncio
 import os
 import sys
+import argparse
 
 from .server import GallagherMCPServer
 
@@ -25,9 +26,18 @@ async def main():
         print("export GACC_API_KEY='your-api-key-here'", file=sys.stderr)
         sys.exit(1)
 
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="Gallagher MCP Server")
+    parser.add_argument("--host", default="localhost",
+                        help="Host to bind to (default: localhost)")
+    parser.add_argument("--port", type=int,
+                        help="Port to bind to (if not specified, uses stdio)")
+
+    args = parser.parse_args()
+
     try:
         server = GallagherMCPServer()
-        await server.run()
+        await server.run(host=args.host, port=args.port)
     except KeyboardInterrupt:
         print("Server stopped by user", file=sys.stderr)
         sys.exit(0)

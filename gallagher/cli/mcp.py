@@ -31,6 +31,14 @@ async def serve(
             help="Port to run the MCP server on (default: stdio)"
         )
     ] = None,
+    host: Annotated[
+        str,
+        typer.Option(
+            "--host",
+            "-h",
+            help="Host to bind to (default: localhost)"
+        )
+    ] = "localhost",
 ):
     """Start the MCP server
 
@@ -39,6 +47,7 @@ async def serve(
     used by AI assistants to query Gallagher Command Centre data.
 
     By default, the server runs on stdio for use with MCP clients.
+    Use --port to run as a TCP server for network access.
     """
     console = Console()
 
@@ -62,11 +71,12 @@ async def serve(
         console.print()
 
         if port:
-            console.print(f"Starting server on port {port}...")
-            # TODO: Implement TCP server support
+            console.print(f"Starting TCP server on {host}:{port}...")
             console.print(
-                "[yellow]TCP server support not yet implemented[/yellow]")
-            raise typer.Exit(code=1)
+                f"Server will be accessible at: http://{host}:{port}")
+            console.print("Press Ctrl+C to stop the server")
+            server = GallagherMCPServer()
+            await server.run(host=host, port=port)
         else:
             console.print("Starting stdio server...")
             server = GallagherMCPServer()
@@ -114,6 +124,22 @@ Add to your MCP servers configuration:
 }
 ```
 
+[bold green]ChatGPT and Other AI Services[/bold]
+Run the server as a TCP server for network access:
+
+```bash
+# Start TCP server
+export GACC_API_KEY="your-gallagher-api-key-here"
+gala mcp serve --port 8080 --host 0.0.0.0
+
+# Or directly with Python
+python -m gallagher.mcp.server --port 8080 --host 0.0.0.0
+```
+
+Then configure your AI service to connect to:
+- URL: http://your-server-ip:8080
+- Protocol: MCP over HTTP
+
 [bold green]Other MCP Clients[/bold]
 Run the server directly:
 
@@ -131,6 +157,13 @@ python -m gallagher.mcp.server
 • get_cardholder - Get detailed information about a specific cardholder
 • get_cardholder_cards - Get all cards assigned to a cardholder
 • get_cardholder_access_groups - Get all access groups assigned to a cardholder
+
+[bold red]Security Note[/bold]
+When running as a TCP server, consider:
+• Using a firewall to restrict access
+• Running on localhost (127.0.0.1) for local-only access
+• Using HTTPS/TLS in production environments
+• Implementing authentication if needed
 """
 
     console.print(Panel(

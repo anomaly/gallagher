@@ -36,7 +36,7 @@ Majority of the development was conducted on macOS, but the toolchain should be 
 In addition to the usual suspects (e.g pytest) we use:
 
 - `task` - as the task runner of choice, it's widely available on platforms and supports Github actions. All endpoints are documented within the command line tool.
-- `poetry` as our package manager of choice for the python project
+- `uv` as our package manager of choice for the python project
 - `mkdocs` for documentation, maintained using markdown
 
 ## SDK

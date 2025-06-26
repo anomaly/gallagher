@@ -13,13 +13,13 @@ In the most trivial cases we recommend installation via `PyPI`. The package is d
 The SDK can be installed by adding it as a dependency to your project:
 
 ```bash
-poetry add gallagher
+uv add gallagher
 ```
 
 If you are feeling adventurous you can install everything by:
 
 ```bash
-poetry add gallagher[all]
+uv add gallagher[all]
 ```
 
 ### SDK
@@ -130,7 +130,7 @@ To contribute to the library, please fork this repository and lodge a pull reque
 
 [Task](https://taskfile.dev) is a task runner / build tool that aims to be simpler and easier to use than, for example, GNU Make. Gallagher Python Toolkit uses Task to run common tasks such as testing, linting, and building the documentation. First follow the [installation steps](https://taskfile.dev/installation/) to install Task on your system.
 
-All the `tasks` are quite logically grouped and most of them will need you to have a `virtualenv` initialised via `poetry`.
+All the `tasks` are quite logically grouped and most of them will need you to have a `virtualenv` initialised via `uv`.
 
 !!! info
 

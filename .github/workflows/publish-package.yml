@@ -20,10 +20,10 @@ jobs:
         with:
           version: 3.x
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install dependencies
-        run: |
-          pip install poetry
-          poetry install
+      - name: Install uv
+        run: pip install uv
+      - name: Sync dependencies
+        run: uv sync
       - name: Run tests
         run: |
           export GACC_API_KEY=${{ secrets.GACC_API_KEY }}
@@ -46,15 +46,16 @@ jobs:
         with:
           version: 3.x
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install dependencies
-        run: |
-          pip install poetry
-          poetry install
+      - name: Install uv
+        run: pip install uv
+      - name: Sync dependencies
+        run: uv sync
       - name: Build package
-        run: |
-          poetry build
+        run: uv build
       - name: Publish package
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_KEY }}
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_KEY }}
         run: |
-          poetry publish --no-interaction --username __token__ --password $POETRY_PYPI_TOKEN_PYPI
+          pip install twine
+          twine upload dist/*

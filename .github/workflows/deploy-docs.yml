@@ -17,9 +17,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - name: Install poetry
-        run: pip install poetry
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv
+      - name: Sync dependencies
+        run: uv sync --extra dev
       - name: Build and Publish to GH Pages
-        run: cd docs && poetry run mkdocs gh-deploy --force --clean --verbose
+        run: cd docs && uv run mkdocs gh-deploy --force --clean --verbose

@@ -6,11 +6,11 @@ We use [typer](https://typer.tiangolo.com) to construct the CLI, which in turn u
 
 We follow a `git` like `command`, `sub-command` pattern, so it should feel quite familiar.
 
-poetry will install the alias `gal` for you to interact with the CLI. You can ask for help with:
+uv will install the alias `gal` for you to interact with the CLI. You can ask for help with:
 
 ::: mkdocs-typer
-    :module: gallagher.cli
-    :command: app
+:module: gallagher.cli
+:command: app
 
 ## Resources
 

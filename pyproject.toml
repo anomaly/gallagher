@@ -6,7 +6,11 @@ authors = [{ name = "Anomaly", email = "oss@anomaly.ltd" }]
 license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["pydantic (>=2.11.5,<3.0.0)", "httpx (>=0.28.1,<0.29.0)"]
+dependencies = [
+    "pydantic (>=2.11.5,<3.0.0)",
+ "httpx (>=0.28.1,<0.29.0)",
+ "email-validator>=2.2.0",
+]
 
 [project.optional-dependencies]
 tui = ["textual>=3.2.0,<4.0.0"]
@@ -29,3 +33,10 @@ sync = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "coverage>=7.9.1",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.0.0",
+]

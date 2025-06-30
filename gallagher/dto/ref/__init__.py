@@ -76,13 +76,19 @@ from .ext import (
     PlaceholderRef,
 )
 
+from .features import FeaturesRef
+
 from .items import (
     ItemRef,
 )
 
+from .locker import LockerRef
+
 from .pdf import (
     PDFRef,
 )
+
+from .reception import ReceptionRef
 
 from .salto import (
     SaltoItemTypeRef,
@@ -92,7 +98,6 @@ from .salto import (
 from .schedule import (
     ScheduleRef,
 )
-
 
 from .misc import (
     InstructionRef,
@@ -105,6 +110,10 @@ from .operator import (
 from .role import (
     RoleRef,
 )
+
+from .visit import VisitRef
+
+from .visitor import VisitorRef
 
 from .zone import (
     AccessZoneRef,

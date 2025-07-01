@@ -1,10 +1,19 @@
-from ..utils import (
-    AppBaseModel, 
-    OptionalHrefMixin,
-)
+""" Access Group Reference
+
+"""
+
+from ..utils import AppBaseModel, HrefMixin
 
 
-class AccessGroupRef(AppBaseModel, OptionalHrefMixin,):
-    """Access Groups is what a user is assigned to to provide access to doors"""
+class AccessGroupRef(
+    AppBaseModel,
+    HrefMixin
+):
+    """Access Group Reference
 
+    A reference to an access group containing minimal information
+    for linking and identification purposes.
+    """
+
+    id: str
     name: str

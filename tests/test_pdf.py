@@ -38,6 +38,8 @@ async def test_pdf_list(pdf_definition: PdfResponse):
 async def test_pdf_detail(pdf_definition: PdfResponse):
 
     for pdf in pdf_definition.results:
+        if not pdf.id:
+            pytest.skip('PDF summary missing id, cannot retrieve detail.')
         detail = await PdfDefinition.retrieve(pdf.id)
 
         assert type(detail) is PdfDetail

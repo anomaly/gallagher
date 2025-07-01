@@ -40,24 +40,40 @@ from .event import (
     EventTypeSummary,
 )
 
+from .features import FeaturesSummary
+
 from .items import (
     ItemTypeSummary,
     ItemSummary,
 )
 
+from .locker import LockerSummary
+
+from .operator import OperatorSummary
+
+from .pdf import (
+    PdfSummary,
+)
+
+from .reception import ReceptionSummary
+
+from .role import RoleSummary
+
 from .salto import (
     SaltoAccessItemSummary,
+    SaltoSummary,
 )
 
 from .schedule import (
     ScheduleSummary,
 )
 
+from .visit import VisitSummary
+
 from .visitor import (
     VisitorManagementSummary,
     VisitorTypeSummary,
+    VisitorSummary,
 )
 
-from .pdf import (
-    PdfSummary,
-)
+from .zone import ZoneSummary

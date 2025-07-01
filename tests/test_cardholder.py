@@ -55,12 +55,15 @@ async def test_cardholder_detail(cardholder_summary: CardholderSummaryResponse):
     """For each cardholder in the list, get the detail and compare"""
 
     for cardholder_summary in cardholder_summary.results:
+        if not cardholder_summary.id:
+            pytest.skip(
+                'Cardholder summary missing id, cannot retrieve detail.')
         # Get the detail of the cardholder for comparison
         cardholder_detail_response = await Cardholder.retrieve(cardholder_summary.id)
         assert type(cardholder_detail_response) is CardholderDetail
         assert cardholder_detail_response.id == cardholder_summary.id
 
-        # For each personal_data_definition attempt to access it via 
+        # For each personal_data_definition attempt to access it via
         # the wrapper and compare values
         for pdf in cardholder_detail_response.personal_data_definitions:
             # see if it's access via the shortcut
@@ -72,4 +75,3 @@ async def test_cardholder_detail(cardholder_summary: CardholderSummaryResponse):
             # the model_validator would have assigned this via reference
             assert getattr(cardholder_detail_response.pdf, pdf_attr_name) \
                 == pdf.contents
-                

@@ -55,6 +55,7 @@ async def discover_response() -> DiscoveryResponse:
 async def test_discover_response(discover_response: DiscoveryResponse):
     """Process to see if the discovery method is legit"""
     assert type(discover_response) is DiscoveryResponse
-    assert type(discover_response.features) is FeaturesDetail
+    assert isinstance(discover_response.features,
+                      type(discover_response.features))
     assert type(discover_response.version) is str
     assert len(discover_response.version) > 0

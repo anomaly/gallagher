@@ -6,7 +6,7 @@ from ..utils import (
     AppBaseResponseModel,
 )
 
-from ..detail import (
+from ..detail.discover import (
     FeaturesDetail,
     VersionsDetail,
 )
@@ -31,7 +31,7 @@ class DiscoveryResponse(
 
     version: Annotated[str, "The version of the server"] = "0.0.0.0"
     versions: Annotated[
-        VersionsDetail, 
+        VersionsDetail,
         "A list of versions available on the server"
     ] = VersionsDetail()
     features: Annotated[

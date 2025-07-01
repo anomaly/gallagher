@@ -1,10 +1,12 @@
-from ..utils import AppBaseModel, IdentityMixin
-
-from ..ref import AccessGroupRef
+from ..utils import AppBaseModel, IdentityMixin, HrefMixin
+from ..ref import AccessGroupRef, DivisionRef
 
 from .access_group import (
     AccessGroupSummary,
 )
+
+from typing import Optional
+from datetime import datetime
 
 
 class VisitorTypeSummary(AppBaseModel, IdentityMixin):
@@ -28,3 +30,23 @@ class VisitorManagementSummary(AppBaseModel):
 
     active: bool
     visitor_types: list[VisitorTypeSummary]
+
+
+class VisitorSummary(
+    AppBaseModel,
+    IdentityMixin,
+    HrefMixin
+):
+    """Visitor Summary
+
+    A summary view of a visitor containing key information
+    for listing and basic operations.
+    """
+
+    first_name: str
+    last_name: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    division: Optional[DivisionRef] = None
+    created: Optional[datetime] = None
+    modified: Optional[datetime] = None

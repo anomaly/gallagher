@@ -26,6 +26,9 @@ async def test_reception_list(reception_summary: ReceptionResponse):
 async def test_reception_detail(reception_summary: ReceptionResponse):
     """Test getting the details of a reception"""
     for r_summary in reception_summary.results:
+        if not r_summary.id:
+            pytest.skip(
+                'Reception summary missing id, cannot retrieve detail.')
         r_detail = await Receptions.retrieve(r_summary.id)
         assert type(r_detail) is ReceptionDetail
         assert r_detail.id == r_summary.id

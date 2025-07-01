@@ -18,7 +18,7 @@ class ZoneDetail(ZoneSummary):
     """
 
     # Extended fields beyond summary
-    doors: Optional[List[DoorRef]] = None
+    doors: Optional[List[dict]] = None
     zone_boundaries: Optional[List[dict]] = None
     access_rules: Optional[List[dict]] = None
     notes: Optional[str] = None

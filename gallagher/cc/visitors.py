@@ -18,7 +18,7 @@ class Visitors(APIEndpoint):
     @classmethod
     async def get_config(cls) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.visitors.visitors,
+            endpoint=Capabilities.CURRENT.features.visits.visits,
             dto_list=VisitorResponse,
             dto_retrieve=VisitorDetail,
         )

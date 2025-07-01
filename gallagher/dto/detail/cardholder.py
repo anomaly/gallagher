@@ -84,6 +84,7 @@ class PdfAccessorWrapper:
 class CardholderDetail(
     AppBaseModel,
     IdentityMixin,
+    HrefMixin,
 ):
     """Displays a table of cardholders
 
@@ -93,18 +94,19 @@ class CardholderDetail(
 
     """
 
+    id: Optional[str] = None
     first_name: str
     last_name: str
     short_name: Optional[str] = None
     description: Optional[str] = None
-    authorised: bool
+    authorised: Optional[bool] = None
 
     last_successful_access_time: Optional[datetime] = None
     last_successful_access_zone: Optional[AccessZoneRef] = None
     server_display_name: Optional[str] = None
 
     disable_cipher_pad: bool = False
-    division: DivisionRef
+    division: Optional[dict] = None
     edit: HrefMixin
 
     operator_login_enabled: bool = False
@@ -118,7 +120,7 @@ class CardholderDetail(
 
     personal_data_definitions: list[CardholderPersonalDataDefinition] = []
     cards: list[CardholderCardSummary] = []
-    access_groups: list[CardholderAccessGroupSummary] = []
+    access_groups: Optional[list] = None
     # operator_groups
     # competencies
 
@@ -136,6 +138,9 @@ class CardholderDetail(
     # Note this is not a pyndatic class and hence utils.py
     # has the configuration set to allow arbitrary types
     pdf: PdfAccessorWrapper = PdfAccessorWrapper()
+
+    created: Optional[datetime] = None
+    modified: Optional[datetime] = None
 
     @model_validator(mode='before')
     @classmethod

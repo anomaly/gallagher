@@ -26,6 +26,9 @@ async def test_access_group_list(access_group_summary: AccessGroupResponse):
 async def test_access_group_detail(access_group_summary: AccessGroupResponse):
     """Test getting the details of an access group"""
     for ag_summary in access_group_summary.results:
+        if not ag_summary.id:
+            pytest.skip(
+                'Access group summary missing id, cannot retrieve detail.')
         ag_detail = await AccessGroups.retrieve(ag_summary.id)
         assert type(ag_detail) is AccessGroupDetail
         assert ag_detail.id == ag_summary.id

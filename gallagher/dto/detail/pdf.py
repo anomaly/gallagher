@@ -3,6 +3,7 @@ from typing import Optional
 from ..utils import (
     AppBaseModel,
     HrefMixin,
+    IdentityMixin,
 )
 
 from ..ref import (
@@ -12,9 +13,11 @@ from ..ref import (
 
 from ..enum import PdfType
 
-class PdfDetail(AppBaseModel, HrefMixin):
+
+class PdfDetail(AppBaseModel, IdentityMixin, HrefMixin):
     """Personal Data Fields are custom fields for a card holder"""
 
+    id: Optional[str] = None
     name: str
     server_display_name: Optional[str] = None
     description: Optional[str] = None
@@ -37,3 +40,5 @@ class PdfDetail(AppBaseModel, HrefMixin):
     image_format: Optional[str] = None
     content_type: Optional[str] = None
     is_profile_image: bool = False
+
+    accessGroups: Optional[list] = None

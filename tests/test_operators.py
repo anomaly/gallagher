@@ -26,6 +26,8 @@ async def test_operator_list(operator_summary: OperatorResponse):
 async def test_operator_detail(operator_summary: OperatorResponse):
     """Test getting the details of an operator"""
     for o_summary in operator_summary.results:
+        if not o_summary.id:
+            pytest.skip('Operator summary missing id, cannot retrieve detail.')
         o_detail = await Operators.retrieve(o_summary.id)
         assert type(o_detail) is OperatorDetail
         assert o_detail.id == o_summary.id

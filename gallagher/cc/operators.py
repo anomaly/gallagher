@@ -2,7 +2,7 @@
 
 """
 
-from ..core import Capabilities, APIEndpoint, EndpointConfig
+from gallagher.cc.core import Capabilities, APIEndpoint, EndpointConfig
 
 from ..dto.detail import OperatorDetail
 from ..dto.response import OperatorResponse

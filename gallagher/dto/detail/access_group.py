@@ -25,12 +25,20 @@ class AccessGroupDetail(
 ):
     """ """
 
+    id: Optional[str] = None
     name: str
-    description: Optional[str]
-    parent: Optional[AccessGroupRef]
-    division: IdentityMixin
+    description: Optional[str] = None
+    parent: Optional[dict] = None
+    division: Optional[dict] = None
+    serverDisplayName: Optional[str] = None
+    personalDataDefinitions: Optional[list] = None
+    overrideAperioPrivacy: Optional[bool] = None
+    aperioOfflineAccess: Optional[bool] = None
+    hvlfFenceZones: Optional[list] = None
+    access: Optional[list] = None
+    saltoAccess: Optional[dict] = None
+    alarmZones: Optional[list] = None
     cardholders: OptionalHrefMixin
-    server_display_name: Optional[str]
 
     description: Optional[str]
     parent: Optional[AccessGroupRef]
@@ -45,11 +53,8 @@ class AccessGroupDetail(
     lock_unlock_access_zones: bool
     enter_during_lockdown: bool
     first_card_unlock: bool
-    override_aperio_privacy: bool
-    aperio_offline_access: bool
     disarm_alarm_zones: bool
     arm_alarm_zones: bool
-    hvLf_fence_zones: bool
     view_alarms: bool
     shunt: bool
     lock_out_fence_zones: bool

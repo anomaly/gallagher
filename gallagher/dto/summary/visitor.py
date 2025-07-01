@@ -5,6 +5,9 @@ from .access_group import (
     AccessGroupSummary,
 )
 
+from typing import Optional
+from datetime import datetime
+
 
 class VisitorTypeSummary(AppBaseModel, IdentityMixin):
     """Visitor Types are a combination of:

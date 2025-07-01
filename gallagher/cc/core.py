@@ -60,6 +60,8 @@ from ..exception import (
     NoAPIKeyProvidedError,
 )
 
+from ..dto.detail.discover import FeaturesDetail
+
 
 def _check_api_key_format(api_key):
     """Validates that the Gallagher Key is in the right format.
@@ -88,6 +90,7 @@ def _sanitise_name_param(name: str) -> str:
 
     return f"%{name}%"
 
+
 def _get_authorization_headers():
     """Creates an authorization header for Gallagher API calls
 
@@ -115,7 +118,7 @@ def _get_authorization_headers():
         client properly.
         """
         raise NoAPIKeyProvidedError()
-    
+
     if not _check_api_key_format(api_key):
         """ API key is not in the right format
 
@@ -162,7 +165,7 @@ class EndpointConfig:
     sort: str = "id"  # Can be set to id or -id
 
     fields: Tuple[str] = ()  # Optional list of fields, blank = all
-    search: Tuple[str] = () # If the endpoint supports search, blank = none
+    search: Tuple[str] = ()  # If the endpoint supports search, blank = none
 
     @classmethod
     async def validate_endpoint(cls):
@@ -180,20 +183,21 @@ class Capabilities:
     Discover response object, each endpoint will reference
     one of the instance variable Href property to get the
     path to the endpoint.
-    
+
     Gallagher recommends that the endpoints not be hardcoded
     into the client and instead be discovered at runtime.
-    
+
     Note that if a feature has not been licensed by a client
     then the path will be set to None, if the client attempts
     to access the endpoint then the library will throw an exception
-    
+
     This value is memoized and should be performant
     """
     CURRENT = DiscoveryResponse(
         version="0.0.0.0",  # Indicates that it's not been discovered
         features=FeaturesDetail(),
     )
+
 
 class APIEndpoint:
     """Base class for all API objects
@@ -233,7 +237,7 @@ class APIEndpoint:
         provide additional configuration options.
         """
         raise NotImplementedError("get_config method not implemented")
-    
+
     @classmethod
     def _ssl_context(cls):
         """Returns the SSL context for the endpoint
@@ -246,7 +250,7 @@ class APIEndpoint:
         if not file_tls_certificate:
             """TLS certificate is required for SSL context"""
             return None
-        
+
         context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
         context.load_cert_chain(file_tls_certificate, file_private_key)
         return context
@@ -288,9 +292,9 @@ class APIEndpoint:
         from . import api_base
 
         async with httpx.AsyncClient(
-                proxy=proxy_address,
-                verify=cls._ssl_context(),
-            ) as _httpx_async:
+            proxy=proxy_address,
+            verify=cls._ssl_context(),
+        ) as _httpx_async:
             # Don't use the _get wrapper here, we need to get the raw response
             response = await _httpx_async.get(
                 api_base,
@@ -319,7 +323,6 @@ class APIEndpoint:
             # an instance of a pydantic object and all values are thus
             # copied not referenced.
             cls.__config__ = await cls.get_config()
-
 
     @classmethod
     async def list(cls, skip=0):
@@ -374,9 +377,9 @@ class APIEndpoint:
         cls,
         sort: SearchSortOrder = SearchSortOrder.ID,
         top: int = 100,
-        name: Optional[str] = None, # TODO: en
-        division: str = None, # TODO: use division type
-        direct_division: str = None, # TODO: use division type
+        name: Optional[str] = None,  # TODO: en
+        division: str = None,  # TODO: use division type
+        direct_division: str = None,  # TODO: use division type
         description: Optional[str] = None,
         fields: str | List[str] = "defaults",
         **kwargs,
@@ -429,7 +432,6 @@ class APIEndpoint:
             params=params,
         )
 
-
     # Follow links methods, these are valid based on if the response
     # classes make available a next, previous or update href, otherwise
     # the client raises an NotImplementedError
@@ -452,7 +454,8 @@ class APIEndpoint:
 
         if not response.next:
             """We have no where to go based on the passed response"""
-            raise DeadEndException("No further paths to follow for this endpoint")
+            raise DeadEndException(
+                "No further paths to follow for this endpoint")
 
         return await cls._get(
             response.next.href,
@@ -486,7 +489,7 @@ class APIEndpoint:
     @classmethod
     async def follow(
         cls,
-        asyncio_event: AsyncioEvent, # Not to be confused with Gallagher event
+        asyncio_event: AsyncioEvent,  # Not to be confused with Gallagher event
         params: dict[str, Any] = {},
     ):
         """Fetches update and follows next to get the next set of results
@@ -516,9 +519,9 @@ class APIEndpoint:
         url = f"{cls.__config__.endpoint_follow.href}"
 
         async with httpx.AsyncClient(
-                proxy=proxy_address,
-                verify=cls._ssl_context(),
-            ) as _httpx_async:
+            proxy=proxy_address,
+            verify=cls._ssl_context(),
+        ) as _httpx_async:
 
             while not asyncio_event.is_set():
                 try:
@@ -576,9 +579,9 @@ class APIEndpoint:
         :param AppBaseModel response_class: DTO to be used for list requests
         """
         async with httpx.AsyncClient(
-                proxy=proxy_address,
-                verify=cls._ssl_context(),
-            ) as _httpx_async:
+            proxy=proxy_address,
+            verify=cls._ssl_context(),
+        ) as _httpx_async:
 
             try:
 
@@ -627,9 +630,9 @@ class APIEndpoint:
         parsing and sending out a body as part of the request. 
         """
         async with httpx.AsyncClient(
-                proxy=proxy_address,
-                verify=cls._ssl_context(),
-            ) as _httpx_async:
+            proxy=proxy_address,
+            verify=cls._ssl_context(),
+        ) as _httpx_async:
 
             try:
 

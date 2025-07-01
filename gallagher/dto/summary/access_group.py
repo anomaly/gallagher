@@ -40,6 +40,7 @@ class AccessGroupSummary(
     for listing and basic operations.
     """
 
+    id: Optional[str] = None
     name: str
     description: Optional[str] = None
     division: Optional[DivisionRef] = None

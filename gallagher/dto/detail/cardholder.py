@@ -27,6 +27,7 @@ from ..summary import (
     PdfSummary,
 )
 
+
 class CardholderRelationshipDetail(
     AppBaseModel,
     HrefMixin,
@@ -53,7 +54,8 @@ class CardholderPersonalDataField(
     """
     definition: PdfSummary
     value: str | HrefMixin
-    notifications: Optional[bool] = False # Local to the @Email field
+    notifications: Optional[bool] = False  # Local to the @Email field
+
 
 class CardholderPersonalDataDefinition(
     AppBaseModel,
@@ -77,7 +79,8 @@ class PdfAccessorWrapper:
     to dynamically populate the dictionary of personal data fields
     """
     pass
-    
+
+
 class CardholderDetail(
     AppBaseModel,
     IdentityMixin,
@@ -154,15 +157,15 @@ class CardholderDetail(
         if 'personalDataDefinitions' in data:
             data['personalDataDefinitions'] = [
                 {
-                    'name': name, 
+                    'name': name,
                     'contents': contents
-                } \
-                    for item in data['personalDataDefinitions'] \
-                    for name, contents in item.items()
+                }
+                for item in data['personalDataDefinitions']
+                for name, contents in item.items()
             ]
 
         return data
-    
+
     @model_validator(mode='after')
     def populate_pdf_accessor(self) -> Self:
         # For each key in the personal_data_definitions, create a new
@@ -171,7 +174,7 @@ class CardholderDetail(
             # Note this sets a reference from personal_data_definitions
             # if you compare these in the tests, they should be the same
             setattr(
-                self.pdf, 
+                self.pdf,
                 # turn the key into a snake case key
                 # ignore the prefixed @ symbol
                 _to_snake_case_key(pdf_field.name),

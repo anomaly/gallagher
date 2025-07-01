@@ -61,6 +61,7 @@ from .role import RoleSummary
 
 from .salto import (
     SaltoAccessItemSummary,
+    SaltoSummary,
 )
 
 from .schedule import (

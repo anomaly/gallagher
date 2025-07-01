@@ -15,3 +15,6 @@ class DoorResponse(AppBaseResponseWithFollowModel):
     """
 
     results: List[DoorSummary]
+
+
+DoorSummaryResponse = DoorResponse

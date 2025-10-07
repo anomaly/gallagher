@@ -10,21 +10,21 @@ theme:
   name: material
 
 markdown_extensions:
-    - mkdocs-typer
-    - codehilite
-    - pymdownx.highlight:
-        anchor_linenums: true
-        line_spans: __span
-        pygments_lang_class: true
-    - pymdownx.inlinehilite
-    - pymdownx.snippets
-    - pymdownx.superfences
-    - admonition
+  - codehilite
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
 
-plugins: 
+plugins:
   - social
   - search
   - mkdocstrings
+  - mkdocs-typer2
 
 nav:
   - Introduction: index.md
@@ -32,5 +32,5 @@ nav:
   - Python SDK: python-sdk.md
   - SQL and SQLAlchemy: sql.md
   - Command Line Interface: cli.md
-  - Terminal User Interface: tui.md 
+  - Terminal User Interface: tui.md
   - Contributor's Manual: design.md

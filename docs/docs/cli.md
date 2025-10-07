@@ -8,9 +8,9 @@ We follow a `git` like `command`, `sub-command` pattern, so it should feel quite
 
 uv will install the alias `gal` for you to interact with the CLI. You can ask for help with:
 
-::: mkdocs-typer
+::: mkdocs-typer2
     :module: gallagher.cli
-    :command: app
+    :name: app
 
 ## Resources
 

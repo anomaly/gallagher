@@ -94,7 +94,6 @@ class CardholderDetail(
 
     """
 
-    id: Optional[str] = None
     first_name: str
     last_name: str
     short_name: Optional[str] = None

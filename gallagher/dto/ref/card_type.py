@@ -3,14 +3,12 @@
 
 from ..utils import (
     AppBaseModel,
-    IdentityMixin,
-    HrefMixin,
     OptionalHrefMixin,
 )
 
 class CardTypeRef(
     AppBaseModel,
-    HrefMixin,
+    OptionalHrefMixin,
 ):
     """ Reference for a card type """
     name: str

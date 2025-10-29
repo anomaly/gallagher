@@ -1,4 +1,5 @@
 from typing import Optional
+from datetime import datetime
 
 from ..utils import (
     AppBaseModel,
@@ -14,6 +15,7 @@ from ..ref import (
     AccessGroupRef,
     AccessZoneRef,
     ScheduleRef,
+    DivisionRef,
 )
 
 
@@ -29,21 +31,22 @@ class AccessSummary(
 
 class AccessGroupSummary(
     AppBaseModel,
+    IdentityMixin,
+    HrefMixin
 ):
-    """AccessGroup Summary is what the API returns on searches
+    """Access Group Summary
 
-    This builds on the Ref class to add the summary fields and is
-    extended by the Detail class to add the fully remainder of
-    the fields
+    A summary view of an access group containing key information
+    for listing and basic operations.
     """
 
+    id: Optional[str] = None
     name: str
-    description: Optional[str]
-    parent: Optional[AccessGroupRef]
-    division: IdentityMixin
-    cardholders: OptionalHrefMixin
-    server_display_name: Optional[str]
-
+    description: Optional[str] = None
+    division: Optional[DivisionRef] = None
+    cardholder_count: Optional[int] = None
+    created: Optional[datetime] = None
+    modified: Optional[datetime] = None
 
 
 class CardholderAccessGroupSummary(
@@ -58,5 +61,5 @@ class CardholderAccessGroupSummary(
     access_group: AccessGroupRef
     status: TypeValuePair
 
-    valid_from: from_optional_datetime = None # Appears as from in the API
+    valid_from: from_optional_datetime = None  # Appears as from in the API
     valid_until: until_optional_datetime = None

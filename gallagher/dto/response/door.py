@@ -1,15 +1,20 @@
-from ..utils import (
-    AppBaseResponseModel,
-)
+""" Door Response
 
-from ..summary import (
-    DoorSummary,
-)
+"""
+
+from typing import List
+
+from ..utils import AppBaseResponseWithFollowModel
+from ..summary import DoorSummary
 
 
-class DoorSummaryResponse(
-    AppBaseResponseModel,
-):
-    """ """
+class DoorResponse(AppBaseResponseWithFollowModel):
+    """Door Response
 
-    results: list[DoorSummary]
+    A response containing a list of doors with pagination support.
+    """
+
+    results: List[DoorSummary]
+
+
+DoorSummaryResponse = DoorResponse

@@ -63,7 +63,7 @@ tasks:
   dev:docs:
     desc: run the mkdocs server with appropriate flags
     cmds:
-      - cd docs && uv run mkdocs serve --open -a localhost:8001
+      - cd docs && uv run -m mkdocs serve --open -a localhost:8001
   debug:get:
     desc: use httpie to get payload from CC
     summary: |

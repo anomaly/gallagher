@@ -2,7 +2,11 @@
 
 """
 
-from ..core import Capabilities, APIEndpoint, EndpointConfig
+from ..core import (
+    Capabilities,
+    APIEndpoint,
+    EndpointConfig,
+)
 
 from ...dto.detail import (
     CardholderDetail,

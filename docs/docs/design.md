@@ -55,6 +55,7 @@ There are three types of schema definitions, each one of them suffixed with thei
 - **Summary** is what is returned by the Gallagher API in operations such as [searches](https://gallaghersecurity.github.io/cc-rest-docs/ref/cardholders.html), these are generally a subset of the full object
 - **Detail** are the full object found at a particular `href`, they compound on the `Summary` schema and add additional attributes
 - **Responses** are resposnes sent back from the server, these will typically contain a set of `Summary` or `Detail` objects. When fetching _detailed_ responses for an object the server will often respond with a `Detail` object without a wrapper `Response` object.
+- **Payloads** are objects that are sent to the server as part of a `POST` or `PUT` operation, these are suffixed with **Payload**, some of these also offer `Builder` classes to assist with construction of the payload.
 
 I additional we have classes that defined responses which are suffixed with **Response**, these wrap structures which returns `hrefs` for `next` and `previous` responses and usually have a collection to hold the response.
 

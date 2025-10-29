@@ -9,6 +9,12 @@ from ..ref import (
 )
 
 
+class SaltoSummary(AppBaseModel):
+    """Placeholder for SaltoSummary. Expand as needed."""
+    id: str = ""
+    name: str = ""
+
+
 class SaltoAccessItemSummary(
     AppBaseModel,
 ):

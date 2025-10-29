@@ -27,6 +27,7 @@ from ..summary import (
     PdfSummary,
 )
 
+
 class CardholderRelationshipDetail(
     AppBaseModel,
     HrefMixin,
@@ -52,8 +53,9 @@ class CardholderPersonalDataField(
     value, which also is accessible using the key at the dictionary level.
     """
     definition: PdfSummary
-    value: str | HrefMixin
-    notifications: Optional[bool] = False # Local to the @Email field
+    value: str | HrefMixin | int | float | bool | None
+    notifications: Optional[bool] = False  # Local to the @Email field
+
 
 class CardholderPersonalDataDefinition(
     AppBaseModel,
@@ -77,10 +79,12 @@ class PdfAccessorWrapper:
     to dynamically populate the dictionary of personal data fields
     """
     pass
-    
+
+
 class CardholderDetail(
     AppBaseModel,
     IdentityMixin,
+    HrefMixin,
 ):
     """Displays a table of cardholders
 
@@ -94,14 +98,14 @@ class CardholderDetail(
     last_name: str
     short_name: Optional[str] = None
     description: Optional[str] = None
-    authorised: bool
+    authorised: Optional[bool] = None
 
     last_successful_access_time: Optional[datetime] = None
     last_successful_access_zone: Optional[AccessZoneRef] = None
     server_display_name: Optional[str] = None
 
     disable_cipher_pad: bool = False
-    division: DivisionRef
+    division: Optional[dict] = None
     edit: HrefMixin
 
     operator_login_enabled: bool = False
@@ -115,7 +119,7 @@ class CardholderDetail(
 
     personal_data_definitions: list[CardholderPersonalDataDefinition] = []
     cards: list[CardholderCardSummary] = []
-    access_groups: list[CardholderAccessGroupSummary] = []
+    access_groups: Optional[list] = None
     # operator_groups
     # competencies
 
@@ -133,6 +137,9 @@ class CardholderDetail(
     # Note this is not a pyndatic class and hence utils.py
     # has the configuration set to allow arbitrary types
     pdf: PdfAccessorWrapper = PdfAccessorWrapper()
+
+    created: Optional[datetime] = None
+    modified: Optional[datetime] = None
 
     @model_validator(mode='before')
     @classmethod
@@ -154,15 +161,15 @@ class CardholderDetail(
         if 'personalDataDefinitions' in data:
             data['personalDataDefinitions'] = [
                 {
-                    'name': name, 
+                    'name': name,
                     'contents': contents
-                } \
-                    for item in data['personalDataDefinitions'] \
-                    for name, contents in item.items()
+                }
+                for item in data['personalDataDefinitions']
+                for name, contents in item.items()
             ]
 
         return data
-    
+
     @model_validator(mode='after')
     def populate_pdf_accessor(self) -> Self:
         # For each key in the personal_data_definitions, create a new
@@ -171,7 +178,7 @@ class CardholderDetail(
             # Note this sets a reference from personal_data_definitions
             # if you compare these in the tests, they should be the same
             setattr(
-                self.pdf, 
+                self.pdf,
                 # turn the key into a snake case key
                 # ignore the prefixed @ symbol
                 _to_snake_case_key(pdf_field.name),

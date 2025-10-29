@@ -1,0 +1,1245 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The official manuals for the Gallagher Python Toolkit.
+">
+      
+      
+        <meta name="author" content="Anomaly Software">
+      
+      
+        <link rel="canonical" href="https://anomaly.github.io/gallagher/design/">
+      
+      
+        <link rel="prev" href="../tui/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
+    
+    
+      
+        <title>Contributor's Manual - Gallagher Python Toolkit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Contributor's Manual - Gallagher Python Toolkit" >
+      
+        <meta  property="og:description"  content="The official manuals for the Gallagher Python Toolkit.
+" >
+      
+        <meta  property="og:image"  content="https://anomaly.github.io/gallagher/assets/images/social/design.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://anomaly.github.io/gallagher/design/" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Contributor's Manual - Gallagher Python Toolkit" >
+      
+        <meta  name="twitter:description"  content="The official manuals for the Gallagher Python Toolkit.
+" >
+      
+        <meta  name="twitter:image"  content="https://anomaly.github.io/gallagher/assets/images/social/design.png" >
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#contributors-manual" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gallagher Python Toolkit" class="md-header__button md-logo" aria-label="Gallagher Python Toolkit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gallagher Python Toolkit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Contributor's Manual
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/anomaly/gallagher/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gallagher Python Toolkit" class="md-nav__button md-logo" aria-label="Gallagher Python Toolkit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gallagher Python Toolkit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/anomaly/gallagher/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation & Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python-sdk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python SDK
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SQL and SQLAlchemy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Command Line Interface
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terminal User Interface
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Contributor's Manual
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributor's Manual
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Toolchain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      SDK
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-transfer-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Transfer Objects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Transfer Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writing-dto-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing DTO classes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conflicts-with-python-reserved-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conflicts with Python Reserved Words
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Headers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-client-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Client Core
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Client Core">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transport-wrappers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transport Wrappers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#designing-endpoint-consumers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Designing Endpoint Consumers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extending-dtos-for-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extending DTOs for the CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tui" class="md-nav__link">
+    <span class="md-ellipsis">
+      TUI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainers-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maintainers Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maintainers Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publishing-a-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publishing a Release
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writing-release-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing Release Notes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Toolchain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      SDK
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-transfer-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Transfer Objects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Transfer Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writing-dto-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing DTO classes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conflicts-with-python-reserved-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conflicts with Python Reserved Words
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Headers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-client-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Client Core
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Client Core">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transport-wrappers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transport Wrappers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#designing-endpoint-consumers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Designing Endpoint Consumers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extending-dtos-for-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extending DTOs for the CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tui" class="md-nav__link">
+    <span class="md-ellipsis">
+      TUI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainers-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maintainers Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maintainers Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publishing-a-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publishing a Release
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writing-release-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing Release Notes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="contributors-manual">Contributor's Manual</h1>
+<p>The following guide is aimed at developers who are looking to understand the toolkit at a deeper level or wish to contribute to the project. The aim is to outline the design thinking behind various components of the project.</p>
+<h2 id="layout">Layout</h2>
+<p>It's handy to know where each portion of the project lives, so you can find your way around. Majority of the source is located under the <code>gallagher</code> directory, which is what is shipped via <code>pypi</code>. <code>tests</code> are not part of the distribution and <code>examples</code> are intended to be runnable examples a developer can copy and paste.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── assets                          assets for the github/pypi project
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── docs                            documentation via mkdocs
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   └── docs                        where the markdown files are stored
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├── examples                        examples of how to use the API client
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── gallagher                       the main package
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── cc
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   │   ├── alarms                  alarms endpoint
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   │   ├── cardholders             cardholders endpoint
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   │   └── status_overrides        status overrides endpoint
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   ├── cli                         command line interface
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   ├── tui                         terminal user interface
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   ├── dto                         data transfer objects
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   │   ├── detail                  detail objects
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   │   ├── payload                 payloads for requests
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   │   ├── ref                     reference objects
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   │   ├── response                response objects
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   │   └── summary                 summary objects
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   └── ext                         extensions to the core package e.g SQL
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>└── tests                           tests for the project
+</span></code></pre></div>
+<h2 id="toolchain">Toolchain</h2>
+<p>Majority of the development was conducted on macOS, but the toolchain should be compatible with any operating system. All elements of the project were developed in <code>python</code> with standard tooling. Our major dependencies are <code>httpx</code> and <code>pydantic</code>.</p>
+<p>In addition to the usual suspects (e.g pytest) we use:</p>
+<ul>
+<li><code>task</code> - as the task runner of choice, it's widely available on platforms and supports Github actions. All endpoints are documented within the command line tool.</li>
+<li><code>uv</code> as our package manager of choice for the python project</li>
+<li><code>mkdocs</code> for documentation, maintained using markdown</li>
+</ul>
+<h2 id="sdk">SDK</h2>
+<p>A central feature to this project is the API client, focused on a superior developer experience and performance we spent substantial time in designing the Python interface to ensure it scales. We also ensure that we follow forward compatibility design patterns outlined by Gallagher (e.g <a href="https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html">HATEOAS</a>) so you as a developer don't have to worry about it.</p>
+<p>This chapter is optional if you are simply using the API client or the tools. It's aimed towards developers who choose to extend the client further.</p>
+<h2 id="data-transfer-objects">Data Transfer Objects</h2>
+<p>Data Transfer Objects (DTOs) are used to parse the JSON payloads exchanged with the Gallagher REST endpoints. This is to ensure strict validation of the payloads. At it's heart each one of these classes are a <code>pydatic</code> parser.</p>
+<p>There are three types of schema definitions, each one of them suffixed with their intent:</p>
+<ul>
+<li><strong>Ref</strong> are <code>References</code> to other objects, they using contain a <code>href</code> and possibly additional meta data such as a <code>name</code> or <code>id</code></li>
+<li><strong>Summary</strong> is what is returned by the Gallagher API in operations such as <a href="https://gallaghersecurity.github.io/cc-rest-docs/ref/cardholders.html">searches</a>, these are generally a subset of the full object</li>
+<li><strong>Detail</strong> are the full object found at a particular <code>href</code>, they compound on the <code>Summary</code> schema and add additional attributes</li>
+<li><strong>Responses</strong> are resposnes sent back from the server, these will typically contain a set of <code>Summary</code> or <code>Detail</code> objects. When fetching <em>detailed</em> responses for an object the server will often respond with a <code>Detail</code> object without a wrapper <code>Response</code> object.</li>
+<li><strong>Payloads</strong> are objects that are sent to the server as part of a <code>POST</code> or <code>PUT</code> operation, these are suffixed with <strong>Payload</strong>, some of these also offer <code>Builder</code> classes to assist with construction of the payload.</li>
+</ul>
+<p>I additional we have classes that defined responses which are suffixed with <strong>Response</strong>, these wrap structures which returns <code>hrefs</code> for <code>next</code> and <code>previous</code> responses and usually have a collection to hold the response.</p>
+<p>Ensure that each Endpoint defines their own DTOs so you can test them for authenticity. Avoid writing generic classes.</p>
+<p>While <code>Refs</code>, <code>Summary</code> and <code>Detail</code> responses have fields, and it would make sense from an efficiency point of view to inherit e.g <code>Summary</code> builds on <code>Ref</code>, this should be avoided so logically an instance of a <code>Ref</code> class doesn't assert true for <code>isinstance</code> of a <code>Summary</code> class.</p>
+<h3 id="utilities">Utilities</h3>
+<p>The Developer Experience must be at the heart your thinking when you are extending the SDK, to assist with this the SDK provides the following utilities.</p>
+<p><strong>Base models</strong> - are classes that extend the <code>pyndatic</code> <code>BaseModel</code> class and provide common fields and configuration that are shared across all DTOs. Each DTO must inherit from one of the appropriate base models.</p>
+<ul>
+<li><code>AppBaseModel</code> - is what a <code>Ref</code>, <code>Summary</code> or <code>Detail</code> class would inherit from</li>
+<li><code>AppBaseResponseModel</code> - distinguishes between a model vs a response. A response has results which would in turn be a list of <code>Ref</code> or <code>Summary</code> objects</li>
+<li><code>AppBaseResponseWithFollowModel</code> - as response as model as the one before but with <code>next</code>, <code>previous</code>, or <code>update</code> links (depending on the use case)</li>
+</ul>
+<p><strong>Mixins</strong> - are Python classes that inject a particular behaviour into a DTO. They abstract concepts like <code>id</code>, <code>href</code> and <code>optional_href</code> (which is defined using an annotation).</p>
+<ul>
+<li><code>IdentityMixin</code> - provides an <code>id</code> field</li>
+<li><code>HrefMixin</code> - provides an <code>href</code> field</li>
+<li><code>OptionalHrefMixin</code> - provides an <code>href</code> field that is optional</li>
+</ul>
+<p>using these is as simple as inheriting from them in your DTO classes e.g:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gallagher.dto.mixins</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">IdentityMixin</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">HrefMixin</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">AppBaseModel</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">CardholderSummary</span><span class="p">(</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">AppBaseModel</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">IdentityMixin</span><span class="p">,</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">HrefMixin</span><span class="p">,</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">):</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Summary of a cardholder</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="sd">    This is a summary of a cardholder, it is typically returned</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="sd">    in a list of cardholders.</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="sd">    It would have an id and href field because of the Mixin</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    <span class="n">authorised</span><span class="p">:</span> <span class="nb">bool</span>
+</span></code></pre></div>
+<h3 id="writing-dto-classes">Writing DTO classes</h3>
+<p>DTOs are essentially <code>pyndatic</code> data models with some design assumptions. Most of these are around helpers we provide along with naming and placement conventions:</p>
+<ul>
+<li><strong>Suffix names with utlity</strong> - we debated this a lot before deciding that it was more utiliatarian to suffix the classes with their utility e.g <code>CardholderSummary</code>, <code>CardholderDetail</code>, <code>CardholderRef</code>, this voids the needs for formally importing the classes and then aliasing them.</li>
+<li><strong>Use Mixins</strong> - to provide common fields across DTOs, this reduces code duplication and ensures consistency, so wherever possible use the provided Mixins.</li>
+<li><strong>Caution on using OptionalHrefMixin</strong> - this Mixin was initially introduced to model the HATEOAS discovery pattern (which we call the Discovery pattern), while this proves useful in some other use cases, we advice caution in making a <code>href</code> optional as we prefer to have a strict schema.</li>
+<li><strong>Placement of DTOs</strong> - In most cases your DTOs will be placed by function e.g <code>ref</code>, <code>summary</code>, <code>detail</code>, however in cases where a model is returned explicitly as part of say a Detail response, and expands attributes e.g <code>CardholderAccessGroupSummary</code> (which defines a card assigned to a Cardholder) then this should be placed in the same page as the <code>detail</code>. In the inline examples you will find this in <code>detail/cardholder.py</code>.</li>
+</ul>
+<h3 id="conflicts-with-python-reserved-words">Conflicts with Python Reserved Words</h3>
+<p>Gallagher's API uses certain <code>keys</code> e.g <code>from</code> in their <code>json</code> responses that are reserved words in Python. To handle this we use the <code>pydantic</code> <code>Field</code> class to alias these fields. These are defined as annotations that you should use across the DTOs. A sample definition looks like (found in <code>dto/utils.py</code>):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">from_optional_datetime</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">],</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="s2">&quot;from&quot;</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">]</span>
+</span></code></pre></div>
+<p>Our current aliases are:</p>
+<ul>
+<li><code>from_optional_datetime</code> - which is to be used for the <code>from</code> date fields</li>
+<li><code>until_optional_datetime</code> - which is to be used for the <code>until</code> date fields, while <code>until</code> is not a reserved word in Python, we've chosen to use this to be consistent with the <code>from</code> field</li>
+</ul>
+<p><code>type</code> is another <code>key</code> that that constant appears in the <code>JSON</code> payloads, while this is a reserved function name in Python, it does not conflict with the compiler when used as a variable name. For now we've chosen not to wrap this in an alias.</p>
+<h2 id="custom-headers">Custom Headers</h2>
+<p>The <code>httpx</code> wrappers sets the following headers for all requests sent to the command centre:</p>
+<ul>
+<li><code>Content-Type</code> set to <code>application/json</code> to let the command centre know that we are sending JSON payloads</li>
+<li><code>User-Agent</code> set of <code>GallagherPyToolkit/1.0</code> where <code>1.0</code> is the version number discovered from <code>gallagher/__init__.py</code></li>
+<li><code>Authorization</code> set to <code>GGL-API-KEY 9939-00-</code> as prescribed by the official documentation</li>
+</ul>
+<h2 id="api-client-core">API Client Core</h2>
+<p>The <code>core</code> package in <code>cc</code> provides two important classes:</p>
+<ul>
+<li><code>APIEndpoint</code> which all endpoint consumers configuration must inherit from</li>
+<li><code>EndpointConfig</code> an instance of which each class must return as a result of the <code>get_config</code> method</li>
+</ul>
+<p>Every Endpoint Consumer Class is expected to return an instance of <code>EndpointConfig</code> from the <code>get_config</code> method. Each configuration provides references to paths that are dynamically discovered as part of our bootstrapping process.</p>
+<p>Never hard code URLs as this violates the <a href="https://en.wikipedia.org/wiki/HATEOAS">HATEOAS</a> design principle.</p>
+<p>Additionally each configuration will provide references to DTO classes that is used to parse responses, and details of the body.</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Alarms</span><span class="p">(</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">APIEndpoint</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">):</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Alarms</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="nd">@classmethod</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EndpointConfig</span><span class="p">:</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="k">return</span> <span class="n">EndpointConfig</span><span class="p">(</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>            <span class="n">endpoint</span><span class="o">=</span><span class="n">Capabilities</span><span class="o">.</span><span class="n">CURRENT</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">alarms</span><span class="p">,</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>            <span class="n">dto_list</span><span class="o">=</span><span class="n">AlarmSummaryResponse</span><span class="p">,</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>            <span class="n">dto_retrieve</span><span class="o">=</span><span class="n">AlarmSummary</span><span class="p">,</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="p">)</span>
+</span></code></pre></div>
+<p>The above example shows the <code>Alarms</code> class which is a consumer of the <code>alarms</code> endpoint. It nominates <code>AlarmSummaryResponse</code> as the class the infrastructure will use to parse <code>list</code> responses and <code>AlarmSummary</code> as the class to parse <code>retrieve</code> responses.</p>
+<p>It references the <code>Capabilities.CURRENT</code> singleton which is a <code>Capabilities</code> instance that is bootstrapped at runtime. This is a singleton that is used to provide references to all endpoints.</p>
+<p>If a command centre does not have a certain capability then the objects are set to <code>None</code> and accessing the feature raises an exception (more on this in other sections).</p>
+<h3 id="transport-wrappers">Transport Wrappers</h3>
+<p><code>APIEndpoint</code> has several helper methods that reduce code duplication and ensures that the HTTP call lifecycle is handled properly.</p>
+<ul>
+<li><code>_get</code> - provides a wrapper for HTTP <code>GET</code> calls, this takes in a mandatory <code>url</code> and an optional <code>response_class</code> which must be a subclass of <code>AppBaseModel</code>, typically a <code>Detail</code> or a <code>Response</code> class</li>
+<li><code>_post</code> - provides a wrapper for HTTP <code>POST</code> calls, and like <code>_get</code> takes in a <code>url</code> and <code>response_class</code>. In addition you pass in <code>payload</code> which must also be a subclass of <code>AppBaseModel</code>.</li>
+</ul>
+<p>These wrappers raise the following <code>Exceptions</code> when they encounter the corresponding HTTP codes:</p>
+<ul>
+<li><code>gallagher.exception.UnlicensedFeatureException</code> on <code>HTTPStatus.FORBIDDEN</code> when an unlicensed endpoint is accessed (see the discovery section for details)</li>
+<li><code>gallagher.exception.NotFoundException</code>on<code>HTTPStatus.NOT_FOUND</code>(GET only) - raised if a HTTP endpoint wasn't found e.g A<code>Detail</code> object wasn't found</li>
+<li><code>gallagher.exception.ComingSoonException</code> - raised if a feature is marked as "coming soon" by Gallagher</li>
+<li><code>gallagher.exception.DeadEndException</code> - raised if you try and follow a path i.e <code>next</code> or <code>previous</code> on an endpoint that supports it but no longer has a path forward or back.</li>
+<li><code>gallagher.exception.AuthenticationError</code> on <code>HTTPStatus.UNAUTHORIZED</code> if there are issues with authentication</li>
+<li><code>gallagher.exception.PathFollowNotSupportedError</code> - raised if you try and call <code>next</code> or <code>previous</code> on an endpoint that does not support path follow.</li>
+</ul>
+<h3 id="designing-endpoint-consumers">Designing Endpoint Consumers</h3>
+<p>Each API consumer inherits from <code>APIEndpont</code> which is defined in <code>gallagher.cc.core</code>. Before each endpoint is executed we run an internal discovery process (see the <code>_discover</code> method in <code>APIEndoint</code> class).</p>
+<p>We do this to be forwards compatible (see <a href="https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html">HATEOAS chapter</a> in Gallagher's documentation), but caches the response across a session (a session being an application life cycle) to increase API round trip performance.</p>
+<p>The discovered state of the server is stored in a singleton, that's used by all the API endpoints. This can be found in the <code>core</code> package, as the <code>CURRENT</code> attribute of the <code>Capabilities</code> class. This is always an instance of <code>DiscoveryResponse</code>. Because this is instantiated as part of the bootstrap, initially all the URLs are set to <code>None</code>, the values are populated ahead of the first API call made to the server.</p>
+<p>For this reason all <code>APIEndpoint</code> classes return a configuration as a result of a function called <code>get_config</code> (an <code>async</code> method that at a <code>class</code> scope) as opposed to a statically assigned class variable (otherwise the URLs would always result to be the initial <code>None</code> value).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you want to force discovery of the endpoints call <code>expire_discovery</code> on the <code>APIEndpoint</code> before calling the API endpoint. e.g <code>Cardholder.expire_discovery()</code></p>
+</div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">..core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">Capabilities</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">APIEndpoint</span><span class="p">,</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">EndpointConfig</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">...dto.detail</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">DivisionDetail</span><span class="p">,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">)</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="kn">from</span><span class="w"> </span><span class="nn">...dto.response</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="n">DivisionSummaryResponse</span><span class="p">,</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="p">)</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">class</span><span class="w"> </span><span class="nc">Division</span><span class="p">(</span><span class="n">APIEndpoint</span><span class="p">):</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="sd">    Gallagher advises against hard coding the URLs for divisions, and instead</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="sd">    recommends using the /api endpoint to discover the URLs from</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="sd">    events.divisions.href and alarms.division.href.</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="nd">@classmethod</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EndpointConfig</span><span class="p">:</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>        <span class="k">return</span> <span class="n">EndpointConfig</span><span class="p">(</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>            <span class="n">endpoint</span><span class="o">=</span><span class="n">Capabilities</span><span class="o">.</span><span class="n">CURRENT</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">divisions</span><span class="o">.</span><span class="n">divisions</span><span class="p">,</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>            <span class="n">dto_list</span><span class="o">=</span><span class="n">DivisionSummaryResponse</span><span class="p">,</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>            <span class="n">dto_retrieve</span><span class="o">=</span><span class="n">DivisionDetail</span><span class="p">,</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>        <span class="p">)</span>
+</span></code></pre></div>
+<h2 id="cli">CLI</h2>
+<p><a href="https://typer.tiangolo.com">Typer</a> enhances <a href="https://click.palletsprojects.com/en/8.1.x/">click</a> by providing a mode <code>FastAPI</code> like developer experience (having been created by the developers of FastAPI). The design of our <code>cli</code> is highly inspired by tools like <code>git</code>, and follows the subcommand pattern.</p>
+<p>This section outlines thoughts on the design of the command line interface for those working on extending it.</p>
+<h3 id="extending-dtos-for-the-cli">Extending DTOs for the CLI</h3>
+<p>The CLI interrogates the DTOs to build it's output. It does this by calling a set of predefined methods. These methods appear on the <code>Response</code> that in turn interrogates the <code>Summary</code> or <code>Detail</code> objects. You must think of these methods as returning a representation of itself for the command line.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You are not responsible for formatting the output, the CLI will do this for you. The DTO is solely responsible for returning the data.</p>
+<p>If you are extending the CLI then please read the design patterns for presenting output. Remember, Developer Experience and Consistency is key.</p>
+</div>
+<p>A <code>Response</code> class must provide a representation of results it holds. Note that not all responses from the Gallagher API return the same keys, so you will have to override the methods per <code>Response</code> class.</p>
+<p>The <code>cli_header</code> returns an array of strings that the CLI will use as headers for the table:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nd">@property</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">cli_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">,</span> <span class="s2">&quot;First name&quot;</span><span class="p">,</span> <span class="s2">&quot;Last name&quot;</span><span class="p">,</span> <span class="s2">&quot;Authorised&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<p>The length of this list must match the length of the <code>__rich_repr__</code> method.</p>
+<p>Next the CLI depends on calling the <code>__rich__repr__</code> method which standard rich representation (Typer and our CLI depends on the <code>rich</code> library to produce output). In many cases this created by amalgamating the fields form the results:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">__rich_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">__rich_repr__</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">]</span>
+</span></code></pre></div>
+<p>Finally the CLI depends on the standard <code>__str__</code> function to present sumamries of the results. Be mindful of what you send back as a response from this.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> cardholders&quot;</span>
+</span></code></pre></div>
+<p>Putting all this together if you were to return a list of <code>Cardholders</code> as part of the <code>Summary</code> call, it looks somewhat like this:</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">CardholderSummaryResponse</span><span class="p">(</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">AppBaseResponseModel</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">):</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Summary response for cardholder list and search</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="sd">    /api/cardholders is generally the endpoint that responds</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="sd">    to the query, it is dynamically configured from the discovery</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">CardholderSummary</span><span class="p">]</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="nd">@property</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">cli_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">,</span> <span class="s2">&quot;First name&quot;</span><span class="p">,</span> <span class="s2">&quot;Last name&quot;</span><span class="p">,</span> <span class="s2">&quot;Authorised&quot;</span><span class="p">]</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__rich_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>        <span class="k">return</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">__rich_repr__</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">]</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> cardholders&quot;</span>
+</span></code></pre></div>
+<h2 id="tui">TUI</h2>
+<h2 id="sql">SQL</h2>
+<p>The SQL interface is built using the <code>shillelagh</code> library. The library exposes various <code>metadata</code> which the extension gathers to construct the SQL interface. The following is a guide to outline how that works and what you require to populate should you wish to extend or contribute to the SQL interface.</p>
+<p>Each API Endpoint configuration that wishes to support the SQL interfaces returns a constant named <code>__shillelagh__</code> which is a tuple of classes that are used to query the endpoint. The classes must be a subclass of <code>AppBaseResponseModel</code> and must implement a <code>result_set</code> property that returns a reference to the property that provides the resultset for the SQL queries.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Write up Alarms for querying via the SQL interface</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">__shillelagh__</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="n">Alarms</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>The following demonstrates two examples where <code>CardholderSummaryResponse</code> returns the <code>results</code> property</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">CardholderSummaryResponse</span><span class="p">(</span><span class="n">AppBaseResponseModel</span><span class="p">):</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Summary response for cardholder list and search</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="sd">    /api/cardholders is generally the endpoint that responds</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="sd">    to the query, it is dynamically configured from the discovery</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">CardholderSummary</span><span class="p">]</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    <span class="nd">@property</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">result_set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">CardholderSummary</span><span class="p">]:</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Wrap summary response target property</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="sd">        the sql interface will call this property and each summary</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="sd">        response is expected to override this and return the appropriate</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="sd">        target property</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span>
+</span></code></pre></div>
+<p>whereas <code>AlarmSummaryResponse</code> nominates the <code>alarms</code> property.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">AlarmSummaryResponse</span><span class="p">(</span><span class="n">AppBaseResponseModel</span><span class="p">):</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;AlarmSummaryResponse represents a single alarm&quot;&quot;&quot;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">alarms</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AlarmSummary</span><span class="p">]</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="n">updates</span><span class="p">:</span> <span class="n">OptionalHrefMixin</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="nd">@property</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">result_set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">AlarmSummary</span><span class="p">]:</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Wrap summary response target property</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="sd">        the sql interface will call this property and each summary</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="sd">        response is expected to override this and return the appropriate</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="sd">        target property</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">alarms</span>
+</span></code></pre></div>
+<p>Both of these make for the <code>results</code> of the SQL</p>
+<h2 id="maintainers-notes">Maintainers Notes</h2>
+<p>This section primarily contains notes for the managers of the project, it covers topics like publication of releases.</p>
+<p>Much of this is automated via Github actions, these actions depend on the following secrets that have been set at a project level (and can only be updated by the project owners):</p>
+<ul>
+<li><code>PYPI_API_KEY</code> - the API key for PyPI that is used to publish the package</li>
+<li><code>GACC_API_KEY</code> - the API key for the Gallagher Command Centre that is used to run tests against.</li>
+</ul>
+<h3 id="publishing-a-release">Publishing a Release</h3>
+<p>The action <code>.github/workflows/publish-package.yml</code> is responsible for publishing a release. This is triggered by a tag being pushed to the repository. The tag must be in the format <code>vX.Y.Z</code> where <code>X</code>, <code>Y</code> and <code>Z</code> are integers.</p>
+<p>The <code>release</code> action will run the set of tests, and if they pass, it will publish the package to PyPI.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In most instances you should not have to publish a release by hand. If there is ever a need to do that, we recommend that appropriate notes be left against the release.</p>
+</div>
+<h3 id="writing-release-notes">Writing Release Notes</h3>
+<p>With every release we must ensure that this documentation is kept relevant and we leave a trace of what has changed in beautifully written release notes.</p>
+<blockquote>
+<p>" If you don't have documentation, you don't have a minimum viable product." - <a href="https://github.com/dynamicwebpaige#-if-you-dont-have-documentation-you-dont-have-a-minimum-viable-product">Paige Bailey</a></p>
+</blockquote>
+<p>The project recommends the following pattern, which is enforced by a template in our Github workflow. We understand that you can use generative AI tools to write your release notes, but we believe that users of this library want to hear what us the maintainers thought is important as opposed to a computed list of changes.</p>
+<p>We understand it takes that little bit longer to do this right, doing this well shows our level of care.</p>
+<ul>
+<li><strong>Preamble</strong>, a summary of the release where we outline the major motivation (be it a feature or a service release)</li>
+<li><strong>Features</strong>, a concise list of what we have added to this release and did not exist before</li>
+<li><strong>Improvements</strong>, a list of improvements made to existing features</li>
+<li><strong>Bug Fixes</strong>, this is different to <code>improvements</code> these are genuine issues that were found</li>
+</ul>
+<blockquote>
+<p>Includes the sections relevant and leave out what's not. Be as human as possible, this is a conversation with our users.</p>
+</blockquote>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Anomaly Software
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+    
+  </body>
+</html>

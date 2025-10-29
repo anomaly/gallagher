@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://anomaly.github.io/gallagher/</loc>
+         <lastmod>2025-10-29</lastmod>
+    </url>
+    <url>
+         <loc>https://anomaly.github.io/gallagher/cli/</loc>
+         <lastmod>2025-10-29</lastmod>
+    </url>
+    <url>
+         <loc>https://anomaly.github.io/gallagher/design/</loc>
+         <lastmod>2025-10-29</lastmod>
+    </url>
+    <url>
+         <loc>https://anomaly.github.io/gallagher/installation/</loc>
+         <lastmod>2025-10-29</lastmod>
+    </url>
+    <url>
+         <loc>https://anomaly.github.io/gallagher/python-sdk/</loc>
+         <lastmod>2025-10-29</lastmod>
+    </url>
+    <url>
+         <loc>https://anomaly.github.io/gallagher/sql/</loc>
+         <lastmod>2025-10-29</lastmod>
+    </url>
+    <url>
+         <loc>https://anomaly.github.io/gallagher/tui/</loc>
+         <lastmod>2025-10-29</lastmod>
+    </url>
+</urlset>

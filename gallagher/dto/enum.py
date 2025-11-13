@@ -39,3 +39,5 @@ class CredentialsClass(str, Enum):
     TRACKING_TAG = "trackingTag"
     TRANSACT = "transact"
     FIOD2 = "fido2"
+    BIOMETRIC = "biometric"
+    APPLE_PASS = "applePass"

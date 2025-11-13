@@ -1,5 +1,15 @@
 """ Cardholder Update Builder exploration
 
+Example Usage:
+
+    add_card_href = CardTypeRef(href="https://api.example.com/cards/123")
+    remove_card_href = HrefMixin(href="https://api.example.com/cards/456")
+
+    card_update_builder = CardholderUpdateBuilder()
+        .add_card(add_card_href)
+        .remove_card(remove_card_href)
+        .build()
+
 """
 from ..ref.card import CardTypeRef
 
@@ -15,3 +25,4 @@ class CardholderUpdateBuilder:
 
     def remove_card(self, href: URL):
         pass
+

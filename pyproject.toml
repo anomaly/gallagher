@@ -1,6 +1,6 @@
 [project]
 name = "gallagher"
-version = "1.0.0a15"
+version = "1.0.0a16"
 description = "The missing developer toolkit for Gallagher Command Centre"
 authors = [{ name = "Anomaly", email = "oss@anomaly.ltd" }]
 license = { text = "MIT" }

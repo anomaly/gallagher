@@ -1,3 +1,5 @@
+""" Command line hook for gallagher package
+"""
 from . import app
 
 def main():

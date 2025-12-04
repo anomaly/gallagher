@@ -68,8 +68,3 @@ class GallagherConsole(App):
 # development and how we can use it provide a demo
 app = GallagherConsole()
 
-def main():
-    app.run()
-
-if __name__ == "__main__":
-    main()

@@ -15,6 +15,7 @@ dependencies = [
 [project.scripts]
 gala = "gallagher.cli.__main__:main"
 gallagher-mcp = "gallagher.mcp.__main__:main"
+gtui = "gallagher.tui.__main__:main"
 
 [project.optional-dependencies]
 cli = ["typer>=0.16.0,<1.0.0"]

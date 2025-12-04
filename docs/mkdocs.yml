@@ -33,4 +33,5 @@ nav:
   - SQL and SQLAlchemy: sql.md
   - Command Line Interface: cli.md
   - Terminal User Interface: tui.md
+  - MCP Server: mcp.md
   - Contributor's Manual: design.md

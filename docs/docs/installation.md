@@ -22,6 +22,12 @@ If you are feeling adventurous you can install everything by:
 uv add gallagher[all]
 ```
 
+In case you find your setup missing packages, try syncing with `--all-extras` flag (probably relevant if you are using all the tools or developing with the SDK):
+
+```bash
+uv sync --all-extras
+```
+
 ### SDK
 
 To use the API (or the associated tools, as they use the API client in return) you must have an API key supplied by the Command Centre instance. The same key is used if you were were using the API on premise or in the cloud.

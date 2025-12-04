@@ -713,7 +713,7 @@ wheels = [
 
 [[package]]
 name = "gallagher"
-version = "1.0.0a16"
+version = "1.0.0b1"
 source = { editable = "." }
 dependencies = [
     { name = "email-validator" },

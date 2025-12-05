@@ -18,6 +18,7 @@ Our Python Toolkit focuses on enhancing the developer experience (DX) around the
 - **Command Line Interface** (CLI) to build powerful pipeline-based workflows.
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
 - **SQL interface** query the REST API as if it were a database or interact with via an ORM.
+- **MCP Server and Client** implement the [Model Context Protocol](https://modelcontextprotocol.io) to allow LLMs to interact with Gallagher Command Centre.
 
 > [!NOTE]\
 > This project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.

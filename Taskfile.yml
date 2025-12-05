@@ -63,7 +63,11 @@ tasks:
   dev:docs:
     desc: run the mkdocs server with appropriate flags
     cmds:
-      - cd docs && uv run -m mkdocs serve --open -a localhost:8001
+      - cd docs && uv run -m mkdocs serve --livereload --watch-theme --open -a localhost:8001
+  mcp:serve:
+    desc: runs the mcp server for development
+    cmds:
+      - uv run gala-mcp-server --dev --reload --host
   debug:get:
     desc: use httpie to get payload from CC
     summary: |

@@ -14,7 +14,7 @@ dependencies = [
 
 [project.scripts]
 gala = "gallagher.cli.__main__:main"
-gallagher-mcp = "gallagher.mcp.server.__main__:main"
+gala-mcp-server = "gallagher.mcp.server.__main__:main"
 gtui = "gallagher.tui.__main__:main"
 
 [project.optional-dependencies]

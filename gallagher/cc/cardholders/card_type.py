@@ -15,8 +15,7 @@ class CardType(APIEndpoint):
     of credentials available on this particular instance.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.card_types.card_types,
             dto_list=CardTypeResponse,

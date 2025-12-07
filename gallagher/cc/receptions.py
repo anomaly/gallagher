@@ -15,8 +15,7 @@ class Receptions(APIEndpoint):
     retrieving, creating, and updating receptions.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.receptions.receptions,
             dto_list=ReceptionResponse,

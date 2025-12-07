@@ -15,8 +15,7 @@ class AccessGroups(APIEndpoint):
     retrieving, creating, and updating access groups.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.access_groups.access_groups,
             dto_list=AccessGroupResponse,

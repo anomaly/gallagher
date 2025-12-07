@@ -27,8 +27,7 @@ class Cardholder(APIEndpoint):
     entities that require access to the site.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.cardholders.cardholders,
             endpoint_follow=Capabilities.CURRENT.features.cardholders.changes,
@@ -45,8 +44,7 @@ class PdfDefinition(APIEndpoint):
     of credentials available on this particular instance.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.personal_data_fields\
                 .personal_data_fields,

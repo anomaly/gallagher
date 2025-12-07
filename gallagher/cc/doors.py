@@ -11,8 +11,7 @@ class Doors(APIEndpoint):
     retrieving, creating, and updating doors.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.doors.doors,
             dto_list=DoorResponse,

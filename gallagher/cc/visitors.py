@@ -15,8 +15,7 @@ class Visitors(APIEndpoint):
     retrieving, creating, and updating visitors.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.visits.visits,
             dto_list=VisitorResponse,

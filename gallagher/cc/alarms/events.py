@@ -33,8 +33,7 @@ class Event(APIEndpoint):
     the next href is a non blocking call to get the next set of events.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.events.events,
             endpoint_follow=Capabilities.CURRENT.features.events.updates,
@@ -46,8 +45,7 @@ class Event(APIEndpoint):
 class EventType(APIEndpoint):
     """EventType"""
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.events.event_groups,
             dto_list=EventTypeResponse,
@@ -63,8 +61,7 @@ class EventGroups(APIEndpoint):
     See above Event class for more details.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.events.event_groups,
             dto_list=EventTypeResponse,

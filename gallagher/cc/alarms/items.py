@@ -23,8 +23,7 @@ class ItemsTypes(APIEndpoint):
     Gallagher
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.items.item_types,
             endpoint_follow=Capabilities.CURRENT.features.items.updates,
@@ -52,8 +51,7 @@ class Item(APIEndpoint):
 
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.items.items,
             dto_list=ItemsSummaryResponse,

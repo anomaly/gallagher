@@ -15,8 +15,7 @@ class Lockers(APIEndpoint):
     retrieving, creating, and updating lockers.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.locker_banks.locker_banks,
             dto_list=LockerResponse,

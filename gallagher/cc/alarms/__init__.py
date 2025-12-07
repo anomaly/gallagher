@@ -41,8 +41,7 @@ class Alarms(
     - mark_as_force_processed:
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         """Return the configuration for Alarms
 
         Arguments:

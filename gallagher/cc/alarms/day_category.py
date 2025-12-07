@@ -11,8 +11,7 @@ from ...dto.response import DayCategoryResponse
 class DayCategory(APIEndpoint):
     """Day Categories"""
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.day_categories.day_categories,
             dto_list=DayCategoryResponse,

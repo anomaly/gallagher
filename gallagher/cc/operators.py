@@ -15,8 +15,7 @@ class Operators(APIEndpoint):
     retrieving, creating, and updating operators.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.operator_groups.operator_groups,
             dto_list=OperatorResponse,

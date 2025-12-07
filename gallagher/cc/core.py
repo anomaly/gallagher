@@ -262,12 +262,19 @@ class APIEndpoint(RequestHeadersMixin,):
         self.config = config
         self._CAPABILITIES = capabilities
 
+        # Unlike before gallagher/#96 we now call get_config
+        # here as discover would have already completed
+        self.__config__ = self.get_config()
 
-    async def get_config(self) -> EndpointConfig:
+
+    def get_config(self) -> EndpointConfig:
         """Returns the configuration for the endpoint
 
         This method can be overridden by the child class to
         provide additional configuration options.
+
+        Note: since gallagher/#96 this was refactored to be
+        a sync method so it can be called in the constructor.
         """
         raise NotImplementedError("get_config method not implemented")
 

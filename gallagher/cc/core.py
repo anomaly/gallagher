@@ -279,8 +279,6 @@ class APIEndpoint(RequestHeadersMixin,):
 
         :param int skip: fetch responses from this anchor
         """
-        await self._discover()  # Discover must be here for dynamic config
-
         return await self._get(
             self.__config__.endpoint.href,
             self.__config__.dto_list,
@@ -295,24 +293,22 @@ class APIEndpoint(RequestHeadersMixin,):
 
         :param int id: identifier of the object to be fetched
         """
-        await self._discover()  # Discover must be here for dynamic config
-
         return await self._get(
             f"{self.__config__.endpoint.href}/{id}",
             self.__config__.dto_retrieve,
         )
 
-    async def modify(cls):
+    async def modify(self):
         """ """
         pass
 
     async def create(self, **params):
         """ """
-        self._discover()
+        pass
 
     async def delete(self):
         """ """
-        self._discover()
+        pass
 
     async def search(
         self,
@@ -343,8 +339,6 @@ class APIEndpoint(RequestHeadersMixin,):
         :param kwargs: Fields to search for
 
         """
-        await self._discover()
-
         params = {
             "top": top,
             "sort": sort,
@@ -382,8 +376,6 @@ class APIEndpoint(RequestHeadersMixin,):
 
         This is only valid if the response object has a next href
         """
-        await self._discover()
-
         # If the self.__config__ is not of type AppBaseResponseWithFollowModel
         # then we should raise an exception
         if not issubclass(self.__config__.dto_list, AppBaseResponseWithFollowModel):
@@ -407,8 +399,6 @@ class APIEndpoint(RequestHeadersMixin,):
 
         This is only valid if the response object has a previous href
         """
-        await self._discover()
-
         # If the self.__config__ is not of type AppBaseResponseWithFollowModel
         # then we should raise an exception
         if not issubclass(self.__config__.dto_list, AppBaseResponseWithFollowModel):
@@ -446,8 +436,6 @@ class APIEndpoint(RequestHeadersMixin,):
         This behaviour is followed by updates and changes endpoints, this method
         should be used a helper for the updates and changes methods.
         """
-        await self._discover()
-
         if not self.__config__.endpoint_follow:
             raise PathFollowNotSupportedError(
                 "Endpoint does not support previous, next or updates"

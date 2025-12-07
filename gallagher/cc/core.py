@@ -158,9 +158,9 @@ class CommandCentreConfig(BaseSettings):
     # By default the base API is set to the Australian Gateway
     # Override this with the US gateway or a local DNS/IP address
     api_base: HttpUrl = Field(
-        default=URL.COMMAND_CENTRE_API_AU,
+        default=URL.CLOUD_GATEWAY_AU,
         description="Base URL for Command Centre REST API",
-    )
+    )   
 
     # Default is set to the library, set this to your application
     client_id: str = Field(

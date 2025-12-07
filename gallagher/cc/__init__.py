@@ -22,26 +22,123 @@
 """
 
 from typing import Optional
+from datetime import datetime
 
-from ..const import URL
+import httpx
 
-# Follow the instructions in the Gallagher documentation
-# to obtain an API key
-api_key: str = None
+from ..dto.detail import (
+    FeaturesDetail,
+)
+from ..dto.response import (
+    DiscoveryResponse,
+)
 
-# Certificate file to be used for authentication
-file_tls_certificate: str = None
+from .core import (
+    CommandCentreConfig,
+    RequestHeadersMixin,
+)
 
-# Private key file to be used for authentication
-file_private_key: str = None
 
-# By default the base API is set to the Australian Gateway
-# Override this with the US gateway or a local DNS/IP address
-api_base: str = URL.CLOUD_GATEWAY_AU
+class APIClient(RequestHeadersMixin,):
+    """ Command Centre REST API client configuration holder """
 
-# Default is set to the library, set this to your application
-client_id: str = "gallagher-py"
+    """ This configuration must be initialised ahead of time
 
-# By default connections are sent straight to the server
-# should you wish to use a proxy, set this to the proxy URL
-proxy: Optional[str] = None
+    We pass this object around to the rest of the API clients for
+    them to behave uniformly.
+    """
+    config: CommandCentreConfig
+
+    """
+    Discover response object, each endpoint will reference
+    one of the instance variable Href property to get the
+    path to the endpoint.
+
+    Gallagher recommends that the endpoints not be hardcoded
+    into the client and instead be discovered at runtime.
+
+    Note that if a feature has not been licensed by a client
+    then the path will be set to None, if the client attempts
+    to access the endpoint then the library will throw an exception
+
+    This value is memoized and should be performant
+    """
+    _CAPABILITIES: DiscoveryResponse
+
+    def __init__(self, config: Optional[CommandCentreConfig] = None):
+        
+        self.config = config or CommandCentreConfig()
+        
+        self._CAPABILITIES = DiscoveryResponse(
+            version="0.0.0.0",  # Indicates that it's not been discovered
+            features=FeaturesDetail(),
+        )
+
+        # Run the initially discovery to populate HATEOAS endpoints
+        self.discover()
+
+    def discover(self):
+        """The Command Centre root API endpoint
+
+        Much of Gallagher's API documentation suggests that we don't
+        hard code the URL, but instead use the discovery endpoint by
+        calling the root endpoint.
+
+        This should be a singleton which is instantiated upon initialisation
+        and then used across the other endpoints.
+
+        For example features.events.events.href is the endpoint for the events
+        where as features.events.events.updates is the endpoint for getting
+        updates to the changes to events.
+
+        This differs per endpoint that we work with.
+
+        Note that references to self._CAPABILITIES as a singleton, while
+        cls.method when executing a class method.
+
+        :params class cls: The class that is calling the method
+        """
+
+        if not self._CAPABILITIES.version == "0.0.0.0" and isinstance(
+            self._CAPABILITIES._good_known_since, datetime
+        ):
+            # We've already discovered the endpoints as per HATEOAS
+            # design requirement, however because the endpoint configuration is
+            # dynamically populated, we have to call the get_config method
+            return
+
+        with httpx.Client(
+            proxy=self.config.proxy,
+            verify=self.config.ssl_context,
+        ) as _httpx_async:
+            # Don't use the _get wrapper here, we need to get the raw response
+            response = _httpx_async.get(
+                self.config.api_base,
+                headers=self._get_authorization_headers(),
+            )
+
+            parsed_obj = DiscoveryResponse.model_validate(
+                response.json()
+            )
+
+            # Assign the capabilities to the class, this should
+            # result in the endpoint
+            #
+            # With the refactored initialisation of the pydantic
+            # models, the values for the unavailable endpoints
+            # should be set to None
+            self._CAPABILITIES = parsed_obj
+
+    def expire_discovery(self):
+        """Expires endpoint discovery information
+
+        Use this with caution as it significantly increases roundtrip times
+        and decreases API client performance.
+
+        Unless the server instance updates mid cycle, there should be no
+        reason for these discovered URLs to change.
+        """
+        self._CAPABILITIES = DiscoveryResponse(
+            version="0.0.0.0",  # Indicates that it's not been discovered
+            features=FeaturesDetail(),
+        )

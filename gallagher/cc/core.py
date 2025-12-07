@@ -18,8 +18,7 @@ from typing import (
     Any,
     List,
 )
-
-from datetime import datetime
+from pathlib import Path
 from dataclasses import dataclass
 
 from asyncio import Event as AsyncioEvent  # Used for signalling events
@@ -29,18 +28,22 @@ from http import HTTPStatus  # Provides constants for HTTP status codes
 import ssl
 import httpx
 
-from . import proxy as proxy_address
+from pydantic_settings import BaseSettings
+from pydantic import (
+    Field,
+    HttpUrl,
+)
+
 from gallagher.exception import UnlicensedFeatureException
 
-from ..const import TRANSPORT
+from ..const import (
+    TRANSPORT,
+    URL,
+)
 
 from ..dto.utils import (
     AppBaseModel,
     AppBaseResponseWithFollowModel,
-)
-
-from ..dto.detail import (
-    FeaturesDetail,
 )
 
 from ..dto.response import (
@@ -60,20 +63,6 @@ from ..exception import (
     NoAPIKeyProvidedError,
 )
 
-from ..dto.detail.discover import FeaturesDetail
-
-
-def _check_api_key_format(api_key):
-    """Validates that the Gallagher Key is in the right format.
-
-    It's not possible for the API client to validate the key against
-    Gallagher servers but it will validate that the key is in the
-    right format.
-    """
-    api_tokens = api_key.split("-")
-    return len(api_tokens) == 8
-
-
 def _sanitise_name_param(name: str) -> str:
     """
     Limits the returned items to those with a name that matches this string. 
@@ -90,50 +79,119 @@ def _sanitise_name_param(name: str) -> str:
 
     return f"%{name}%"
 
-
-def _get_authorization_headers():
-    """Creates an authorization header for Gallagher API calls
-
-    The server expects an Authorization header with GGL-API-KEY
-    set to the API key provided by Gallagher Command Centre.
-
-    This API key is what allows the cloud proxy to determine where
-    the request should be routed to.
-
-    See the Authorization section here for more information
-    https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html
-
-    from gallagher import cc, const
-
-    cc.api_key = "GH_"
-
+class RequestHeadersMixin():
+    """Mixin to provide request headers for Gallagher API calls
+    
+    Reason for this being a mixin is to allow both the APIClient and
+    APIEndpoint to share the same method for generating headers.
     """
-    from . import api_key
-    from .. import __version__
 
-    if not api_key:
-        """ API key cannot be empty
+    def _check_api_key_format(api_key):
+        """Validates that the Gallagher Key is in the right format.
 
-        Trap this exception to ensure that you have configured the
-        client properly.
+        It's not possible for the API client to validate the key against
+        Gallagher servers but it will validate that the key is in the
+        right format.
         """
-        raise NoAPIKeyProvidedError()
+        api_tokens = api_key.split("-")
+        return len(api_tokens) == 8
 
-    if not _check_api_key_format(api_key):
-        """ API key is not in the right format
+    def _get_authorization_headers(self):
+        """Creates an authorization header for Gallagher API calls
 
-        The API key is not in the right format, this is likely because
-        the client has not copied the key correctly from the Gallagher
-        Command Centre.
+        The server expects an Authorization header with GGL-API-KEY
+        set to the API key provided by Gallagher Command Centre.
+
+        This API key is what allows the cloud proxy to determine where
+        the request should be routed to.
+
+        See the Authorization section here for more information
+        https://gallaghersecurity.github.io/cc-rest-docs/ref/events.html
+
+        from gallagher import cc, const
+
+        cc.api_key = "GH_"
         """
-        raise ValueError("API key is not in the right format")
+        from .. import __version__
 
-    return {
-        "Content-Type": "application/json",
-        "User-Agent": f"GallagherPyToolkit/{__version__}",
-        "Authorization": f"GGL-API-KEY {api_key}",
-    }
+        if not self.config.api_key:
+            """ API key cannot be empty
 
+            Trap this exception to ensure that you have configured the
+            client properly.
+            """
+            raise NoAPIKeyProvidedError()
+
+        if not self._check_api_key_format(self.config.api_key):
+            """ API key is not in the right format
+
+            The API key is not in the right format, this is likely because
+            the client has not copied the key correctly from the Gallagher
+            Command Centre.
+            """
+            raise ValueError("API key is not in the right format")
+
+        return {
+            "Content-Type": "application/json",
+            "User-Agent": f"GallagherPyToolkit/{__version__}",
+            "Authorization": f"GGL-API-KEY {self.config.api_key}",
+        }
+    
+
+class CommandCentreConfig(BaseSettings):
+    """ Configuration for Command Centre API client """
+
+    # Follow the instructions in the Gallagher documentation
+    # to obtain an API key
+    api_key: str = Field(
+        ...,
+        description="API key for Command Centre REST API",
+        env="GACC_API_KEY",
+    )
+
+    # Certificate file to be used for authentication
+    file_tls_certificate: Optional[Path] = None
+
+    # Private key file to be used for authentication
+    file_private_key: Optional[Path] = None
+
+    # By default the base API is set to the Australian Gateway
+    # Override this with the US gateway or a local DNS/IP address
+    api_base: HttpUrl = Field(
+        default=URL.COMMAND_CENTRE_API_AU,
+        description="Base URL for Command Centre REST API",
+    )
+
+    # Default is set to the library, set this to your application
+    client_id: str = Field(
+        default="gallagher-py",
+        description="Client ID for Command Centre REST API",
+    )
+
+    # By default connections are sent straight to the server
+    # should you wish to use a proxy, set this to the proxy URL
+    proxy: Optional[HttpUrl] = Field(
+        default=None,
+        description="Proxy URL for Command Centre REST API",
+        env="GACC_PROXY",
+    )
+
+    @property
+    def ssl_context(self):
+        """Returns the SSL context for the endpoint
+
+        This method can be overridden by the child class to
+        provide additional SSL context options.
+        """
+        from . import file_tls_certificate, file_private_key
+
+        if not file_tls_certificate:
+            """TLS certificate is required for SSL context"""
+            return None
+
+        context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        context.load_cert_chain(file_tls_certificate, file_private_key)
+        return context
 
 @dataclass
 class EndpointConfig:
@@ -167,39 +225,16 @@ class EndpointConfig:
     fields: Tuple[str] = ()  # Optional list of fields, blank = all
     search: Tuple[str] = ()  # If the endpoint supports search, blank = none
 
-    @classmethod
-    async def validate_endpoint(cls):
+    async def validate_endpoint(self):
         """Check to see if the feature is licensed and available
 
         Gallagher REST API is licensed per feature, if a feature is not
         the endpoint is set to none and we should throw an exception
         """
-        if not cls.endpoint:
+        if not self.endpoint:
             raise UnlicensedFeatureException("Endpoint not defined")
 
-
-class Capabilities:
-    """
-    Discover response object, each endpoint will reference
-    one of the instance variable Href property to get the
-    path to the endpoint.
-
-    Gallagher recommends that the endpoints not be hardcoded
-    into the client and instead be discovered at runtime.
-
-    Note that if a feature has not been licensed by a client
-    then the path will be set to None, if the client attempts
-    to access the endpoint then the library will throw an exception
-
-    This value is memoized and should be performant
-    """
-    CURRENT = DiscoveryResponse(
-        version="0.0.0.0",  # Indicates that it's not been discovered
-        features=FeaturesDetail(),
-    )
-
-
-class APIEndpoint:
+class APIEndpoint(RequestHeadersMixin,):
     """Base class for all API objects
 
     All API endpoints must inherit from this class and provide a Config class
@@ -214,23 +249,21 @@ class APIEndpoint:
     # lifecycle methods and use to cache the configuration object
     __config__ = None
 
-    @classmethod
-    async def expire_discovery(cls):
-        """Expires endpoint discovery information
+    def __init__(self, config: CommandCentreConfig, capabilities: DiscoveryResponse):
+        """Initialises the API endpoint with the discovery response
 
-        Use this with caution as it significantly increases roundtrip times
-        and decreases API client performance.
+        Each endpoint requires the discovery response to be passed
+        in so that it can dynamically assign the endpoint hrefs
+        based on what the server provides.
 
-        Unless the server instance updates mid cycle, there should be no
-        reason for these discovered URLs to change.
+        :param CommandCentreConfig config: The API client configuration
+        :param DiscoveryResponse capabilities: The discovery response
         """
-        Capabilities.CURRENT = DiscoveryResponse(
-            version="0.0.0.0",  # Indicates that it's not been discovered
-            features=FeaturesDetail(),
-        )
+        self.config = config
+        self._CAPABILITIES = capabilities
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+
+    async def get_config(self) -> EndpointConfig:
         """Returns the configuration for the endpoint
 
         This method can be overridden by the child class to
@@ -238,94 +271,7 @@ class APIEndpoint:
         """
         raise NotImplementedError("get_config method not implemented")
 
-    @classmethod
-    def _ssl_context(cls):
-        """Returns the SSL context for the endpoint
-
-        This method can be overridden by the child class to
-        provide additional SSL context options.
-        """
-        from . import file_tls_certificate, file_private_key
-
-        if not file_tls_certificate:
-            """TLS certificate is required for SSL context"""
-            return None
-
-        context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
-        context.load_cert_chain(file_tls_certificate, file_private_key)
-        return context
-
-    @classmethod
-    async def _discover(cls):
-        """The Command Centre root API endpoint
-
-        Much of Gallagher's API documentation suggests that we don't
-        hard code the URL, but instead use the discovery endpoint by
-        calling the root endpoint.
-
-        This should be a singleton which is instantiated upon initialisation
-        and then used across the other endpoints.
-
-        For example features.events.events.href is the endpoint for the events
-        where as features.events.events.updates is the endpoint for getting
-        updates to the changes to events.
-
-        This differs per endpoint that we work with.
-
-        Note that references to Capabilities.CURRENT as a singleton, while
-        cls.method when executing a class method.
-
-        :params class cls: The class that is calling the method
-        """
-
-        if Capabilities.CURRENT.version != "0.0.0.0" and isinstance(
-            Capabilities.CURRENT._good_known_since, datetime
-        ):
-            # We've already discovered the endpoints as per HATEOAS
-            # design requirement, however because the endpoint configuration is
-            # dynamically populated, we have to call the get_config method
-            cls.__config__ = await cls.get_config()
-            return
-
-        # Auto-discovery of the API endpoints, this will
-        # be called as part of the bootstrapping process
-        from . import api_base
-
-        async with httpx.AsyncClient(
-            proxy=proxy_address,
-            verify=cls._ssl_context(),
-        ) as _httpx_async:
-            # Don't use the _get wrapper here, we need to get the raw response
-            response = await _httpx_async.get(
-                api_base,
-                headers=_get_authorization_headers(),
-            )
-
-            await _httpx_async.aclose()
-
-            parsed_obj = DiscoveryResponse.model_validate(response.json())
-
-            # Assign the capabilities to the class, this should
-            # result in the endpoint
-            #
-            # With the refactored initialisation of the pydantic
-            # models, the values for the unavailable endpoints
-            # should be set to None
-            Capabilities.CURRENT = parsed_obj
-
-            # Set this so the configuration is only discovered
-            # once per endpoint
-            #
-            # If we assign the __config__ variable in the class
-            # that inherits from this class, the instance of EndpointConfig
-            # will copy the None values from the Capabilities.CURRENT
-            # object, this primarily because Capabilities.CURRENT is
-            # an instance of a pydantic object and all values are thus
-            # copied not referenced.
-            cls.__config__ = await cls.get_config()
-
-    @classmethod
-    async def list(cls, skip=0):
+    async def list(self, skip=0):
         """For a list of objects for the given resource
 
         Most resources can be searched which is exposed by this method.
@@ -333,15 +279,14 @@ class APIEndpoint:
 
         :param int skip: fetch responses from this anchor
         """
-        await cls._discover()  # Discover must be here for dynamic config
+        await self._discover()  # Discover must be here for dynamic config
 
-        return await cls._get(
-            cls.__config__.endpoint.href,
-            cls.__config__.dto_list,
+        return await self._get(
+            self.__config__.endpoint.href,
+            self.__config__.dto_list,
         )
 
-    @classmethod
-    async def retrieve(cls, id):
+    async def retrieve(self, id):
         """Retrieve a single object for the given resource
 
         Most objects have an ID which is numeral or UUID.
@@ -350,31 +295,27 @@ class APIEndpoint:
 
         :param int id: identifier of the object to be fetched
         """
-        await cls._discover()  # Discover must be here for dynamic config
+        await self._discover()  # Discover must be here for dynamic config
 
-        return await cls._get(
-            f"{cls.__config__.endpoint.href}/{id}",
-            cls.__config__.dto_retrieve,
+        return await self._get(
+            f"{self.__config__.endpoint.href}/{id}",
+            self.__config__.dto_retrieve,
         )
 
-    @classmethod
     async def modify(cls):
         """ """
         pass
 
-    @classmethod
-    async def create(cls, **params):
+    async def create(self, **params):
         """ """
-        cls._discover()
+        self._discover()
 
-    @classmethod
-    async def delete(cls):
+    async def delete(self):
         """ """
-        cls._discover()
+        self._discover()
 
-    @classmethod
     async def search(
-        cls,
+        self,
         sort: SearchSortOrder = SearchSortOrder.ID,
         top: int = 100,
         name: Optional[str] = None,  # TODO: en
@@ -402,7 +343,7 @@ class APIEndpoint:
         :param kwargs: Fields to search for
 
         """
-        await cls._discover()
+        await self._discover()
 
         params = {
             "top": top,
@@ -426,9 +367,9 @@ class APIEndpoint:
         # for each type of object that calls the base function
         params.update(kwargs)
 
-        return await cls._get(
-            cls.__config__.endpoint.href,
-            cls.__config__.dto_list,
+        return await self._get(
+            self.__config__.endpoint.href,
+            self.__config__.dto_list,
             params=params,
         )
 
@@ -436,17 +377,16 @@ class APIEndpoint:
     # classes make available a next, previous or update href, otherwise
     # the client raises an NotImplementedError
 
-    @classmethod
-    async def next(cls, response):
+    async def next(self, response):
         """Fetches the next set of results
 
         This is only valid if the response object has a next href
         """
-        await cls._discover()
+        await self._discover()
 
-        # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
+        # If the self.__config__ is not of type AppBaseResponseWithFollowModel
         # then we should raise an exception
-        if not issubclass(cls.__config__.dto_list, AppBaseResponseWithFollowModel):
+        if not issubclass(self.__config__.dto_list, AppBaseResponseWithFollowModel):
             """A response model must have a next, previous or update"""
             raise PathFollowNotSupportedError(
                 "Endpoint does not support previous, next or updates"
@@ -457,22 +397,21 @@ class APIEndpoint:
             raise DeadEndException(
                 "No further paths to follow for this endpoint")
 
-        return await cls._get(
+        return await self._get(
             response.next.href,
-            cls.__config__.dto_list,
+            self.__config__.dto_list,
         )
 
-    @classmethod
-    async def previous(cls, response):
+    async def previous(self, response):
         """Fetches the previous set of results
 
         This is only valid if the response object has a previous href
         """
-        await cls._discover()
+        await self._discover()
 
-        # If the cls.__config__ is not of type AppBaseResponseWithFollowModel
+        # If the self.__config__ is not of type AppBaseResponseWithFollowModel
         # then we should raise an exception
-        if not issubclass(cls.__config__.dto_list, AppBaseResponseWithFollowModel):
+        if not issubclass(self.__config__.dto_list, AppBaseResponseWithFollowModel):
             """A response model must have a next, previous or update"""
             raise PathFollowNotSupportedError(
                 "Endpoint does not support previous, next or updates"
@@ -481,14 +420,13 @@ class APIEndpoint:
         if not response.previous:
             raise DeadEndException("No path leads further back than this")
 
-        return await cls._get(
-            cls.response.previous.href,
-            cls.__config__.dto_list,
+        return await self._get(
+            self.response.previous.href,
+            self.__config__.dto_list,
         )
 
-    @classmethod
     async def follow(
-        cls,
+        self,
         asyncio_event: AsyncioEvent,  # Not to be confused with Gallagher event
         params: dict[str, Any] = {},
     ):
@@ -508,33 +446,33 @@ class APIEndpoint:
         This behaviour is followed by updates and changes endpoints, this method
         should be used a helper for the updates and changes methods.
         """
-        await cls._discover()
+        await self._discover()
 
-        if not cls.__config__.endpoint_follow:
+        if not self.__config__.endpoint_follow:
             raise PathFollowNotSupportedError(
                 "Endpoint does not support previous, next or updates"
             )
 
         # Initial url is set to endpoint_follow
-        url = f"{cls.__config__.endpoint_follow.href}"
+        url = f"{self.__config__.endpoint_follow.href}"
 
         async with httpx.AsyncClient(
-            proxy=proxy_address,
-            verify=cls._ssl_context(),
+            proxy=self.config.proxy,
+            verify=self.config.ssl_context,
         ) as _httpx_async:
 
             while not asyncio_event.is_set():
                 try:
                     response = await _httpx_async.get(
                         f"{url}",  # required to turn pydantic object to str
-                        headers=_get_authorization_headers(),
+                        headers=self._get_authorization_headers(),
                         params=params,
                         timeout=TRANSPORT.TIMEOUT_POLL,
                     )
 
                     if response.status_code == HTTPStatus.OK:
 
-                        parsed_obj = cls.__config__.dto_follow.model_validate(
+                        parsed_obj = self.__config__.dto_follow.model_validate(
                             response.json()
                         )
 
@@ -558,9 +496,8 @@ class APIEndpoint:
                 except httpx.RequestError as e:
                     raise (e)
 
-    @classmethod
     async def _get(
-        cls,
+        self,
         url: str,
         response_class: AppBaseModel | None,
         params: dict[str, Any] = {},
@@ -579,15 +516,15 @@ class APIEndpoint:
         :param AppBaseModel response_class: DTO to be used for list requests
         """
         async with httpx.AsyncClient(
-            proxy=proxy_address,
-            verify=cls._ssl_context(),
+            proxy=self.config.proxy,
+            verify=self.config.ssl_context,
         ) as _httpx_async:
 
             try:
 
                 response = await _httpx_async.get(
                     f"{url}",  # required to turn pydantic object to str
-                    headers=_get_authorization_headers(),
+                    headers=self._get_authorization_headers(),
                     params=params,
                 )
 
@@ -614,9 +551,8 @@ class APIEndpoint:
             except httpx.RequestError as e:
                 raise (e)
 
-    @classmethod
     async def _post(
-        cls,
+        self,
         url: str,
         payload: AppBaseModel | None,
         response_class: AppBaseModel | None = None,
@@ -630,8 +566,8 @@ class APIEndpoint:
         parsing and sending out a body as part of the request. 
         """
         async with httpx.AsyncClient(
-            proxy=proxy_address,
-            verify=cls._ssl_context(),
+            proxy=self.config.proxy,
+            verify=self.config.ssl_context,
         ) as _httpx_async:
 
             try:
@@ -639,7 +575,7 @@ class APIEndpoint:
                 response = await _httpx_async.post(
                     f"{url}",  # required to turn pydantic object to str
                     json=payload.model_dump() if payload else None,
-                    headers=_get_authorization_headers(),
+                    headers=self._get_authorization_headers(),
                 )
 
                 await _httpx_async.aclose()

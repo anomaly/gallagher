@@ -12,9 +12,6 @@ from gallagher.dto.detail import (
 
 from gallagher.dto.response import DivisionSummaryResponse
 
-from gallagher.cc.alarms.divisions import Division
-
-
 @pytest.fixture
 async def division_summary(api_client: APIClient) -> DivisionSummaryResponse:
     """Makes a single call to the division list

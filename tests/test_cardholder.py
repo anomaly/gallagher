@@ -13,8 +13,6 @@ from gallagher.dto.detail import (
 
 from gallagher.dto.response import CardholderSummaryResponse
 
-from gallagher.cc.cardholders import Cardholder
-
 
 @pytest.fixture
 async def cardholder_summary(api_client: APIClient) -> CardholderSummaryResponse:

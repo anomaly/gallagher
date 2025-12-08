@@ -146,7 +146,6 @@ class CommandCentreConfig(BaseSettings):
     api_key: str = Field(
         ...,
         description="API key for Command Centre REST API",
-        env="GACC_API_KEY",
     )
 
     # Certificate file to be used for authentication
@@ -173,7 +172,6 @@ class CommandCentreConfig(BaseSettings):
     proxy: Optional[HttpUrl] = Field(
         default=None,
         description="Proxy URL for Command Centre REST API",
-        env="GACC_PROXY",
     )
 
     @property

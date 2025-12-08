@@ -26,7 +26,7 @@ from datetime import datetime
 
 import httpx
 
-from ..dto.detail import (
+from ..dto.detail.discover import (
     FeaturesDetail,
 )
 from ..dto.response import (
@@ -38,6 +38,7 @@ from .core import (
     RequestHeadersMixin,
 )
 
+from .access_groups import AccessGroups
 
 class APIClient(RequestHeadersMixin,):
     """ Command Centre REST API client configuration holder """
@@ -65,6 +66,9 @@ class APIClient(RequestHeadersMixin,):
     """
     _CAPABILITIES: DiscoveryResponse
 
+
+    access_groups: AccessGroups
+
     def __init__(self, config: Optional[CommandCentreConfig] = None):
         
         self.config = config or CommandCentreConfig()
@@ -76,6 +80,12 @@ class APIClient(RequestHeadersMixin,):
 
         # Run the initially discovery to populate HATEOAS endpoints
         self.discover()
+
+        # Initialise the rest of the API clients
+        self.access_groups = AccessGroups(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
 
     def discover(self):
         """The Command Centre root API endpoint

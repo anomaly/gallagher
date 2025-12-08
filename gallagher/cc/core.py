@@ -152,7 +152,7 @@ class CommandCentreConfig(BaseSettings):
     file_tls_certificate: Optional[str] = None
 
     # Private key file to be used for authentication
-    file_private_key: Optional[str] = None
+    file_tls_key: Optional[str] = None
 
     # By default the base API is set to the Australian Gateway
     # Override this with the US gateway or a local DNS/IP address
@@ -189,7 +189,7 @@ class CommandCentreConfig(BaseSettings):
         context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
         context.load_cert_chain(
             certfile=self.file_tls_certificate,
-            keyfile=self.file_private_key,
+            keyfile=self.file_tls_key,
         )
         return context
 

@@ -36,7 +36,7 @@ async def cc_config():
       suffix=".crt",
       delete=False
     )
-    temp_file_private_key = tempfile.NamedTemporaryFile(
+    temp_file_tls_key = tempfile.NamedTemporaryFile(
       suffix=".key",
       delete=False
     )
@@ -45,16 +45,16 @@ async def cc_config():
     if not certificate_anomaly is None and not temp_file_certificate is None:
       temp_file_certificate.write(certificate_anomaly.encode('utf-8'))
 
-    if not private_key_anomaly is None and not temp_file_private_key is None:
-      temp_file_private_key.write(private_key_anomaly.encode('utf-8'))
+    if not private_key_anomaly is None and not temp_file_tls_key is None:
+      temp_file_tls_key.write(private_key_anomaly.encode('utf-8'))
 
     # Read the two files to ensure they are written
     temp_file_certificate.flush()
-    temp_file_private_key.flush()
+    temp_file_tls_key.flush()
 
     config = CommandCentreConfig(
         api_key=api_key,
-        file_private_key=temp_file_private_key.name,
+        file_tls_key=temp_file_tls_key.name,
         file_tls_certificate=temp_file_certificate.name,
     )
 
@@ -64,8 +64,8 @@ async def cc_config():
     if temp_file_certificate:
       os.unlink(temp_file_certificate.name)
 
-    if temp_file_private_key:
-      os.unlink(temp_file_private_key.name)
+    if temp_file_tls_key:
+      os.unlink(temp_file_tls_key.name)
 
 @pytest.fixture(scope="function")
 async def api_client(cc_config: CommandCentreConfig):

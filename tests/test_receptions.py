@@ -8,7 +8,6 @@ from gallagher.cc import APIClient
 
 from gallagher.dto.detail import ReceptionDetail
 from gallagher.dto.response import ReceptionResponse
-from gallagher.cc.receptions import Receptions
 
 
 @pytest.fixture

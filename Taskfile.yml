@@ -24,7 +24,7 @@ tasks:
 
       this does not run coverage or provide tap output
     cmds:
-      - uv run coverage run -m pytest -s tests/{{.CLI_ARGS}}
+      - uv run coverage run -m pytest -s tests/{{.CLI_ARGS}} -v
   test:tap:
     desc: runs tests with tap output
     summary: runs all the tests inside the virtualenv, optionally

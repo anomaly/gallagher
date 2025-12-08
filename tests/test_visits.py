@@ -8,7 +8,6 @@ from gallagher.cc import APIClient
 
 from gallagher.dto.detail import VisitDetail
 from gallagher.dto.response import VisitResponse
-from gallagher.cc.visits import Visits
 
 
 @pytest.fixture

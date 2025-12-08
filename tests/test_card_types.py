@@ -4,13 +4,15 @@
 
 import pytest
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.response import CardTypeResponse
 
 from gallagher.cc.cardholders.card_type import CardType
 
 
 @pytest.fixture
-async def card_types() -> CardTypeResponse:
+async def card_types(api_client: APIClient) -> CardTypeResponse:
     """Makes a single call to the card type list
 
     This is passed as a fixture to all other calls around
@@ -19,7 +21,7 @@ async def card_types() -> CardTypeResponse:
     :return: CardTypeResponse
     """
 
-    response = await CardType.list()
+    response = await api_client.card_types.list()
     return response
 
 

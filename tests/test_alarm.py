@@ -4,7 +4,6 @@ to make sure that we are getting valid responses.
 """
 
 from datetime import datetime
-
 import pytest
 
 from gallagher.cc import APIClient
@@ -15,10 +14,6 @@ from gallagher.dto.detail import (
 
 from gallagher.dto.response import (
     AlarmSummaryResponse,
-)
-
-from gallagher.cc.alarms import (
-    Alarms,
 )
 
 # Fixture for the comment, this will create a timestamp

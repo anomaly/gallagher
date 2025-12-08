@@ -5,6 +5,8 @@
 import pytest
 import asyncio
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.response import (
     EventTypeResponse,
     EventSummaryResponse,
@@ -22,16 +24,16 @@ from gallagher.cc.alarms.events import (
 
 
 @pytest.fixture
-async def event_types() -> EventTypeResponse:
+async def event_types(api_client: APIClient) -> EventTypeResponse:
     """Fetch the Event Types list from CC"""
-    response = await EventType.list()
+    response = await api_client.events.types.list()
     return response
 
 
 @pytest.fixture
-async def event_summary() -> EventSummaryResponse:
+async def event_summary(api_client: APIClient) -> EventSummaryResponse:
     """Fetch a list of Events from the CC"""
-    response = await Event.list()    
+    response = await api_client.events.list()    
     return response
 
 
@@ -45,17 +47,17 @@ async def test_event_summary(event_summary: EventSummaryResponse):
     assert type(event_summary) is EventSummaryResponse
 
 
-async def test_event_groups():
+async def test_event_groups(api_client: APIClient):
     """Get a list of Event Groups 
     
     These will be used by other endpoints to filter events
     """
-    response = await EventGroups.list()
+    response = await api_client.events.groups.list()
     assert type(response) is EventTypeResponse
     assert len(response.event_groups) > 0
 
 
-async def test_event_updates():
+async def test_event_updates(api_client: APIClient):
     """ Test polling events from the Command Centre
     
     - Run around 10 loops and then quit
@@ -67,7 +69,7 @@ async def test_event_updates():
     event = asyncio.Event()
     count = 0
 
-    async for updates in Event.follow(
+    async for updates in api_client.events.follow(
         asyncio_event=event,
     ):
         for update_event in updates.events:

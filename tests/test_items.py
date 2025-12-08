@@ -5,6 +5,8 @@
 
 import pytest
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.summary import (
     ItemSummary,
 )
@@ -18,24 +20,24 @@ from gallagher.cc.alarms.items import Item
 
 
 @pytest.fixture
-async def items_types() -> ItemTypesResponse:
+async def items_types(api_client: APIClient) -> ItemTypesResponse:
     """Get a list of item types and iterates through it
     these are a summary response
 
     """
     from gallagher.cc.alarms.items import ItemsTypes
 
-    response = await ItemsTypes.list()
+    response = await api_client.items.types.list()
     return response
 
 
 @pytest.fixture
-async def items_summary() -> ItemsSummaryResponse:
+async def items_summary(api_client: APIClient) -> ItemsSummaryResponse:
     """Get a list of items and this should feed into fetching
     each one of these on it's own.
 
     """
-    response = await Item.list()
+    response = await api_client.items.list()
     return response
 
 
@@ -61,7 +63,10 @@ async def test_items_list(items_summary: ItemsSummaryResponse):
     assert len(items_summary.results) > 0
 
 
-async def test_items_follow_next(items_summary: ItemsSummaryResponse):
+async def test_items_follow_next(
+    api_client: APIClient,
+    items_summary: ItemsSummaryResponse
+):
     """Get a list of items and this should feed into fetching
     each one of these on it's own.
 
@@ -80,7 +85,9 @@ async def test_items_follow_next(items_summary: ItemsSummaryResponse):
 
         # Get the next page if there is one
         # assign it to the summary and keep it going
-        follow_item_summary = await Item.next(follow_item_summary)
+        follow_item_summary = await api_client.items.next(
+            follow_item_summary
+        )
 
         assert type(follow_item_summary) is ItemsSummaryResponse
         assert type(follow_item_summary.results) is list
@@ -89,10 +96,13 @@ async def test_items_follow_next(items_summary: ItemsSummaryResponse):
         page_number += 1
 
 
-async def test_item_detail(items_summary: ItemsSummaryResponse):
+async def test_item_detail(
+    api_client: APIClient,
+    items_summary: ItemsSummaryResponse
+):
     """Get each item in the list and make sure it's a valid item"""
     for item_summary in items_summary.results:
         # Get the detail of the item
-        item_detail_response = await Item.retrieve(item_summary.id)
+        item_detail_response = await api_client.items.retrieve(item_summary.id)
         assert type(item_detail_response) is ItemSummary
         assert item_detail_response.id == item_summary.id

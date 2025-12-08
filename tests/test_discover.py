@@ -6,6 +6,8 @@ import ssl
 import pytest
 import httpx
 
+from gallagher.cc import APIClient
+
 from gallagher import cc
 from gallagher.cc import core
 
@@ -18,7 +20,7 @@ from gallagher.dto.response import (
 
 
 @pytest.fixture
-async def discover_response() -> DiscoveryResponse:
+async def discover_response(api_client: APIClient) -> DiscoveryResponse:
     """Makes sure that the API is discoverable as per HATEOAS
 
     This is not an endpoint like the others, because it is a discovery

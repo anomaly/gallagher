@@ -5,6 +5,8 @@
 import random
 import pytest
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.detail import (
     CardholderDetail,
 )
@@ -15,7 +17,7 @@ from gallagher.cc.cardholders import Cardholder
 
 
 @pytest.fixture
-async def cardholder_summary() -> CardholderSummaryResponse:
+async def cardholder_summary(api_client: APIClient) -> CardholderSummaryResponse:
     """Makes a single call to the cardholder list
 
     This is passed as a fixture to all other calls around
@@ -24,7 +26,7 @@ async def cardholder_summary() -> CardholderSummaryResponse:
     :return: CardholderSummaryResponse
     """
 
-    response = await Cardholder.list()
+    response = await api_client.cardholders.list()
     return response
 
 
@@ -35,14 +37,17 @@ async def test_cardholder_list(cardholder_summary: CardholderSummaryResponse):
     assert len(cardholder_summary.results) > 0
 
 
-async def test_cardholder_search(cardholder_summary: CardholderSummaryResponse):
+async def test_cardholder_search(
+    api_client: APIClient,
+    cardholder_summary: CardholderSummaryResponse,
+):
     """Test for the cardholder search"""
 
     # Get a random cardholder in the list
     cardholder = random.choice(cardholder_summary.results)
 
     # Search for the cardholder
-    search_results = await Cardholder.search(
+    search_results = await api_client.cardholders.search(
         name=cardholder.first_name,
     )
 
@@ -51,7 +56,10 @@ async def test_cardholder_search(cardholder_summary: CardholderSummaryResponse):
     assert len(search_results.results) > 0
 
 
-async def test_cardholder_detail(cardholder_summary: CardholderSummaryResponse):
+async def test_cardholder_detail(
+    api_client: APIClient,
+    cardholder_summary: CardholderSummaryResponse,
+):
     """For each cardholder in the list, get the detail and compare"""
 
     for cardholder_summary in cardholder_summary.results:
@@ -59,7 +67,8 @@ async def test_cardholder_detail(cardholder_summary: CardholderSummaryResponse):
             pytest.skip(
                 'Cardholder summary missing id, cannot retrieve detail.')
         # Get the detail of the cardholder for comparison
-        cardholder_detail_response = await Cardholder.retrieve(cardholder_summary.id)
+        cardholder_detail_response = await api_client.cardholders\
+            .retrieve(cardholder_summary.id)
         assert type(cardholder_detail_response) is CardholderDetail
         assert cardholder_detail_response.id == cardholder_summary.id
 

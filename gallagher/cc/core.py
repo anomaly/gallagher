@@ -86,7 +86,7 @@ class RequestHeadersMixin():
     APIEndpoint to share the same method for generating headers.
     """
 
-    def _check_api_key_format(api_key):
+    def _check_api_key_format(self, api_key):
         """Validates that the Gallagher Key is in the right format.
 
         It's not possible for the API client to validate the key against
@@ -149,10 +149,10 @@ class CommandCentreConfig(BaseSettings):
     )
 
     # Certificate file to be used for authentication
-    file_tls_certificate: Optional[Path] = None
+    file_tls_certificate: Optional[str] = None
 
     # Private key file to be used for authentication
-    file_private_key: Optional[Path] = None
+    file_private_key: Optional[str] = None
 
     # By default the base API is set to the Australian Gateway
     # Override this with the US gateway or a local DNS/IP address
@@ -181,14 +181,16 @@ class CommandCentreConfig(BaseSettings):
         This method can be overridden by the child class to
         provide additional SSL context options.
         """
-        from . import file_tls_certificate, file_private_key
 
-        if not file_tls_certificate:
+        if not self.file_tls_certificate:
             """TLS certificate is required for SSL context"""
             return None
-
+        
         context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
-        context.load_cert_chain(file_tls_certificate, file_private_key)
+        context.load_cert_chain(
+            certfile=self.file_tls_certificate,
+            keyfile=self.file_private_key,
+        )
         return context
 
 @dataclass

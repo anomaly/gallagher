@@ -47,11 +47,15 @@ async def api_client():
     )
 
     # Write the certificate and private key to temporary files
-    if certificate_anomaly and temp_file_certificate:
+    if not certificate_anomaly is None and not temp_file_certificate is None:
       temp_file_certificate.write(certificate_anomaly.encode('utf-8'))
 
-    if private_key_anomaly and temp_file_private_key:
+    if not private_key_anomaly is None and not temp_file_private_key is None:
       temp_file_private_key.write(private_key_anomaly.encode('utf-8'))
+
+    # Read the two files to ensure they are written
+    temp_file_certificate.flush()
+    temp_file_private_key.flush()
 
     config = CommandCentreConfig(
         api_key=api_key,

@@ -123,7 +123,7 @@ class APIClient(RequestHeadersMixin,):
         ) as _httpx_async:
             # Don't use the _get wrapper here, we need to get the raw response
             response = _httpx_async.get(
-                self.config.api_base,
+                f"{self.config.api_base}",
                 headers=self._get_authorization_headers(),
             )
 

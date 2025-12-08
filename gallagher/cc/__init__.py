@@ -40,6 +40,22 @@ from .core import (
 
 from .access_groups import AccessGroups
 from .alarms import Alarms
+from .alarms.divisions import Division
+from .alarms.day_category import DayCategory
+from .alarms.events import Event, EventType, EventGroups
+from .alarms.events import Event, EventType, EventGroups
+from .alarms.items import ItemsTypes, Item
+from .alarms.schedule import Schedule
+from .cardholders import Cardholder, PdfDefinition
+from .cardholders.card_type import CardType
+from .doors import Doors
+from .lockers import Lockers
+from .operators import Operators
+from .receptions import Receptions
+from .roles import Roles
+from .visitors import Visitors
+from .visits import Visits
+from .zones import Zones
 
 class APIClient(RequestHeadersMixin,):
     """ Command Centre REST API client configuration holder """
@@ -70,6 +86,26 @@ class APIClient(RequestHeadersMixin,):
 
     access_groups: AccessGroups
     alarms: Alarms
+    divisions: Division
+    day_categories: DayCategory
+    events: Event
+    event_types: EventType
+    event_groups: EventGroups
+    items: Item
+    item_types: ItemsTypes
+    schedule: Schedule
+    card_types: CardType
+    cardholders: Cardholder
+    pdf_definitions: PdfDefinition
+    doors: Doors
+    lockers: Lockers
+    operators: Operators
+    receptions: Receptions
+    roles: Roles
+    visitors: Visitors
+    visits: Visits
+    zones: Zones
+
 
     def __init__(self, config: Optional[CommandCentreConfig] = None):
         
@@ -90,6 +126,101 @@ class APIClient(RequestHeadersMixin,):
         )
 
         self.alarms = Alarms(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.divisions = Division(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.day_categories = DayCategory(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.events = Event(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.event_types = EventType(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.event_groups = EventGroups(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.items = Item(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.item_types = ItemsTypes(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.schedule = Schedule(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.card_types = CardType(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.cardholders = Cardholder(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.pdf_definitions = PdfDefinition(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.doors = Doors(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.lockers = Lockers(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.operators = Operators(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.receptions = Receptions(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.roles = Roles(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.visitors = Visitors(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.visits = Visits(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.zones = Zones(
             config=self.config,
             capabilities=self._CAPABILITIES
         )

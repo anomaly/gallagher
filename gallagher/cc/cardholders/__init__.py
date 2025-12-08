@@ -3,7 +3,6 @@
 """
 
 from ..core import (
-    Capabilities,
     APIEndpoint,
     EndpointConfig,
 )

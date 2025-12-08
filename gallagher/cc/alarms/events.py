@@ -5,7 +5,6 @@ authenticates at a device, usually by badging a card.
 """
 
 from ..core import (
-    Capabilities,
     APIEndpoint,
     EndpointConfig,
 )

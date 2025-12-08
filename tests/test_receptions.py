@@ -4,15 +4,17 @@
 
 import pytest
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.detail import ReceptionDetail
 from gallagher.dto.response import ReceptionResponse
 from gallagher.cc.receptions import Receptions
 
 
 @pytest.fixture
-async def reception_summary() -> ReceptionResponse:
+async def reception_summary(api_client: APIClient) -> ReceptionResponse:
     """Makes a single call to the reception list"""
-    response = await Receptions.list()
+    response = await api_client.receptions.list()
     return response
 
 
@@ -23,12 +25,15 @@ async def test_reception_list(reception_summary: ReceptionResponse):
     assert len(reception_summary.results) > 0
 
 
-async def test_reception_detail(reception_summary: ReceptionResponse):
+async def test_reception_detail(
+    api_client: APIClient,
+    reception_summary: ReceptionResponse,
+):
     """Test getting the details of a reception"""
     for r_summary in reception_summary.results:
         if not r_summary.id:
             pytest.skip(
                 'Reception summary missing id, cannot retrieve detail.')
-        r_detail = await Receptions.retrieve(r_summary.id)
+        r_detail = await api_client.receptions.retrieve(r_summary.id)
         assert type(r_detail) is ReceptionDetail
         assert r_detail.id == r_summary.id

@@ -8,14 +8,13 @@ See #1 to track how this was developed and tested.
 
 import pytest
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.response import PdfResponse
 from gallagher.dto.detail import PdfDetail
 
-from gallagher.cc.cardholders import PdfDefinition
-
-
 @pytest.fixture
-async def pdf_definition() -> PdfResponse:
+async def pdf_definition(api_client: APIClient) -> PdfResponse:
     """Makes a single call to the pdf list
 
     This is passed as a fixture to all other calls around
@@ -24,7 +23,7 @@ async def pdf_definition() -> PdfResponse:
     :return: PdfResponse
     """
 
-    response = await PdfDefinition.list()
+    response = await api_client.pdf_definitions.list()
     return response
 
 
@@ -35,11 +34,11 @@ async def test_pdf_list(pdf_definition: PdfResponse):
     assert len(pdf_definition.results) > 0
 
 
-async def test_pdf_detail(pdf_definition: PdfResponse):
+async def test_pdf_detail(api_client: APIClient,pdf_definition: PdfResponse):
 
     for pdf in pdf_definition.results:
         if not pdf.id:
             pytest.skip('PDF summary missing id, cannot retrieve detail.')
-        detail = await PdfDefinition.retrieve(pdf.id)
+        detail = await api_client.pdf_definitions.retrieve(pdf.id)
 
         assert type(detail) is PdfDetail

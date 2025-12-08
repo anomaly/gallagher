@@ -3,15 +3,14 @@
 
 import pytest
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.response import (
     ScheduleSummaryResponse,
 )
 
-from gallagher.cc.alarms.schedule import Schedule
-
-
 @pytest.fixture
-async def schedule_summary_response() -> ScheduleSummaryResponse:
+async def schedule_summary_response(api_client: APIClient) -> ScheduleSummaryResponse:
     """Makes a single call to the schedule list
 
     This is passed as a fixture to all other calls around
@@ -20,7 +19,7 @@ async def schedule_summary_response() -> ScheduleSummaryResponse:
     :return: ScheduleSummaryResponse
     """
 
-    response = await Schedule.list()
+    response = await api_client.schedules.list()
     return response
 
 

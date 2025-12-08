@@ -16,7 +16,7 @@ from gallagher.cc.core import CommandCentreConfig
 from gallagher.cc import APIClient
 
 @pytest.fixture(scope="function")
-async def api_client():
+async def cc_config():
     """The Gallagher API client requires a test key, this is
     set in the environment variable GACC_API_KEY.
 
@@ -57,9 +57,8 @@ async def api_client():
         file_private_key=temp_file_private_key.name,
         file_tls_certificate=temp_file_certificate.name,
     )
-    api_client = APIClient(config=config)
 
-    yield api_client
+    yield config
 
     # Cleanup temporary files
     if temp_file_certificate:
@@ -67,3 +66,11 @@ async def api_client():
 
     if temp_file_private_key:
       os.unlink(temp_file_private_key.name)
+
+@pytest.fixture(scope="function")
+async def api_client(cc_config: CommandCentreConfig):
+
+    api_client = APIClient(config=cc_config)
+
+    yield api_client
+

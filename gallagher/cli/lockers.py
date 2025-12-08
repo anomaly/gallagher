@@ -13,7 +13,7 @@ from rich.table import Table
 from .utils import AsyncTyper
 
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.lockers import Lockers
+from gallagher.cc.lockers import Locker
 
 from gallagher.exception import (
     NotFoundException,
@@ -29,7 +29,7 @@ async def list():
     """list all lockers"""
     console = Console()
     with console.status("[bold green]Fetching lockers...", spinner="dots"):
-        lockers = await Lockers.list()
+        lockers = await Locker.list()
 
         table = Table(title="Lockers")
         for header in lockers.cli_header:
@@ -49,7 +49,7 @@ async def get(
     console = Console()
     with console.status("[bold]Finding locker...", spinner="dots"):
         try:
-            locker = await Lockers.retrieve(id)
+            locker = await Locker.retrieve(id)
             [console.print(r) for r in locker.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No locker with id={id} found[/bold]")
@@ -92,7 +92,7 @@ async def find(
     """find lockers by name"""
     console = Console()
     with console.status("[bold]Searching lockers...", spinner="dots"):
-        lockers = await Lockers.search(
+        lockers = await Locker.search(
             name=name,
             sort=sort,
             top=top,

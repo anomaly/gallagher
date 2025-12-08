@@ -8,7 +8,7 @@ from gallagher.cc import APIClient
 
 from gallagher.dto.detail import RoleDetail
 from gallagher.dto.response import RoleResponse
-from gallagher.cc.roles import Roles
+from gallagher.cc.roles import Role
 
 
 @pytest.fixture

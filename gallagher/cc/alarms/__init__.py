@@ -20,7 +20,7 @@ from ...dto.response import (
 )
 from ...dto.payload import AlarmCommentPayload
 
-class Alarms(
+class Alarm(
     APIEndpoint,
 ):
     """Alarms
@@ -164,5 +164,5 @@ class Alarms(
 
 # Write up Alarms for querying via the SQL interface
 __shillelagh__ = (
-    Alarms,
+    Alarm,
 )

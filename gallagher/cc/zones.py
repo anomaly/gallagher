@@ -8,7 +8,7 @@ from ..dto.detail import ZoneDetail
 from ..dto.response import ZoneResponse
 
 
-class Zones(APIEndpoint):
+class Zone(APIEndpoint):
     """Zones
 
     Provides access to zone operations including listing,

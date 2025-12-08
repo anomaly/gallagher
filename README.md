@@ -41,9 +41,8 @@ import os
 import asyncio
 
 # Import the client and models
-from gallagher import cc
+from gallagher.cc import CommandCentreConfig, APIClient
 from gallagher.dto.summary import CardholderSummary
-from gallagher.cc.cardholders import Cardholder
 
 # Optionally provide a client certificate and key
 cert_path = os.path.join(os.getcwd(), "client.pem")
@@ -51,10 +50,19 @@ key_path = os.path.join(os.getcwd(), "client.key")
 
 # Set the API key from the environment
 api_key = os.environ.get("GACC_API_KEY")
-cc.api_key = api_key
+
+# Make a configuration object
+config = CommandCentreConfig(
+    api_key=api_key,
+    file_tls_cert=cert_path,
+    file_tls_key=key_path,
+)
+
+# Initialise the client
+client = APIClient(config=config)
 
 # Async support gives us back a coroutine
-ch_coro = Cardholder.list()
+ch_coro = client.cardholders.list()
 
 # Run the coroutine to get the cardholder
 cardholders = asyncio.run(ch_coro)

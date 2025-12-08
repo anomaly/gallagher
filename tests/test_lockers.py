@@ -8,7 +8,7 @@ from gallagher.cc import APIClient
 
 from gallagher.dto.detail import LockerDetail
 from gallagher.dto.response import LockerResponse
-from gallagher.cc.lockers import Lockers
+from gallagher.cc.lockers import Locker
 
 
 @pytest.fixture

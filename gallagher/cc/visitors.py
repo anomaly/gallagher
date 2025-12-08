@@ -8,7 +8,7 @@ from ..dto.detail import VisitorDetail
 from ..dto.response import VisitorResponse
 
 
-class Visitors(APIEndpoint):
+class Visitor(APIEndpoint):
     """Visitors
 
     Provides access to visitor operations including listing,

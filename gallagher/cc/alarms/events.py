@@ -51,7 +51,7 @@ class EventType(APIEndpoint):
         )
 
 
-class EventGroups(APIEndpoint):
+class EventGroup(APIEndpoint):
     """ Event Groups are used to filter events
     
     Use this to dynamically discover a list of event groups which you can

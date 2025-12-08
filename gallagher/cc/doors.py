@@ -4,7 +4,7 @@ from ..dto.detail import DoorDetail
 from ..dto.response import DoorResponse
 
 
-class Doors(APIEndpoint):
+class Door(APIEndpoint):
     """Doors
 
     Provides access to door operations including listing,

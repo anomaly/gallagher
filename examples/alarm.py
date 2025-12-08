@@ -8,7 +8,7 @@ import os
 import asyncio
 
 from gallagher import cc
-from gallagher.cc.alarms import Alarms
+from gallagher.cc.alarms import Alarm
 
 async def main():
     api_key = os.environ.get("GACC_API_KEY")
@@ -16,7 +16,7 @@ async def main():
 
     event = asyncio.Event()
 
-    async for updates in Alarms.follow(
+    async for updates in Alarm.follow(
         asyncio_event=event,
     ):
         

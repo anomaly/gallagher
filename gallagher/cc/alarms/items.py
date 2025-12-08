@@ -17,7 +17,7 @@ from ...dto.response import (
 )
 
 
-class ItemsTypes(APIEndpoint):
+class ItemsType(APIEndpoint):
     """
     Gallagher
     """

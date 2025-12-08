@@ -8,7 +8,7 @@ from gallagher.cc import APIClient
 
 from gallagher.dto.detail import DoorDetail
 from gallagher.dto.response import DoorResponse
-from gallagher.cc.doors import Doors
+from gallagher.cc.doors import Door
 
 
 @pytest.fixture

@@ -7,7 +7,7 @@ from ..dto.detail import VisitDetail
 from ..dto.response import VisitResponse
 
 
-class Visits(APIEndpoint):
+class Visit(APIEndpoint):
     """Visits
     Provides access to visit operations including listing, retrieving, creating, and updating visits.
     """

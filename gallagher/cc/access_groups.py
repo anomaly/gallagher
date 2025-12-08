@@ -8,7 +8,7 @@ from ..dto.detail import AccessGroupDetail
 from ..dto.response import AccessGroupResponse
 
 
-class AccessGroups(APIEndpoint):
+class AccessGroup(APIEndpoint):
     """Access Groups
 
     Provides access to access group operations including listing,

@@ -23,7 +23,7 @@ async def items_types(api_client: APIClient) -> ItemTypesResponse:
     these are a summary response
 
     """
-    from gallagher.cc.alarms.items import ItemsTypes
+    from gallagher.cc.alarms.items import ItemsType
 
     response = await api_client.item_types.list()
     return response

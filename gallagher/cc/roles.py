@@ -8,7 +8,7 @@ from ..dto.detail import RoleDetail
 from ..dto.response import RoleResponse
 
 
-class Roles(APIEndpoint):
+class Role(APIEndpoint):
     """Roles
 
     Provides access to role operations including listing,

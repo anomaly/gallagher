@@ -8,7 +8,7 @@ from ..dto.detail import ReceptionDetail
 from ..dto.response import ReceptionResponse
 
 
-class Receptions(APIEndpoint):
+class Reception(APIEndpoint):
     """Receptions
 
     Provides access to reception operations including listing,

@@ -8,7 +8,7 @@ from ..dto.detail import OperatorDetail
 from ..dto.response import OperatorResponse
 
 
-class Operators(APIEndpoint):
+class Operator(APIEndpoint):
     """Operators
 
     Provides access to operator operations including listing,

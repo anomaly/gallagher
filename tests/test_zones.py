@@ -8,7 +8,7 @@ from gallagher.cc import APIClient
 
 from gallagher.dto.detail import ZoneDetail
 from gallagher.dto.response import ZoneResponse
-from gallagher.cc.zones import Zones
+from gallagher.cc.zones import Zone
 
 
 @pytest.fixture

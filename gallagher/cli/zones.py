@@ -13,7 +13,7 @@ from rich.table import Table
 from .utils import AsyncTyper
 
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.zones import Zones
+from gallagher.cc.zones import Zone
 
 from gallagher.exception import (
     NotFoundException,
@@ -29,7 +29,7 @@ async def list():
     """list all zones"""
     console = Console()
     with console.status("[bold green]Fetching zones...", spinner="dots"):
-        zones = await Zones.list()
+        zones = await Zone.list()
 
         table = Table(title="Zones")
         for header in zones.cli_header:
@@ -49,7 +49,7 @@ async def get(
     console = Console()
     with console.status("[bold]Finding zone...", spinner="dots"):
         try:
-            zone = await Zones.retrieve(id)
+            zone = await Zone.retrieve(id)
             [console.print(r) for r in zone.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No zone with id={id} found[/bold]")
@@ -92,7 +92,7 @@ async def find(
     """find zones by name"""
     console = Console()
     with console.status("[bold]Searching zones...", spinner="dots"):
-        zones = await Zones.search(
+        zones = await Zone.search(
             name=name,
             sort=sort,
             top=top,

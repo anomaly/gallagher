@@ -8,7 +8,7 @@ from ..dto.detail import LockerDetail
 from ..dto.response import LockerResponse
 
 
-class Lockers(APIEndpoint):
+class Locker(APIEndpoint):
     """Lockers
 
     Provides access to locker operations including listing,

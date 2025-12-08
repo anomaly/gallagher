@@ -39,6 +39,7 @@ from .core import (
 )
 
 from .access_groups import AccessGroups
+from .alarms import Alarms
 
 class APIClient(RequestHeadersMixin,):
     """ Command Centre REST API client configuration holder """
@@ -68,6 +69,7 @@ class APIClient(RequestHeadersMixin,):
 
 
     access_groups: AccessGroups
+    alarms: Alarms
 
     def __init__(self, config: Optional[CommandCentreConfig] = None):
         
@@ -83,6 +85,11 @@ class APIClient(RequestHeadersMixin,):
 
         # Initialise the rest of the API clients
         self.access_groups = AccessGroups(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.alarms = Alarms(
             config=self.config,
             capabilities=self._CAPABILITIES
         )

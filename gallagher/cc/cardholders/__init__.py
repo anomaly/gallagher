@@ -29,8 +29,8 @@ class Cardholder(APIEndpoint):
 
     def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.cardholders.cardholders,
-            endpoint_follow=Capabilities.CURRENT.features.cardholders.changes,
+            endpoint=self._CAPABILITIES.features.cardholders.cardholders,
+            endpoint_follow=self._CAPABILITIES.features.cardholders.changes,
             dto_follow=CardholderSummaryResponse,
             dto_list=CardholderSummaryResponse,
             dto_retrieve=CardholderDetail,
@@ -46,7 +46,7 @@ class PdfDefinition(APIEndpoint):
 
     def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.personal_data_fields\
+            endpoint=self._CAPABILITIES.features.personal_data_fields\
                 .personal_data_fields,
             dto_list=PdfResponse,
             dto_retrieve=PdfDetail,

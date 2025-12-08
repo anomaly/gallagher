@@ -2,7 +2,7 @@
 
 """
 
-from gallagher.cc.core import Capabilities, APIEndpoint, EndpointConfig
+from gallagher.cc.core import APIEndpoint, EndpointConfig
 
 from ..dto.detail import ReceptionDetail
 from ..dto.response import ReceptionResponse
@@ -17,7 +17,7 @@ class Receptions(APIEndpoint):
 
     def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.receptions.receptions,
+            endpoint=self._CAPABILITIES.features.receptions.receptions,
             dto_list=ReceptionResponse,
             dto_retrieve=ReceptionDetail,
         )

@@ -3,7 +3,7 @@
 
 """
 
-from ..core import Capabilities, APIEndpoint, EndpointConfig
+from ..core import APIEndpoint, EndpointConfig
 
 from ...dto.response import DayCategoryResponse
 
@@ -13,7 +13,7 @@ class DayCategory(APIEndpoint):
 
     def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.day_categories.day_categories,
+            endpoint=self._CAPABILITIES.features.day_categories.day_categories,
             dto_list=DayCategoryResponse,
             dto_retrieve=DayCategoryResponse,
         )

@@ -35,8 +35,8 @@ class Event(APIEndpoint):
 
     def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.events.events,
-            endpoint_follow=Capabilities.CURRENT.features.events.updates,
+            endpoint=self._CAPABILITIES.features.events.events,
+            endpoint_follow=self._CAPABILITIES.features.events.updates,
             dto_follow=EventSummaryResponse,
             dto_list=EventSummaryResponse,
             dto_retrieve=EventDetail,
@@ -47,7 +47,7 @@ class EventType(APIEndpoint):
 
     def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.events.event_groups,
+            endpoint=self._CAPABILITIES.features.events.event_groups,
             dto_list=EventTypeResponse,
         )
 
@@ -63,6 +63,6 @@ class EventGroups(APIEndpoint):
 
     def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.events.event_groups,
+            endpoint=self._CAPABILITIES.features.events.event_groups,
             dto_list=EventTypeResponse,
         )

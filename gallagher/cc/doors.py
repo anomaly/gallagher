@@ -1,4 +1,4 @@
-from gallagher.cc.core import Capabilities, APIEndpoint, EndpointConfig
+from gallagher.cc.core import APIEndpoint, EndpointConfig
 
 from ..dto.detail import DoorDetail
 from ..dto.response import DoorResponse
@@ -13,7 +13,7 @@ class Doors(APIEndpoint):
 
     def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.doors.doors,
+            endpoint=self._CAPABILITIES.features.doors.doors,
             dto_list=DoorResponse,
             dto_retrieve=DoorDetail,
         )

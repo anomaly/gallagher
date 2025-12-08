@@ -118,6 +118,10 @@ cc.file_tls_certificate = temp_file_certificate.name
 cc.file_private_key = temp_file_private_key.name
 ```
 
+> If you want to validate your certificate can use something like `httpie` as demonstrate here
+>
+> `http --cert=.certs/anomaly-gallagher.pem --cert-key=.certs/anomaly-gallagher.key get https://commandcentre-api-au.security.gallagher.cloud/api/ "Authorization: GGL-API-KEY $GACC_API_KEY"`
+
 ### Command line interface
 
 ### Terminal user interface

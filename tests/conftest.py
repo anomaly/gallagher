@@ -9,6 +9,7 @@
 """
 import os
 import tempfile
+import random
 
 import pytest
 
@@ -52,10 +53,13 @@ async def cc_config():
     temp_file_certificate.flush()
     temp_file_tls_key.flush()
 
+    # Since supporting Basic authentication #65, randomly choose
+    # between Basic and API Key authentication for tests
     config = CommandCentreConfig(
-        api_key=api_key,
-        file_tls_key=temp_file_tls_key.name,
-        file_tls_certificate=temp_file_certificate.name,
+      api_key=api_key,
+      file_tls_key=temp_file_tls_key.name,
+      file_tls_certificate=temp_file_certificate.name,
+      use_basic_authentication=random.choice([True, False]),
     )
 
     yield config

@@ -109,13 +109,16 @@ If you wish to target the cloud gateway via IP address, use the constants:
 
 ### Options
 
-- `api_key`
+The `CommandCentreConfig` class provides a number of options that you can set to configure the SDK to your needs. The following options are available:
+
+- `api_key` - API Key to authenticate with the Command Centre
 - `file_tls_certificate` - path to a client TLS certificate
 - `file_tls_key` - path to a client TLS key
 - `api_base` - base URL of the Command Centre or cloud gateway
 - `proxy` - proxy URL to use for HTTP requests
+- `use_basic_authentication` - whether to use Basic Authentication instead of API Key authentication
 
-Thanks to `httpx` we have proxy support built in out of the box. By default the `proxy` is set to `None` indicating that one isn't in use. If you wish to use a proxy for your use case, then simply set the `proxy` attribute on the `cc` object like you would the `api_base` or `api_key`.
+Thanks to `httpx` we have proxy support built in out of the box. By default the `proxy` is set to `None` indicating that one isn't in use. If you wish to use a proxy for your use case, then simply set the `proxy` to the URL of the proxy server.
 
 For information on advanced configuration options [see the httpx documentation](https://www.python-httpx.org/advanced/proxies/). As always be very careful where you retrieve the proxy information from, and do not version control it.
 
@@ -191,10 +194,8 @@ from gallagher.dto.response import (
     ItemsSummaryResponse,
 )
 
-from gallagher.cc.alarms.items import Item
-
 # Get a list of items
-response = await Item.list()
+response = await api_client.items.list()
 
 # Print the href to prove we have results
 for item in response.results:
@@ -215,10 +216,8 @@ from gallagher.dto.response import (
     ItemsSummaryResponse,
 )
 
-from gallagher.cc.alarms.items import Item
-
 # Get a list of items
-detail_response = await Item.retrieve(399)
+detail_response = await api_client.items.retrieve(399)
 ```
 
 !!! note
@@ -288,7 +287,6 @@ import os
 import asyncio
 
 from gallagher import cc
-from gallagher.cc.alarms import Alarms
 
 async def main():
     api_key = os.environ.get("GACC_API_KEY")
@@ -297,7 +295,7 @@ async def main():
     # Used to control the event loop
     asyncio_event = asyncio.Event()
 
-    async for updates in Alarms.follow(
+    async for updates in api_client.alarms.follow(
         asyncio_event=asyncio_event,
     ):
 
@@ -313,4 +311,4 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Endpoints that provide either an `
+Endpoints that provide either an

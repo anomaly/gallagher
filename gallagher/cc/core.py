@@ -11,6 +11,7 @@ to the endpoint in the DiscoveryResponse object. When initialised the
 endpoint will be assigned to None but will self heal as part of 
 the bootstrapping process.
 """
+from .. import __version__
 
 from typing import (
     Optional,
@@ -25,6 +26,7 @@ from asyncio import Event as AsyncioEvent  # Used for signalling events
 
 from http import HTTPStatus  # Provides constants for HTTP status codes
 
+import base64
 import ssl
 import httpx
 
@@ -112,8 +114,6 @@ class RequestHeadersMixin():
 
         cc.api_key = "GH_"
         """
-        from .. import __version__
-
         if not self.config.api_key:
             """ API key cannot be empty
 
@@ -130,11 +130,30 @@ class RequestHeadersMixin():
             Command Centre.
             """
             raise ValueError("API key is not in the right format")
+        
+
+        # Authentication header based on the configuration 
+        # see gallagher/#65 for more information
+        # 
+        # From the Gallagher docs:
+        # Tempting as it may be, do not interpret is as a GUID.
+        authorization_header = f"GGL-API-KEY {self.config.api_key}"
+        if self.config.use_basic_authentication:
+            # From the Gallagher docs
+            # There are two ways you can pass the API key to the server: 
+            # following an authorisation method of GGL-API-KEY, or 
+            # (in 9.0 or later) in the style of HTTP Basic authentication: 
+            # prefixed with a colon, Base64-encoded, and following 
+            # an authorisation method of Basic.
+            encoded = base64.b64encode(
+                f":{self.config.api_key}".encode("utf-8")
+            ).decode("ascii")
+            authorization_header = f"Basic {encoded}"
 
         return {
             "Content-Type": "application/json",
             "User-Agent": f"GallagherPyToolkit/{__version__}",
-            "Authorization": f"GGL-API-KEY {self.config.api_key}",
+            "Authorization": authorization_header,
         }
     
 
@@ -149,10 +168,10 @@ class CommandCentreConfig(BaseSettings):
     )
 
     # Certificate file to be used for authentication
-    file_tls_certificate: Optional[str] = None
+    file_tls_certificate: Optional[Path] = None
 
     # Private key file to be used for authentication
-    file_tls_key: Optional[str] = None
+    file_tls_key: Optional[Path] = None
 
     # By default the base API is set to the Australian Gateway
     # Override this with the US gateway or a local DNS/IP address
@@ -172,6 +191,13 @@ class CommandCentreConfig(BaseSettings):
     proxy: Optional[HttpUrl] = Field(
         default=None,
         description="Proxy URL for Command Centre REST API",
+    )
+
+    # Setting this to True will send a Basic Authentication header
+    # instead of the GGL-API-KEY key.
+    use_basic_authentication: bool = Field(
+        default=False,
+        description="Use basic authentication instead of API key",
     )
 
     @property

@@ -40,8 +40,6 @@ from .event import (
     EventTypeResponse,
 )
 
-from .features import FeaturesResponse
-
 from .items import (
     ItemsSummaryResponse,
     ItemTypesResponse,

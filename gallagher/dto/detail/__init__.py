@@ -36,8 +36,6 @@ from .event import (
     EventDetail,
 )
 
-from .features import FeaturesDetail
-
 from .locker import LockerDetail
 
 from .operator import OperatorDetail

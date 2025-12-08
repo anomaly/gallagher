@@ -40,8 +40,6 @@ from .event import (
     EventTypeSummary,
 )
 
-from .features import FeaturesSummary
-
 from .items import (
     ItemTypeSummary,
     ItemSummary,

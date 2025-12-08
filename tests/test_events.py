@@ -16,17 +16,10 @@ from gallagher.dto.summary.event import (
     EventSummary,
 )
 
-from gallagher.cc.alarms.events import (
-    EventType,
-    Event,
-    EventGroups,
-)
-
-
 @pytest.fixture
 async def event_types(api_client: APIClient) -> EventTypeResponse:
     """Fetch the Event Types list from CC"""
-    response = await api_client.events.types.list()
+    response = await api_client.event_types.list()
     return response
 
 
@@ -52,7 +45,7 @@ async def test_event_groups(api_client: APIClient):
     
     These will be used by other endpoints to filter events
     """
-    response = await api_client.events.groups.list()
+    response = await api_client.event_groups.list()
     assert type(response) is EventTypeResponse
     assert len(response.event_groups) > 0
 

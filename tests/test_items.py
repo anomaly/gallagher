@@ -16,8 +16,6 @@ from gallagher.dto.response import (
     ItemsSummaryResponse,
 )
 
-from gallagher.cc.alarms.items import Item
-
 
 @pytest.fixture
 async def items_types(api_client: APIClient) -> ItemTypesResponse:
@@ -27,7 +25,7 @@ async def items_types(api_client: APIClient) -> ItemTypesResponse:
     """
     from gallagher.cc.alarms.items import ItemsTypes
 
-    response = await api_client.items.types.list()
+    response = await api_client.item_types.list()
     return response
 
 

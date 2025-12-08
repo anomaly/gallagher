@@ -93,7 +93,7 @@ class APIClient(RequestHeadersMixin,):
     event_groups: EventGroups
     items: Item
     item_types: ItemsTypes
-    schedule: Schedule
+    schedules: Schedule
     card_types: CardType
     cardholders: Cardholder
     pdf_definitions: PdfDefinition
@@ -165,7 +165,7 @@ class APIClient(RequestHeadersMixin,):
             capabilities=self._CAPABILITIES
         )
 
-        self.schedule = Schedule(
+        self.schedules = Schedule(
             config=self.config,
             capabilities=self._CAPABILITIES
         )

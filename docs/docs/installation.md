@@ -73,7 +73,7 @@ api_key = os.environ.get("GACC_API_KEY")
 cc.api_key = api_key
 
 cc.file_tls_certificate = '/path/to/client.pem'
-cc.file_private_key = '/path/to/client.key'
+cc.file_tls_key = '/path/to/client.key'
 ```
 
 The rest of the requests and operations remain the same, the library will use an `SSL Context` to do the needful.
@@ -95,7 +95,7 @@ temp_file_certificate = tempfile.NamedTemporaryFile(
     suffix=".crt",
     delete=False
 )
-temp_file_private_key = tempfile.NamedTemporaryFile(
+temp_file_tls_key = tempfile.NamedTemporaryFile(
     suffix=".key",
     delete=False
 )
@@ -104,8 +104,8 @@ temp_file_private_key = tempfile.NamedTemporaryFile(
 if certificate_anomaly and temp_file_certificate:
     temp_file_certificate.write(certificate_anomaly.encode('utf-8'))
 
-if private_key_anomaly and temp_file_private_key:
-    temp_file_private_key.write(private_key_anomaly.encode('utf-8'))
+if private_key_anomaly and temp_file_tls_key:
+    temp_file_tls_key.write(private_key_anomaly.encode('utf-8'))
 ```
 
 You can assign these temporary files to the client as shown above.
@@ -115,7 +115,7 @@ from gallagher import cc
 
 cc.api_key = api_key
 cc.file_tls_certificate = temp_file_certificate.name
-cc.file_private_key = temp_file_private_key.name
+cc.file_tls_key = temp_file_tls_key.name
 ```
 
 > If you want to validate your certificate can use something like `httpie` as demonstrate here

@@ -23,6 +23,6 @@ class CardholderUpdateBuilder:
     def add_card(self, card: CardTypeRef):
         self.cards.append(card)
 
-    def remove_card(self, href: URL):
+    def remove_card(self, href: HrefMixin):
         pass
 

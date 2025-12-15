@@ -8,9 +8,13 @@ The cli should be pretty self documenting, however see docs/ for
 official documentation.
 """
 
-import os
+import typer
+import click
 
-from gallagher import cc, __version__
+from gallagher import __version__
+
+from gallagher.cc import APIClient, CommandCentreConfig
+from gallagher.const import URL
 
 from .utils import AsyncTyper
 
@@ -47,15 +51,79 @@ JSON API, directly or via the cloud gateway.\n
 It's intent it to make available scriptable endpoints to ease automation.
 """
 
-# Load the API key for the package so all entry points
-# can use it to query the service
-api_key = os.environ.get("GACC_API_KEY")
-cc.api_key = api_key
-
 # Main Typer app use to create the CLI
 app = AsyncTyper(
     help=_help_text,
 )
+
+# Global parameters
+@app.callback()
+def main(
+    ctx: click.Context,
+    api_key: str = typer.Option(
+        None,
+        "--api-key",
+        "-k",
+        envvar="GACC_API_KEY",
+        prompt_required=True,
+        help="API key for authentication"
+    ),
+    tls_cert: str = typer.Option(
+        None,
+        "--tls-cert",
+        "-c",
+        envvar="GACC_TLS_CERT",
+        help="Path to TLS certificate file"
+    ),
+    tls_key: str = typer.Option(
+        None,
+        "--tls-key",
+        envvar="GACC_TLS_KEY",
+        help="Path to TLS private key file"
+    ),
+    proxy_url: str = typer.Option(
+        None,
+        "--proxy-url",
+        "-p",
+        envvar="GACC_PROXY_URL",
+        help="Proxy URL for HTTP requests"
+    ),
+    use_basic_auth: bool = typer.Option(
+        False,
+        "--use-basic-auth",
+        "-b",
+        envvar="GACC_USE_BASIC_AUTH",
+        help="Use basic authentication instead of API key"
+    ),
+    gateway: str = typer.Option(
+        "AU",
+        "--gateway",
+        "-g",
+        envvar="GACC_GATEWAY",
+        help="Gateway region (AU or US)",
+        click_type=click.Choice(["AU", "US"], case_sensitive=False)
+    ),
+):
+    """Main callback to handle global parameters.
+    
+    The API client is initialised here and is passed to subcommands via
+    dependency injection.
+    """
+    ctx.ensure_object(dict)
+
+    config = CommandCentreConfig(
+        api_key=api_key,
+        tls_cert=tls_cert,
+        tls_key=tls_key,
+        proxy_url=proxy_url,
+        use_basic_auth=use_basic_auth,
+        gateway=gateway == "US" and URL.CLOUD_GATEWAY_US \
+            or URL.CLOUD_GATEWAY_AU,
+    )
+
+    ctx.obj['api_client'] = APIClient(config)
+
+
 
 # Load up all sub commands
 app.add_typer(access_groups_app, name="ag")

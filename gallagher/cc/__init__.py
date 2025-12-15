@@ -107,8 +107,14 @@ class APIClient(RequestHeadersMixin,):
     zones: Zone
 
 
-    def __init__(self, config: Optional[CommandCentreConfig] = None):
+    def __init__(
+        self,
+        config: Optional[CommandCentreConfig] = None,
+        request_hooks: list = [],
+        response_hooks: list = []
+    ):
         
+        # Use the default values if no configuration is provided
         self.config = config or CommandCentreConfig()
         
         self._CAPABILITIES = DiscoveryResponse(

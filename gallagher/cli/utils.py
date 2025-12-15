@@ -25,8 +25,6 @@ from functools import (
 
 import asyncer
 from typer import Typer
-
-
 class AsyncTyper(Typer):
     @staticmethod
     def maybe_run_async(decorator, f):

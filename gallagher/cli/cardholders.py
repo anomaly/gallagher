@@ -12,8 +12,9 @@ from rich.table import Table
 
 from .utils import AsyncTyper
 
+from gallagher.cc import APIClient
+
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.cardholders import Cardholder
 
 from gallagher.exception import (
     NotFoundException,
@@ -25,12 +26,14 @@ app = AsyncTyper(
 
 
 @app.command("list")
-async def list():
+async def list(ctx: typer.Context):
     """list all cardholders"""
     console = Console()
+    client: APIClient = ctx.obj["api_client"]
+
     with console.status("[bold green]Fetching cardholders...", spinner="dots"):
 
-        cardholders = await Cardholder.list()
+        cardholders = await client.cardholders.list()
 
         table = Table(title="Cardholders")
         for header in cardholders.cli_header:
@@ -44,14 +47,17 @@ async def list():
 
 @app.command("get")
 async def get(
+    ctx: typer.Context,
     id: Annotated[int, typer.Argument(help='cardholder id')],
 ):
     """get a cardholder by id"""
     console = Console()
+    client: APIClient = ctx.obj["api_client"]
+
     with console.status("[bold]Finding cardholder...", spinner="dots"):
 
         try:
-            cardholder = await Cardholder.retrieve(id)
+            cardholder = await client.cardholders.retrieve(id)
             [console.print(r) for r in cardholder.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No cardholder with id={id} found[/bold]")
@@ -59,6 +65,7 @@ async def get(
 
 @app.command("find")
 async def find(
+    ctx: typer.Context,
     name: Annotated[
         str,
         typer.Argument(help="First or last name to search for")
@@ -92,9 +99,11 @@ async def find(
 ):
     """find cardholders by name"""
     console = Console()
+    client: APIClient = ctx.obj["api_client"]
+
     with console.status("[bold]Searching cardholders...", spinner="dots"):
 
-        cardholders = await Cardholder.search(
+        cardholders = await client.cardholders.search(
             name=name,
             sort=sort,
             top=top,

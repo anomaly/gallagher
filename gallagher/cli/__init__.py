@@ -103,6 +103,13 @@ def main(
         help="Gateway region (AU or US)",
         click_type=click.Choice(["AU", "US"], case_sensitive=False)
     ),
+    output_format: str = typer.Option(
+        "pretty",
+        "--format",
+        "-f",
+        help="Output format",
+        click_type=click.Choice(["pretty", "json", "csv", "markdown"], case_sensitive=False)
+    ),
 ):
     """Main callback to handle global parameters.
     
@@ -110,19 +117,19 @@ def main(
     dependency injection.
     """
     ctx.ensure_object(dict)
+    ctx.obj['output_format'] = output_format
 
     config = CommandCentreConfig(
         api_key=api_key,
-        tls_cert=tls_cert,
-        tls_key=tls_key,
-        proxy_url=proxy_url,
-        use_basic_auth=use_basic_auth,
-        gateway=gateway == "US" and URL.CLOUD_GATEWAY_US \
+        file_tls_certificate=tls_cert,
+        file_tls_key=tls_key,
+        proxy=proxy_url,
+        use_basic_authentication=use_basic_auth,
+        api_base=(gateway == "US" and URL.CLOUD_GATEWAY_US) \
             or URL.CLOUD_GATEWAY_AU,
     )
 
     ctx.obj['api_client'] = APIClient(config)
-
 
 
 # Load up all sub commands

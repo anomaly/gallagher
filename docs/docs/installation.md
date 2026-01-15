@@ -54,7 +54,8 @@ Command Centre optionally allows you to use self signed client side TLS certific
 You can use `openssl` to generate yourself a client side certificate and key.
 
 ```bash
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout client.key -out client.pem
+openssl req -x509 -nodes -days 365 -newkey rsa:2048\
+ -keyout client.key -out client.pem
 ```
 
 Fill in the required details for the certificate and then generate a `sha1` hash of the certificate.
@@ -111,11 +112,20 @@ if private_key_anomaly and temp_file_tls_key:
 You can assign these temporary files to the client as shown above.
 
 ```python
-from gallagher import cc
+from gallagher.cc import CommandCentreConfig, APIClient
 
-cc.api_key = api_key
-cc.file_tls_certificate = temp_file_certificate.name
-cc.file_tls_key = temp_file_tls_key.name
+# Set the API key from the environment
+api_key = os.environ.get("GACC_API_KEY")
+
+# Make a configuration object
+config = CommandCentreConfig(
+    api_key=api_key,
+    file_tls_cert=cert_path, # required if CC demands it
+    file_tls_key=key_path, # required if above is enabled
+)
+
+# Initialise the client
+client = APIClient(config=config)
 ```
 
 > If you want to validate your certificate can use something like `httpie` as demonstrate here

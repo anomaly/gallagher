@@ -27,6 +27,7 @@ from .events import app as events_app
 from .item import app as items_app
 from .azone import app as azone_app
 from .agroup import app as agroup_app
+from .comp import app as comp_app
 from .day import app as day_app
 from .door import app as door_app
 from .elevator import app as elevator_app
@@ -157,4 +158,5 @@ app.add_typer(schedule_app, name="schedule")
 app.add_typer(visits_app, name="visit")
 app.add_typer(visitors_app, name="visitor")
 app.add_typer(zones_app, name="zone")
+app.add_typer(comp_app, name="comp")
 

@@ -48,9 +48,17 @@ from .alarms.items import ItemsType, Item
 from .alarms.schedule import Schedule
 from .cardholders import Cardholder, PdfDefinition
 from .cardholders.card_type import CardType
+from .alarm_zones import AlarmZone
+from .competencies import Competency
 from .doors import Door
+from .elevators import Elevator
+from .fence_zones import FenceZone
+from .inputs import Input
+from .interlock_groups import InterlockGroup
 from .lockers import Locker
+from .macros import Macro
 from .operators import Operator
+from .outputs import Output
 from .receptions import Reception
 from .roles import Role
 from .visitors import Visitor
@@ -85,21 +93,29 @@ class APIClient(RequestHeadersMixin,):
 
 
     access_groups: AccessGroup
+    alarm_zones: AlarmZone
     alarms: Alarm
+    competencies: Competency
     divisions: Division
     day_categories: DayCategory
+    elevators: Elevator
     events: Event
     event_types: EventType
     event_groups: EventGroup
+    fence_zones: FenceZone
+    inputs: Input
+    interlock_groups: InterlockGroup
     items: Item
     item_types: ItemsType
+    macros: Macro
+    operators: Operator
+    outputs: Output
     schedules: Schedule
     card_types: CardType
     cardholders: Cardholder
     pdf_definitions: PdfDefinition
     doors: Door
     lockers: Locker
-    operators: Operator
     receptions: Reception
     roles: Role
     visitors: Visitor
@@ -227,6 +243,46 @@ class APIClient(RequestHeadersMixin,):
         )
 
         self.zones = Zone(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.alarm_zones = AlarmZone(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.competencies = Competency(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.elevators = Elevator(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.fence_zones = FenceZone(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.inputs = Input(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.interlock_groups = InterlockGroup(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.macros = Macro(
+            config=self.config,
+            capabilities=self._CAPABILITIES
+        )
+
+        self.outputs = Output(
             config=self.config,
             capabilities=self._CAPABILITIES
         )

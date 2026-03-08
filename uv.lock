@@ -1077,6 +1077,11 @@ tui = [
     { name = "textual" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "coverage" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "alembic", marker = "extra == 'sync'", specifier = ">=1.16.1,<2.0.0" },
@@ -1104,6 +1109,9 @@ requires-dist = [
     { name = "typer", marker = "extra == 'cli'", specifier = ">=0.16.0,<1.0.0" },
 ]
 provides-extras = ["cli", "dev", "mcp", "sync", "tui"]
+
+[package.metadata.requires-dev]
+dev = [{ name = "coverage", specifier = ">=7.13.4" }]
 
 [[package]]
 name = "genai-prices"

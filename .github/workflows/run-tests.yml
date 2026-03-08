@@ -23,7 +23,7 @@ jobs:
       - name: Install uv
         run: pip install uv
       - name: Sync dependencies
-        run: uv sync
+        run: uv sync --all-groups
       - name: Run tests
         run: |
           export GACC_API_KEY="${{ secrets.GACC_API_KEY }}"

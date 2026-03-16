@@ -286,12 +286,23 @@ Here's a sample of how you can follow updates and stop the loop if there are no 
 import os
 import asyncio
 
-from gallagher import cc
+from gallagher.cc import CommandCentreConfig, APIClient
+
+# Optionally provide a client certificate and key
+cert_path = os.path.join(os.getcwd(), "client.pem")
+key_path = os.path.join(os.getcwd(), "client.key")
+
+# Set the API key from the environment
+api_key = os.environ.get("GACC_API_KEY")
+
+# Make a configuration object
+config = CommandCentreConfig(
+    api_key=api_key,
+    file_tls_cert=cert_path,
+    file_tls_key=key_path,
+)
 
 async def main():
-    api_key = os.environ.get("GACC_API_KEY")
-    cc.api_key = api_key
-
     # Used to control the event loop
     asyncio_event = asyncio.Event()
 
@@ -311,4 +322,39 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Endpoints that provide either an
+## Personal Data Fields
+
+`Cardholders` can have a Personal Data Fields stored against then, these are aribitary data which can range from textual, numeric, or links to binary data (e.g a photo). The API client provides a clean pythonic interface to retrieve the information.
+
+PDF fields are expressed somewhat like this in the API:
+
+```json
+{
+    "@Prefered Name": {
+        "definition": {
+            "href": "https://commandcentre-api-au.security.gallagher.cloud/api/personal_data_fields/1063",
+            "id": "1063",
+            "name": "Prefered Name",
+            "type": "string"
+        },
+        "href": "https://commandcentre-api-au.security.gallagher.cloud/api/cardholders/190737/personal_data/1063",
+        "value": "Dev"
+    }
+},
+```
+
+Since it would be impractical to use the arbitary keys are attributes (not to mention the `@` prefix), the SDK uses a `pydantic` model validator to parse each field as a `CardholderPersonalDataDefinition` object, which has a `name` and a `contents` attribute, the contents in turn has:
+
+- `definition`, attributes of the PDF field definition
+- `href`, which is a `href` to the PDF value for the cardholder
+- `value`, which contains the value of the field (depending on it's type)
+- `notifications`, which is a boolean
+
+You can iterate over the `cardholder.personal_data_fields` to get access to each one of these.
+
+To make things a little more convinient, the SDK provides a shortcut for you to access these fields. A special property called `pdf` exposes each pdf field as a dynamic attribute, where the name of the PDF field:
+
+- had the `@` prefix removed
+- is converted to snake case
+
+So in the above example, you can access the `@Prefered Name` PDF field as `cardholder.pdf.prefered_name.value`, where `cardholder.pdf.perfered_name` is a `CardholderPersonalDataDefinition` object.

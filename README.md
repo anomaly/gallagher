@@ -18,6 +18,7 @@ Our Python Toolkit focuses on enhancing the developer experience (DX) around the
 - **Command Line Interface** (CLI) to build powerful pipeline-based workflows.
 - **Terminal User Interface** (TUI) for easy interactions with the Command Centre.
 - **SQL interface** query the REST API as if it were a database or interact with via an ORM.
+- **MCP Server and Client** implement the [Model Context Protocol](https://modelcontextprotocol.io) to allow LLMs to interact with Gallagher Command Centre.
 
 > [!NOTE]\
 > This project is **NOT** affiliated with Gallagher Security. All trademarks are the property of their respective owners.
@@ -40,9 +41,8 @@ import os
 import asyncio
 
 # Import the client and models
-from gallagher import cc
+from gallagher.cc import CommandCentreConfig, APIClient
 from gallagher.dto.summary import CardholderSummary
-from gallagher.cc.cardholders import Cardholder
 
 # Optionally provide a client certificate and key
 cert_path = os.path.join(os.getcwd(), "client.pem")
@@ -50,10 +50,19 @@ key_path = os.path.join(os.getcwd(), "client.key")
 
 # Set the API key from the environment
 api_key = os.environ.get("GACC_API_KEY")
-cc.api_key = api_key
+
+# Make a configuration object
+config = CommandCentreConfig(
+    api_key=api_key,
+    file_tls_cert=cert_path,
+    file_tls_key=key_path,
+)
+
+# Initialise the client
+client = APIClient(config=config)
 
 # Async support gives us back a coroutine
-ch_coro = Cardholder.list()
+ch_coro = client.cardholders.list()
 
 # Run the coroutine to get the cardholder
 cardholders = asyncio.run(ch_coro)

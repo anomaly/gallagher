@@ -13,7 +13,7 @@ from rich.table import Table
 from .utils import AsyncTyper
 
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.doors import Doors
+from gallagher.cc.doors import Door
 
 from gallagher.exception import (
     NotFoundException,
@@ -29,7 +29,7 @@ async def list():
     """list all doors"""
     console = Console()
     with console.status("[bold green]Fetching doors...", spinner="dots"):
-        doors = await Doors.list()
+        doors = await Door.list()
 
         table = Table(title="Doors")
         for header in doors.cli_header:
@@ -49,7 +49,7 @@ async def get(
     console = Console()
     with console.status("[bold]Finding door...", spinner="dots"):
         try:
-            door = await Doors.retrieve(id)
+            door = await Door.retrieve(id)
             [console.print(r) for r in door.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No door with id={id} found[/bold]")
@@ -92,7 +92,7 @@ async def find(
     """find doors by name"""
     console = Console()
     with console.status("[bold]Searching doors...", spinner="dots"):
-        doors = await Doors.search(
+        doors = await Door.search(
             name=name,
             sort=sort,
             top=top,

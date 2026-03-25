@@ -13,7 +13,7 @@ from rich.table import Table
 from .utils import AsyncTyper
 
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.roles import Roles
+from gallagher.cc.roles import Role
 
 from gallagher.exception import (
     NotFoundException,
@@ -29,7 +29,7 @@ async def list():
     """list all roles"""
     console = Console()
     with console.status("[bold green]Fetching roles...", spinner="dots"):
-        roles = await Roles.list()
+        roles = await Role.list()
 
         table = Table(title="Roles")
         for header in roles.cli_header:
@@ -49,7 +49,7 @@ async def get(
     console = Console()
     with console.status("[bold]Finding role...", spinner="dots"):
         try:
-            role = await Roles.retrieve(id)
+            role = await Role.retrieve(id)
             [console.print(r) for r in role.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No role with id={id} found[/bold]")
@@ -92,7 +92,7 @@ async def find(
     """find roles by name"""
     console = Console()
     with console.status("[bold]Searching roles...", spinner="dots"):
-        roles = await Roles.search(
+        roles = await Role.search(
             name=name,
             sort=sort,
             top=top,

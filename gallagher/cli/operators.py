@@ -13,7 +13,7 @@ from rich.table import Table
 from .utils import AsyncTyper
 
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.operators import Operators
+from gallagher.cc.operators import Operator
 
 from gallagher.exception import (
     NotFoundException,
@@ -29,7 +29,7 @@ async def list():
     """list all operators"""
     console = Console()
     with console.status("[bold green]Fetching operators...", spinner="dots"):
-        operators = await Operators.list()
+        operators = await Operator.list()
 
         table = Table(title="Operators")
         for header in operators.cli_header:
@@ -49,7 +49,7 @@ async def get(
     console = Console()
     with console.status("[bold]Finding operator...", spinner="dots"):
         try:
-            operator = await Operators.retrieve(id)
+            operator = await Operator.retrieve(id)
             [console.print(r) for r in operator.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No operator with id={id} found[/bold]")
@@ -92,7 +92,7 @@ async def find(
     """find operators by name"""
     console = Console()
     with console.status("[bold]Searching operators...", spinner="dots"):
-        operators = await Operators.search(
+        operators = await Operator.search(
             name=name,
             sort=sort,
             top=top,

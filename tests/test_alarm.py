@@ -4,8 +4,9 @@ to make sure that we are getting valid responses.
 """
 
 from datetime import datetime
-
 import pytest
+
+from gallagher.cc import APIClient
 
 from gallagher.dto.detail import (
     AlarmDetail,
@@ -13,10 +14,6 @@ from gallagher.dto.detail import (
 
 from gallagher.dto.response import (
     AlarmSummaryResponse,
-)
-
-from gallagher.cc.alarms import (
-    Alarms,
 )
 
 # Fixture for the comment, this will create a timestamp
@@ -30,12 +27,12 @@ async def alarm_comment():
 
 
 @pytest.fixture
-async def alarm_summary() -> AlarmSummaryResponse:
+async def alarm_summary(api_client: APIClient) -> AlarmSummaryResponse:
     """Get a list of item types and iterates through it
     these are a summary response
 
     """
-    response = await Alarms.list()
+    response = await api_client.alarms.list()
     return response
 
 
@@ -49,7 +46,10 @@ async def test_alarms_list(alarm_summary: AlarmSummaryResponse):
     assert len(alarm_summary.alarms) > 0
 
 
-async def test_alarms_detail(alarm_summary: AlarmSummaryResponse):
+async def test_alarms_detail(
+    api_client: APIClient,
+    alarm_summary: AlarmSummaryResponse
+):
     """Get details of all the alarms
 
     This will get the details of all the alarms and then
@@ -59,13 +59,14 @@ async def test_alarms_detail(alarm_summary: AlarmSummaryResponse):
 
     for alarm_summary in alarm_summary.alarms:
         # Get the detail of the alarm for comparison
-        alarm_detail_response = await Alarms.retrieve(alarm_summary.id)
+        alarm_detail_response = await api_client.alarms.retrieve(alarm_summary.id)
         assert type(alarm_detail_response) is AlarmDetail
         assert alarm_detail_response.id == alarm_summary.id
 
 
 async def test_alarms_post_comment(
-    alarm_summary: AlarmSummaryResponse, alarm_comment: str
+    api_client: APIClient,
+    alarm_summary: AlarmSummaryResponse, alarm_comment: str,
 ):
     """Posts a commend to an alarm
 
@@ -74,19 +75,22 @@ async def test_alarms_post_comment(
     """
     for alarm_summary in alarm_summary.alarms:
         # Get the detail of the alarm for comparison
-        await Alarms.comment(
+        await api_client.alarms.comment(
             alarm_summary,
             alarm_comment,
         )
 
 
 async def test_alarms_comment_exists(
+    api_client: APIClient,
     alarm_summary: AlarmSummaryResponse, alarm_comment: str
 ):
     for alarm_summary in alarm_summary.alarms:
 
         # Get alarm detail to check the comment
-        alarm_detail_response = await Alarms.retrieve(alarm_summary.id)
+        alarm_detail_response = await api_client.alarms.retrieve(
+            alarm_summary.id
+        )
 
         for history in alarm_detail_response.history:
             # Find the comment in the history

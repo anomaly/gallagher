@@ -5,7 +5,6 @@ authenticates at a device, usually by badging a card.
 """
 
 from ..core import (
-    Capabilities,
     APIEndpoint,
     EndpointConfig,
 )
@@ -33,11 +32,10 @@ class Event(APIEndpoint):
     the next href is a non blocking call to get the next set of events.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.events.events,
-            endpoint_follow=Capabilities.CURRENT.features.events.updates,
+            endpoint=self._CAPABILITIES.features.events.events,
+            endpoint_follow=self._CAPABILITIES.features.events.updates,
             dto_follow=EventSummaryResponse,
             dto_list=EventSummaryResponse,
             dto_retrieve=EventDetail,
@@ -46,15 +44,14 @@ class Event(APIEndpoint):
 class EventType(APIEndpoint):
     """EventType"""
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.events.event_groups,
+            endpoint=self._CAPABILITIES.features.events.event_groups,
             dto_list=EventTypeResponse,
         )
 
 
-class EventGroups(APIEndpoint):
+class EventGroup(APIEndpoint):
     """ Event Groups are used to filter events
     
     Use this to dynamically discover a list of event groups which you can
@@ -63,9 +60,8 @@ class EventGroups(APIEndpoint):
     See above Event class for more details.
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.events.event_groups,
+            endpoint=self._CAPABILITIES.features.events.event_groups,
             dto_list=EventTypeResponse,
         )

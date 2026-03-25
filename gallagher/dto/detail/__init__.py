@@ -36,8 +36,6 @@ from .event import (
     EventDetail,
 )
 
-from .features import FeaturesDetail
-
 from .locker import LockerDetail
 
 from .operator import OperatorDetail
@@ -61,3 +59,19 @@ from .visit import VisitDetail
 from .visitor import VisitorDetail
 
 from .zone import ZoneDetail
+
+from .alarm_zone import AlarmZoneDetail
+
+from .competency import CompetencyDetail
+
+from .elevator import ElevatorDetail
+
+from .fence_zone import FenceZoneDetail
+
+from .input import InputDetail
+
+from .interlock_group import InterlockGroupDetail
+
+from .macro import MacroDetail
+
+from .output import OutputDetail

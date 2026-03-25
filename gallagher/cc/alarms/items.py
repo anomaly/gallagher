@@ -4,7 +4,6 @@
 """
 
 from ..core import (
-    Capabilities,
     APIEndpoint,
     EndpointConfig,
 )
@@ -18,16 +17,15 @@ from ...dto.response import (
 )
 
 
-class ItemsTypes(APIEndpoint):
+class ItemsType(APIEndpoint):
     """
     Gallagher
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.items.item_types,
-            endpoint_follow=Capabilities.CURRENT.features.items.updates,
+            endpoint=self._CAPABILITIES.features.items.item_types,
+            endpoint_follow=self._CAPABILITIES.features.items.updates,
             dto_follow=ItemsSummaryResponse,
             dto_list=ItemTypesResponse,
             dto_retrieve=ItemTypesResponse,
@@ -52,10 +50,9 @@ class Item(APIEndpoint):
 
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.items.items,
+            endpoint=self._CAPABILITIES.features.items.items,
             dto_list=ItemsSummaryResponse,
             dto_retrieve=ItemSummary,
         )

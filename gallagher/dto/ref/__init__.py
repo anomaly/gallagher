@@ -19,6 +19,20 @@ from .alarm import (
     AlarmZoneRef,
 )
 
+from .competency import CompetencyRef
+
+from .elevator import ElevatorRef
+
+from .fence_zone import FenceZoneRef
+
+from .input import InputRef
+
+from .interlock_group import InterlockGroupRef
+
+from .macro import MacroRef
+
+from .output import OutputRef
+
 from .card_type import (
     CardTypeRef,
 )

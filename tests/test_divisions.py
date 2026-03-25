@@ -4,17 +4,16 @@
 
 import pytest
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.detail import (
     DivisionDetail,
 )
 
 from gallagher.dto.response import DivisionSummaryResponse
 
-from gallagher.cc.alarms.divisions import Division
-
-
 @pytest.fixture
-async def division_summary() -> DivisionSummaryResponse:
+async def division_summary(api_client: APIClient) -> DivisionSummaryResponse:
     """Makes a single call to the division list
 
     This is passed as a fixture to all other calls around
@@ -23,7 +22,7 @@ async def division_summary() -> DivisionSummaryResponse:
     :return: DivisionSummaryResponse
     """
 
-    response = await Division.list()
+    response = await api_client.divisions.list()
     return response
 
 
@@ -40,7 +39,10 @@ async def test_division_list(division_summary: DivisionSummaryResponse):
     assert len(division_summary.results) > 0
 
 
-async def test_division_detail(division_summary: DivisionSummaryResponse):
+async def test_division_detail(
+    api_client: APIClient,
+    division_summary: DivisionSummaryResponse,
+):
     """Test getting the details of a division
 
     This will trigger the list endpoint and then run the detail
@@ -52,7 +54,8 @@ async def test_division_detail(division_summary: DivisionSummaryResponse):
 
     for division_summary in division_summary.results:
         # Get the detail of the division
-        division_detail_response = await Division.retrieve(division_summary.id)
+        division_detail_response = await api_client.divisions\
+            .retrieve(division_summary.id)
         assert type(division_detail_response) is DivisionDetail
         assert division_detail_response.id == division_summary.id
 

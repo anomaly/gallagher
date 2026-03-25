@@ -1,4 +1,4 @@
-# Python API Client
+# Python SDK
 
 Gallagher Python Toolkit started life with the API Client, and it underpins all the utilities GPT ships. The central theme in the API client is data validation for responses and payloads. We take the approach of "nothing can go wrong" when we are interacting with a Gallagher Command Centre. We put in enormous effort into maintaining this SDK with the following aims:
 
@@ -51,9 +51,9 @@ If you are fetching a `detail` then they are returned on their own as part of th
 
 You do not need to look under the hood to work with the API client. This section was written for you to understand how we implement Gallagher's requirements for standard based development. Each endpoint inherits from a base class called `APIEndpoint` defined in `gallagher/cc/core.py` and provides a configuration that describes the behaviour of the endpoint (in accordance with the Command Centre API).
 
-Before your request is sent, the endpoint will:
+Upon initialisation of the `APIClient` class, the following happens:
 
-- Run a method called `_discover` (this is only ever run once per session, i.e so long as the client instance is in memory), this discovers and caches API endpoints in accordance to the HATEOAS principle.
+- A method called `_discover` is run (this is only ever run once per session, i.e so long as the client instance is in memory), this discovers and caches API endpoints in accordance to the HATEOAS principle.
 - The `get_config` method is executed to bootstrap the environment and using the above discovery results.
 - Runs your request and returns the response where appropriate.
 
@@ -61,17 +61,20 @@ You can read about his in [our design document](design.md).
 
 ## Configuration
 
-You are required to set the `api_key` once across your usage of the SDK. You can typically do this by import `cc` from the `gallagher` package and setting the `api_key` attribute.
+You are required at a minimum provide a configuration that sets the `api_key` once across your usage of the SDK. You do this by providing a configuration to the `APIClient` object.
 
 ```python
 import os
-from gallagher import cc
+from gallagher.cc import CommandCentreConfig, APIClient
 
-api_key = os.environ.get("GACC_API_KEY")
-cc.api_key = api_key
+config = CommandCentreConfig(
+    api_key=os.environ.get("GACC_API_KEY"),
+)
+
+client = APIClient(config=config)
 ```
 
-You can obviously obtain the `api_key` from a secure location such as a secret manager or a configuration file.
+You _must_ obtain the `api_key` from a secure location such as a secret manager or a configuration file.
 
 !!! warning
 
@@ -104,26 +107,18 @@ If you wish to target the cloud gateway via IP address, use the constants:
     which are passed as an array to the `APIEndpoint` class. The SDK will automatically
     cycle through the addresses in case of a failure.
 
-You can override the address of the gateway in a similar the way to setting the `api_key`:
+### Options
 
-```python
-from gallagher import cc
-from gallagher.const import URL
+The `CommandCentreConfig` class provides a number of options that you can set to configure the SDK to your needs. The following options are available:
 
-cc.api_base = URL.CLOUD_GATEWAY_US
-```
+- `api_key` - API Key to authenticate with the Command Centre
+- `file_tls_certificate` - path to a client TLS certificate
+- `file_tls_key` - path to a client TLS key
+- `api_base` - base URL of the Command Centre or cloud gateway
+- `proxy` - proxy URL to use for HTTP requests
+- `use_basic_authentication` - whether to use Basic Authentication instead of API Key authentication
 
-In cases where you are targeting a local Command Centre, you can set the `api_base` to the FQDN or IP address of the Command Centre that's locally accessible on the network.
-
-### Proxy support
-
-Thanks to `httpx` we have proxy support built in out of the box. By default the `proxy` is set to `None` indicating that one isn't in use. If you wish to use a proxy for your use case, then simply set the `proxy` attribute on the `cc` object like you would the `api_base` or `api_key`.
-
-```python
-from gallagher import cc
-
-cc.proxy = "http://username:password@proxy.example.com:8080"
-```
+Thanks to `httpx` we have proxy support built in out of the box. By default the `proxy` is set to `None` indicating that one isn't in use. If you wish to use a proxy for your use case, then simply set the `proxy` to the URL of the proxy server.
 
 For information on advanced configuration options [see the httpx documentation](https://www.python-httpx.org/advanced/proxies/). As always be very careful where you retrieve the proxy information from, and do not version control it.
 
@@ -139,22 +134,28 @@ import os
 import asyncio
 
 # Import the client and models
-from gallagher import (
-    cc,
-)
-from gallagher.dto.summary import (
-    CardholderSummary,
-)
-from gallagher.cc.cardholders import (
-    Cardholder,
-)
+from gallagher.cc import CommandCentreConfig, APIClient
+from gallagher.dto.summary import CardholderSummary
+
+# Optionally provide a client certificate and key
+cert_path = os.path.join(os.getcwd(), "client.pem")
+key_path = os.path.join(os.getcwd(), "client.key")
 
 # Set the API key from the environment
 api_key = os.environ.get("GACC_API_KEY")
-cc.api_key = api_key
+
+# Make a configuration object
+config = CommandCentreConfig(
+    api_key=api_key,
+    file_tls_cert=cert_path,
+    file_tls_key=key_path,
+)
+
+# Initialise the client
+client = APIClient(config=config)
 
 # Async support gives us back a coroutine
-ch_coro = Cardholder.list()
+ch_coro = client.cardholders.list()
 
 # Run the coroutine to get the cardholder
 cardholders = asyncio.run(ch_coro)
@@ -193,10 +194,8 @@ from gallagher.dto.response import (
     ItemsSummaryResponse,
 )
 
-from gallagher.cc.alarms.items import Item
-
 # Get a list of items
-response = await Item.list()
+response = await api_client.items.list()
 
 # Print the href to prove we have results
 for item in response.results:
@@ -217,10 +216,8 @@ from gallagher.dto.response import (
     ItemsSummaryResponse,
 )
 
-from gallagher.cc.alarms.items import Item
-
 # Get a list of items
-detail_response = await Item.retrieve(399)
+detail_response = await api_client.items.retrieve(399)
 ```
 
 !!! note
@@ -289,17 +286,27 @@ Here's a sample of how you can follow updates and stop the loop if there are no 
 import os
 import asyncio
 
-from gallagher import cc
-from gallagher.cc.alarms import Alarms
+from gallagher.cc import CommandCentreConfig, APIClient
+
+# Optionally provide a client certificate and key
+cert_path = os.path.join(os.getcwd(), "client.pem")
+key_path = os.path.join(os.getcwd(), "client.key")
+
+# Set the API key from the environment
+api_key = os.environ.get("GACC_API_KEY")
+
+# Make a configuration object
+config = CommandCentreConfig(
+    api_key=api_key,
+    file_tls_cert=cert_path,
+    file_tls_key=key_path,
+)
 
 async def main():
-    api_key = os.environ.get("GACC_API_KEY")
-    cc.api_key = api_key
-
     # Used to control the event loop
     asyncio_event = asyncio.Event()
 
-    async for updates in Alarms.follow(
+    async for updates in api_client.alarms.follow(
         asyncio_event=asyncio_event,
     ):
 
@@ -315,4 +322,39 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Endpoints that provide either an `
+## Personal Data Fields
+
+`Cardholders` can have a Personal Data Fields stored against then, these are aribitary data which can range from textual, numeric, or links to binary data (e.g a photo). The API client provides a clean pythonic interface to retrieve the information.
+
+PDF fields are expressed somewhat like this in the API:
+
+```json
+{
+    "@Prefered Name": {
+        "definition": {
+            "href": "https://commandcentre-api-au.security.gallagher.cloud/api/personal_data_fields/1063",
+            "id": "1063",
+            "name": "Prefered Name",
+            "type": "string"
+        },
+        "href": "https://commandcentre-api-au.security.gallagher.cloud/api/cardholders/190737/personal_data/1063",
+        "value": "Dev"
+    }
+},
+```
+
+Since it would be impractical to use the arbitary keys are attributes (not to mention the `@` prefix), the SDK uses a `pydantic` model validator to parse each field as a `CardholderPersonalDataDefinition` object, which has a `name` and a `contents` attribute, the contents in turn has:
+
+- `definition`, attributes of the PDF field definition
+- `href`, which is a `href` to the PDF value for the cardholder
+- `value`, which contains the value of the field (depending on it's type)
+- `notifications`, which is a boolean
+
+You can iterate over the `cardholder.personal_data_fields` to get access to each one of these.
+
+To make things a little more convinient, the SDK provides a shortcut for you to access these fields. A special property called `pdf` exposes each pdf field as a dynamic attribute, where the name of the PDF field:
+
+- had the `@` prefix removed
+- is converted to snake case
+
+So in the above example, you can access the `@Prefered Name` PDF field as `cardholder.pdf.prefered_name.value`, where `cardholder.pdf.perfered_name` is a `CardholderPersonalDataDefinition` object.

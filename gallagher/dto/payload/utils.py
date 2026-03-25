@@ -1,9 +1,5 @@
 """ Payload builder helpers
 
-
-
-
-
 """
 
 from pydantic import BaseModel, URL

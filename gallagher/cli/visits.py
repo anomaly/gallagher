@@ -13,7 +13,7 @@ from rich.table import Table
 from .utils import AsyncTyper
 
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.visits import Visits
+from gallagher.cc.visits import Visit
 
 from gallagher.exception import (
     NotFoundException,
@@ -29,7 +29,7 @@ async def list():
     """list all visits"""
     console = Console()
     with console.status("[bold green]Fetching visits...", spinner="dots"):
-        visits = await Visits.list()
+        visits = await Visit.list()
 
         table = Table(title="Visits")
         for header in visits.cli_header:
@@ -49,7 +49,7 @@ async def get(
     console = Console()
     with console.status("[bold]Finding visit...", spinner="dots"):
         try:
-            visit = await Visits.retrieve(id)
+            visit = await Visit.retrieve(id)
             [console.print(r) for r in visit.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No visit with id={id} found[/bold]")
@@ -74,7 +74,7 @@ async def find(
     """find visits by visitor name"""
     console = Console()
     with console.status("[bold]Searching visits...", spinner="dots"):
-        visits = await Visits.search(
+        visits = await Visit.search(
             visitor_name=visitor_name,
             sort=sort,
             top=top,

@@ -40,8 +40,6 @@ from .event import (
     EventTypeResponse,
 )
 
-from .features import FeaturesResponse
-
 from .items import (
     ItemsSummaryResponse,
     ItemTypesResponse,
@@ -70,3 +68,19 @@ from .visit import VisitResponse
 from .visitor import VisitorResponse
 
 from .zone import ZoneResponse
+
+from .alarm_zone import AlarmZoneResponse
+
+from .competency import CompetencyResponse
+
+from .elevator import ElevatorResponse
+
+from .fence_zone import FenceZoneResponse
+
+from .input import InputResponse
+
+from .interlock_group import InterlockGroupResponse
+
+from .macro import MacroResponse
+
+from .output import OutputResponse

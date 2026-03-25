@@ -13,7 +13,7 @@ from rich.table import Table
 from .utils import AsyncTyper
 
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.receptions import Receptions
+from gallagher.cc.receptions import Reception
 
 from gallagher.exception import (
     NotFoundException,
@@ -29,7 +29,7 @@ async def list():
     """list all receptions"""
     console = Console()
     with console.status("[bold green]Fetching receptions...", spinner="dots"):
-        receptions = await Receptions.list()
+        receptions = await Reception.list()
 
         table = Table(title="Receptions")
         for header in receptions.cli_header:
@@ -49,7 +49,7 @@ async def get(
     console = Console()
     with console.status("[bold]Finding reception...", spinner="dots"):
         try:
-            reception = await Receptions.retrieve(id)
+            reception = await Reception.retrieve(id)
             [console.print(r) for r in reception.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No reception with id={id} found[/bold]")
@@ -92,7 +92,7 @@ async def find(
     """find receptions by name"""
     console = Console()
     with console.status("[bold]Searching receptions...", spinner="dots"):
-        receptions = await Receptions.search(
+        receptions = await Reception.search(
             name=name,
             sort=sort,
             top=top,

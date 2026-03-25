@@ -2,7 +2,7 @@
 
 """
 
-from ..core import Capabilities, APIEndpoint, EndpointConfig
+from ..core import APIEndpoint, EndpointConfig
 
 from ...dto.response import ScheduleSummaryResponse
 
@@ -10,9 +10,8 @@ from ...dto.response import ScheduleSummaryResponse
 class Schedule(APIEndpoint):
     """Schedules"""
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.schedules.schedules,
+            endpoint=self._CAPABILITIES.features.schedules.schedules,
             dto_list=ScheduleSummaryResponse,
         )

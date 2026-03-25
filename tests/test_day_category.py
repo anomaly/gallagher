@@ -4,13 +4,12 @@
 
 import pytest
 
+from gallagher.cc import APIClient
+
 from gallagher.dto.response import DayCategoryResponse
 
-from gallagher.cc.alarms.day_category import DayCategory
-
-
 @pytest.fixture
-async def day_category() -> DayCategoryResponse:
+async def day_category(api_client: APIClient) -> DayCategoryResponse:
     """Makes a single call to the day category list
 
     This is passed as a fixture to all other calls around
@@ -19,7 +18,7 @@ async def day_category() -> DayCategoryResponse:
     :return: DayCategoryResponse
     """
 
-    response = await DayCategory.list()
+    response = await api_client.day_categories.list()
     return response
 
 

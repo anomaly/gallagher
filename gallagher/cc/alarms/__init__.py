@@ -9,7 +9,6 @@ from typing import Optional
 from ..core import (
     APIEndpoint,
     EndpointConfig,
-    Capabilities,
 )
 
 from ...dto.ref import AlarmRef
@@ -21,7 +20,7 @@ from ...dto.response import (
 )
 from ...dto.payload import AlarmCommentPayload
 
-class Alarms(
+class Alarm(
     APIEndpoint,
 ):
     """Alarms
@@ -41,24 +40,22 @@ class Alarms(
     - mark_as_force_processed:
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         """Return the configuration for Alarms
 
         Arguments:
         cls: class reference
         """
         return EndpointConfig(
-            endpoint=Capabilities.CURRENT.features.alarms.alarms,
-            endpoint_follow=Capabilities.CURRENT.features.alarms.updates,
+            endpoint=self._CAPABILITIES.features.alarms.alarms,
+            endpoint_follow=self._CAPABILITIES.features.alarms.updates,
             dto_follow=AlarmUpdateResponse,
             dto_list=AlarmSummaryResponse,
             dto_retrieve=AlarmDetail,
         )
 
-    @classmethod
     async def mark_as_viewed(
-        cls,
+        self,
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
         comment: Optional[str],
     ) -> bool:
@@ -70,16 +67,15 @@ class Alarms(
         comment: Optional[str]
             A comment to add to the alarm 
         """
-        await cls._post(
+        await self._post(
             alarm.view.href,
             AlarmCommentPayload(comment=comment) if comment else None,
         )
 
         return alarm.href is not None
 
-    @classmethod
     async def comment(
-        cls,
+        self,
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
         comment: str,
     ) -> bool:
@@ -98,16 +94,15 @@ class Alarms(
             The comment to add to the alarm
         """
 
-        await cls._post(
+        await self._post(
             alarm.comment.href,
             AlarmCommentPayload(comment=comment),
         )
 
         return alarm.href is not None
 
-    @classmethod
     async def mark_as_acknowledged(
-        cls,
+        self,
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
         comment: Optional[str],
     ) -> bool:
@@ -119,16 +114,15 @@ class Alarms(
         comment: Optional[str]
             A comment to add to the alarm
         """
-        await cls._post(
+        await self._post(
             alarm.acknowledge.href,
             AlarmCommentPayload(comment=comment) if comment else None,
         )
 
         return alarm.href is not None
 
-    @classmethod
     async def mark_as_processed(
-        cls,
+        self,
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
         comment: Optional[str],
     ) -> bool:
@@ -140,16 +134,15 @@ class Alarms(
         comment: Optional[str]
             A comment to add to the alarm 
         """
-        await cls._post(
+        await self._post(
             alarm.process.href,
             AlarmCommentPayload(comment=comment) if comment else None,
         )
 
         return alarm.href is not None
 
-    @classmethod
     async def mark_as_force_processed(
-        cls,
+        self,
         alarm: AlarmRef | AlarmSummary | AlarmDetail,
     ) -> bool:
         """ Mark an alarm as force processed
@@ -161,7 +154,7 @@ class Alarms(
         returns:
         bool: True if the alarm was force processed 
         """
-        await cls._post(
+        await self._post(
             alarm.force_process.href,
             None,
         )
@@ -171,5 +164,5 @@ class Alarms(
 
 # Write up Alarms for querying via the SQL interface
 __shillelagh__ = (
-    Alarms,
+    Alarm,
 )

@@ -161,8 +161,7 @@ class Alarms(
     """ Alarms
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.alarms.alarms,
             dto_list=AlarmSummaryResponse,
@@ -229,8 +228,7 @@ class Division(APIEndpoint):
 
     """
 
-    @classmethod
-    async def get_config(cls) -> EndpointConfig:
+    def get_config(self) -> EndpointConfig:
         return EndpointConfig(
             endpoint=Capabilities.CURRENT.features.divisions.divisions,
             dto_list=DivisionSummaryResponse,

@@ -2,23 +2,21 @@
 
 """
 
-import ssl
 import pytest
 import httpx
 
-from gallagher import cc
-from gallagher.cc import core
-
-from gallagher.dto.detail import (
-    FeaturesDetail,
+from gallagher.cc.core import (
+    CommandCentreConfig,
+    RequestHeadersMixin,
 )
+
 from gallagher.dto.response import (
     DiscoveryResponse,
 )
 
 
 @pytest.fixture
-async def discover_response() -> DiscoveryResponse:
+async def discover_response(cc_config: CommandCentreConfig) -> DiscoveryResponse:
     """Makes sure that the API is discoverable as per HATEOAS
 
     This is not an endpoint like the others, because it is a discovery
@@ -27,22 +25,16 @@ async def discover_response() -> DiscoveryResponse:
     :return: DiscoveryResponse
     """
 
-    ssl_context = None
-
-    if cc.file_tls_certificate and cc.file_private_key:
-        ssl_context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
-        ssl_context.load_cert_chain(
-            cc.file_tls_certificate,
-            cc.file_private_key
-        )
+    header_mixin = RequestHeadersMixin()
+    header_mixin.config = cc_config
 
     async with httpx.AsyncClient(
-        proxy=cc.proxy,
-        verify=ssl_context,
+        proxy=cc_config.proxy,
+        verify=cc_config.ssl_context,
     ) as _httpx_async:
         response = await _httpx_async.get(
-            cc.api_base,
-            headers=core._get_authorization_headers(),
+            f"{cc_config.api_base}",
+            headers=header_mixin._get_authorization_headers(),
         )
 
         await _httpx_async.aclose()

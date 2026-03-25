@@ -13,7 +13,7 @@ from rich.table import Table
 from .utils import AsyncTyper
 
 from gallagher.enum import SearchSortOrder
-from gallagher.cc.access_groups import AccessGroups
+from gallagher.cc.access_groups import AccessGroup
 
 from gallagher.exception import (
     NotFoundException,
@@ -29,7 +29,7 @@ async def list():
     """list all access groups"""
     console = Console()
     with console.status("[bold green]Fetching access groups...", spinner="dots"):
-        access_groups = await AccessGroups.list()
+        access_groups = await AccessGroup.list()
 
         table = Table(title="Access Groups")
         for header in access_groups.cli_header:
@@ -49,7 +49,7 @@ async def get(
     console = Console()
     with console.status("[bold]Finding access group...", spinner="dots"):
         try:
-            access_group = await AccessGroups.retrieve(id)
+            access_group = await AccessGroup.retrieve(id)
             [console.print(r) for r in access_group.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No access group with id={id} found[/bold]")
@@ -92,7 +92,7 @@ async def find(
     """find access groups by name"""
     console = Console()
     with console.status("[bold]Searching access groups...", spinner="dots"):
-        access_groups = await AccessGroups.search(
+        access_groups = await AccessGroup.search(
             name=name,
             sort=sort,
             top=top,

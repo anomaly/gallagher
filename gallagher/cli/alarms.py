@@ -20,7 +20,7 @@ from ..exception import (
 )
 
 from gallagher.cc.alarms import (
-    Alarms,
+    Alarm,
 )
 
 app = AsyncTyper(
@@ -41,7 +41,7 @@ async def list():
 
     with console.status("[bold green]Fetching alarms...", spinner="dots"):
 
-        alarms = await Alarms.list()
+        alarms = await Alarm.list()
         table = Table(title="Alarms")
 
         for header in alarms.cli_header:
@@ -66,7 +66,7 @@ async def get(
     with console.status("[bold green]Fetching alarm...", spinner="dots"):
 
         try:
-            alarm = await Alarms.retrieve(id)
+            alarm = await Alarm.retrieve(id)
             [console.print(r) for r in alarm.__rich_repr__()]
         except NotFoundException as e:
             console.print(f"[bold]No alarm with id={id} found[/bold]")
@@ -118,10 +118,10 @@ async def comment(
     ) as status:
         try:
             console.log("Finding alarm ...")
-            alarm_detail = await Alarms.retrieve(id)
+            alarm_detail = await Alarm.retrieve(id)
 
             console.log("Adding comment to history ...")
-            await Alarms.comment(alarm_detail, message)
+            await Alarm.comment(alarm_detail, message)
 
             console.print("[green]Comment posted successfully[/green]")
 
@@ -173,7 +173,7 @@ async def acknowledge(
             try:
                 # Get the alarm
                 console.log("Finding alarm ...")
-                alarm_detail = await Alarms.retrieve(id)
+                alarm_detail = await Alarm.retrieve(id)
 
                 if not alarm_detail.acknowledge:
                     # alarm has already been acknowledged
@@ -189,7 +189,7 @@ async def acknowledge(
                     f'comment ...'
                 )
 
-                await Alarms.mark_as_acknowledged(alarm_detail, message)
+                await Alarm.mark_as_acknowledged(alarm_detail, message)
                 console.print("[green]Acknowledged alarm[/green]")
 
             except NotFoundException as e:
@@ -221,7 +221,7 @@ async def acknowledge(
         try:
             # Get the alarm
             console.log("Finding alarm ...")
-            alarm_detail = await Alarms.retrieve(id)
+            alarm_detail = await Alarm.retrieve(id)
 
             if not alarm_detail.view:
                 # alarm has already been acknowledged
@@ -237,7 +237,7 @@ async def acknowledge(
                 f'comment ...'
             )
 
-            await Alarms.mark_as_viewed(alarm_detail, message)
+            await Alarm.mark_as_viewed(alarm_detail, message)
             console.print("[green]Viewed alarm[/green]")
 
 
@@ -289,7 +289,7 @@ async def process(
             try:
                 # Get the alarm
                 console.log("Finding alarm ...")
-                alarm_detail = await Alarms.retrieve(id)
+                alarm_detail = await Alarm.retrieve(id)
 
                 if not alarm_detail.process:
                     # alarm has already been acknowledged
@@ -305,7 +305,7 @@ async def process(
                     f'comment ...'
                 )
 
-                await Alarms.mark_as_processed(alarm_detail, message)
+                await Alarm.mark_as_processed(alarm_detail, message)
                 console.print("[green]Processed alarm[/green]")
 
             except NotFoundException as e:

@@ -22,6 +22,12 @@ If you are feeling adventurous you can install everything by:
 uv add gallagher[all]
 ```
 
+In case you find your setup missing packages, try syncing with `--all-extras` flag (probably relevant if you are using all the tools or developing with the SDK):
+
+```bash
+uv sync --all-extras
+```
+
 ### SDK
 
 To use the API (or the associated tools, as they use the API client in return) you must have an API key supplied by the Command Centre instance. The same key is used if you were were using the API on premise or in the cloud.
@@ -48,7 +54,8 @@ Command Centre optionally allows you to use self signed client side TLS certific
 You can use `openssl` to generate yourself a client side certificate and key.
 
 ```bash
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout client.key -out client.pem
+openssl req -x509 -nodes -days 365 -newkey rsa:2048\
+ -keyout client.key -out client.pem
 ```
 
 Fill in the required details for the certificate and then generate a `sha1` hash of the certificate.
@@ -67,7 +74,7 @@ api_key = os.environ.get("GACC_API_KEY")
 cc.api_key = api_key
 
 cc.file_tls_certificate = '/path/to/client.pem'
-cc.file_private_key = '/path/to/client.key'
+cc.file_tls_key = '/path/to/client.key'
 ```
 
 The rest of the requests and operations remain the same, the library will use an `SSL Context` to do the needful.
@@ -89,7 +96,7 @@ temp_file_certificate = tempfile.NamedTemporaryFile(
     suffix=".crt",
     delete=False
 )
-temp_file_private_key = tempfile.NamedTemporaryFile(
+temp_file_tls_key = tempfile.NamedTemporaryFile(
     suffix=".key",
     delete=False
 )
@@ -98,19 +105,32 @@ temp_file_private_key = tempfile.NamedTemporaryFile(
 if certificate_anomaly and temp_file_certificate:
     temp_file_certificate.write(certificate_anomaly.encode('utf-8'))
 
-if private_key_anomaly and temp_file_private_key:
-    temp_file_private_key.write(private_key_anomaly.encode('utf-8'))
+if private_key_anomaly and temp_file_tls_key:
+    temp_file_tls_key.write(private_key_anomaly.encode('utf-8'))
 ```
 
 You can assign these temporary files to the client as shown above.
 
 ```python
-from gallagher import cc
+from gallagher.cc import CommandCentreConfig, APIClient
 
-cc.api_key = api_key
-cc.file_tls_certificate = temp_file_certificate.name
-cc.file_private_key = temp_file_private_key.name
+# Set the API key from the environment
+api_key = os.environ.get("GACC_API_KEY")
+
+# Make a configuration object
+config = CommandCentreConfig(
+    api_key=api_key,
+    file_tls_cert=cert_path, # required if CC demands it
+    file_tls_key=key_path, # required if above is enabled
+)
+
+# Initialise the client
+client = APIClient(config=config)
 ```
+
+> If you want to validate your certificate can use something like `httpie` as demonstrate here
+>
+> `http --cert=.certs/anomaly-gallagher.pem --cert-key=.certs/anomaly-gallagher.key get https://commandcentre-api-au.security.gallagher.cloud/api/ "Authorization: GGL-API-KEY $GACC_API_KEY"`
 
 ### Command line interface
 

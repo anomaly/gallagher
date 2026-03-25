@@ -541,12 +541,12 @@ class APIEndpoint:
                         # send this back to the caller
                         yield parsed_obj
 
-                        if not parsed_obj.next:
+                        if not parsed_obj.updates:
                             return
 
                         # set the url to the next follow and we should
                         # be able to follow this endlessly
-                        url = f"{parsed_obj.next.href}"
+                        url = f"{parsed_obj.updates.href}"
 
                     elif response.status_code == HTTPStatus.NOT_FOUND:
                         raise NotFoundException()

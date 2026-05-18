@@ -63,7 +63,7 @@ tasks:
   dev:docs:
     desc: run the mkdocs server with appropriate flags
     cmds:
-      - cd docs && uv run -m mkdocs serve --livereload --watch-theme --open -a localhost:8001
+      - uv run zensical serve
   mcp:serve:
     desc: runs the mcp server for development
     cmds:

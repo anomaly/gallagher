@@ -8,8 +8,9 @@ The cli should be pretty self documenting, however see docs/ for
 official documentation.
 """
 
+from enum import Enum
+
 import typer
-import click
 
 from gallagher import __version__
 
@@ -52,6 +53,21 @@ JSON API, directly or via the cloud gateway.\n
 It's intent it to make available scriptable endpoints to ease automation.
 """
 
+
+class Gateway(str, Enum):
+    """Cloud gateway regions the client can be pointed at"""
+    AU = "AU"
+    US = "US"
+
+
+class OutputFormat(str, Enum):
+    """Rendering options for command output"""
+    PRETTY = "pretty"
+    JSON = "json"
+    CSV = "csv"
+    MARKDOWN = "markdown"
+
+
 # Main Typer app use to create the CLI
 app = AsyncTyper(
     help=_help_text,
@@ -60,7 +76,7 @@ app = AsyncTyper(
 # Global parameters
 @app.callback()
 def main(
-    ctx: click.Context,
+    ctx: typer.Context,
     api_key: str = typer.Option(
         None,
         "--api-key",
@@ -96,24 +112,24 @@ def main(
         envvar="GACC_USE_BASIC_AUTH",
         help="Use basic authentication instead of API key"
     ),
-    gateway: str = typer.Option(
-        "AU",
+    gateway: Gateway = typer.Option(
+        Gateway.AU,
         "--gateway",
         "-g",
         envvar="GACC_GATEWAY",
+        case_sensitive=False,
         help="Gateway region (AU or US)",
-        click_type=click.Choice(["AU", "US"], case_sensitive=False)
     ),
-    output_format: str = typer.Option(
-        "pretty",
+    output_format: OutputFormat = typer.Option(
+        OutputFormat.PRETTY,
         "--format",
         "-f",
+        case_sensitive=False,
         help="Output format",
-        click_type=click.Choice(["pretty", "json", "csv", "markdown"], case_sensitive=False)
     ),
 ):
     """Main callback to handle global parameters.
-    
+
     The API client is initialised here and is passed to subcommands via
     dependency injection.
     """
@@ -159,4 +175,3 @@ app.add_typer(visits_app, name="visit")
 app.add_typer(visitors_app, name="visitor")
 app.add_typer(zones_app, name="zone")
 app.add_typer(comp_app, name="comp")
-

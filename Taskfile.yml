@@ -75,14 +75,17 @@ tasks:
       appends the required headers, assumes the environment
       variables are set.
 
-      you must pass in the partial url (past /api), 
+      you must pass in the partial url (past /api),
       along with any parameters.
 
       by no suffix is provided CC returns a list of hateoas
       compliant endpoints.
     cmds:
       - |
-        http get \
+        http \
+        --cert=.certs/anomaly-gallagher.pem \
+        --cert-key=.certs/anomaly-gallagher.key \
+        get \
         https://commandcentre-api-au.security.gallagher.cloud/api/{{.CLI_ARGS}} \
         "Authorization: GGL-API-KEY $GACC_API_KEY"
   debug:delete:
@@ -93,10 +96,13 @@ tasks:
       appends the required headers, assumes the environment
       variables are set.
 
-      you must pass in the partial url (past /api), 
+      you must pass in the partial url (past /api),
       along with any parameters.
     cmds:
       - |
-        http delete \
+        http \
+        --cert=.certs/anomaly-gallagher.pem \
+        --cert-key=.certs/anomaly-gallagher.key \
+        delete \
         https://commandcentre-api-au.security.gallagher.cloud/api/{{.CLI_ARGS}} \
         "Authorization: GGL-API-KEY $GACC_API_KEY"

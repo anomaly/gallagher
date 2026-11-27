@@ -3,7 +3,10 @@ from typing import Optional, Any
 from datetime import datetime
 from typing_extensions import Self
 
-from pydantic import model_validator
+from pydantic import (
+    Field,
+    model_validator,
+)
 
 from ..utils import (
     AppBaseModel,
@@ -32,7 +35,7 @@ class CardholderRelationshipDetail(
     AppBaseModel,
     HrefMixin,
 ):
-    """ A role that a cardholder has 
+    """ A role that a cardholder has
 
     Think of this as a representation of a many to many relationship
     where this cardholder has a role in the system. Other users can
@@ -63,7 +66,7 @@ class CardholderPersonalDataDefinition(
     """ A personal data definition for the cardholder
 
     This is sent back as the personalDataDefinitions field in the
-    CardholderDetail response. It has a peculiar structure that 
+    CardholderDetail response. It has a peculiar structure that
     we have outlined in the parse_personal_data_definitions method
     """
     name: str
@@ -71,7 +74,7 @@ class CardholderPersonalDataDefinition(
 
 
 class PdfAccessorWrapper:
-    """ Wrapper that holds a dictionary of accessible PDF 
+    """ Wrapper that holds a dictionary of accessible PDF
 
     The aim is to make these accessible in as python a way as possible
 
@@ -106,13 +109,9 @@ class CardholderDetail(
 
     disable_cipher_pad: bool = False
     division: Optional[dict] = None
-    edit: HrefMixin
 
     operator_login_enabled: bool = False
     operator_password_expired: bool = False
-
-    update_location: HrefMixin
-    updates: HrefMixin
 
     user_extended_access_time: bool = False
     windows_login_enabled: bool = False
@@ -136,7 +135,7 @@ class CardholderDetail(
 
     # Note this is not a pyndatic class and hence utils.py
     # has the configuration set to allow arbitrary types
-    pdf: PdfAccessorWrapper = PdfAccessorWrapper()
+    pdf: PdfAccessorWrapper = Field(default_factory=PdfAccessorWrapper)
 
     created: Optional[datetime] = None
     modified: Optional[datetime] = None
@@ -146,7 +145,7 @@ class CardholderDetail(
     def parse_personal_data_definitions(cls, data: Any) -> Any:
         """ Rewrite the personalDataDefinition for it to be parseable
 
-        The personalDataDefinitions field is a list of objects, each one of 
+        The personalDataDefinitions field is a list of objects, each one of
         which has a single object with key being the personal data field name
         and the value being the value of the field.
 

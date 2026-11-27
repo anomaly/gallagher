@@ -5,13 +5,13 @@
 from typing import Optional
 from datetime import datetime
 
-from ..utils import AppBaseModel, IdentityMixin, HrefMixin
+from ..utils import AppBaseModel, OptionalIdentityMixin, HrefMixin
 from ..ref import DivisionRef
 
 
 class OperatorSummary(
     AppBaseModel,
-    IdentityMixin,
+    OptionalIdentityMixin,
     HrefMixin
 ):
     """Operator Summary
@@ -20,7 +20,6 @@ class OperatorSummary(
     for listing and basic operations.
     """
 
-    id: Optional[str] = None
     name: str
     description: Optional[str] = None
     division: Optional[DivisionRef] = None

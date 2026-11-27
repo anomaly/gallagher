@@ -2,7 +2,7 @@
 
 """
 
-from pydantic import BaseModel, URL
+from pydantic import BaseModel
 
 class BaseRequestPayloadBuilder(BaseModel):
     pass

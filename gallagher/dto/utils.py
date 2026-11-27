@@ -35,12 +35,12 @@ from pydantic import (
 # Annotations for fields that are reserved words in Python
 from_optional_datetime = Annotated[
     Optional[datetime],
-    Field(..., alias="from")
+    Field(None, alias="from")
 ]
 
 until_optional_datetime = Annotated[
     Optional[datetime],
-    Field(..., alias="until")
+    Field(None, alias="until")
 ]
 
 

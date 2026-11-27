@@ -1,15 +1,14 @@
 from typing import Optional
 from datetime import datetime
 
-from ..utils import AppBaseModel, IdentityMixin, HrefMixin
+from ..utils import AppBaseModel, OptionalIdentityMixin, HrefMixin
 
 from ..ref import DivisionRef
 
 
-class RoleDetail(AppBaseModel, IdentityMixin, HrefMixin):
+class RoleDetail(AppBaseModel, OptionalIdentityMixin, HrefMixin):
     """ """
 
-    id: Optional[str] = None
     name: str
     description: Optional[str] = None
     serverDisplayName: Optional[str] = None

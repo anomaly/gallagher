@@ -1,6 +1,4 @@
-from typing import (
-    Annotated,
-)
+from pydantic import Field
 
 from ..utils import (
     AppBaseResponseModel,
@@ -29,14 +27,18 @@ class DiscoveryResponse(
     the API client can work with the server.
     """
 
-    version: Annotated[str, "The version of the server"] = "0.0.0.0"
-    versions: Annotated[
-        VersionsDetail,
-        "A list of versions available on the server"
-    ] = VersionsDetail()
-    features: Annotated[
-        FeaturesDetail, "A list of features available on the server"
-    ] = FeaturesDetail()
+    version: str = Field(
+        default="0.0.0.0",
+        description="The version of the server",
+    )
+    versions: VersionsDetail = Field(
+        default_factory=VersionsDetail,
+        description="A list of versions available on the server",
+    )
+    features: FeaturesDetail = Field(
+        default_factory=FeaturesDetail,
+        description="A list of features available on the server",
+    )
 
     @property
     async def get_sem_ver(self):

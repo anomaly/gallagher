@@ -56,7 +56,7 @@ class CardholderPersonalDataField(
     value, which also is accessible using the key at the dictionary level.
     """
     definition: PdfSummary
-    value: str | HrefMixin | int | float | bool | None
+    value: str | HrefMixin | int | float | bool | None = None
     notifications: Optional[bool] = False  # Local to the @Email field
 
 
@@ -157,15 +157,20 @@ class CardholderDetail(
         for the cardholder's PDF fields.
         """
 
-        if 'personalDataDefinitions' in data:
-            data['personalDataDefinitions'] = [
-                {
-                    'name': name,
-                    'contents': contents
-                }
-                for item in data['personalDataDefinitions']
-                for name, contents in item.items()
-            ]
+        if isinstance(data, dict) and 'personalDataDefinitions' in data:
+            # Copy so we don't mutate the caller's dict; re-validating the
+            # same raw dict would otherwise split already rewritten items
+            data = {
+                **data,
+                'personalDataDefinitions': [
+                    {
+                        'name': name,
+                        'contents': contents
+                    }
+                    for item in data['personalDataDefinitions']
+                    for name, contents in item.items()
+                ],
+            }
 
         return data
 

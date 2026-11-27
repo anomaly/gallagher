@@ -16,5 +16,5 @@ class DayCategorySummary(
     """Represents a single entry from the response"""
 
     name: str
-    description: Optional[str]
-    notes: Optional[str]
+    description: Optional[str] = None
+    notes: Optional[str] = None

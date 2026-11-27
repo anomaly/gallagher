@@ -5,7 +5,7 @@
 from typing import List
 
 from ..utils import AppBaseResponseWithFollowModel
-from ..summary import FeaturesSummary
+from ..summary.features import FeaturesSummary
 
 
 class FeaturesResponse(AppBaseResponseWithFollowModel):

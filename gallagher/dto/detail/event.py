@@ -26,7 +26,7 @@ class EventDetail(
 
     server_display_name: str
     time: datetime
-    message: Optional[str]
+    message: Optional[str] = None
     occurrences: int
     priority: int
     alarm: AlarmRef

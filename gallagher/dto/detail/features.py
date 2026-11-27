@@ -6,7 +6,7 @@ from typing import Optional, List
 from datetime import datetime
 
 from ..utils import AppBaseModel, IdentityMixin, HrefMixin
-from ..summary import FeaturesSummary
+from ..summary.features import FeaturesSummary
 
 
 class FeaturesDetail(FeaturesSummary):

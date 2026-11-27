@@ -12,8 +12,7 @@ Example Usage:
 
 """
 from ..ref.card import CardTypeRef
-
-from pydantic import BaseModel, URL
+from ..utils import HrefMixin
 
 class CardholderUpdateBuilder:
 

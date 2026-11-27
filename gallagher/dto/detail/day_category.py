@@ -20,5 +20,4 @@ class DayCategoryDetail(DayCategorySummary):
     # Extended fields beyond summary
     time_periods: Optional[List[dict]] = None
     exceptions: Optional[List[dict]] = None
-    notes: Optional[str] = None
     is_default: Optional[bool] = None
